@@ -1,33 +1,26 @@
 {
-    "userid": 2,
-    "deviceid": "123456",
-    "locations": [
-
-        {
-            "present": "YES",
-            "latitude": "123.00",
-            "longitude": "456.00",
-            "battery": "95",
-            "time": "2019-11-23 10-35-12",
-            "mode": "offline"
-        },
-        {
-            "present": "NO",
-            "latitude": "123.00",
-            "longitude": "456.00",
-            "battery": "96",
-            "time": "2019-11-23 10-35-12",
-            "mode": "online"
-        },
-        {
-            "present": "NO",
-            "latitude": "123.00",
-            "longitude": "456.00",
-            "battery": "96",
-            "time": "2019-11-23 10-35-12",
-            "mode": "online"
-        }
-
-    ]
-
+	"locations": [
+	{
+		"battery": "100",
+		"longitude": "-122.084",
+		"latitude": "37.4219983",
+		"mode": "online",
+		"present": "YES",
+		"status": "end",
+		"time": "2019-12-09 01:47:42"
+	},
+		{
+		"battery": "100",
+		"longitude": "-122.084",
+		"latitude": "37.4219983",
+		"mode": "online",
+		"present": "YES",
+		"status": "end",
+		"time": "2019-12-09 01:47:42"
+	}
+	
+	],
+	"userid": "2",
+	"deviceid":"",
+	"version":"2.1"
 }

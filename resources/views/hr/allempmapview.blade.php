@@ -141,7 +141,7 @@ var bounds = new google.maps.LatLngBounds();
     }
    
 //alert(return_address(beach.latitude, beach.longitude));
-    for (var i = 0; i < data.length; i++) {
+   /* for (var i = 0; i < data.length; i++) {
          var beach = data[i];
        
           var point =new google.maps.LatLng(beach.latitude, beach.longitude);
@@ -169,7 +169,7 @@ var flightPath = new google.maps.Polyline({
 
 
 
-flightPath.setMap(map);
+flightPath.setMap(map);*/
 
 //map.fitBounds(bounds);
     
@@ -242,7 +242,7 @@ var bindInfoWindow = function(marker, map, infowindow, html) {
   } 
 
 
-var timeout = setInterval(reloadmap, 10000); 
+var timeout = setInterval(reloadmap, 1000000); 
 
 function reloadmap () {
    for(i=0; i<markers.length; i++){

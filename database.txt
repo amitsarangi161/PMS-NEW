@@ -1,2 +1,0 @@
-SELECT * FROM `expenseentries` WHERE `version`='NEW' and date IS NULL
-UPDATE expenseentries SET todate = date WHERE `version`='NEW' and date IS NOT NULL
