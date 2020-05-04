@@ -1,0 +1,33 @@
+{
+    "userid": 2,
+    "deviceid": "123456",
+    "locations": [
+
+        {
+            "present": "YES",
+            "latitude": "123.00",
+            "longitude": "456.00",
+            "battery": "95",
+            "time": "2019-11-23 10-35-12",
+            "mode": "offline"
+        },
+        {
+            "present": "NO",
+            "latitude": "123.00",
+            "longitude": "456.00",
+            "battery": "96",
+            "time": "2019-11-23 10-35-12",
+            "mode": "online"
+        },
+        {
+            "present": "NO",
+            "latitude": "123.00",
+            "longitude": "456.00",
+            "battery": "96",
+            "time": "2019-11-23 10-35-12",
+            "mode": "online"
+        }
+
+    ]
+
+}
