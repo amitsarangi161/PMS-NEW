@@ -257,7 +257,7 @@
                	   <td>{{$bankpayment->amount}}</td>
                	   <td>{{$bankpayment->paymenttype}}</td>
                    <td>{{$bankpayment->reamrks}}</td>
-                   <td>{{$bankpayment->bankname}}</td>
+                   <td>{{$bankpayment->bankname}}/{{$bankpayment->acno}}/{{$bankpayment->ifsccode}}</td>
                    <td>{{$bankpayment->transactionid}}</td>
                    <td>{{$bankpayment->dateofpayment}}</td>
                    <td>{{$bankpayment->created_at}}</td>

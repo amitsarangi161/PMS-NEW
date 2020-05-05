@@ -2520,8 +2520,9 @@ public function no_to_words($no)
     public function viewapproveddebitvoucher($id)
     {
 
-             $bankpayments=debitvoucherpayment::select('debitvoucherpayments.*','banks.bankname')
-                          ->leftJoin('banks','debitvoucherpayments.bankid','=','banks.id')
+             $bankpayments=debitvoucherpayment::select('debitvoucherpayments.*','banks.bankname','useraccounts.acno','useraccounts.ifsccode')
+                          ->leftJoin('useraccounts','debitvoucherpayments.bankid','=','useraccounts.id')
+                          ->leftJoin('banks','useraccounts.bankid','=','banks.id')
 
                           ->where('debitvoucherpayments.did',$id)
                           ->get();
