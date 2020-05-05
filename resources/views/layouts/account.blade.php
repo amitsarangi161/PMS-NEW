@@ -287,7 +287,7 @@
                   <span class="label label-success pull-right">{{$pendingmgr}}</span>
               </span>
             </a></li>
-            <li class="{{ Request::is('acc-vouchers/pendingvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchers"><i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS
+            <li class="{{ Request::is('acc-vouchers/pendingvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchers"><i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS(ADMIN)
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$pendingvouchers}}</span>
               </span>
