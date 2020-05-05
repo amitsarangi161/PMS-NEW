@@ -262,6 +262,7 @@
            $approvedvouchers=\App\voucher::where('status','APPROVED')->count();
            $cancelledvouchers=\App\voucher::where('status','CANCELLED')->count();
            $paidvouchers=\App\voucher::where('status','PAID')->count();
+           $pendingmgr=\App\voucher::where('status','PENDING MGR')->count();
            $totalvouchers=\App\voucher::where('id','>','0')->count();
         @endphp
 
@@ -269,7 +270,7 @@
             <i class="fa fa-retweet"></i> <span>VOUCHER</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
-              <span class="label label-warning pull-right">{{$pendingvouchers}}</span>
+              <span class="label label-warning pull-right">{{$pendingvouchers+$pendingmgr}}</span>
             </span>
             </span>
           </a>
@@ -283,7 +284,7 @@
              <li class="{{ Request::is('acc-vouchers/pendingvouchersmgr') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchersmgr" class="chngdrfont">
               <i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS(MGR)
               <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{$pendingvouchers}}</span>
+                  <span class="label label-success pull-right">{{$pendingmgr}}</span>
               </span>
             </a></li>
             <li class="{{ Request::is('acc-vouchers/pendingvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchers"><i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS

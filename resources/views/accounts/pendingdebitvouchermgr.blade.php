@@ -61,7 +61,7 @@
     @if($diff>=10)
           <tr style="background-color: #d81b60b5;">
           	<td><a href="/viewpendinfdebitvouchermgr/{{$debitvoucher->id}}"  class="btn btn-primary">{{$debitvoucher->id}}</a></td>
-          	<td>{{$debitvoucher->vendorname.$diff}}</td>
+          	<td>{{$debitvoucher->vendorname}}</td>
           	<td>
           		@if($debitvoucher->projectname)
           		<p class="b" title="{{$debitvoucher->projectname}}">{{$debitvoucher->projectname}}</p>
@@ -90,10 +90,10 @@
           	<td>{{$debitvoucher->status}}</td>
           	<td><a href="/viewpendinfdebitvouchermgr/{{$debitvoucher->id}}" class="btn btn-primary">View</a></td>
           </tr>
-    @elseif($diff>5)
+    @elseif($diff>=5)
     <tr style="background-color: #00b8ff73;">
             <td><a href="/viewpendinfdebitvouchermgr/{{$debitvoucher->id}}"  class="btn btn-primary">{{$debitvoucher->id}}</a></td>
-            <td>{{$debitvoucher->vendorname.$diff}}</td>
+            <td>{{$debitvoucher->vendorname}}</td>
             <td>
               @if($debitvoucher->projectname)
               <p class="b" title="{{$debitvoucher->projectname}}">{{$debitvoucher->projectname}}</p>
@@ -125,7 +125,7 @@
     @else
     <tr style="background-color: #00a65aa6;">
             <td><a href="/viewpendinfdebitvouchermgr/{{$debitvoucher->id}}"  class="btn btn-primary">{{$debitvoucher->id}}</a></td>
-            <td>{{$debitvoucher->vendorname.$diff}}</td>
+            <td>{{$debitvoucher->vendorname}}</td>
             <td>
               @if($debitvoucher->projectname)
               <p class="b" title="{{$debitvoucher->projectname}}">{{$debitvoucher->projectname}}</p>
