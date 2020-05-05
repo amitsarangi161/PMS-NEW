@@ -2310,8 +2310,10 @@ public function no_to_words($no)
                 ->leftJoin('clients','projects.clientid','=','clients.id')
                 ->get();
 
-          $requisitionheader=requisitionheader::select('requisitionheaders.*','projects.projectname')
+          $requisitionheader=requisitionheader::select('requisitionheaders.*','projects.projectname','u1.name as employee','u2.name as author')
                 ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
+                ->leftJoin('users as u2','requisitionheaders.userid','=','u2.id')
                 ->where('requisitionheaders.id',$id)->first();
 
           $requisitions=requisition::select('requisitions.*','expenseheads.expenseheadname','particulars.particularname','vendors.id as vendorid','vendors.vendorname','vendors.mobile','vendors.details','vendors.bankname','vendors.acno','vendors.branchname','vendors.ifsccode','vendors.photo','vendors.vendoridproof')
