@@ -608,6 +608,7 @@ Route::get('/acc-vouchers/cancelledvouchers','AccountController@cancelledvoucher
 Route::get('/viewvoucher/{id}','AccountController@viewvoucher');
 Route::get('/viewapprovedvoucher/{id}','AccountController@viewapprovedvoucher');
 Route::get('/acc-vouchers/pendingvouchers','AccountController@pendingvouchers');
+Route::get('/acc-vouchers/pendingvouchersmgr','AccountController@pendingvouchersmgr');
 Route::get('/acc-vouchers/paidvouchers','AccountController@paidvouchers');
 Route::get('/approvevoucher/{id}','AccountController@approvevoucher');
 Route::delete('/cancelthisvoucher/{id}','AccountController@cancelthisvoucher');

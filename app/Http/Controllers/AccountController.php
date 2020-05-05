@@ -229,6 +229,20 @@ class AccountController extends Controller
           return view('accounts.pendingvouchers',compact('vouchers'));
 
        } 
+       public function pendingvouchersmgr()
+       {
+            $vouchers=voucher::select('vouchers.*','projects.projectname','expenseheads.expenseheadname','particulars.particularname','users.name as author','banks.bankname')
+                    ->leftJoin('projects','vouchers.projectid','=','projects.id')
+                    ->leftJoin('expenseheads','vouchers.expenseheadid','=','expenseheads.id')
+                    ->leftJoin('particulars','vouchers.particularid','=','particulars.id')
+                    ->leftJoin('banks','vouchers.bankid','=','banks.id')
+                    ->leftJoin('users','vouchers.author','=','users.id')
+                    ->where('vouchers.status','PENDING MGR')
+                    ->get();
+
+          return view('accounts.pendingvouchersmgr',compact('vouchers'));
+
+       } 
 
         public function paidvouchers()
        {
@@ -292,6 +306,7 @@ class AccountController extends Controller
             $voucher->amounttopay=$request->amounttopay;
             $voucher->description=$request->description;
             $voucher->author=Auth::id();
+            $voucher->status="PENDING MGR";
                $rarefile = $request->file('uploadedfile'); 
            
                    if($rarefile!=''){
