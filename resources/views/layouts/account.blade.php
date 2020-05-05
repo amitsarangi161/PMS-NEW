@@ -280,10 +280,16 @@
               
 
             </a></li>
+             <li class="{{ Request::is('acc-vouchers/pendingvouchersmgr') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchersmgr" class="chngdrfont">
+              <i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS(MGR)
+              <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$pendingvouchers}}</span>
+              </span>
+            </a></li>
             <li class="{{ Request::is('acc-vouchers/pendingvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchers"><i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$pendingvouchers}}</span>
-            </span>
+              </span>
             </a></li>
 
              <li class="{{ Request::is('acc-vouchers/approvedvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/approvedvouchers"><i class="fa fa-circle-o text-red"></i>APPROVED VOUCHERS
@@ -472,18 +478,32 @@
           </ul>
 
         </li>
-
+        @php
+                            
+          $notpaidreqcount=\App\requisitionpayment::where('paymentstatus','PENDING')
+                          ->count();
+          $paidreqcount=\App\requisitionpayment::where('paymentstatus','PAID')
+                          ->count();
+        @endphp
         <li class="{{ Request::is('prb*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-credit-card"></i> <span>PAY REQUISITION BANK</span>
+
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+
+              <i class="fa fa-angle-left pull-right"></i><span class="label label-warning pull-right">{{$notpaidreqcount+$paidreqcount}}</span>
             </span>
           </a>
           <ul class="treeview-menu">
-              <li class="{{ Request::is('prb/requisitiononlinepending') ? 'active' : '' }}"><a href="/prb/requisitiononlinepending"><i class="fa fa-circle-o text-blue"></i>PENDING REQUISITION BANK</a></li>
+              <li class="{{ Request::is('prb/requisitiononlinepending') ? 'active' : '' }}"><a href="/prb/requisitiononlinepending"><i class="fa fa-circle-o text-blue"></i>PENDING REQUISITION BANK
+              <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$notpaidreqcount}}</span>
+                </span></a></li>
            
-           <li class="{{ Request::is('prb/requisitiononlinepaid') ? 'active' : '' }}"><a href="/prb/requisitiononlinepaid"><i class="fa fa-circle-o text-blue"></i>PAID REQUISITION BANK</a></li>
+           <li class="{{ Request::is('prb/requisitiononlinepaid') ? 'active' : '' }}"><a href="/prb/requisitiononlinepaid"><i class="fa fa-circle-o text-blue"></i>PAID REQUISITION BANK
+           <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$paidreqcount}}</span>
+                </span></a></li>
           </ul>
         </li>
         <li class="{{ Request::is('prc*') ? 'active' : '' }} treeview">
