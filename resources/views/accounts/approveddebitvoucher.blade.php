@@ -42,6 +42,7 @@
 		<th>Paid Amount</th>
 		<th>Inv. Scan</th>
 		<th>Status</th>
+    <th>Created_at</th>
 		<th>View</th>
 		</tr>
 
@@ -80,6 +81,7 @@
           	
           	</td>
           	<td>{{$debitvoucher['data']['status']}}</td>
+            <td>{{$debitvoucher['data']['created_at']}}</td>
           	<td><a href="/viewapproveddebitvoucher/{{$debitvoucher['data']['id']}}"  class="btn btn-primary">View</a></td>
           </tr>
 

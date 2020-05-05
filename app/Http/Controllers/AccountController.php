@@ -190,6 +190,17 @@ class AccountController extends Controller
 
           return back();
 
+      }  
+       public function approvevouchermgr(Request $request,$id)
+      {
+
+          $voucher=voucher::find($id);
+          $voucher->status="PENDING";
+          $voucher->approvedby=Auth::id();
+          $voucher->save();
+
+          return back();
+
       }
       public function cancelthisvoucher(Request $request,$id)
       {

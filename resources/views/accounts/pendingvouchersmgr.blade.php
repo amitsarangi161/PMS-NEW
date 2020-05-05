@@ -75,7 +75,7 @@
         <td>{{$voucher->created_at}}</td>
         <td><a href="/viewvoucher/{{$voucher->id}}" class="btn btn-primary">VIEW</a></td>
         <td>
-          <a href="/approvevoucher/{{$voucher->id}}" onclick="return confirm('Do You want to Approve this Voucher?')" class="btn btn-success">APPROVE</a></td>
+          <a href="/approvevouchermgr/{{$voucher->id}}" onclick="return confirm('Do You want to Approve this Voucher?')" class="btn btn-success">APPROVE</a></td>
         </td>
         <td>
           <form action="/cancelthisvoucher/{{$voucher->id}}"  method="post">
