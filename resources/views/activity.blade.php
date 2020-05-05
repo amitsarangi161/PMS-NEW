@@ -3,6 +3,7 @@
 @section('content')
 
 @php 
+comment
 @endphp
    @if(Session::has('msg'))
    <p class="alert alert-info text-center">{{ Session::get('msg') }}</p>
