@@ -61,6 +61,7 @@ use App\companysetup;
 use App\district;
 use App\division;
 use App\assignuser;
+use App\voucher;
 use DataTables;
 use Excel;
 //use Barryvdh\DomPDF\Facade as PDF;
@@ -294,9 +295,13 @@ public function companydetails(){
 
     $noofprojects=project::count();
     $completedprojects=project::where('status','COMPLETED')->count();
+    $pendingvouchers=voucher::where('status','PENDING')->count();
+    $pendingdrvouchers=debitvoucherheader::where('status','MGR APPROVED')->count();
+    $pendingrequisitions=requisitionheader::where('status','PENDING')->count();
+    $pendingexpenseentry=expenseentry::where('status','PENDING')->count();
     $noofclients=client::count();
     $noofusers=user::count();
-      return view('home',compact('noofprojects','noofclients','noofusers','todos','completedprojects'));
+      return view('home',compact('noofprojects','noofclients','noofusers','todos','completedprojects','pendingvouchers','pendingdrvouchers','pendingrequisitions','pendingexpenseentry'));
        
 
   }

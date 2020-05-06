@@ -35,6 +35,7 @@
 		<th>Final Amount</th>
 		<th>Inv. Scan</th>
 		<th>Status</th>
+    <th>Cancelled By</th>
 		<th>VIEW</th>
 		
 		</tr>
@@ -72,6 +73,7 @@
           	</a>
           	</td>
           	<td>{{$debitvoucher->status}}</td>
+            <td>{{$debitvoucher->name}}</td>
           	<td><a href="/viewdebitvoucher/{{$debitvoucher->id}}" class="btn btn-primary">VIEW</a></td>
           </tr>
 

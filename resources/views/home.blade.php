@@ -21,7 +21,7 @@
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="/dm/viewallclient" class="small-box-footer">view all clients<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/projects/viewallclient" class="small-box-footer">view all clients<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
             <div class="col-lg-3 col-xs-6">
@@ -50,7 +50,7 @@
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="/projects/viewallproject" class="small-box-footer">view all projects<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="/projects/viewallproject?client=ALL&status=COMPLETED" class="small-box-footer">view all projects<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         
@@ -75,13 +75,13 @@
 
     <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <a href="/usermsg/mymessages">
+          <a href="/acc-vouchers/pendingvouchers" title="Pending Vouchers Admin">
           <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Messages</span>
-              <span class="info-box-number" id="countmsg111"></span>
+              <span class="info-box-text" title="Pending Vouchers Admin">Pending Vouchers Admin</span>
+              <span class="info-box-number" id="countmsg111">{{$pendingvouchers}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -90,14 +90,14 @@
         </div>
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <a href="/uc/viewallcomplaints" title="Differ Date Request">
+          <a href="/vouchers/pendingdebitvoucheradmin" title="Pending Debit Vouchers Admin">
           <div class="info-box">
             
              <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text" title="Differ Date Request">Differ Date Request</span>
+              <span class="info-box-text" title="Pending Debit Vouchers Admin">Pending Debit Vouchers Admin</span>
 
-              <span class="info-box-number" id="differcount">0</span>
+              <span class="info-box-number" id="differcount">{{$pendingdrvouchers}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -106,14 +106,14 @@
         </div>
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <a href="/viewrequisitions/pendingrequisitions" title="Pending Requisition">
+          <a href="/viewrequisitions/pendingrequisitions" title="Pending Requisition Admin">
 
           <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text" title="Pending Requisition">Pending Requisition</span>
-              <span class="info-box-number">0</span>
+              <span class="info-box-text" title="Pending Requisition Admin">Pending Requisition Admin</span>
+              <span class="info-box-number">{{$pendingrequisitions}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -122,13 +122,13 @@
         </div>
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <a href="/expense/pendingexpenseentry" title="Pending Expense Entry">
+          <a href="/expense/pendingexpenseentry" title="Pending Expense Entry Admin">
                     <div class="info-box">
            
             <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Pending Expense Entry</span>
-              <span class="info-box-number">0</span>
+              <span class="info-box-text" title="Pending Expense Entry Admin">Pending Expense Entry Admin</span>
+              <span class="info-box-number">{{$pendingexpenseentry}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -137,44 +137,6 @@
         </div>
         <!-- /.col -->
       </div>
-
-      <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <a href="/vouchers/pendingdebitvoucheradmin" title="PENDING DEBIT VOUCHER ADMIN">
-          <div class="info-box">
-            <span class="info-box-icon bg-navy"><i class="fa fa-bookmark-o"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">PENDING DR VOUCHER</span>
-              <span class="info-box-number">0</span>
-
-             
-                  <span class="progress-description">
-                   
-                  </span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-        </a>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <a href="/tour/pendingtourapplications" target="_blank" title="PENDING TOUR APPROVAL">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-plane"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">PENDING TOUR APPROVAL</span>
-              <span class="info-box-number">0</span>
-            </div>
-       
-          </div>
-          </a>
-        </div>
-       
-      </div>
-
       @endif
 
       <div class="row">

@@ -788,13 +788,13 @@ class AccountController extends Controller
 
    public function cancelleddebitvoucher()
    {
-       $debitvouchers=debitvoucherheader::select('debitvoucherheaders.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+       $debitvouchers=debitvoucherheader::select('debitvoucherheaders.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname','users.name')
                      ->leftJoin('vendors','debitvoucherheaders.vendorid','=','vendors.id')
                       ->leftJoin('projects','debitvoucherheaders.projectid','=','projects.id')
                      ->leftJoin('expenseheads','debitvoucherheaders.expenseheadid','=','expenseheads.id')
+                     ->leftJoin('users','debitvoucherheaders.cancelledby','=','users.id')
                      ->where('debitvoucherheaders.status','CANCELLED')
                      ->get();
-
       return view('accounts.cancelleddebitvoucher',compact('debitvouchers'));
    } 
 
