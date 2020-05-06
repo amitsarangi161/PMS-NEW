@@ -436,7 +436,7 @@
           @endphp
          <li class="{{ Request::is('viewrequisitions*') ? 'active' : '' }} treeview">
           <a href="#">
-            <i class="fa fa-envelope"></i> <span>VIEW REQUISITIONS</span>
+            <i class="fa fa-paper-plane "></i> <span>VIEW REQUISITIONS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
               <span class="label label-warning pull-right">{{$mgrpendingreqcount+$pendingreqcount}}</span>
@@ -503,7 +503,7 @@
         @endphp
         <li class="{{ Request::is('prb*') ? 'active' : '' }} treeview">
           <a href="#">
-            <i class="fa fa-credit-card"></i> <span>PAY REQUISITION</span>
+            <i class="fa fa-calculator"></i> <span>REQUISITION PAYMENT</span>
 
             <span class="pull-right-container">
 
@@ -610,7 +610,7 @@
 <!-- TEMP SALAY MODULE -->
 <li class="{{ Request::is('tempsalary*') ? 'active' : '' }} treeview">
           <a href="#">
-            <i class="fa fa-university"></i> <span>TEMP SALARY ENTRY</span>
+            <i class="fa fa-spinner"></i> <span>TEMP SALARY ENTRY</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
