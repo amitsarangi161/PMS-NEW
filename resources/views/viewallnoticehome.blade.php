@@ -43,7 +43,7 @@
          	<td>{{$notice->subject}}</td>
          	<td><p class="b" title="{{$notice->description}}">{{$notice->description}}</p></td>
          	<td>
-         		<a href="{{asset('/img/doc/'.$notice->attachment)}}" target="_blank">
+         		<a href="{{asset('/img/notice/'.$notice->attachment)}}" target="_blank">
          			{{$notice->attachment}}</i>
 
          		</a>

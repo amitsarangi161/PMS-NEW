@@ -452,30 +452,30 @@
                 </span>
             </a></li>
 
-            <li class="{{ Request::is('viewrequisitions/pendingrequisitions') ? 'active' : '' }}"><a  href="/viewrequisitions/pendingrequisitions"><i class="fa fa-circle-o text-blue"></i>PENDING REQUISITIONS(ADMIN)
+            <li class="{{ Request::is('viewrequisitions/pendingrequisitions') ? 'active' : '' }}"><a class="chngreqfont"  href="/viewrequisitions/pendingrequisitions"><i class="fa fa-circle-o text-blue"></i>PENDING REQUISITIONS(ADMIN)
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$pendingreqcount}}</span>
                 </span>
             </a></li>
-            <li class="{{ Request::is('viewrequisitions/approvedrequisitions') ? 'active' : '' }}"><a href="/viewrequisitions/approvedrequisitions"><i class="fa fa-circle-o text-blue"></i>APPROVED REQUISITIONS
+            <li class="{{ Request::is('viewrequisitions/approvedrequisitions') ? 'active' : '' }}"><a class="chngreqfont" href="/viewrequisitions/approvedrequisitions"><i class="fa fa-circle-o text-blue"></i>APPROVED REQUISITIONS
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$approvedreqcount}}</span>
                 </span>
             </a></li>
 
-             <li class="{{ Request::is('viewrequisitions/completedrequisitions') ? 'active' : '' }}"><a href="/viewrequisitions/completedrequisitions"><i class="fa fa-circle-o text-blue"></i>COMPLETED REQUISITIONS
+             <li class="{{ Request::is('viewrequisitions/completedrequisitions') ? 'active' : '' }}"><a class="chngreqfont" href="/viewrequisitions/completedrequisitions"><i class="fa fa-circle-o text-blue"></i>COMPLETED REQUISITIONS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$completedreqcount}}</span>
                 </span>
              </a></li>
            
-              <li class="{{ Request::is('viewrequisitions/cancelledrequisitions') ? 'active' : '' }}"><a href="/viewrequisitions/cancelledrequisitions"><i class="fa fa-circle-o text-blue"></i>CANCELLED REQUISITIONS
+              <li class="{{ Request::is('viewrequisitions/cancelledrequisitions') ? 'active' : '' }}"><a class="chngreqfont" href="/viewrequisitions/cancelledrequisitions"><i class="fa fa-circle-o text-blue"></i>CANCELLED REQUISITIONS
                <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$cancelledreqcount}}</span>
                 </span>
 
               </a></li>
-              <li class="{{ Request::is('viewrequisitions/viewapplicationform') ? 'active' : '' }}"><a href="/viewrequisitions/viewapplicationform"><i class="fa fa-circle-o text-red"></i>VIEW ALL APPLICATION FORM</a></li>
+              <li class="{{ Request::is('viewrequisitions/viewapplicationform') ? 'active' : '' }}"><a class="chngreqfont" href="/viewrequisitions/viewapplicationform"><i class="fa fa-circle-o text-red"></i>VIEW ALL APPLICATION FORM</a></li>
 
           </ul>
 

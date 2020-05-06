@@ -266,7 +266,7 @@ public function companydetails(){
     {
 
         if (!Auth::user()){
-            $notices=array();
+            $notices=notice::orderBy('id','DESC')->where('status','ACTIVE')->get();
             $documents=array();
             return view('startpage',compact('notices','documents'));
         }

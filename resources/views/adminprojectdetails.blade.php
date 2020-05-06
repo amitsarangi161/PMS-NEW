@@ -11,6 +11,8 @@
   cursor: pointer;
   color: red;
 }
+.prdetails label{font-size: 12px;letter-spacing: .7px;}
+.prdetails .form-control{font-size: 12px;height: 30px;letter-spacing: .7px;}
 </style>
 
 <div class="row">
@@ -27,7 +29,7 @@
                   <div class="panel-heading">
                     PROJECT DETAILS
                   </div>
-                  <div class="panel-body">                    
+                  <div class="panel-body prdetails">                    
                   
                     <div class="col-md-6">
                       <div class="form-group">
@@ -41,8 +43,7 @@
                         <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->districtname}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                  <div class="panel-body">
+                  
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">DIVISION NAME</label>
@@ -55,8 +56,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->projectname}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                  <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">PROJECT COST</label>
@@ -69,8 +68,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->priority}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                  <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">PAPER COST</label>
@@ -83,8 +80,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->loano}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                  <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">AGREEMENT NUMBER</label>
@@ -97,8 +92,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->startdate}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                   <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">DATE OF COMPLETION</label>
@@ -111,8 +104,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->isddate}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                   <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">ISD VALID UPTO</label>
@@ -125,8 +116,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->isdamount}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                    <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">EMD DATE</label>
@@ -139,8 +128,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->emdvalidupto}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                  <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">EMD AMOUNT</label>
@@ -153,8 +140,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->apsdate}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                  <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">APS VALID UPTO</label>
@@ -167,8 +152,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->apsamount}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                  <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">BG DATE</label>
@@ -181,8 +164,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->bgvalidupto}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                  <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">BG AMOUNT</label>
@@ -195,8 +176,6 @@
                         <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->dddate}}" placeholder="Enter email">
                       </div>
                     </div>
-                  </div>
-                  <div class="panel-body">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="exampleInputEmail1">DD VALID UPTO</label>
