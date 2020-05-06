@@ -206,10 +206,8 @@ class AccountController extends Controller
       {
           $voucher=voucher::find($id);
           $voucher->status="CANCELLED";
-          $voucher->author=Auth::id();
-
+          $voucher->cancelledby=Auth::id();
           $voucher->save();
-
           return back();
       }
 
@@ -824,9 +822,10 @@ class AccountController extends Controller
    {
        $debitvoucherheader=debitvoucherheader::find($id);
        $debitvoucherheader->status='CANCELLED';
+       $debitvoucherheader->author=Auth::id();
        $debitvoucherheader->save();
-
-       return redirect('/vouchers/approveddebitvoucher');
+       return back();
+       /*return redirect('/vouchers/approveddebitvoucher');*/
    }  
 
     public function drvouchermarkcompleted(Request $request,$id)
@@ -3242,7 +3241,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
            $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
-             ->where('paymenttype','!=','CASH')
+             ->where('paymenttype','=','ONLINE PAYMENT')
              ->where('requisitionpayments.paymentstatus','PAID')
              ->get();
              //return $requisitionpayments;

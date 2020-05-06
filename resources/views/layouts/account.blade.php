@@ -56,6 +56,7 @@
         .chngdrfont{
           font-size: 12px!important;
         }
+        .payrequistion a{font-size: 0.8em!important;}
       </style>
     
     <!-- Scripts -->
@@ -481,33 +482,59 @@
         </li>
         @php
                             
-          $notpaidreqcount=\App\requisitionpayment::where('paymentstatus','PENDING')
+          $pending_online_req_count=\App\requisitionpayment::where('paymentstatus','PENDING')
+                            ->where('paymenttype','ONLINE PAYMENT')
+                            ->count();
+          $paid_online_req_count=\App\requisitionpayment::where('paymentstatus','PAID')
+                          ->where('paymenttype','ONLINE PAYMENT')
                           ->count();
-          $paidreqcount=\App\requisitionpayment::where('paymentstatus','PAID')
-                          ->count();
+          $pending_cash_req_count=\App\requisitionpayment::where('paymenttype','CASH')
+                    ->where('paymentstatus','PENDING')
+                    ->count();
+          $pending_cheque_req_count=\App\requisitionpayment::where('paymenttype','CHEQUE')
+                    ->where('paymentstatus','PENDING')
+                    ->count();
+          $paid_cash_req_count=\App\requisitionpayment::where('paymenttype','CASH')
+                    ->where('paymentstatus','PAID')
+                    ->count();
+          $paid_cheque_req_count=\App\requisitionpayment::where('paymenttype','CHEQUE')
+                    ->where('paymentstatus','PAID')
+                    ->count();
         @endphp
         <li class="{{ Request::is('prb*') ? 'active' : '' }} treeview">
           <a href="#">
-            <i class="fa fa-credit-card"></i> <span>PAY REQUISITION BANK</span>
+            <i class="fa fa-credit-card"></i> <span>PAY REQUISITION</span>
 
             <span class="pull-right-container">
 
-              <i class="fa fa-angle-left pull-right"></i><span class="label label-warning pull-right">{{$notpaidreqcount}}</span>
+              <i class="fa fa-angle-left pull-right"></i><span class="label label-warning pull-right">{{$pending_online_req_count+$pending_cash_req_count+$pending_cheque_req_count}}</span>
             </span>
           </a>
-          <ul class="treeview-menu">
+          <ul class="treeview-menu payrequistion">
               <li class="{{ Request::is('prb/requisitiononlinepending') ? 'active' : '' }}"><a href="/prb/requisitiononlinepending"><i class="fa fa-circle-o text-blue"></i>PENDING REQUISITION BANK
               <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{$notpaidreqcount}}</span>
+                  <span class="label label-success pull-right">{{$pending_online_req_count}}</span>
                 </span></a></li>
            
            <li class="{{ Request::is('prb/requisitiononlinepaid') ? 'active' : '' }}"><a href="/prb/requisitiononlinepaid"><i class="fa fa-circle-o text-blue"></i>PAID REQUISITION BANK
            <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{$paidreqcount}}</span>
+                  <span class="label label-success pull-right">{{$paid_online_req_count}}</span>
+                </span></a>
+            </li>
+            <li class="{{ Request::is('prb/requisitioncashrequest') ? 'active' : '' }}"><a href="/prb/requisitioncashrequest"><i class="fa fa-circle-o text-blue"></i>REQUISITION CASH/CHEQUE REQUEST
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$pending_cheque_req_count+$pending_cash_req_count}}</span>
+                </span>
+              </a></li>
+           
+           <li class="{{ Request::is('prb/viewpaidrequisitioncash') ? 'active' : '' }}"><a href="/prb/viewpaidrequisitioncash"><i class="fa fa-circle-o text-blue"></i>VIEW PAID REQUISITION(CASH/CHEQUE)
+            <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$paid_cheque_req_count+$paid_cash_req_count}}</span>
                 </span></a></li>
           </ul>
         </li>
-        <li class="{{ Request::is('prc*') ? 'active' : '' }} treeview">
+
+<!--         <li class="{{ Request::is('prc*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-money"></i> <span>PAY REQUISITION CASH/CHEQUE</span>
             <span class="pull-right-container">
@@ -521,7 +548,7 @@
 
           </ul>
 
-        </li>
+        </li> -->
 
  @php
     $counthodpendingexp=\App\expenseentry::where('status','HOD PENDING')->count();

@@ -51,6 +51,7 @@
 		<th>Status</th>
     <th>Created_at</th>
 		<th>View</th>
+    <th>Cancel</th>
 		</tr>
 
 	</thead>
@@ -104,6 +105,14 @@
           	<td>{{$debitvoucher->status}}</td>
             <td>{{$debitvoucher->created_at}}</td>
           	<td><a href="/viewpendinfdebitvouchermgr/{{$debitvoucher->id}}" class="btn btn-primary">View</a></td>
+            <td>
+          <form action="/canceldrvoucher/{{$debitvoucher->id}}"  method="post">
+            {{csrf_field()}}
+            {{method_field('DELETE')}}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Do You want to Delete this Debit Voucher?')">CANCEL</button>
+            
+          </form>
+        </td>
           </tr>
    
    

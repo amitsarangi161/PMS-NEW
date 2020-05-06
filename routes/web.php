@@ -350,10 +350,10 @@ Route::post('/updateuserbankaccount','AccountController@updateuserbankaccount');
 
 Route::post('/requisitionpaytovendor/{id}','AccountController@requisitionpaytovendor');
 
-Route::get('/prc/requisitioncashrequest','AccountController@requisitioncashrequest');
+
 Route::post('/cashierpaidrequsitioncash','AccountController@cashierpaidrequsitioncash');
 
-Route::get('/prc/viewpaidrequisitioncash','AccountController@viewpaidrequisitioncash');
+
 
 Route::get('/reports/projectwisepaymentreports','HomeController@projectwisepaymentreports');
 Route::post('/cashierpaidrequsitiononlineupdate/{id}','AccountController@cashierpaidrequsitiononlineupdate');
@@ -502,7 +502,7 @@ Route::post('/changeuserstatus','HomeController@changeuserstatus');
 
 /*5-9-19*/
 
-Route::post('/canceldrvoucher/{id}','AccountController@canceldrvoucher');
+
 
 Route::post('/drvouchermarkcompleted/{id}','AccountController@drvouchermarkcompleted');
 
@@ -628,6 +628,8 @@ Route::post('/importvendor','AccountController@importvendor');
 Route::get('/defination/managevendors','AccountController@managevendors');
 Route::get('prb/requisitiononlinepending','AccountController@viewallbankrequisitionpayment');
 Route::get('prb/requisitiononlinepaid','AccountController@cashierpaidrequsitionamt');
+Route::get('/prb/requisitioncashrequest','AccountController@requisitioncashrequest');
+Route::get('/prb/viewpaidrequisitioncash','AccountController@viewpaidrequisitioncash');
 Route::get('/cashierviewdetailsonlinepayment/{id}','AccountController@cashierviewdetailsonlinepayment');
 Route::get('/viewapprovedrequisition/{id}','AccountController@viewapprovedrequisition');
 Route::post('/cashierpaidrequsitiononline/{id}','AccountController@cashierpaidrequsitiononline');
@@ -639,6 +641,7 @@ Route::get('/viewpendinfdebitvouchermgr/{id}','AccountController@viewpendinfdebi
 Route::get('/vouchers/approveddebitvoucher','AccountController@approveddebitvoucher');
 Route::get('/vouchers/pendingdebitvouchermgr','AccountController@pendingdebitvouchermgr');
 Route::get('/viewpendinfdebitvoucheradmin/{id}','AccountController@viewpendinfdebitvoucheradmin');
+Route::delete('/canceldrvoucher/{id}','AccountController@canceldrvoucher');
 
 Route::post('/approvedebitvouchermgr/{id}','AccountController@approvedebitvouchermgr');
 Route::post('/approvedebitvoucheradmin/{id}','AccountController@approvedebitvoucheradmin');

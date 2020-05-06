@@ -54,6 +54,7 @@
 		<th>Status</th>
     <th>Created_at</th>
 		<th>View</th>
+    <th>Cancel</th>
 		</tr>
 
 	</thead>
@@ -79,7 +80,7 @@
 
           <tr style="background-color: {{$color}}">
           	<td><a href="/viewpendinfdebitvoucheradmin/{{$debitvoucher->id}}"  class="btn btn-primary">{{$debitvoucher->id}}</a></td>
-          	<td>{{$debitvoucher->vendorname.$diff}}</td>
+          	<td>{{$debitvoucher->vendorname}}</td>
           	<td>
           		@if($debitvoucher->projectname)
           		<p class="b" title="{{$debitvoucher->projectname}}">{{$debitvoucher->projectname}}</p>
@@ -109,6 +110,13 @@
           	<td>{{$debitvoucher->status}}</td>
             <td>{{$debitvoucher->created_at}}</td>
           	<td><a href="/viewpendinfdebitvoucheradmin/{{$debitvoucher->id}}"  class="btn btn-primary">View</a></td>
+            <td>
+          <form action="/canceldrvoucher/{{$debitvoucher->id}}"  method="post">
+            {{csrf_field()}}
+            {{method_field('DELETE')}}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Do You want to Delete this Debit Voucher?')">CANCEL</button>
+          </form>
+        </td>
           </tr>
      
 		@endforeach
