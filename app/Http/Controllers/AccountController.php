@@ -54,6 +54,20 @@ use App\tempsalary;
 
 class AccountController extends Controller
 {  
+  public function drpaymentschedule(Request $request){
+
+    $drscheduledate=debitvoucherpayment::find($request->paymentid);
+    $drscheduledate->scheduledate=$request->scheduledate;
+    $drscheduledate->save();
+    return back();
+  }
+  public function requisitionpaymentschedule(Request $request){
+
+    $reqscheduledate=requisitionpayment::find($request->paymentid);
+    $reqscheduledate->scheduledate=$request->scheduledate;
+    $reqscheduledate->save();
+    return back();
+  }
 
    public function edittempsalary($id)
    {
@@ -3320,6 +3334,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
               })
             
              ->get();
+             //return $requisitionpayments;
           return view('accounts.requisitioncashrequest',compact('requisitionpayments'));
       }
     public function cashierpaidrequsitiononline(Request $request,$id)

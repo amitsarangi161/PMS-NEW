@@ -647,6 +647,9 @@ Route::post('/approvedebitvouchermgr/{id}','AccountController@approvedebitvouche
 Route::post('/approvedebitvoucheradmin/{id}','AccountController@approvedebitvoucheradmin');
 Route::get('/vouchers/pendingdebitvoucheradmin','AccountController@pendingdebitvoucheradmin');
 
+Route::post('/requisitionpaymentschedule','AccountController@requisitionpaymentschedule');
+Route::post('/drpaymentschedule','AccountController@drpaymentschedule');
+
 //-------------END PMS ACCOUNT ROUTE------------//
 
 //-------------PMS MD ROUTE------------//
