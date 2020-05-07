@@ -1953,7 +1953,6 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
      public function saverequisitions(Request $request)
     {
         
-
         $requisitionheader=new requisitionheader();
         $requisitionheader->employeeid=Auth::id();
         $requisitionheader->description=$request->description1;

@@ -526,6 +526,7 @@ Route::post('/saveemployeedetails','HrController@saveemployeedetails');
 
 Route::get('/hrmain/editemployeedetails/{id}','HrController@editemployeedetails');
 Route::post('/updateemployeedetails/{id}','HrController@updateemployeedetails');
+Route::post('/saveempotherdoc/{id}','HrController@saveempotherdoc');
 Route::post('/ajaxgetdept','HrController@ajaxgetdept');
 Route::post('/updatedepartment','HrController@updatedepartment');
 
@@ -537,6 +538,7 @@ Route::post('/getalluserlocation','HrController@getalluserlocation');
 Route::post('/showattendance','HrController@showattendance');
 Route::post('/showallempmapview','HrController@showallempmapview');
 Route::get('/showdetaillocations/{uid}/{date}','HrController@showdetaillocations');
+Route::delete('/deleteempotherdoc/{id}','HrController@deleteempotherdoc');
 
 
 //-------------PMS END HR ROUTE------------//

@@ -378,14 +378,47 @@
                   </div>
                 </div>
               </div>
-                <div class="col-md-6">
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label for="inputEmail3" class=" col-sm-3">ID Proof</label>
+                  <label for="inputEmail3" class=" col-sm-3">Voter ID</label>
                   <div class="col-sm-6">
                     <input name="idproof" onchange="readURL5(this)" type="file">
                   </div>
                   <div class="col-sm-3">
                     <img id="imgshow5" src="#" alt="No Image Selected" style="height: 70px;width: 70px;">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Aadhaar Card</label>
+                  <div class="col-sm-6">
+                    <input name="aadhaarcard" onchange="readURL6(this)" type="file">
+                  </div>
+                  <div class="col-sm-3">
+                    <img id="imgshow6" src="#" alt="No Image Selected" style="height: 70px;width: 70px;">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Pan Card</label>
+                  <div class="col-sm-6">
+                    <input name="pancard" onchange="readURL7(this)" type="file">
+                  </div>
+                  <div class="col-sm-3">
+                    <img id="imgshow7" src="#" alt="No Image Selected" style="height: 70px;width: 70px;">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Photo</label>
+                  <div class="col-sm-6">
+                    <input name="photo" onchange="readURL8(this)" type="file">
+                  </div>
+                  <div class="col-sm-3">
+                    <img id="imgshow8" src="#" alt="No Image Selected" style="height: 70px;width: 70px;">
                   </div>
                 </div>
               </div>
@@ -456,6 +489,38 @@
 
         reader.onload = function (e) {
             $('#imgshow5').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+  } function readURL6(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imgshow6').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+  } 
+  function readURL7(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imgshow7').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+  }
+   function readURL8(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imgshow8').attr('src', e.target.result);
         }
 
         reader.readAsDataURL(input.files[0]);

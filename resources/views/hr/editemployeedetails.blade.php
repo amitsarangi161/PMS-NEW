@@ -8,6 +8,9 @@ if($editemployeedocument){
   $idproof=$editemployeedocument->idproof;
   $resume=$editemployeedocument->resume;
   $resignation=$editemployeedocument->resignation;
+  $aadhaarcard=$editemployeedocument->aadhaarcard;
+  $pancard=$editemployeedocument->pancard;
+  $photo=$editemployeedocument->photo;
   
 }
 else{
@@ -17,6 +20,9 @@ else{
   $idproof='';
   $resume='';
   $resignation='';
+  $aadhaarcard='';
+  $pancard='';
+  $photo='';
 }
 @endphp
 
@@ -317,7 +323,7 @@ else{
           </div>
             </div>
 
-      <div class="col-md-6">
+      <div class="col-md-12">
           <!-- Horizontal Form -->
           <div class="box box-info box-solid">
             <div class="box-header with-border">
@@ -328,7 +334,7 @@ else{
             <div class="form-horizontal">
               <div class="box-body">
 
-                <div class="form-group">
+                <div class="form-group col-sm-6 col-sm-6">
                   <label  class="col-sm-2">Resume</label>
 
                   <div class="col-sm-6">
@@ -339,7 +345,7 @@ else{
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-sm-6">
                   <label  class="col-sm-2">Offer Letter</label>
                   <div class="col-sm-6">
                     <input name="offerletter" onchange="readURL2(this);" type="file">
@@ -349,7 +355,7 @@ else{
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-sm-6">
                   <label  class="col-sm-2">Joining Letter</label>
                   <div class="col-sm-6">
                     <input name="joiningletter" onchange="readURL3(this);" type="file">
@@ -359,7 +365,7 @@ else{
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-sm-6">
                   <label  class="col-sm-2">Agreement Paper</label>
                   <div class="col-sm-6">
                     <input name="agreementpaper" onchange="readURL4(this);" type="file">
@@ -369,7 +375,7 @@ else{
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-sm-6">
                   <label  class="col-sm-2">ID Proof</label>
                   <div class="col-sm-6">
                     <input name="idproof" onchange="readURL5(this);" type="file">
@@ -378,32 +384,117 @@ else{
                   <img id="imgshow5" src="/image/idproof/{{$idproof}}" style="height: 70px;width: 70px;">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label  class="col-sm-2">Resignation Letter</label>
+               
+                <div class="form-group col-sm-6">
+                  <label  class="col-sm-2">Aadhar Card</label>
                   <div class="col-sm-6">
-                    <input name="resignation" onchange="readURL6(this);" type="file">
+                    <input name="aadhaar" onchange="readURL6(this);" type="file">
                   </div>
                   <div class="col-sm-3">
-                  <img id="imgshow6" src="/image/resignation/{{$resignation}}" style="height: 70px;width: 70px;">
+                  <img id="imgshow6" src="/image/aadhaarcard/{{$aadhaarcard}}" style="height: 70px;width: 70px;">
                   </div>
                 </div>
-
-
-              
-
+                <div class="form-group col-sm-6">
+                  <label  class="col-sm-2">Pan Card</label>
+                  <div class="col-sm-6">
+                    <input name="pancard" onchange="readURL7(this);" type="file">
+                  </div>
+                  <div class="col-sm-3">
+                  <img id="imgshow7" src="/image/pancard/{{$pancard}}" style="height: 70px;width: 70px;">
+                  </div>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label  class="col-sm-2">Photo</label>
+                  <div class="col-sm-6">
+                    <input name="photo" onchange="readURL8(this);" type="file">
+                  </div>
+                  <div class="col-sm-3">
+                  <img id="imgshow8" src="/image/photo/{{$photo}}" style="height: 70px;width: 70px;">
+                  </div>
+                </div>
+                   <div class="form-group col-sm-6">
+                  <label  class="col-sm-2">Resignation Letter</label>
+                  <div class="col-sm-6">
+                    <input name="resignation" onchange="readURL9(this)" type="file">
+                  </div>
+                  <div class="col-sm-3">
+                  <img id="imgshow9" src="/image/resignation/{{$resignation}}" alt="No Image Selected" style="height: 70px;width: 70px;">
+                  </div>
+                </div>
+                
               </div>
               
             </div>
           </div>
-      </div>
-</div>
-            <!-- /.box-body -->
-              <div class="box-footer">
-                <button type="submit" class="btn btn-info pull-right">Update</button>
+  </div>
+    <div class="box-footer">
+      <button type="submit" class="btn btn-info pull-right">Update</button>
+    </div>
+</form>
+<div class="col-md-12">
+  <form action="/saveempotherdoc/{{$editemployeedetail->id}}" method="post" enctype="multipart/form-data" class="form-horizontal">
+          {{csrf_field()}}
+          <div class="box box-info box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Employee Other Documents</h3>
+            </div>
+              <div class="form-horizontal">
+              <div class="box-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="bg-navy">
+                      <th>Sl.No</th>
+                      <th>Document Name</th>
+                      <th>Document</th>
+                      @if(Auth::user()->usertype=='MASTER ADMIN')
+                      <th>Delete</th>
+                      @endif
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($employeeotherdocuments as $key=>$employeeotherdocument)
+                    <tr>
+                      <td>{{++$key}}</td>
+                      <td>{{$employeeotherdocument->documentname}}</td>
+                      <td><img class="center-block" src="/image/otherdocument/{{$employeeotherdocument->document}}" style="height: 70px;width: 70px;"></td>
+                      @if(Auth::user()->usertype=='MASTER ADMIN')
+                      <td><form action="/deleteempotherdoc/{{$employeeotherdocument->id}}"  method="post">
+            {{csrf_field()}}
+            {{method_field('DELETE')}}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Do You want to Delete this Document?')">DELETE</button>
+            
+          </form></td>
+          @endif
+                    </tr>
+                   @endforeach
+                    
+                  </tbody>
+                </table>
+                
               </div>
-              <!-- /.box-footer -->
+            </div>
+            <div class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group col-sm-12">
+                  <label  class="col-sm-2">Document Name</label>
+                  <div class="col-sm-3">
+                    <input type="text" class="form-control" name="documentname" placeholder="Enter Document Name">
+                  </div>
+                  <div class="col-sm-3">
+                    <input name="document"  type="file" onchange="readURL10(this)">
+                  </div>
+                  <div class="col-sm-2">
+                  <img id="imgshow10" src="#" style="height: 70px;width: 70px;">
+                  </div>
+                  <div class="col-sm-2">
+                  <button type="submit"class="btn btn-success btn-flat"> Save Document</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
-
+</div>
 <script>
 
   function readURL1(input) {
@@ -508,6 +599,75 @@ else{
 
         }
     }
+     function readURL7(input) {
+        
+
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#imgshow7')
+                    .attr('src', e.target.result)
+                    .width(70)
+                    .height(70);        
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
+     function readURL8(input) {
+        
+
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#imgshow8')
+                    .attr('src', e.target.result)
+                    .width(70)
+                    .height(70);        
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
+     function readURL9(input) {
+        
+
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#imgshow9')
+                    .attr('src', e.target.result)
+                    .width(70)
+                    .height(70);        
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
+ function readURL10(input) {
+        
+
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#imgshow10')
+                    .attr('src', e.target.result)
+                    .width(70)
+                    .height(70);        
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
+
 </script>
 
 

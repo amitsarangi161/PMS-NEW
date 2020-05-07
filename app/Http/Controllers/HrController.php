@@ -22,12 +22,17 @@ use App\employeedetail;
 use App\employeecompanydetail;
 use App\employeebankaccountsdetail;
 use App\employeedocument;
+use App\employeeotherdocument;
 use App\attendance;
 use Excel;
 class HrController extends Controller
 {
   //-------------PMS HR ------------//
-
+public function deleteempotherdoc(Request $request,$id){
+  $deletedoc=employeeotherdocument::find($id);
+  $deletedoc->delete();
+  return back();
+}
     public function getalluserlocation(Request $request)
     {
        
@@ -396,6 +401,35 @@ $request->validate([
         $success=$rarefile->move($raupload,$uplogoimg);
         $employeedocument->idproof = $uplogoimg;
         }
+        $rarefile = $request->file('aadhaarcard');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/aadhaarcard";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->aadhaarcard = $uplogoimg;
+        }
+        $rarefile = $request->file('pancard');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/pancard";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->pancard = $uplogoimg;
+        }
+        $rarefile = $request->file('photo');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/photo";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->photo = $uplogoimg;
+        }
+
+
         $employeedocument->save();
 
          $user=new User();
@@ -420,11 +454,31 @@ public function editemployeedetails($id){
       $editcompanydetail=employeecompanydetail::find($id);
       $editemployeebankaccount=employeebankaccountsdetail::find($id);
       $editemployeedocument=employeedocument::find($id);
-        /*return $editcompanydetail;*/
-        return view('hr.editemployeedetails',compact('editemployeedetail','editcompanydetail','editemployeebankaccount','editemployeedocument'));
+      $employeeotherdocuments=employeeotherdocument::where('employee_id',$id)
+                          ->get();
+       //return $employeeotherdocuments;
+        return view('hr.editemployeedetails',compact('editemployeedetail','editcompanydetail','editemployeebankaccount','editemployeedocument','employeeotherdocuments'));
     }
+public function saveempotherdoc(Request $request,$id){
+  //return $request->all();
+$empotherdoc=new employeeotherdocument();
+$empotherdoc->employee_id=$request->id;
+$empotherdoc->documentname=$request->documentname;
+$rarefile = $request->file('document');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/otherdocument";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $empotherdoc->document = $uplogoimg;
+        }
+$empotherdoc->save();
+return back();
+}
 public function updateemployeedetails(Request $request,$id)
     {
+     //return $request->all();
         $updateemployee=employeedetail::find($id);
         $updateemployee->employeename=$request->employeename;
         $updateemployee->empcodeno=$request->empcodeno;
@@ -527,6 +581,33 @@ public function updateemployeedetails(Request $request,$id)
         $uplogoimg=$u.$rarefile->getClientOriginalName();
         $success=$rarefile->move($raupload,$uplogoimg);
         $employeedocument->resignation = $uplogoimg;
+        }
+        $rarefile = $request->file('aadhaarcard');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/aadhaarcard";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->aadhaarcard = $uplogoimg;
+        }
+        $rarefile = $request->file('pancard');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/pancard";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->pancard = $uplogoimg;
+        }
+        $rarefile = $request->file('photo');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/photo";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->photo = $uplogoimg;
         }
         $employeedocument->save();
         Session::flash('message','Updated Employee successfully');

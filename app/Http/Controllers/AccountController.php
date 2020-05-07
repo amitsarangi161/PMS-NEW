@@ -4274,7 +4274,7 @@ public function changependingstatusmgr(Request $request,$id)
     }
     public function saverequisitions(Request $request)
     {
-         // return $request->all();
+         //return $request->all();
         
         $requisitionheader=new requisitionheader();
         $requisitionheader->employeeid=$request->employeeid;
