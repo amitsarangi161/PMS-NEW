@@ -48,15 +48,19 @@
      </thead>
      <tbody>
      	@foreach($requisitionpayments as $requisitionpayment)
-      @php
+       @php
         $today=Carbon\Carbon::now();
-        if($requisitionpayment->scheduledate!=''){
+        $color='';
+    if($requisitionpayment->scheduledate!=''){
           $scheduledate=\Carbon\Carbon::parse($requisitionpayment->scheduledate);
-           if($scheduledate=$today){
+          $s=$scheduledate->toDateString();
+          $t=$today->toDateString();
+           if($s==$t){
              $color='#00a65aa6';
             }
-      }
-      else{
+           
+    }
+       else{
         $color='';
       }
       @endphp

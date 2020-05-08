@@ -28,7 +28,7 @@
      	@foreach($debitvoucherpayments as $debitvoucherpayment)
           @php
         $today=Carbon\Carbon::now();
-        
+        $color='';
     if($debitvoucherpayment->scheduledate!=''){
           $scheduledate=\Carbon\Carbon::parse($debitvoucherpayment->scheduledate);
           $s=$scheduledate->toDateString();
