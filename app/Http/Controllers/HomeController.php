@@ -267,7 +267,8 @@ public function companydetails(){
 
         if (!Auth::user()){
             $notices=notice::orderBy('id','DESC')->where('status','ACTIVE')->get();
-            $documents=array();
+            $documents=document::orderBy('id','DESC')->get();
+            
             return view('startpage',compact('notices','documents'));
         }
        $todos=todo::where('userid',Auth::id())->whereDate('datetime', Carbon::today())->paginate(10);

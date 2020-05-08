@@ -29,8 +29,9 @@ class HrController extends Controller
 {
   //-------------PMS HR ------------//
 public function deleteempotherdoc(Request $request,$id){
-  $deletedoc=employeeotherdocument::find($id);
-  $deletedoc->delete();
+ employeeotherdocument::find($id)->delete();
+
+       Session::flash('error','Document Deleted Successfully');
   return back();
 }
     public function getalluserlocation(Request $request)
@@ -474,6 +475,7 @@ $rarefile = $request->file('document');
         $empotherdoc->document = $uplogoimg;
         }
 $empotherdoc->save();
+Session::flash('message','Document Uploaded Successfully');
 return back();
 }
 public function updateemployeedetails(Request $request,$id)

@@ -27,7 +27,10 @@ else{
 @endphp
 
 <div class="row">
-  @if(Session::has('message'))
+  @if(Session::has('error'))
+  <div class="alert alert-danger text-center"><span class="glyphicon glyphicon-ok"></span> {!! session('error') !!}</div>
+  @endif
+   @if(Session::has('message'))
   <div class="alert alert-success text-center"><span class="glyphicon glyphicon-ok"></span> {!! session('message') !!}</div>
   @endif
   <div class="col-md-6">
@@ -432,8 +435,7 @@ else{
     </div>
 </form>
 <div class="col-md-12">
-  <form action="/saveempotherdoc/{{$editemployeedetail->id}}" method="post" enctype="multipart/form-data" class="form-horizontal">
-          {{csrf_field()}}
+  
           <div class="box box-info box-solid">
             <div class="box-header with-border">
               <h3 class="box-title">Employee Other Documents</h3>
@@ -456,7 +458,13 @@ else{
                     <tr>
                       <td>{{++$key}}</td>
                       <td>{{$employeeotherdocument->documentname}}</td>
-                      <td><img class="center-block" src="/image/otherdocument/{{$employeeotherdocument->document}}" style="height: 70px;width: 70px;"></td>
+                    <td><a href="{{asset('/image/otherdocument/'.$employeeotherdocument->document)}}" target="_blank">
+              <img style="height: 70px;width: 70px;" src="{{asset('/image/otherdocument/'.$employeeotherdocument->document)}}" alt="click to view" id="imgshow">
+            </a>
+              <a href="{{asset('/image/otherdocument/'.$employeeotherdocument->document)}}" class="btn btn-primary btn-sm" download>
+               <span class="glyphicon glyphicon-download-alt"></span> Download
+               </a></td>
+
                       @if(Auth::user()->usertype=='MASTER ADMIN')
                       <td><form action="/deleteempotherdoc/{{$employeeotherdocument->id}}"  method="post">
             {{csrf_field()}}
@@ -473,6 +481,8 @@ else{
                 
               </div>
             </div>
+            <form action="/saveempotherdoc/{{$editemployeedetail->id}}" method="post" enctype="multipart/form-data" class="form-horizontal">
+          {{csrf_field()}}
             <div class="form-horizontal">
               <div class="box-body">
                 <div class="form-group col-sm-12">
@@ -667,6 +677,8 @@ else{
 
         }
     }
+$(".alert-success").delay(5000).fadeOut(800); 
+    $(".alert-danger").delay(15000).fadeOut(800);
 
 </script>
 
