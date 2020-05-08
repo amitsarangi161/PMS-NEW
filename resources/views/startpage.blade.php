@@ -61,7 +61,7 @@ width: 100%;
 	</div>
 </div>
     <div class="col-md-5 col-md-offset-2">
-	    <div class="ideaboxNews in-easing">
+	    <div class="ideaboxNews2 in-easing">
 	    	<h3 class="text-center">Documents</h3>
 	        <ul>
 	        	<marquee direction="up" behavior="scroll" scrolldelay="100" scrollamount="2" onmouseenter="this.stop();" onmouseleave="this.start();" height="100%">
@@ -76,17 +76,9 @@ width: 100%;
 	            </li>
 	            </a> 
 	           @endforeach
-	           
-
-	            
-	           
-	          
-	            
 	         </marquee>
-
-
 	        </ul>
-
+				<a href="/view-all-documents"><h6 class="pull-right">view all document</h6></a>
 	    </div>
 </div>
 </div>
