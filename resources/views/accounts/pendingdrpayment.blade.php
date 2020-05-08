@@ -28,13 +28,17 @@
      	@foreach($debitvoucherpayments as $debitvoucherpayment)
           @php
         $today=Carbon\Carbon::now();
-        if($debitvoucherpayment->scheduledate!=''){
+        
+    if($debitvoucherpayment->scheduledate!=''){
           $scheduledate=\Carbon\Carbon::parse($debitvoucherpayment->scheduledate);
-           if($scheduledate=$today){
+          $s=$scheduledate->toDateString();
+          $t=$today->toDateString();
+           if($s==$t){
              $color='#00a65aa6';
             }
-      }
-      else{
+           
+    }
+       else{
         $color='';
       }
       @endphp

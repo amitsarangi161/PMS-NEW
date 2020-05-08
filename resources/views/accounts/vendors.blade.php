@@ -22,15 +22,13 @@
      
       </tr>
     <tr>
-     <td><strong>ENTER VENDOR MOBILE NO<span style="color: red"> *</span></strong></td>
+     <td colspan="2"><strong>ENTER VENDOR MOBILE NO<span style="color: red"> *</span></strong></td>
     <!--  <td><input type="hidden" value="+91" id="country_code" readonly /></td> -->
-    <td></td>
-     <td><input type="number" autocomplete="off" name="mobile" id="phone_number" placeholder="Enter Vendor Mobile No" class="form-control"></td>
+     <td colspan="2"><input type="number" autocomplete="off" name="mobile" id="phone_number" placeholder="Enter Vendor Mobile No" class="form-control"></td>
      </tr>
      <tr>
-     <td><strong>ENTER EMAIL<span style="color: red"> *</span></strong></td>
-    <td></td>
-     <td><input type="email" autocomplete="off" name="email"  placeholder="Enter Vendor Email" class="form-control"></td>
+     <td colspan="2"><strong>ENTER EMAIL<span style="color: red"> *</span></strong></td>
+     <td colspan="2"><input type="email" autocomplete="off" name="email"  placeholder="Enter Vendor Email" class="form-control"></td>
      </tr>
     
      
@@ -81,27 +79,55 @@
         <td colspan="2"><input type="text" placeholder="Enter IFSC Code" name="ifsccode" class="form-control"></td>
       </tr>
 
-        <!-- <tr>
-	 	 <td colspan="2"><strong>VENDOR ID PROOF<span style="color: red"> *</span></strong></td>
-	 	 <td colspan="2">
-	 	 	<input name="vendoridproof" type="file" onchange="readURL(this);">
+        <tr>
+	 	 <td colspan="2"><strong>Upload AAdhaar Card<span style="color: red"> *</span></strong></td>
+	 	 <td>
+	 	 	<input name="aadhaarcard" type="file" onchange="readURL(this);">
             <p class="help-block">Upload .png, .jpg or .jpeg image files only</p>
-
+      </td>
+      <td>
             <img style="height:70px;width:95px;" alt="noimage" id="imgshow">
 	 	 </td>
 	 	 
-	    </tr> -->
-	 <!--   <tr>
-	   	 <td colspan="2"><strong>VENDOR PHOTO/AC. INFO PHOTO<span style="color: red"> *</span></strong></td>
-	 	 <td colspan="2">
-	 	 	<input name="photo" type="file" onchange="readURL1(this);">
+	    </tr>
+	   <tr>
+	   	 <td colspan="2"><strong>Upload Pancard<span style="color: red"> *</span></strong></td>
+	 	 <td>
+	 	 	<input name="pancard" type="file" onchange="readURL1(this);">
             <p class="help-block">Upload .png, .jpg or .jpeg image files only</p>
-
+</td><td>
             <img style="height:70px;width:95px;" alt="noimage" id="imgshow1">
 	 	 </td>
-	   </tr> -->
+	   </tr>
+     <tr>
+       <td colspan="2"><strong>Upload Gstin<span style="color: red"> *</span></strong></td>
+     <td>
+      <input name="gstin" type="file" onchange="readURL2(this);">
+            <p class="help-block">Upload .png, .jpg or .jpeg image files only</p>
+          </td><td>
+            <img style="height:70px;width:95px;" alt="noimage" id="imgshow2">
+     </td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Upload Bank Passbook<span style="color: red"> *</span></strong></td>
+     <td>
+      <input name="bankpassbook" type="file" onchange="readURL3(this);">
+            <p class="help-block">Upload .png, .jpg or .jpeg image files only</p>
+</td><td>
+            <img style="height:70px;width:95px;" alt="noimage" id="imgshow3">
+     </td>
+     </tr>
+     <tr>
+       <td colspan="2"><strong>Upload Cancel Cheque<span style="color: red"> *</span></strong></td>
+     <td>
+      <input name="cancelcheque" type="file" onchange="readURL4(this);">
+            <p class="help-block">Upload .png, .jpg or .jpeg image files only</p>
+</td><td>
+            <img style="height:70px;width:95px;" alt="noimage" id="imgshow4">
+     </td>
+     </tr>
 	   <tr>
-	   	<td colspan="4"><button class="btn btn-success" type="submit">Save</button></td>
+	   	<td colspan="4"><button class="btn btn-success pull-right" type="submit">Save</button></td>
 	   </tr>
      
 	</table>
@@ -143,6 +169,58 @@
               
             reader.onload = function (e) {
                 $('#imgshow1')
+                    .attr('src', e.target.result)
+                    .width(95)
+                    .height(70);
+          
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }function readURL2(input) {
+    
+
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#imgshow2')
+                    .attr('src', e.target.result)
+                    .width(95)
+                    .height(70);
+          
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }function readURL3(input) {
+    
+
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#imgshow3')
+                    .attr('src', e.target.result)
+                    .width(95)
+                    .height(70);
+          
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
+    function readURL4(input) {
+    
+
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#imgshow4')
                     .attr('src', e.target.result)
                     .width(95)
                     .height(70);

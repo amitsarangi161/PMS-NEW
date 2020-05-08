@@ -4,3 +4,10 @@ changesTable		 columnname
 			3.photo
 2. debitvoucherpayments 1.scheduledate
 3.requisitionpayments	1.scheduledate
+
+
+vendors 1.aadhaarcard
+	2.pancard
+	3.gstin
+	4.bankpassbook
+	5.cancelcheque

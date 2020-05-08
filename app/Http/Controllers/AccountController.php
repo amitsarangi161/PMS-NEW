@@ -4553,6 +4553,7 @@ public function changependingstatusmgr(Request $request,$id)
      }
    public function updatevendor(Request $request,$id)
    {
+
        $vendor=vendor::find($id);
        $vendor->vendorname=$request->vendorname;
        $vendor->mobile=$request->mobile;
@@ -4570,20 +4571,41 @@ public function changependingstatusmgr(Request $request,$id)
      
      
      
-      $rarefile = $request->file('vendoridproof');    
+      $rarefile = $request->file('aadhaarcard');    
         if($rarefile!=''){
-        $raupload = public_path() .'/img/vendor/';
+        $raupload = public_path() .'/img/vendordocument/aadhaarcard/';
         $rarefilename=time().'.'.$rarefile->getClientOriginalName();
         $success=$rarefile->move($raupload,$rarefilename);
-        $vendor->vendoridproof = $rarefilename;
+        $vendor->aadhaarcard = $rarefilename;
         }
 
-         $rarefile1 = $request->file('photo');    
+         $rarefile1 = $request->file('pancard');    
         if($rarefile1!=''){
-        $raupload1 = public_path() .'/img/vendor/';
+        $raupload1 = public_path() .'/img/vendordocument/pancard';
         $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
         $success1=$rarefile1->move($raupload1,$rarefilename1);
-        $vendor->photo = $rarefilename1;
+        $vendor->pancard = $rarefilename1;
+        }
+         $rarefile1 = $request->file('gstin');    
+        if($rarefile1!=''){
+        $raupload1 = public_path() .'/img/vendordocument/gstin';
+        $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
+        $success1=$rarefile1->move($raupload1,$rarefilename1);
+        $vendor->gstin = $rarefilename1;
+        }
+        $rarefile1 = $request->file('bankpassbook');    
+        if($rarefile1!=''){
+        $raupload1 = public_path() .'/img/vendordocument/bankpassbook';
+        $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
+        $success1=$rarefile1->move($raupload1,$rarefilename1);
+        $vendor->bankpassbook = $rarefilename1;
+        }
+        $rarefile1 = $request->file('cancelcheque');    
+        if($rarefile1!=''){
+        $raupload1 = public_path() .'/img/vendordocument/cancelcheque';
+        $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
+        $success1=$rarefile1->move($raupload1,$rarefilename1);
+        $vendor->cancelcheque = $rarefilename1;
         }
 
         $vendor->save();
@@ -4617,20 +4639,41 @@ public function changependingstatusmgr(Request $request,$id)
      $vendor->userid=Auth::id();
      
      
-      $rarefile = $request->file('vendoridproof');    
+    $rarefile = $request->file('aadhaarcard');    
         if($rarefile!=''){
-        $raupload = public_path() .'/img/vendor/';
+        $raupload = public_path() .'/img/vendordocument/aadhaarcard/';
         $rarefilename=time().'.'.$rarefile->getClientOriginalName();
         $success=$rarefile->move($raupload,$rarefilename);
-        $vendor->vendoridproof = $rarefilename;
+        $vendor->aadhaarcard = $rarefilename;
         }
 
-         $rarefile1 = $request->file('photo');    
+         $rarefile1 = $request->file('pancard');    
         if($rarefile1!=''){
-        $raupload1 = public_path() .'/img/vendor/';
+        $raupload1 = public_path() .'/img/vendordocument/pancard';
         $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
         $success1=$rarefile1->move($raupload1,$rarefilename1);
-        $vendor->photo = $rarefilename1;
+        $vendor->pancard = $rarefilename1;
+        }
+         $rarefile1 = $request->file('gstin');    
+        if($rarefile1!=''){
+        $raupload1 = public_path() .'/img/vendordocument/gstin';
+        $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
+        $success1=$rarefile1->move($raupload1,$rarefilename1);
+        $vendor->gstin = $rarefilename1;
+        }
+        $rarefile1 = $request->file('bankpassbook');    
+        if($rarefile1!=''){
+        $raupload1 = public_path() .'/img/vendordocument/bankpassbook';
+        $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
+        $success1=$rarefile1->move($raupload1,$rarefilename1);
+        $vendor->bankpassbook = $rarefilename1;
+        }
+        $rarefile1 = $request->file('cancelcheque');    
+        if($rarefile1!=''){
+        $raupload1 = public_path() .'/img/vendordocument/cancelcheque';
+        $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
+        $success1=$rarefile1->move($raupload1,$rarefilename1);
+        $vendor->cancelcheque = $rarefilename1;
         }
 
         $vendor->save();
