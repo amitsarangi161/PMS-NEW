@@ -2187,7 +2187,7 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
         else
         {
 
-
+/*
                $checkprvs=expenseentry::where('userid',Auth::id())
                         ->where('expenseheadid',$request->expenseheadid)
                         ->where('projectid',$request->projectid)
@@ -2195,7 +2195,8 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
                         ->where('date',$request->date)
                         ->where('status','!=','CANCELLED')
                         ->where('towallet','!=','YES')
-                        ->count();
+                        ->count();*/
+                 $checkprvs=0; 
                if($checkprvs>0 && $request->towallet=='NO')
                {
                   Session::flash('msg','Failed  Expense entry for this Expensehead Already Exist');

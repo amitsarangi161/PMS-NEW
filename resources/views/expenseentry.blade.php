@@ -220,7 +220,7 @@
 
         <td><strong>EXPENSE AMOUNT *</strong></td>
         <td>
-           <input type="number" name="amount" id="amount" placeholder="Enter Amount Here" autocomplete="off" class="form-control" required="">
+           <input type="text" name="amount" id="amount" placeholder="Enter Amount Here" autocomplete="off" class="form-control" required="">
         </td>
       </tr>
         <tr>
