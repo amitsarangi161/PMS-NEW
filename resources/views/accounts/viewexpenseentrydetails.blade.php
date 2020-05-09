@@ -7,6 +7,24 @@
 	</tr>
 	
 </table>
+<div class="well" style="font-size: 20px;background-color: violet;">
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+
+      <td><strong>TOTAL PAID AMOUNT TILL DATE :</strong>  {{$totalamt}}</td>
+      <td><strong>TOTAL EXPENSE TILL DATE :</strong> {{$totalamtentry}}</td>
+      <td><strong>BALANCE AMOUNT :</strong> {{$bal}}</td>
+      
+      <td><img src="{{asset('wallet.png')}}" style="height: 40px;width: 40px;">Rs. {{$walletbalance}}</td>
+      <td><button type="button" class="btn btn-primary" onclick="opennewwindiow();">VIEW EXPENSES</button></td>
+      </tr>
+      
+    </table>
+    
+  </div>
+  
+</div>
 <div class="well">
 <table class="table">
 	<tr>

@@ -2059,6 +2059,7 @@ public function no_to_words($no)
     }
     public function pendingexpenseentrydetailview($empid)
     {
+      
         $expenseentries=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname')
                       ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
                       ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
@@ -3380,6 +3381,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
        public function viewpendingexpenseentrydetails($id)
        {
+
             $expenseentry=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname')
                       ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
                       ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
@@ -3392,6 +3394,37 @@ public function approvedebitvoucheradmin(Request $request,$id)
                        ->where('expenseentries.id',$id)
                       ->groupBy('expenseentries.id')
                       ->first();
+        //return $expenseentry;
+            $empid=$expenseentry->employeeid;
+           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
+                      ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                       ->where('requisitionpayments.paymentstatus','PAID')
+                       ->where('requisitionpayments.paymenttype','!=','WALLET')
+                      ->where('requisitionheaders.employeeid',$empid)
+                      ->groupBy('requisitionpayments.id')
+                      ->get();
+         
+          $totalamt=$requisition->sum('paidamt');
+        
+        $entries=expenseentry::where('employeeid',$empid)
+                ->where('towallet','!=','YES')
+                ->get();
+          $totalamtentry=$entries->sum('approvalamount');
+          $wallet=wallet::where('employeeid',$empid)
+                ->get();
+         $walletcr=$wallet->sum('credit');
+         $walletdr=$wallet->sum('debit');
+         $walletbalance=$walletcr-$walletdr;
+
+          $bal=($totalamt-$totalamtentry)-$walletbalance;
+
+          $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
+           
+
+         
+   
+          $paidamounts=requisitionpayment::where('rid',$id)->get();
 
           if($expenseentry->vehicleid!='')
           {
@@ -3441,7 +3474,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
            }
            
-          return view('accounts.viewpendingexpenseentrydetails',compact('vehicledetail','expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr'));
+          return view('accounts.viewpendingexpenseentrydetails',compact('vehicledetail','expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr','paidamounts','totalamt','totalamtentry','bal','walletbalance'));
        }
 
        public function viewdetailshodexpenseentry($id)
@@ -3592,12 +3625,42 @@ public function approvedebitvoucheradmin(Request $request,$id)
                        ->where('expenseentries.id',$id)
                       ->groupBy('expenseentries.id')
                       ->first();
+          $empid=$expenseentry->employeeid;
+           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
+                      ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                       ->where('requisitionpayments.paymentstatus','PAID')
+                       ->where('requisitionpayments.paymenttype','!=','WALLET')
+                      ->where('requisitionheaders.employeeid',$empid)
+                      ->groupBy('requisitionpayments.id')
+                      ->get();
+         
+          $totalamt=$requisition->sum('paidamt');
+        
+        $entries=expenseentry::where('employeeid',$empid)
+                ->where('towallet','!=','YES')
+                ->get();
+          $totalamtentry=$entries->sum('approvalamount');
+          $wallet=wallet::where('employeeid',$empid)
+                ->get();
+         $walletcr=$wallet->sum('credit');
+         $walletdr=$wallet->sum('debit');
+         $walletbalance=$walletcr-$walletdr;
+
+          $bal=($totalamt-$totalamtentry)-$walletbalance;
+
+          $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
+           
+
+         
+   
+          $paidamounts=requisitionpayment::where('rid',$id)->get();
           $vendor=vendor::select('vendors.*','users.name')
             ->leftJoin('users','vendors.userid','=','users.id')
             ->where('vendors.id',$expenseentry->vendorid)
             ->first();
 
-          return view('accounts.viewwalletpaidexpenseentrydetails',compact('expenseentry','vendor'));
+          return view('accounts.viewwalletpaidexpenseentrydetails',compact('expenseentry','vendor','paidamounts','totalamt','totalamtentry','bal','walletbalance'));
        }
 
       public function viewexpenseentrydetails($id)
@@ -3616,6 +3679,33 @@ public function approvedebitvoucheradmin(Request $request,$id)
                        ->where('expenseentries.id',$id)
                       ->groupBy('expenseentries.id')
                       ->first();
+           $empid=$expenseentry->employeeid;
+           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
+                      ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                       ->where('requisitionpayments.paymentstatus','PAID')
+                       ->where('requisitionpayments.paymenttype','!=','WALLET')
+                      ->where('requisitionheaders.employeeid',$empid)
+                      ->groupBy('requisitionpayments.id')
+                      ->get();
+         
+          $totalamt=$requisition->sum('paidamt');
+        
+        $entries=expenseentry::where('employeeid',$empid)
+                ->where('towallet','!=','YES')
+                ->get();
+          $totalamtentry=$entries->sum('approvalamount');
+          $wallet=wallet::where('employeeid',$empid)
+                ->get();
+         $walletcr=$wallet->sum('credit');
+         $walletdr=$wallet->sum('debit');
+         $walletbalance=$walletcr-$walletdr;
+
+          $bal=($totalamt-$totalamtentry)-$walletbalance;
+
+          $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);   
+          $paidamounts=requisitionpayment::where('rid',$id)->get();
+
           $vendor=vendor::select('vendors.*','users.name')
             ->leftJoin('users','vendors.userid','=','users.id')
             ->where('vendors.id',$expenseentry->vendorid)
@@ -3658,7 +3748,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
 
 
-          return view('accounts.viewexpenseentrydetails',compact('expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr'));
+          return view('accounts.viewexpenseentrydetails',compact('expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr','paidamounts','totalamt','totalamtentry','bal','walletbalance'));
       }
 
        public function updateuserbankaccount(Request $request)
