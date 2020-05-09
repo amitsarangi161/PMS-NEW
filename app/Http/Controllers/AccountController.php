@@ -4048,6 +4048,33 @@ public function changependingstatusmgr(Request $request,$id)
      } 
       public function viewcompletedrequisition($id)
       {
+         $rq=requisitionheader::find($id);
+            $empid=$rq->employeeid;
+           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
+                      ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                       ->where('requisitionpayments.paymentstatus','PAID')
+                       ->where('requisitionpayments.paymenttype','!=','WALLET')
+                      ->where('requisitionheaders.employeeid',$empid)
+                      ->groupBy('requisitionpayments.id')
+                      ->get();
+         
+          $totalamt=$requisition->sum('paidamt');
+        
+        $entries=expenseentry::where('employeeid',$empid)
+                ->where('towallet','!=','YES')
+                ->get();
+          $totalamtentry=$entries->sum('approvalamount');
+          $wallet=wallet::where('employeeid',$empid)
+                ->get();
+         $walletcr=$wallet->sum('credit');
+         $walletdr=$wallet->sum('debit');
+         $walletbalance=$walletcr-$walletdr;
+
+          $bal=($totalamt-$totalamtentry)-$walletbalance;
+
+          $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
+           
               $paidamounts=requisitionpayment::select('requisitionpayments.*','banks.bankname','useraccounts.forcompany','useraccounts.acno')
                              ->where('rid',$id)
                              ->leftJoin('useraccounts','requisitionpayments.bankid','=','useraccounts.id')
@@ -4069,11 +4096,37 @@ public function changependingstatusmgr(Request $request,$id)
                        ->get();
 
 
-          return view('accounts.viewcompletedrequisition',compact('requisitionheader','requisitions','paidamounts'));        
+          return view('accounts.viewcompletedrequisition',compact('requisitionheader','requisitions','paidamounts','totalamt','totalamtentry','bal','walletbalance'));        
            
       }
      public function viewcanceledrequisition($id)
      {
+       $rq=requisitionheader::find($id);
+            $empid=$rq->employeeid;
+           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
+                      ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                       ->where('requisitionpayments.paymentstatus','PAID')
+                       ->where('requisitionpayments.paymenttype','!=','WALLET')
+                      ->where('requisitionheaders.employeeid',$empid)
+                      ->groupBy('requisitionpayments.id')
+                      ->get();
+         
+          $totalamt=$requisition->sum('paidamt');
+        
+        $entries=expenseentry::where('employeeid',$empid)
+                ->where('towallet','!=','YES')
+                ->get();
+          $totalamtentry=$entries->sum('approvalamount');
+          $wallet=wallet::where('employeeid',$empid)
+                ->get();
+         $walletcr=$wallet->sum('credit');
+         $walletdr=$wallet->sum('debit');
+         $walletbalance=$walletcr-$walletdr;
+
+          $bal=($totalamt-$totalamtentry)-$walletbalance;
+
+          $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
            $paidamounts=requisitionpayment::where('rid',$id)->get();
           $requisitionheader=requisitionheader::select('requisitionheaders.*','u4.name as cancelledbyname','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname')
                       ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
@@ -4092,7 +4145,7 @@ public function changependingstatusmgr(Request $request,$id)
                        ->get();
            
          
-          return view('accounts.viewcanceledrequisition',compact('requisitionheader','requisitions','paidamounts'));
+          return view('accounts.viewcanceledrequisition',compact('requisitionheader','requisitions','paidamounts','totalamt','totalamtentry','bal','walletbalance'));
      }
      public function viewpendingrequisition($id)
      {
@@ -4239,8 +4292,33 @@ public function changependingstatusmgr(Request $request,$id)
     return back();
   }
 
-     public function viewapplicationdetails($id)
-     {
+     public function viewapplicationdetails($id){
+      $rq=requisitionheader::find($id);
+            $empid=$rq->employeeid;
+           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
+                      ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                       ->where('requisitionpayments.paymentstatus','PAID')
+                       ->where('requisitionpayments.paymenttype','!=','WALLET')
+                      ->where('requisitionheaders.employeeid',$empid)
+                      ->groupBy('requisitionpayments.id')
+                      ->get();
+         
+          $totalamt=$requisition->sum('paidamt');
+        
+        $entries=expenseentry::where('employeeid',$empid)
+                ->where('towallet','!=','YES')
+                ->get();
+          $totalamtentry=$entries->sum('approvalamount');
+          $wallet=wallet::where('employeeid',$empid)
+                ->get();
+         $walletcr=$wallet->sum('credit');
+         $walletdr=$wallet->sum('debit');
+         $walletbalance=$walletcr-$walletdr;
+
+          $bal=($totalamt-$totalamtentry)-$walletbalance;
+
+          $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
            $paidamounts=requisitionpayment::where('rid',$id)->get();
              $requisitionheader=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname')
                       ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
@@ -4257,7 +4335,7 @@ public function changependingstatusmgr(Request $request,$id)
                        ->get();
 
 
-          return view('accounts.viewapplicationdetails',compact('requisitionheader','requisitions','paidamounts'));  
+          return view('accounts.viewapplicationdetails',compact('requisitionheader','requisitions','paidamounts','totalamt','totalamtentry','bal','walletbalance'));  
      }
     public function viewapplicationform(Request $request)
     {

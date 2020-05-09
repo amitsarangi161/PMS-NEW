@@ -11,7 +11,56 @@ $bal=($requisitionheader->approvalamount)-$paid;
 	 </tr>
 </table>
 
+@php
+    $sumstatus=0;
+    foreach($requisitions as $requisition)
+    {
+    	  if($requisition->approvestatus=='PENDING')
+    	  {
+             $sumstatus=$sumstatus+1;
+    	  }
+    	  else
+    	  {
+               $sumstatus=$sumstatus+0;
+    	  }
+    }
 
+
+  $pid=$requisitionheader->projectid;
+if($pid>0){
+$requisitionheader1=\App\requisitionheader::where('projectid',$pid)
+                      
+                        ->where(function($query){
+                         $query->where('status','!=','PENDING');
+                         $query->orWhere('status','!=','CANCELLED');
+                         
+                       })
+                        ->get();
+$payment=$requisitionheader1->sum('approvalamount');
+$projectc=\App\project::where('id',$pid)->first();
+$cost=$projectc->cost;
+$balancep=$cost-$payment;  
+}
+
+@endphp
+<div class="well" style="font-size: 20px;background-color: violet;">
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+
+      <td><strong>TOTAL PAID AMOUNT TILL DATE :</strong>  {{$totalamt}}</td>
+      <td><strong>TOTAL EXPENSE TILL DATE :</strong> {{$totalamtentry}}</td>
+      <td><strong>BALANCE AMOUNT :</strong> {{$bal}}</td>
+      
+      <td><img src="{{asset('wallet.png')}}" style="height: 40px;width: 40px;">Rs. {{$walletbalance}}</td>
+      <td><button type="button" class="btn btn-primary" onclick="opennewwindiow();">VIEW EXPENSES</button></td>
+      </tr>
+      
+    </table>
+    
+  </div>
+  
+</div>
 <div class="well">
 	<table class="table" style="background-color: silver;">
 		<tr>
