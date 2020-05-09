@@ -299,7 +299,28 @@
               <li class="{{ Request::is('uc/viewallrequests') ? 'active' : '' }}"><a href="/uc/viewallrequests"><i class="fa fa-circle-o text-red"></i>VIEW ALL REQUEST</a></li>
               @endif
           </ul>
-</li>
+        </li>
+        @if(Auth::user()->usertype=='MASTER ADMIN')
+
+        <li class="{{ Request::is('reports*') ? 'active' : '' }} treeview">
+                  <a href="#">
+                    <i class="fa fa-money"></i> <span>REPORTS</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                     <li class="{{ Request::is('reports/userwisepaymentreports') ? 'active' : '' }}"><a href="/reports/userwisepaymentreports"><i class="fa fa-circle-o text-red"></i>USER WISE PAYMENT REPORT</a></li>
+                     <!-- <li class="{{ Request::is('reports/projectwisepaymentreports') ? 'active' : '' }}"><a href="/reports/projectwisepaymentreports"><i class="fa fa-circle-o text-red"></i>PROJECT WISE PAYMENT REPORT</a></li>
+                    <li class="{{ Request::is('reports/paymentreports') ? 'active' : '' }}"><a href="/reports/paymentreports"><i class="fa fa-circle-o text-red"></i> PAYMENT REPORT</a></li>
+
+                    <li class="{{ Request::is('reports/transactionreport') ? 'active' : '' }}"><a href="/reports/transactionreport"><i class="fa fa-circle-o text-red"></i>TRANSACTION REPORT</a></li>
+
+                    <li class="{{ Request::is('reports/expensereport') ? 'active' : '' }}"><a href="/reports/expensereport"><i class="fa fa-circle-o text-red"></i>EXPENSE REPORT</a></li> -->
+
+                  </ul>
+        </li>
+        @endif
 
     </section>
     <!-- /.sidebar -->
