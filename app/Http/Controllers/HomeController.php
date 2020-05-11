@@ -2755,6 +2755,8 @@ return $message->sid;*/
    {
      //return $request->all();
      $project=new project();
+     $project->workorderno=$request->workorderno;
+     $project->estimateno=$request->estimateno;
      $project->clientid=$request->clientid;
      $project->clientname=$request->clientname;
      $project->district_id=$request->district;
@@ -2995,6 +2997,8 @@ public function deleteprojectotherdoc(Request $request,$id){
    {
     //return $request->all();
      $project=project::find($id);
+     $project->workorderno=$request->workorderno;
+     $project->estimateno=$request->estimateno;
      $project->clientid=$request->clientid;
      $project->district_id=$request->district_id;
      $project->division_id=$request->division_id;

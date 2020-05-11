@@ -34,6 +34,28 @@
 	        	</div>
 	        	<div class="box-body">
 	        	<div class="row">
+		        		<div class="col-md-6">
+			        	 <div class="form-group">
+			                <label class="col-sm-5">
+			                  	Work Order Number<span style="color: red"> *</span>
+			                </label>
+			                <div class="col-sm-7">
+			                    <input class="form-control" name="workorderno" value="{{$project->workorderno}}" required="" placeholder="Enter Work Order Number">
+			                </div>
+		                 </div>
+	                 	</div>
+	             		<div class="col-md-6">
+		                 <div class="form-group">
+			                <label class="col-sm-5">
+			                  	Estimate Number<span style="color: red"> *</span>
+			                </label>
+			                <div class="col-sm-7">
+			                    <input class="form-control" name="estimateno" value="{{$project->estimateno}}" required placeholder="Enter Estimate Number">
+			                </div>
+		                 </div>
+		             	</div>
+					</div>
+	        	<div class="row">
 	        		<div class="col-md-6">
 		        	 <div class="form-group">
 		                <label class="col-sm-5">
