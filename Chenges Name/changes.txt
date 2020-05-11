@@ -1,3 +1,6 @@
 changesTable		 columnname
 1.  projects		1.workorderno
 			2.estimateno
+
+
+2.expenseentries  status default value =HOD PENDING
