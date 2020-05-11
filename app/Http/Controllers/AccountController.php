@@ -651,7 +651,7 @@ class AccountController extends Controller
                        ->where('expenseentries.status','HOD PENDING')
                       ->groupBy('expenseentries.id')
                       ->get();
-
+//return $expenseentries;
           return view('accounts.pendinghodexpenseentry',compact('expenseentries'));
   }
 
@@ -2008,7 +2008,7 @@ public function no_to_words($no)
 
     public function ajaxgetamountexpensehead(Request $request)
     {
-
+         
           $expenseheads=expensehead::all();
           $expenseheadamount=array();
           foreach ($expenseheads as $key => $expensehead) {
@@ -2017,7 +2017,6 @@ public function no_to_words($no)
                        ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
                        ->where('requisitionpayments.paymentstatus','PAID')
                       ->where('requisitionheaders.projectid',$request->projectid)
-                      ->where('requisitionheaders.id',$request->reqid)
                       ->where('requisitionheaders.employeeid',Auth::id())
                       ->where('requisitions.expenseheadid',$expensehead->id)
                       ->groupBy('requisitions.id')
@@ -2035,7 +2034,7 @@ public function no_to_words($no)
 
           $expenseheadamount[]=$all;
           }
-         
+         return $expenseheadamount;
           return response()->json($expenseheadamount);
 
     }
@@ -2612,18 +2611,13 @@ public function no_to_words($no)
                       ->where('requisitionheaders.projectid',$request->projectid)
                       ->where('requisitionheaders.employeeid',Auth::id())
                       ->where('requisitions.expenseheadid',$request->expenseheadid)
-
-                      ->where('requisitions.requisitionheaderid',$request->requistionid)
-
                       ->groupBy('requisitions.id')
                       ->get();
-                      
           $totalamt=$requisition->sum('approvedamount');
         
         $entries=expenseentry::where('employeeid',Auth::id())
                 ->where('projectid',$request->projectid)
                 ->where('expenseheadid',$request->expenseheadid)
-                ->where('requistion_id',$request->requistionid)
                 ->get();
           $totalamtentry=$entries->sum('approvalamount');
           $bal=$totalamt-$totalamtentry;
@@ -3493,7 +3487,36 @@ public function approvedebitvoucheradmin(Request $request,$id)
                        ->where('expenseentries.id',$id)
                       ->groupBy('expenseentries.id')
                       ->first();
+  $empid=$expenseentry->employeeid;
+           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
+                      ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                       ->where('requisitionpayments.paymentstatus','PAID')
+                       ->where('requisitionpayments.paymenttype','!=','WALLET')
+                      ->where('requisitionheaders.employeeid',$empid)
+                      ->groupBy('requisitionpayments.id')
+                      ->get();
+         
+          $totalamt=$requisition->sum('paidamt');
+        
+        $entries=expenseentry::where('employeeid',$empid)
+                ->where('towallet','!=','YES')
+                ->get();
+          $totalamtentry=$entries->sum('approvalamount');
+          $wallet=wallet::where('employeeid',$empid)
+                ->get();
+         $walletcr=$wallet->sum('credit');
+         $walletdr=$wallet->sum('debit');
+         $walletbalance=$walletcr-$walletdr;
 
+          $bal=($totalamt-$totalamtentry)-$walletbalance;
+
+          $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
+           
+
+         
+   
+          $paidamounts=requisitionpayment::where('rid',$id)->get();
           if($expenseentry->vehicleid!='')
           {
               $vehicledetail=vehicle::find($expenseentry->vehicleid);
@@ -3542,7 +3565,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
            }
            
-          return view('accounts.viewdetailshodexpenseentry',compact('vehicledetail','expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr'));
+          return view('accounts.viewdetailshodexpenseentry',compact('vehicledetail','expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr','paidamounts','totalamt','totalamtentry','bal','walletbalance'));
        }
 
        public function viewpendingexpenseentrydetailsadmin($id)

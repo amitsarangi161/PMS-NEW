@@ -364,7 +364,7 @@ Route::get('/viewpendingexpenseentrydetails/{id}','AccountController@viewpending
 Route::get('/viewpendingexpenseentrydetailsadmin/{id}','AccountController@viewpendingexpenseentrydetailsadmin');
 
 Route::get('/viewpendingexpenseentrydetailsadmin/{id}','AccountController@viewpendingexpenseentrydetailsadmin');
-Route::get('//viewdetailshodexpenseentry/{id}','AccountController@viewdetailshodexpenseentry');
+Route::get('/viewdetailshodexpenseentry/{id}','AccountController@viewdetailshodexpenseentry');
 
 Route::get('/viewuserexpenseentrydetails/{id}','HomeController@viewexpenseentrydetails');
 

@@ -59,9 +59,9 @@
       <div class="modal-body">
        <table class="table">
         <tr>
-          <td><strong>SELECT A USER</strong></td>
-          <td>
-            <select class="form-control select2" id="user">
+          <td style="width: 20%;"><strong>SELECT A USER</strong></td>
+          <td style="width: 60%;">
+            <select class="form-control select2" id="user" style="width: 100%;">
               <option value="">Select a user</option>
               @foreach($users as $user)
                <option value="{{$user->id}}">{{$user->name}}</option>
@@ -70,7 +70,7 @@
               
             </select>
           </td>
-          <td>
+          <td style="width: 20%;">
             <button class="btn btn-success" onclick="newuseraddunderhod()" type="button">ADD</button>
           </td>
 

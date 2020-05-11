@@ -175,9 +175,8 @@ class AjaxController extends Controller
     }
     public function ajaxapprove(Request $request)
     {
-        
 
-         $expenseentry=expenseentry::find($request->id);
+        $expenseentry=expenseentry::find($request->id);
          $expenseentry->status=$request->type;
          $expenseentry->approvalamount=$request->amt;
          if($request->type!='CANCELLED')
@@ -209,10 +208,9 @@ class AjaxController extends Controller
     }public function ajaxapproveadmin(Request $request)
     {
         
-
          $expenseentry=expenseentry::find($request->id);
          $expenseentry->status=$request->type;
-         $expenseentry->approvalamount=$request->amt;
+         $expenseentry->approvalamount=$expenseentry->amount;
          if($request->type!='CANCELLED')
          {
             
@@ -221,6 +219,7 @@ class AjaxController extends Controller
          else
          {
               $expenseentry->remarks=$request->remarks;
+              $expenseentry->approvalamount=$request->amt;
          }
          
          $expenseentry->save();
@@ -230,7 +229,7 @@ class AjaxController extends Controller
          {
              $wallet=new wallet();
              $wallet->employeeid=$employeeid;
-             $wallet->credit=$request->amt;
+             $wallet->credit=$expenseentry->amount;
              $wallet->debit='0';
              $wallet->rid=$request->id;
              $wallet->addedby=Auth::id();
@@ -238,7 +237,7 @@ class AjaxController extends Controller
          }
          
 
-         return "1";
+         return response()->json($expenseentry);
     }
     public function accountkitverify(Request $request){
      

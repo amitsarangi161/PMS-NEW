@@ -2204,18 +2204,21 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
                   return back();
                }
                else
-               {
+                {
                   $expenseentry=new expenseentry();
                   $expenseentry->employeeid=Auth::id();
                   $expenseentry->projectid=$request->projectid;
-                  $expenseentry->requistion_id=$request->requistion_id;
                   $expenseentry->expenseheadid=$request->expenseheadid;
                   $expenseentry->particularid=$request->particularid;
                   $expenseentry->vendorid=$request->vendorid;
                   $expenseentry->amount=$request->amount;
                   $expenseentry->approvalamount=$request->amount;
                   $expenseentry->description=$request->description;
-                  $expenseentry->status="PENDING";
+                  /*$expenseentry->fromdate=$request->fromdate;
+                  $expenseentry->todate=$request->todate;*/
+                  if (Auth::user()->usertype=='ADMIN') {
+                     $expenseentry->status="PENDING";
+                  }
                   $expenseentry->date=$request->date;
                   $expenseentry->version="NEW";
                   $expenseentry->type=$request->type;
@@ -3839,6 +3842,7 @@ public function adminviewcomplaintdetails($id)
                       ->where('requisitionheaders.employeeid',Auth::id())
                       ->groupBy('requisitionpayments.id')
                       ->get();
+         
           $totalamt=$requisition->sum('paidamt');
         
         $entries=expenseentry::where('employeeid',Auth::id())
@@ -3852,7 +3856,7 @@ public function adminviewcomplaintdetails($id)
          $walletbalance=$walletcr-$walletdr;
           $totalamtentry=$entries->sum('approvalamount');
           $bal=($totalamt-$totalamtentry)-$walletbalance;
-
+//return $totalamt.$totalamtentry.$bal;
           $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
         
 

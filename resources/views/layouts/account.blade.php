@@ -570,7 +570,12 @@
 
           </a>
           <ul class="treeview-menu">
+            <li class="{{ Request::is('expense/pendinghodexpenseentry') ? 'active' : '' }}"><a href="/expense/pendinghodexpenseentry"><i class="fa fa-circle-o text-red"></i>PENDING HOD EXPENSE ENTRY
 
+              <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$counthodpendingexp}}</span>
+              </span>
+            </a></li>
             <li class="{{ Request::is('expense/pendingexpenseentry') ? 'active' : '' }}"><a href="/expense/pendingexpenseentry"><i class="fa fa-circle-o text-red"></i>PENDING EXPENSE ENTRY
 
               <span class="pull-right-container">

@@ -541,7 +541,6 @@ $('#todate').change(function(){
                                var x='<tr><td><b>'+value.expenseheadname+'</b></td>'+'<td>'+value.totalamt+'</td>'+'<td>'+value.totalexpense+'</td>'+'<td>'+value.balance+'</td></tr>';
                             }
                            
-
                           $("#appendexpensedetails").append(x);
                              
                           });
