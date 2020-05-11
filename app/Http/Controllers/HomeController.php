@@ -62,6 +62,7 @@ use App\district;
 use App\division;
 use App\assignuser;
 use App\voucher;
+use App\projectotherdocument;
 use DataTables;
 use Excel;
 //use Barryvdh\DomPDF\Facade as PDF;
@@ -2930,6 +2931,8 @@ return $message->sid;*/
 
 
    public function editproject($id){
+    $projectotherdocuments=projectotherdocument::where('project_id',$id)
+                          ->get();
     $project=project::find($id);
     //return $project;
     $clientid=$project->clientid;
@@ -2951,9 +2954,34 @@ return $message->sid;*/
     $districts=district::whereIN('id',$divids)->get();
     //return $districts;
     $activities=activity::all();
-   // return $projectactivities;
-    return view('editproject',compact('project','districts','divisions','projectactivities','clients','activities'));
+   //return $projectotherdocuments;
+    return view('editproject',compact('project','districts','divisions','projectactivities','clients','activities','projectotherdocuments'));
    }
+
+public function saveprojectotherdoc(Request $request,$id){
+$projectotherdoc=new projectotherdocument();
+$projectotherdoc->project_id=$request->id;
+$projectotherdoc->documentname=$request->documentname;
+$rarefile = $request->file('document');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/projectotherdocument";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $projectotherdoc->document = $uplogoimg;
+        }
+$projectotherdoc->save();
+Session::flash('message','Document Uploaded Successfully');
+return back();
+}
+public function deleteprojectotherdoc(Request $request,$id){
+ projectotherdocument::find($id)->delete();
+
+       Session::flash('error','Document Deleted Successfully');
+  return back();
+}
+
    public function deleteprojectactivity($id)
    {
      

@@ -568,6 +568,8 @@ Route::post('/saveproject','HomeController@saveproject');
 Route::get('/projects/viewallproject','HomeController@viewallproject');
 Route::get('/projects/viewallassigneduserprojects','HomeController@viewallassigneduserprojects');
 Route::get('/projects/editproject/{id}','HomeController@editproject');
+Route::post('/saveprojectotherdoc/{id}','HomeController@saveprojectotherdoc');
+Route::delete('/deleteprojectotherdoc/{id}','HomeController@deleteprojectotherdoc');
 Route::get('/deleteprojectactivity/{id}','HomeController@deleteprojectactivity');
 Route::post('/updateproject/{id}','HomeController@updateproject');
 Route::post('/changestatus','HomeController@changestatus');

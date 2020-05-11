@@ -27,12 +27,15 @@ else{
 @endphp
 
 <div class="row">
-  @if(Session::has('error'))
-  <div class="alert alert-danger text-center"><span class="glyphicon glyphicon-ok"></span> {!! session('error') !!}</div>
-  @endif
-   @if(Session::has('message'))
-  <div class="alert alert-success text-center"><span class="glyphicon glyphicon-ok"></span> {!! session('message') !!}</div>
-  @endif
+  <div class="col-md-12">
+    @if(Session::has('error'))
+    <div class="alert alert-danger text-center"><span class="glyphicon glyphicon-ok"></span> {!! session('error') !!}</div>
+    @endif
+     @if(Session::has('message'))
+    <div class="alert alert-success text-center"><span class="glyphicon glyphicon-ok"></span> {!! session('message') !!}</div>
+    @endif
+  </div>
+</div>
   <div class="col-md-6">
           <!-- Horizontal Form -->
           <form action="/updateemployeedetails/{{$editemployeedetail->id}}" method="post" enctype="multipart/form-data" class="form-horizontal">
@@ -488,10 +491,10 @@ else{
                 <div class="form-group col-sm-12">
                   <label  class="col-sm-2">Document Name</label>
                   <div class="col-sm-3">
-                    <input type="text" class="form-control" name="documentname" placeholder="Enter Document Name">
+                    <input type="text" class="form-control" name="documentname" placeholder="Enter Document Name" required="">
                   </div>
                   <div class="col-sm-3">
-                    <input name="document"  type="file" onchange="readURL10(this)">
+                    <input name="document"  type="file" onchange="readURL10(this)" required="">
                   </div>
                   <div class="col-sm-2">
                   <img id="imgshow10" src="#" style="height: 70px;width: 70px;">
@@ -502,7 +505,6 @@ else{
                 </div>
               </div>
             </div>
-          </div>
         </form>
 </div>
 <script>
@@ -677,8 +679,8 @@ else{
 
         }
     }
-$(".alert-success").delay(5000).fadeOut(800); 
-    $(".alert-danger").delay(15000).fadeOut(800);
+$(".alert-success").delay(8000).fadeOut(800); 
+    $(".alert-danger").delay(8000).fadeOut(800);
 
 </script>
 

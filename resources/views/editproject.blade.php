@@ -7,6 +7,16 @@
 @if(Session::has('msg'))
    <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
 @endif
+<div class="row">
+	<div class="col-md-12">
+	  @if(Session::has('error'))
+	  <div class="alert alert-danger text-center"><span class="glyphicon glyphicon-ok"></span> {!! session('error') !!}</div>
+	  @endif
+	   @if(Session::has('message'))
+	  <div class="alert alert-success text-center"><span class="glyphicon glyphicon-ok"></span> {!! session('message') !!}</div>
+	  @endif
+	</div>
+</div>
 
 <div class="box box-info box-solid">
      <div class="box-header bg-navy with-border text-center" style="margin-bottom: 10px;">
@@ -567,7 +577,7 @@
 		</div>
 	</div>
 	<div class="row">
-			<div class="col-md-12">
+		<div class="col-md-12">
 				<div class="box box-info  box-solid">
 	            	<div class="box-header with-border">
 	              		<h3 class="box-title">DEMAND DRAFT</h3>
@@ -623,17 +633,94 @@
 	                </div>
                  </div>
 				</div>
-		<div class="col-md-12">
-			<div class="form-group">
-				<button type="submit"class="btn btn-flat pull-right btn-success">Update Project</button>
+				<div class="col-md-12">
+					<div class="form-group">
+						<button type="submit"class="btn btn-flat pull-right btn-success">Update Project</button>
+					</div>
+				</div>
 			</div>
 		</div>
-			</div>
+	</div>
+</form>
+	<div class="row">
+		<div class="col-md-12">
+				<div class="box box-info  box-solid">
+	            	<div class="box-header with-border">
+	              		<h3 class="box-title">Project Other Documents</h3>
+	            	</div>
+	        	</div>
+	        	<div class="box-body">
+	        		<div class="form-horizontal">
+              <div class="box-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="bg-navy">
+                      <th>Sl.No</th>
+                      <th>Document Name</th>
+                      <th>Document</th>
+                      @if(Auth::user()->usertype=='MASTER ADMIN')
+                      <th>Delete</th>
+                      @endif
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($projectotherdocuments as $key=>$projectotherdocument)
+                    <tr>
+                      <td>{{++$key}}</td>
+                      <td>{{$projectotherdocument->documentname}}</td>
+                    <td><a href="{{asset('/image/projectotherdocument/'.$projectotherdocument->document)}}" target="_blank">
+              <img style="height: 70px;width: 70px;" src="{{asset('/image/projectotherdocument/'.$projectotherdocument->document)}}" alt="click to view" id="imgshow">
+            </a>
+              <a href="{{asset('/image/projectotherdocument/'.$projectotherdocument->document)}}" class="btn btn-primary btn-sm" download>
+               <span class="glyphicon glyphicon-download-alt"></span> Download
+               </a></td>
+
+                      @if(Auth::user()->usertype=='MASTER ADMIN')
+                      <td><form action="/deleteprojectotherdoc/{{$projectotherdocument->id}}"  method="post">
+            {{csrf_field()}}
+            {{method_field('DELETE')}}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Do You want to Delete this Document?')">DELETE</button>
+            
+          </form></td>
+          @endif
+                    </tr>
+                   @endforeach
+                    
+                  </tbody>
+                </table>
+                
+              </div>
+            </div>
+		        	<div class="row">
+		        		<form action="/saveprojectotherdoc/{{$project->id}}" method="post" enctype="multipart/form-data" class="form-horizontal">
+				          {{csrf_field()}}
+				            <div class="form-horizontal">
+				              <div class="box-body">
+				                <div class="form-group col-sm-12">
+				                  <label  class="col-sm-2">Document Name</label>
+				                  <div class="col-sm-3">
+				                    <input type="text" class="form-control" name="documentname" placeholder="Enter Document Name" required="">
+				                  </div>
+				                  <div class="col-sm-3">
+				                    <input name="document"  type="file" onchange="otherdoc(this)" required="">
+				                  </div>
+				                  <div class="col-sm-2">
+				                  <img id="otherdocshow" src="#" style="height: 70px;width: 70px;">
+				                  </div>
+				                  <div class="col-sm-2">
+				                  <button type="submit"class="btn btn-info btn-flat"> Save Document</button>
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+				        </form>
+		        	</div>
+				</div>
 		</div>
 	</div>
 
 	</div>
-	</form>
+	
 </div>
 
 
@@ -706,7 +793,25 @@
   
 
 <script type="text/javascript">
+	$(".alert-success").delay(8000).fadeOut(800); 
+    $(".alert-danger").delay(8000).fadeOut(800);
+ function otherdoc(input) {
+        
 
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#otherdocshow')
+                    .attr('src', e.target.result)
+                    .width(70)
+                    .height(70);        
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
 	$("#cost").on("keypress",function(e){
   console.log("Entered Key is " + e.key);
   switch (e.key)
@@ -1256,14 +1361,9 @@ function fetchdistrict(){
                             $('#district').html(district);
                 }
 		});
+	
 }
 </script>
-
-
-
-
-
-
 @endsection
 
 
