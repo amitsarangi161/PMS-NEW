@@ -13,6 +13,14 @@
 }
 .prdetails label{font-size: 12px;letter-spacing: .7px;}
 .prdetails .form-control{font-size: 12px;height: 30px;letter-spacing: .7px;}
+.text-sm{letter-spacing: .5px;}
+
+mark { 
+  background-color: yellow;
+  color: black;
+  padding-left: 5px;
+  padding-right: 5px;
+}
 </style>
 
 <div class="row">
@@ -31,165 +39,261 @@
                   </div>
                   <div class="panel-body prdetails">                    
                   
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>CLIENT NAME</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->clientname}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                        <p class="text-muted text-sm"><b>WORK ORDER NO: </b> <mark>{{$project->workorderno}}</mark></p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">DISTRICT NAME</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->districtname}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                        <p class="text-muted text-sm"><b>ESTIMATE NO: </b> {{$project->estimateno}}</p>
+                    </div>
+                    <div class="col-md-5">
+                        <p class="text-muted text-sm"><b>CLIENT NAME: </b> {{$project->clientname}}</p>
+                    </div>
+                    <div class="col-md-5">
+                       <p class="text-muted text-sm"><b>DISTRICT NAME: </b> {{$project->districtname}}</p>
                     </div>
                   
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">DIVISION NAME</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->divisionname}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>DIVISION NAME: </b> {{$project->divisionname}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">PROJECT NAME</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->projectname}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                         <p class="text-muted text-sm"><b>PROJECT NAME: </b> {{$project->projectname}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">PROJECT COST</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->cost}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>PROJECT COST: </b> {{$project->cost}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">PRIORITY</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->priority}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>PRIORITY: </b> {{$project->priority}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">PAPER COST</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->papercost}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                       <p class="text-muted text-sm"><b>PAPER COST: </b> {{$project->papercost}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">LOA NUMBER</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->loano}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                       <p class="text-muted text-sm"><b>LOA NUMBER: </b> {{$project->loano}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">AGREEMENT NUMBER</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->agreementno}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>AGREEMENT NUMBER: </b> {{$project->agreementno}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">DATE OF COMMENCEMENT </label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->startdate}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>DATE OF COMMENCEMENT: </b> {{$project->startdate}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">DATE OF COMPLETION</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->enddate}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                       <p class="text-muted text-sm"><b>DATE OF COMPLETION: </b> {{$project->enddate}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">ISD DATE </label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->isddate}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                       <p class="text-muted text-sm"><b>ISD DATE: </b> {{$project->isddate}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">ISD VALID UPTO</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->isdvalidupto}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                       <p class="text-muted text-sm"><b>ISD VALID UPTO: </b> {{$project->isdvalidupto}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">ISD AMOUNT</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->isdamount}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>ISD AMOUNT: </b> {{$project->isdamount}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">EMD DATE</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->emddate}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>EMD DATE: </b> {{$project->emddate}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">EMD VALID UPTO </label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->emdvalidupto}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>EMD VALID UPTO: </b> {{$project->emdvalidupto}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">EMD AMOUNT</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->emdamount}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>EMD AMOUNT: </b> {{$project->emdamount}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">APS DATE</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->apsdate}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>APS DATE: </b> {{$project->apsdate}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">APS VALID UPTO</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->apsvalidupto}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>APS VALID UPTO: </b> {{$project->apsvalidupto}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">APS AMOUNT</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->apsamount}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>APS AMOUNT: </b> {{$project->apsamount}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">BG DATE</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->bgdate}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>BG DATE: </b> {{$project->bgdate}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">BG VALID UPTO</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->bgvalidupto}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>BG VALID UPTO: </b> {{$project->bgvalidupto}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">BG AMOUNT</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->bgamount}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>BG AMOUNT: </b> {{$project->bgamount}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">DD DATE</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->dddate}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>DD DATE: </b> {{$project->dddate}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">DD VALID UPTO</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="{{$project->ddvalidupto}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>DD VALID UPTO: </b> {{$project->ddvalidupto}}</p>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">DD AMOUNT</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"value="{{$project->ddamount}}" placeholder="Enter email">
-                      </div>
+                    <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>DD AMOUNT: </b> {{$project->ddamount}}</p>
                     </div>
                   </div>
-               </div>            
+               </div>  
+                <div class="panel panel-primary">
+               <div class="panel-heading">
+                    PROJECT DOCUMENTS
+                  </div>
+                  <div class="panel-body prdetails">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>Order Form: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/img/orderform/'.$project->orderform)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/img/orderform/'.$project->orderform)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/img/orderform/'.$project->orderform)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>Paper Cost: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/img/papercost/'.$project->papercostattachment)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/img/papercost/'.$project->papercostattachment)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/img/papercost/'.$project->papercostattachment)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>MOM: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/img/momattach/'.$project->momattach)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/img/momattach/'.$project->momattach)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/img/momattach/'.$project->momattach)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>          
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>PO Order: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/img/podattach/'.$project->podattach)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/img/podattach/'.$project->podattach)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/img/podattach/'.$project->podattach)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>ISD: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/img/isdattach/'.$project->isdattachment)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/img/isdattach/'.$project->isdattachment)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/img/isdattach/'.$project->isdattachment)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>EMD Form: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/img/emdattach/'.$project->emdattachment)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/img/emdattach/'.$project->emdattachment)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/img/emdattach/'.$project->emdattachment)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>          
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>APS: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/img/apsattach/'.$project->apsattachment)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/img/apsattach/'.$project->apsattachment)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/img/apsattach/'.$project->apsattachment)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>BG DETAILS: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/img/bgattach/'.$project->bgattachment)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/img/bgattach/'.$project->bgattachment)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/img/bgattach/'.$project->bgattachment)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>Demand Draft: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/img/ddattach/'.$project->ddattachment)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/img/ddattach/'.$project->ddattachment)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/img/ddattach/'.$project->ddattachment)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>          
+                  </div>
+                  
+                  <div class="row">
+                    @foreach($projectotherdocuments as $projectotherdocument)
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p class="text-muted text-sm"><b>{{$projectotherdocument->documentname}}: </b> </p>
+                        </div>
+                        <div class="col-md-8">
+                          <a href="{{asset('/image/projectotherdocument/'.$projectotherdocument->documentname)}}" target="_blank">
+                            <img style="height: 40px;width: 40px;" src="{{asset('/image/projectotherdocument/'.$projectotherdocument->document)}}" alt="click to view">
+                          </a>
+                          <a href="{{asset('/image/projectotherdocument/'.$projectotherdocument->document)}}" class="btn btn-primary btn-sm" download>
+                           <span class="glyphicon glyphicon-download-alt"></span> Download
+                           </a>
+                        </div>
+                      </div>
+                    </div>
+                    @endforeach
+                  </div>
+                </div> 
+                </div>               
             </div>
               <div class="tab-pane" id="assignproject">
                 <div class="panel panel-primary">

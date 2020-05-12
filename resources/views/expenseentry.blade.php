@@ -221,6 +221,7 @@
         <td><strong>EXPENSE AMOUNT *</strong></td>
         <td>
            <input type="text" name="amount" id="amount" placeholder="Enter Amount Here" autocomplete="off" class="form-control" required="">
+           <p id="balanceexceed" style="color: red;"></p>
         </td>
       </tr>
         <tr>
@@ -649,12 +650,14 @@ $("#amount").on('change input', function(){
       {
          $("#subbutton").attr("disabled", true);
          $("#errormsg").html("Your Amount Must be less than balance amount");
+         $("#balanceexceed").html("Your amount exceeds from requistion balance");
       }
       else
       {
          $("#subbutton").removeAttr("disabled");
          
          $("#errormsg").html("");
+         $("#balanceexceed").html("");
       }
      
 });

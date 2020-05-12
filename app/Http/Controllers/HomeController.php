@@ -3342,6 +3342,8 @@ public function deleteprojectotherdoc(Request $request,$id){
 
    public function adminprojectdetails($id)
    {
+     $projectotherdocuments=projectotherdocument::where('project_id',$id)
+                          ->get();
     $users=User::all();
     $project=project::select('projects.*','clients.orgname','clients.clientname','districts.districtname','divisions.divisionname')
                  ->leftJoin('clients','projects.clientid','=','clients.id')
@@ -3349,13 +3351,13 @@ public function deleteprojectotherdoc(Request $request,$id){
                  ->leftJoin('divisions','projects.division_id','=','divisions.id')
                  ->where('projects.id',$id)
                  ->first();
-    //return $project;
+    //return $projectotherdocuments;
         $activities=projectactivity::select('projectactivities.*','activities.activityname','activities.id as acid')
                     ->leftJoin('activities','projectactivities.activityid','=','activities.id')
                      ->where('projectid',$id)
                      ->orderBy('projectactivities.position','ASC')
                      ->get();
-    return view('adminprojectdetails',compact('project','activities','users'));
+    return view('adminprojectdetails',compact('project','activities','users','projectotherdocuments'));
    }
 
 
