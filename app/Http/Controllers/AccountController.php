@@ -4274,7 +4274,7 @@ public function changependingstatusmgr(Request $request,$id)
                       ->where('requisitionheaders.employeeid',$empid)
                       ->groupBy('requisitionpayments.id')
                       ->get();
-         
+         //return $requisition;
           $totalamt=$requisition->sum('paidamt');
         
         $entries=expenseentry::where('employeeid',$empid)
