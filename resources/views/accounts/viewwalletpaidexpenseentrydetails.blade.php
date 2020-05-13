@@ -13,7 +13,12 @@
     <table class="table">
       <tr>
 
-      <td><strong>TOTAL PAID AMOUNT TILL DATE :</strong>  {{$totalamt}}</td>
+      <td>
+      	@if(Auth::user()->usertype=='MASTER ADMIN')
+      	<a href="/reports/transactionreport?fromdate=& todate=& user={{$expenseentry->userid}} &projectname=& status=" style="color: #333;"><strong>TOTAL PAID AMOUNT TILL DATE :</strong>  {{$totalamt}}</a>
+      	@else<strong>TOTAL PAID AMOUNT TILL DATE :</strong>  {{$totalamt}}
+      	@endif
+      </td>
       <td><strong>TOTAL EXPENSE TILL DATE :</strong> {{$totalamtentry}}</td>
       <td><strong>BALANCE AMOUNT :</strong> {{$bal}}</td>
       

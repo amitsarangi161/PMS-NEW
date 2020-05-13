@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.account')
 @section('content')
 @inject('provider', 'App\Http\Controllers\AccountController')
 <table class="table">

@@ -3564,7 +3564,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                $expenseentrydailyvehicle=array();
 
            }
-           
+           //return $expenseentry;
           return view('accounts.viewdetailshodexpenseentry',compact('vehicledetail','expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr','paidamounts','totalamt','totalamtentry','bal','walletbalance'));
        }
 
@@ -3923,6 +3923,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
     }
     public function ajaxrequitionfullyapproved(Request $request)
     {
+     
             $requisition=requisition::find($request->id);
             $requisition->approvedamount=$request->amount;
             $requisition->approvestatus=$request->action;
@@ -4324,6 +4325,7 @@ public function changependingstatusmgr(Request $request,$id)
                       ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
                       ->where('requisitionheaders.status','PENDING MGR')
                       ->get();
+                      //return $requisitions;
         return view('accounts.pendingrequisitionsmgr',compact('requisitions'));
      } 
      public function pendingrequisitions()

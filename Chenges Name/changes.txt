@@ -4,3 +4,8 @@ changesTable		 columnname
 
 
 2.expenseentries  status default value =HOD PENDING
+
+
+
+13/05/2020
+1.requisitionheaders	1.reqaddby

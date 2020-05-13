@@ -41,7 +41,8 @@
 			  @else
               <td>OTHERS</td>
 			  @endif
-			  <td>{{$requisition->author}}</td>
+			  <td>{{$requisition->author}}
+			  @if($requisition->reqaddby!=''){{'/'.$requisition->reqaddby}}@endif</td>
 			  <td>{{$requisition->totalamount}}</td>
 			  <td>{{$requisition->cancelreason}}</td>
 			  <td>{{$requisition->approver}}</td>

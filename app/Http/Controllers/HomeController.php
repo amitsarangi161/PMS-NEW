@@ -1964,6 +1964,7 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
         $requisitionheader->dateto=$request->dateto;
         $requisitionheader->userid=Auth::id();
         $requisitionheader->status="PENDING MGR";
+        $requisitionheader->reqaddby=$request->reqaddby;
         $requisitionheader->save();
         $rid=$requisitionheader->id;
         $count=count($request->expenseheadid);

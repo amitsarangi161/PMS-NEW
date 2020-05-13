@@ -74,10 +74,16 @@
          <td><strong>DATE TO *</strong></td>
         <td><input type="text" class="form-control readonly datepicker" id="todate" name="dateto" autocomplete="off"   required="" ></td>
       </tr>
-        <tr>
+      <tr>
         <td><strong>DESCRIPTION *</strong></td>
         <td>
           <textarea class="form-control" name="description1" required></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Author</strong></td>
+        <td>
+          <input type="text" class="form-control" name="reqaddby">
         </td>
       </tr>
 	</table>

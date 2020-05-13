@@ -44,7 +44,8 @@
 			  @else
               <td>OTHERS</td>
 			  @endif
-			  <td>{{$requisition->author}}</td>
+			  <td>{{$requisition->author}}
+			  	@if($requisition->reqaddby!=''){{'/'.$requisition->reqaddby}}@endif</td>
 			  <td>{{$provider::moneyFormatIndia($requisition->totalamount)}}</td>
 			  <td>{{$provider::moneyFormatIndia($requisition->approvalamount)}}</td>
 			  <td>{{$requisition->approver}}</td>
