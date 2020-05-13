@@ -81,9 +81,9 @@
         </td>
       </tr>
       <tr>
-        <td><strong>Author</strong></td>
+        <td><strong>Author Name</strong></td>
         <td>
-          <input type="text" class="form-control" name="reqaddby">
+          <input type="text" class="form-control" name="reqaddby" required="">
         </td>
       </tr>
 	</table>
