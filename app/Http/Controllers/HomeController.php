@@ -1519,8 +1519,7 @@ if($request->has('status') && $request->status!='')
         $all=array('id'=>$user->id,'name'=>$user->name,'totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal,'walletbalance'=>$walletbalance);
        $userwisepayments[]=$all;
             }
-
-         
+//return $userwisepayments;
             return view('userwisepaymentreports',compact('userwisepayments'));
     }
     public function paymentreports(Request $request)

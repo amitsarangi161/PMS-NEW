@@ -59,7 +59,17 @@
          <tr>
          	<td>{{++$key}}</td>
          	<td>{{$value['userid']}}</td>
-         	<td>{{$value['date']}}</td>
+@php
+$dt=$value['date'];
+$timestamp = strtotime($dt);
+$day = date('l', $timestamp);
+
+@endphp	
+			@if($day!='Sunday')
+         	<td><span class="label label-success">{{$value['date']}} || {{$day}}</span> </td>
+         	@else
+         	<td><span class="label label-danger">{{$value['date']}} || {{$day}}</span> </td>
+         	@endif
          	<td>{{$value['status']}}</td>
          	<td>{{$value['total']}}</td>
          	<th><a href="/showuserlocation/{{$value['userid']}}/{{$value['date']}}" target="_black" class="btn btn-success">MAP</a></th>

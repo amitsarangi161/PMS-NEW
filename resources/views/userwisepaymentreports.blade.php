@@ -3,7 +3,7 @@
 @inject('provider', 'App\Http\Controllers\AccountController')
 <table class="table">
 	<tr class="bg-blue">
-		<td class="text-center">USERWISE PAYMENT REPORT</td>
+		<td class="text-center">USERWISE PAYMENT REPOR1T</td>
 		
 	</tr>
 	
@@ -32,6 +32,7 @@
        $sumwalletbalance=array();
      @endphp
 		@foreach($userwisepayments as $userwisepayment)
+		@if($userwisepayment['totalamt']!='')
            <tr>
            	<td>{{$userwisepayment['id']}}</td>
            	<td>{{$userwisepayment['name']}}</td>
@@ -41,6 +42,7 @@
            	<td style="text-align: right;">{{$provider::moneyFormatIndia($sumwalletbalance[]=$userwisepayment['walletbalance'])}}</td>
            	<td><a href="/viewpaymentdetailsuser/{{$userwisepayment['id']}}" class="btn btn-primary">VIEW DETAILS</a></td>
            </tr>
+           @endif
 		@endforeach
 	</tbody>
 	<tfoot>

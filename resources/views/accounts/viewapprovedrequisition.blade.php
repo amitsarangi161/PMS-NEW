@@ -30,7 +30,7 @@ $bal=$requisitionheader->approvalamount-$paid;
 
       <td>
         @if(Auth::user()->usertype=='MASTER ADMIN')
-        <a href="/reports/transactionreport?fromdate=& todate=& user={{$requisitionheader->userid}} &projectname=& status=" style="color: #333;"><strong>TOTAL PAID AMOUNT TILL DATE :</strong>  {{$totalamt}}</a>
+        <a href="/reports/transactionreport?fromdate=& todate=& user={{$requisitionheader->userid}} &projectname=& status=" style="color: #2e1a93;text-decoration:underline;"><strong>TOTAL PAID AMOUNT TILL DATE :</strong>  {{$totalamt}}</a>
         @else<strong>TOTAL PAID AMOUNT TILL DATE :</strong>  {{$totalamt}}
         @endif
       </td>
