@@ -253,6 +253,7 @@
             <li class="{{ Request::is('projects/viewallclient') ? 'active' : '' }}"><a href="/projects/viewallclient"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL CLIENTS</a></li>
             <li class="{{ Request::is('projects/adddistrict') ? 'active' : '' }}"><a href="/projects/adddistrict"><i class="fa fa-circle-o text-aqua"></i>DISTRICT</a></li>
             <li class="{{ Request::is('projects/adddivision') ? 'active' : '' }}"><a href="/projects/adddivision"><i class="fa fa-circle-o text-aqua"></i>ADD DIVISION</a></li>
+            <li class="{{ Request::is('projects/addscheme') ? 'active' : '' }}"><a href="/projects/addscheme"><i class="fa fa-circle-o text-aqua"></i>ADD SCHEME</a></li>
              <li class="{{ Request::is('projects/viewallproject') ? 'active' : '' }}"><a href="/projects/viewallproject"><i class="fa fa-circle-o text-red"></i>PROJECTS</a></li>
         
           </ul>

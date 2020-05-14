@@ -52,7 +52,7 @@
 		                  	FOR CLIENT<span style="color: red"> *</span>
 		                </label>
 		                <div class="col-sm-7">
-		                    <select type="text" name="clientid" id="clientid" onchange="changeclientname();fetchdistrict();" class="form-control select2" required=""> 
+		                    <select type="text" name="clientid" id="clientid" onchange="changeclientname();fetchdistrict();fetchscheme();" class="form-control select2" required=""> 
 							<option value="">SELECT A CLIENT</option>
 							 @foreach($clients as $key => $client) 
 							 <option value="{{$client->id}}" title="{{$client->clientname}}">{{$client->clientname}}</option>
@@ -95,7 +95,31 @@
                  </div>
              </div>
              	</div>
-
+<div class="row">
+	<div class="col-md-6">
+     <div class="form-group">
+        <label class=" col-sm-5">
+          	CHOOSE A SCHEME
+        </label>
+        <div class="col-sm-7">
+            <select type="text" name="scheme_id" id="schemename" onchange="changeschemename();"  class="form-control select2"  data-placeholder="Select a Schele">
+            <option value="">SELECT A SCHEME</option>
+				 
+		    </select>
+        </div>
+     </div>
+ 	</div>
+ 	<div class="col-md-6">
+     <div class="form-group">
+        <label class="col-sm-5">
+          	SCHEME NAME
+        </label>
+        <div class="col-sm-7">
+            <input class="form-control"  id="fschemename" disabled="">
+        </div>
+     </div>
+ 	</div>
+</div>
              	<div class="row">
              		<div class="col-md-6">
 	        	 <div class="form-group">
@@ -741,8 +765,15 @@
 	
 	function changeclientname()
 	{
+		
 	var cn=$( "#clientid option:selected" ).attr("title");
 	$("#clientname").val(cn);
+
+	}
+	function changeschemename()
+	{
+	var cn=$( "#schemename option:selected" ).attr("title");
+	$("#fschemename").val(cn);
 
 	}
 
@@ -1199,6 +1230,36 @@ function fetchdistrict(){
 
                             })
                             $('#district').html(district);
+                }
+		});
+}
+function fetchscheme(){
+	$('#schemename').html('');
+	var clientid=$("#clientid").val();
+	 $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+        $.ajax({
+               type:'POST',
+              
+               url:'{{url("/ajaxfetchscheme")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                      clientid: clientid,
+                     },
+
+               success:function(data) { 
+               		var scheme='<option value="">Select Scheme</option>';  
+                            $.each(data,function(key,value){
+                                  
+
+                               scheme=scheme+'<option value="'+value.id+'" title="'+value.schemename+'">'+value.schemename+'</option>';
+
+                            })
+                            $('#schemename').html(scheme);
                 }
 		});
 }

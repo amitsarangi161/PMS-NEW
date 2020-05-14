@@ -29,6 +29,7 @@ use App\particular;
 use App\todo;
 use Carbon\Carbon;
 use App\userrequest;
+use App\scheme;
 use Mail;
 use App\vendor;
 use App\expenseentry;
@@ -2765,6 +2766,7 @@ return $message->sid;*/
      $project->clientname=$request->clientname;
      $project->district_id=$request->district;
      $project->division_id=$request->division;
+     $project->scheme_id=$request->scheme_id;
      $project->projectname=$request->projectname;
      $lastid=project::orderBy('id','DESC')->pluck('id')->first();
      $project->projectid='PMS'.($lastid+1);
@@ -2940,9 +2942,9 @@ return $message->sid;*/
     $projectotherdocuments=projectotherdocument::where('project_id',$id)
                           ->get();
     $project=project::find($id);
-    //return $project;
+    ///return $project;
     $clientid=$project->clientid;
-    //return $project;
+    //return $clientid;
     $projectactivities=projectactivity::select('projectactivities.*','activities.activityname')
                       ->where('projectactivities.projectid',$id)
                       ->leftJoin('activities','projectactivities.activityid','=','activities.id')
@@ -2958,10 +2960,11 @@ return $message->sid;*/
               ->groupBy('district_id')
               ->get();
     $districts=district::whereIN('id',$divids)->get();
-    //return $districts;
+    $schemes=scheme::where('client_id',$clientid)->get();
+    //return $schemes;
     $activities=activity::all();
    //return $projectotherdocuments;
-    return view('editproject',compact('project','districts','divisions','projectactivities','clients','activities','projectotherdocuments'));
+    return view('editproject',compact('project','districts','divisions','projectactivities','clients','activities','schemes','projectotherdocuments'));
    }
 
 public function saveprojectotherdoc(Request $request,$id){
@@ -3006,6 +3009,7 @@ public function deleteprojectotherdoc(Request $request,$id){
      $project->clientid=$request->clientid;
      $project->district_id=$request->district_id;
      $project->division_id=$request->division_id;
+     $project->scheme_id=$request->scheme_id;
      $project->clientname=$request->clientname;
      $project->projectname=$request->projectname;
      $lastid=project::orderBy('id','DESC')->pluck('id')->first();
@@ -3346,10 +3350,11 @@ public function deleteprojectotherdoc(Request $request,$id){
      $projectotherdocuments=projectotherdocument::where('project_id',$id)
                           ->get();
     $users=User::all();
-    $project=project::select('projects.*','clients.orgname','clients.clientname','districts.districtname','divisions.divisionname')
+    $project=project::select('projects.*','clients.orgname','clients.clientname','districts.districtname','divisions.divisionname','schemes.schemename')
                  ->leftJoin('clients','projects.clientid','=','clients.id')
                  ->leftJoin('districts','projects.district_id','=','districts.id')
                  ->leftJoin('divisions','projects.division_id','=','divisions.id')
+                 ->leftJoin('schemes','projects.scheme_id','=','schemes.id')
                  ->where('projects.id',$id)
                  ->first();
     //return $projectotherdocuments;
@@ -3787,6 +3792,51 @@ public function adminviewcomplaintdetails($id)
       //return $divisions;
       return view('adddivision',compact('districts','clients','divisions'));
    }
+   public function updatescheme(Request $request)
+   {
+   $clientid=scheme::find($request->schemeid)->client_id;
+    $check=scheme::where('client_id',$clientid)
+          ->where('schemename',$request->schemename)
+          ->count();
+      //return $check;
+    if($check==0){
+     $scheme=scheme::find($request->schemeid);
+     $scheme->schemename=$request->schemename;
+     $scheme->save();
+     Session::flash('msg','Scheme Save Successfully');
+    }
+    else{
+      Session::flash('err','Scheme Already Exist');
+    }     
+     return back();
+   }public function savescheme(Request $request)
+   {
+    $check=scheme::where('client_id',$request->client)
+          ->where('schemename',$request->schemename)
+          ->count();
+      //return $check;
+    if($check==0){
+       $scheme=new scheme();
+     $scheme->client_id=$request->client;
+     $scheme->schemename=$request->schemename;
+     $scheme->save();
+     Session::flash('msg','Scheme Save Successfully');
+    }
+    else{
+      Session::flash('err','Scheme Already Exist');
+    }     
+     return back();
+   }
+
+   public function addscheme()
+   {
+      $clients=client::all();
+      $schemes=scheme::select('schemes.*','clients.clientname')
+            ->leftJoin('clients','schemes.client_id','=','clients.id')
+            ->get();
+            //return $schemes;
+      return view('addscheme',compact('clients','schemes'));
+   }
    public function savedivision(Request $request){
         //return $request->all();
     $count=count($request->divisionname);
@@ -3832,6 +3882,11 @@ public function adminviewcomplaintdetails($id)
             ->groupBy('divisions.district_id')
             ->get();
             return response()->json($districts);
+  }
+  public function ajaxfetchscheme(Request $request){
+   $scheme=scheme::where('client_id',$request->clientid)
+            ->get();
+            return response()->json($scheme);
   }
 
       public function expenseentry()

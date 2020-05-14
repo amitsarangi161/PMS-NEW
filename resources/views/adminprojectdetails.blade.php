@@ -56,6 +56,9 @@ mark {
                       <p class="text-muted text-sm"><b>DIVISION NAME: </b> {{$project->divisionname}}</p>
                     </div>
                     <div class="col-md-5">
+                      <p class="text-muted text-sm"><b>SCHEME NAME: </b> {{$project->schemename}}</p>
+                    </div>
+                    <div class="col-md-5">
                          <p class="text-muted text-sm"><b>PROJECT NAME: </b> {{$project->projectname}}</p>
                     </div>
                     <div class="col-md-5">

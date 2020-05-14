@@ -9,3 +9,6 @@ changesTable		 columnname
 
 13/05/2020
 1.requisitionheaders	1.reqaddby
+
+14/05/2020
+1.projects		1.scheme_id

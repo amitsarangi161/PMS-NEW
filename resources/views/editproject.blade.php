@@ -124,7 +124,33 @@
                  </div>
              </div>
              	</div>
-
+<div class="row">
+	<div class="col-md-6">
+                 <div class="form-group">
+	                <label class=" col-sm-5">
+	                  	SCHEME
+	                </label>
+	                <div class="col-sm-7">
+	                    <select type="text" name="scheme_id" id="schemename" onchange="changeschemename();"  class="form-control select2"  data-placeholder="Select a Schele">
+	                    <option value="">SELECT A SCHEME</option>
+							 @foreach($schemes as $key => $scheme)
+							 <option value="{{$scheme->id}}" title="{{$scheme->schemename}}" {{ ( $scheme->id == $project->scheme_id) ? 'selected' : '' }}>{{$scheme->schemename}}</option>
+							 @endforeach
+					    </select>
+	                </div>
+                 </div>
+             </div>
+             <!-- <div class="col-md-6">
+	                 <div class="form-group">
+		                <label class="col-sm-5">
+		                  	SCHEME NAME
+		                </label>
+		                <div class="col-sm-7">
+		                    <input class="form-control"  id="fschemename" disabled="">
+		                </div>
+	                 </div>
+	             	</div> -->
+</div>
              	<div class="row">
              		<div class="col-md-6">
 	        	 <div class="form-group">
@@ -815,6 +841,14 @@
   
 
 <script type="text/javascript">
+	function changeschemename()
+	{
+		
+	var cn=$( "#schemename option:selected" ).attr("title");
+	//alert(cn);
+	$("#fschemename").val(cn);
+
+	}
 	$(".alert-success").delay(8000).fadeOut(800); 
     $(".alert-danger").delay(8000).fadeOut(800);
  function otherdoc(input) {
@@ -1385,6 +1419,7 @@ function fetchdistrict(){
 		});
 	
 }
+
 </script>
 @endsection
 

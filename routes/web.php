@@ -560,8 +560,11 @@ Route::post('/importproject','HomeController@importproject');
 Route::get('/projects/adddistrict','HomeController@adddistrict');
 Route::post('/savedistrict','HomeController@savedistrict');
 Route::get('/projects/adddivision','HomeController@adddivision');
+Route::get('/projects/addscheme','HomeController@addscheme');
 Route::post('/savedivision','HomeController@savedivision');
 Route::post('/updatedivision','HomeController@updatedivision');
+Route::post('/savescheme','HomeController@savescheme');
+Route::post('/updatescheme','HomeController@updatescheme');
 
 Route::get('/projects/addproject','HomeController@addproject');
 Route::post('/saveproject','HomeController@saveproject');
@@ -579,6 +582,7 @@ Route::get('/userprojects/viewallassigneduserprojects','HomeController@viewallas
 Route::get('userprojects/showuserprojectdetails/{id}','HomeController@showuserprojectdetails');
 Route::post('/ajaxfetchdivision','HomeController@ajaxfetchdivision');
 Route::post('/ajaxfetchdistrict','HomeController@ajaxfetchdistrict');
+Route::post('/ajaxfetchscheme','HomeController@ajaxfetchscheme');
 
 Route::get('/useraccounts/applicationform','HomeController@applicationform');
 Route::post('/resetpassword','HomeController@resetpassword');
