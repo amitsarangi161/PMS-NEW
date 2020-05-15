@@ -139,7 +139,7 @@
 		<td><strong>UPLOADED FILE</strong></td>
 		 <td>
 		 	<a href="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}" target="_blank">
-		 	<img title="click to view the image" style="height:100px;width:150px;" alt="no uploadedfile" src="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}"></a>
+		 	<img title="click to view the image" style="height:60px;width:60px;" alt="no uploadedfile" src="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}"></a>
 		 
 		 	 <a href="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}" download>
 		 	 	<button class="btn"><i class="fa fa-download"></i> Download</button>
@@ -160,13 +160,20 @@
 		 	</select>
 		 </td>
 		 @endif
+		 
 	</tr>
-	   <tr>
         <tr>
-	   	<td><strong>REMARKS:-</strong></td>
-	   	<td><strong>{{$expenseentry->remarks}}</strong></td>
+	   	<td><strong>HOD NAME:-</strong></td>
+	   	<td><strong>{{$expenseentry->hodname}}</strong></td>
+	   	<td><strong>created_at</strong></td>
+	   	<td><strong>{{$expenseentry->created_at}}</strong></td>
 	   </tr>
-	 
+	   <tr>
+	   	<td style="width: 25%;"><strong>HOD REMARKS:-</strong></td>
+	   	<td style="width: 25%;"><strong>{{$expenseentry->hodremarks}}</strong></td>
+	   	
+	   </tr>
+	 <tr>
 	   	<td colspan="4" style="text-align: center;">
 	   		 <ul class="pagination">
 	   		 	@foreach($expenseentriespaginations as $expenseentriespagination)
@@ -568,6 +575,41 @@
       
     </div>
   </div>
+  <div class="modal fade" id="hodaprvmodal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Approve With Remarks</h4>
+        </div>
+        <div class="modal-body">
+        	<form action="" method="post">
+        		{{csrf_field()}}
+          <table class="table">
+             <input type="hidden" id="hodaprvid">
+    
+          	<tr>
+          		<td><strong>REMARKS</strong></td>
+          		<td>
+          			<textarea name="aprvremark" id="aprvremark" class="form-control"></textarea>
+          		</td>
+          	</tr>
+          	<tr>
+          		<td colspan="2"><button type="button" onclick="approveexpense();" class="btn btn-success">SUBMIT</button></td>
+          	</tr>
+          
+          </table>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 <script type="text/javascript">
 
@@ -580,6 +622,15 @@
 	 	   ajaxapprove(type,cid,0,remarks);
 
 	 }
+	 function approveexpense()
+	 {   
+           var remarks=$("#aprvremark").val();
+	       var type='PENDING';
+	 	   var hodaprvid=$("#hodaprvid").val();
+
+	 	   ajaxapprove(type,hodaprvid,0,remarks);
+
+	 }
 	function approve(type,id,amt) {
 		 if(type=='APPROVED')
 		 {
@@ -587,7 +638,10 @@
 		 }
 		 else if(type=='PENDING')
 		 {
-		 	   ajaxapprove(type,id,0,'remarks');
+		 	//alert('hod approved');
+		 	$('#hodaprvid').val(id);
+		 	$("#hodaprvmodal").modal('show');
+		 	   //ajaxapprove(type,id,0,'remarks');
 		 }
 		 else if(type=='PARTIALLY APPROVED')
 		 {
@@ -607,7 +661,8 @@
 
 	function ajaxapprove(type,id,amt,remarks)
 	{
-         	 $.ajaxSetup({
+		//alert(remarks);
+	    $.ajaxSetup({
             headers:{
                 'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
             }
@@ -617,7 +672,7 @@
               $.ajax({
                type:'POST',
               
-               url:'{{url("/ajaxapproveadmin")}}',
+               url:'{{url("/ajaxapprovehod")}}',
               
                data: {
                      "_token": "{{ csrf_token() }}",

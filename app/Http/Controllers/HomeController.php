@@ -638,6 +638,7 @@ public function companydetails(){
                     ->get();
          $users=User::where('usertype','USER')->whereNotIn('id',$userids)->get();
          $hods=User::where('usertype','ADMIN')->get();
+         //return $user;
          return view('userassigntohod',compact('hods','users'));
     }
    public function viewrejectbillsacc()
