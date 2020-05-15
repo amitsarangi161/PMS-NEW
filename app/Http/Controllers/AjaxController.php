@@ -249,7 +249,7 @@ class AjaxController extends Controller
          if($request->type!='CANCELLED')
          {
             $expenseentry->hodremarks=$request->remarks;
-             $expenseentry->approvedby=Auth::id();
+            $expenseentry->approvedby=Auth::id();
          }
          else
          {

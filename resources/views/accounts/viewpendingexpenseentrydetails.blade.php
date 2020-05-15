@@ -166,7 +166,7 @@
 		<td><strong>UPLOADED FILE</strong></td>
 		 <td>
 		 	<a href="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}" target="_blank">
-		 	<img title="click to view the image" style="height:100px;width:150px;" alt="no uploadedfile" src="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}"></a>
+		 	<img title="click to view the image" style="height:50px;width:50px;" alt="no uploadedfile" src="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}"></a>
 		 
 		 	 <a href="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}" download>
 		 	 	<button class="btn"><i class="fa fa-download"></i> Download</button>
@@ -191,7 +191,7 @@
 	</tr>
 	   <tr>
         <tr>
-	   	<td><strong>REMARKS:-</strong></td>
+	   	<td><strong>HOD REMARKS:-</strong></td>
 	   	<td><strong>{{$expenseentry->hodremarks}}</strong></td>
 	   	<td><strong>created_at</strong></td>
 	   	<td><strong>{{$expenseentry->created_at}}</strong></td>
