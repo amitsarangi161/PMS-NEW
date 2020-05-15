@@ -152,6 +152,7 @@ Route::get('/viewnotverifiedreport/{id}','HomeController@viewnotverifiedreport')
 Route::post('/adminverifyreport/{id}','HomeController@adminverifyreport');
 Route::post('/ajaxapprove','AjaxController@ajaxapprove');
 Route::post('/ajaxapproveadmin','AjaxController@ajaxapproveadmin');
+Route::post('/ajaxapprovehod','AjaxController@ajaxapprovehod');
 Route::get('/hod/viewadminprojects','HomeController@viewadminprojects');
 Route::get('/hod/adminprojectdetails/{id}','HomeController@adminprojectdetails');
 Route::get('/projects/adminprojectdetails/{id}','HomeController@adminprojectdetails');

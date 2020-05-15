@@ -71,108 +71,121 @@
 	<div class="table-responsive">
 <table class="table">
 	<tr>
-		<td><strong>EXPENSE ENTRY ID :</strong></td>
-		<td><strong>#{{$expenseentry->id}}</strong></td>
-		<td><strong>FOR EMPLOYEE :</strong></td>
-		<td><strong>{{$expenseentry->for}}</strong></td>
+		<td style="width:25%;"><strong>EXPENSE ENTRY ID :</strong></td>
+		<td style="width:25%;"><strong>#{{$expenseentry->id}}</strong></td>
+		<td style="width:25%;"><strong>FOR EMPLOYEE :</strong></td>
+		<td style="width:25%;"><strong>{{$expenseentry->for}}</strong></td>
 		
 	</tr>
 
 	<tr>
-		<td><strong>PROJECT NAME</strong></td>
+		<td style="width:25%;"><strong>PROJECT NAME</strong></td>
 		@if($expenseentry->projectname!='')
-		<td width="40%"><strong>{{$expenseentry->projectname}}</strong></td>
+		<td style="width:25%;" width="40%"><strong>{{$expenseentry->projectname}}</strong></td>
 		@else
-        <td width="40%"><strong>OTHERS</strong></td>
+        <td style="width:25%;" width="40%"><strong>OTHERS</strong></td>
 		@endif
-		<td><strong>FOR CLIENT</strong></td>
-		<td><strong>{{$expenseentry->clientname}}</strong></td>
+		<td style="width:25%;"><strong>FOR CLIENT</strong></td>
+		<td style="width:25%;"><strong>{{$expenseentry->clientname}}</strong></td>
 		
 	</tr>
 	<tr>
-		<td><strong>EXPENSE HEAD NAME</strong></td>
-		<td><strong>{{$expenseentry->expenseheadname}}</strong></td>
-		<td><strong>PARTICULAR NAME</strong></td>
-		<td><strong>{{$expenseentry->particularname}}</strong></td>
+		<td style="width:25%;"><strong>EXPENSE HEAD NAME</strong></td>
+		<td style="width:25%;"><strong>{{$expenseentry->expenseheadname}}</strong></td>
+		<td style="width:25%;"><strong>PARTICULAR NAME</strong></td>
+		<td style="width:25%;"><strong>{{$expenseentry->particularname}}</strong></td>
 		
 	</tr>
 	<tr>
-		<td><strong>VENDOR NAME</strong></td>
-		<td><strong>{{$expenseentry->vendorname}}</strong></td>
-		<td><strong>AMOUNT</strong></td>
-		<td style="background-color: chartreuse;"><strong>{{$expenseentry->amount}}</strong></td>
+		<td style="width:25%;"><strong>VENDOR NAME</strong></td>
+		<td style="width:25%;"><strong>{{$expenseentry->vendorname}}</strong></td>
+		<td style="width:25%;"><strong>AMOUNT</strong></td>
+		<td style="width:25%;" style="background-color: chartreuse;"><strong>{{$expenseentry->amount}}</strong></td>
 		
 	</tr>
 
 	<tr>
-		<td><strong>APPROVAL AMOUNT</strong></td>
-		<td><strong>{{$expenseentry->approvalamount}}</strong></td>
-		<td><strong>APPROVED BY</strong></td>
-		<td><strong>{{$expenseentry->approvedbyname}}</strong></td>
+		<td style="width:25%;"><strong>APPROVAL AMOUNT</strong></td>
+		<td style="width:25%;"><strong>{{$expenseentry->approvalamount}}</strong></td>
+		<td style="width:25%;"><strong>APPROVED BY</strong></td>
+		<td style="width:25%;"><strong>{{$expenseentry->approvedbyname}}</strong></td>
 		
 	</tr>
 	@if($expenseentry->version=='NEW')
      @if($expenseentry->type!="OTHERS")
      <tr class="bg-info">
-		<td><strong>DATE FROM</strong></td>
-		<td ><strong>{{$expenseentry->fromdate}}</strong></td>
-		<td><strong>DATE TO</strong></td>
-		<td ><strong>{{$expenseentry->todate}}</strong></td>
+		<td style="width:25%;"><strong>DATE FROM</strong></td>
+		<td style="width:25%;" ><strong>{{$expenseentry->fromdate}}</strong></td>
+		<td style="width:25%;"><strong>DATE TO</strong></td>
+		<td style="width:25%;" ><strong>{{$expenseentry->todate}}</strong></td>
 		
 	</tr>
 	@else
 	<tr class="bg-info">
-		<td><strong>FOR DATE</strong></td>
-		<td ><strong>{{$expenseentry->date}}</strong></td>
-		<td></td>
-		<td ></td>
+		<td style="width:25%;"><strong>FOR DATE</strong></td>
+		<td style="width:25%;" ><strong>{{$expenseentry->date}}</strong></td>
+		<td style="width:25%;"></td>
+		<td style="width:25%;" ></td>
 		
 	</tr>
 
 	@endif
 	@else
 	<tr class="bg-info">
-		<td><strong>DATE FROM</strong></td>
-		<td ><strong>{{$expenseentry->fromdate}}</strong></td>
-		<td><strong>DATE TO</strong></td>
-		<td ><strong>{{$expenseentry->todate}}</strong></td>
+		<td style="width:25%;"><strong>DATE FROM</strong></td>
+		<td style="width:25%;" ><strong>{{$expenseentry->fromdate}}</strong></td>
+		<td style="width:25%;"><strong>DATE TO</strong></td>
+		<td style="width:25%;" ><strong>{{$expenseentry->todate}}</strong></td>
 		
 	</tr>
     @endif
 
 	<tr>
-		<td><strong>STATUS</strong></td>
-		<td><strong><span class="label label-warning">{{$expenseentry->status}}</span></strong></td>
+		<td style="width:25%;"><strong>STATUS</strong></td>
+		<td style="width:25%;"><strong><span class="label label-warning">{{$expenseentry->status}}</span></strong></td>
 		
-		 <td><strong>TYPE OF EXPENSES</strong></td>
-		<td><strong><span class="label label-warning">{{$expenseentry->type}}</span></strong></td>
+		 <td style="width:25%;"><strong>TYPE OF EXPENSES</strong></td>
+		<td style="width:25%;"><strong><span class="label label-warning">{{$expenseentry->type}}</span></strong></td>
 	</tr>
 	<tr>
-	    <td><strong>DESCRIPTION</strong></td>
+	    <td style="width:25%;"><strong>DESCRIPTION</strong></td>
 	    @if($expenseentry->towallet=='YES')
-	    <td style="background-color: skyblue;"><strong>{{$expenseentry->description}} ||Requested to Transfer the balance to wallet.</strong></td>
+	    <td style="width:25%;" style="background-color: skyblue;"><strong>{{$expenseentry->description}} ||Requested to Transfer the balance to wallet.</strong></td>
 	    @else
-         <td style="background-color: skyblue;"><strong>{{$expenseentry->description}}</strong></td>
+         <td style="width:25%;" style="background-color: skyblue;"><strong>{{$expenseentry->description}}</strong></td>
 	    @endif
-	    <td><strong>TRANSFER TO WALLET REQUEST</strong></td>
-	    <td class="bg-gray"><strong>{{$expenseentry->towallet}}</strong></td>
+	    <td style="width:25%;"><strong>TRANSFER TO WALLET REQUEST</strong></td>
+	    <td style="width:25%;" class="bg-gray"><strong>{{$expenseentry->towallet}}</strong></td>
 	</tr>
 	<tr>
-		<td><strong>UPLOADED FILE</strong></td>
-		 <td>
+		<td style="width:25%;"><strong>UPLOADED FILE</strong></td>
+		 <td style="width:25%;">
 		 	<a href="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}" target="_blank">
-		 	<img title="click to view the image" style="height:100px;width:150px;" alt="no uploadedfile" src="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}"></a>
+		 	<img title="click to view the image" style="height:60px;width:60px;" alt="no uploadedfile" src="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}"></a>
 		 
 		 	 <a href="{{ asset('/img/expenseuploadedfile/'.$expenseentry->uploadedfile )}}" download>
 		 	 	<button class="btn"><i class="fa fa-download"></i> Download</button>
 		 	 </a>
 		 </td>
-		 <td><strong>APPROVE</strong></td>
+		 <td style="width:25%;"><strong>WRITE REMARKS</strong></td>
+	   	<td style="width:25%;"><input type="text" class="form-control" id="hodremarks" name="hodremarks" placeholder="Remarks for this expenseentry"></td>
+		 
+	</tr>
+        <tr>
+	   	<td style="width:25%;"><strong>HOD NAME:-</strong></td>
+	   	<td style="width:25%;"><strong>{{$expenseentry->hodname}}</strong></td>
+	   	<td style="width:25%;"><strong>created_at</strong></td>
+	   	<td style="width:25%;"><strong>{{$expenseentry->created_at}}</strong></td>
+	   </tr>
+	   <tr>
+	   	<td style="width: 25%;"><!-- <strong>REMARKS:-</strong> --></td>
+	   	<td style="width: 25%;"><!-- <strong>{{$expenseentry->remarks}} --></strong></td>
+	   	<td style="width:25%;"><strong>APPROVE</strong></td>
 		 @if($expenseentry->status != "PENDING" && $expenseentry->towallet=='YES')
 
-        <td> <strong>Can't Revert the Wallet Added Amount</strong></td> 
+        <td style="width:25%;"> <strong>Can't Revert the Wallet Added Amount</strong></td> 
 		 @else
-		 <td>
+		 <td style="width:25%;">
 		 	<select id="approvepending" class="form-control" onchange="approve(this.value,'{{$expenseentry->id}}','{{$expenseentry->amount}}')">
 		 		<option value="">select a type</option>
 		 		<option value="HOD PENDING" {{ ( $expenseentry->status == "HOD PENDING") ? 'selected' : '' }}>HOD PENDING</option>
@@ -182,20 +195,8 @@
 		 	</select>
 		 </td>
 		 @endif
-	</tr>
-	   <tr>
-        <tr>
-	   	<td><strong>REMARKS:-</strong></td>
-	   	<td><strong>{{$expenseentry->remarks}}</strong></td>
-	   	<td><strong>HOD NAME:-</strong></td>
-	   	<td><strong>{{$expenseentry->hodname}}</strong></td>
-
 	   </tr>
-	   <tr>
-	   	<td><strong>created_at</strong></td>
-	   	<td><strong>{{$expenseentry->created_at}}</strong></td>
-	   </tr>
-	 
+	 <tr>
 	   	<td colspan="4" style="text-align: center;">
 	   		 <ul class="pagination">
 	   		 	@foreach($expenseentriespaginations as $expenseentriespagination)
@@ -597,6 +598,41 @@
       
     </div>
   </div>
+  <div class="modal fade" id="hodaprvmodal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Approve With Remarks</h4>
+        </div>
+        <div class="modal-body">
+        	<form action="" method="post">
+        		{{csrf_field()}}
+          <table class="table">
+             <input type="hidden" id="hodaprvid">
+    
+          	<tr>
+          		<td><strong>REMARKS</strong></td>
+          		<td>
+          			<textarea name="aprvremark" id="aprvremark" class="form-control"></textarea>
+          		</td>
+          	</tr>
+          	<tr>
+          		<td colspan="2"><button type="button" onclick="approveexpense();" class="btn btn-success">SUBMIT</button></td>
+          	</tr>
+          
+          </table>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 <script type="text/javascript">
 
@@ -609,6 +645,15 @@
 	 	   ajaxapprove(type,cid,0,remarks);
 
 	 }
+	 function approveexpense()
+	 {   
+           var remarks=$("#aprvremark").val();
+	       var type='PENDING';
+	 	   var hodaprvid=$("#hodaprvid").val();
+
+	 	   ajaxapprove(type,hodaprvid,0,remarks);
+
+	 }
 	function approve(type,id,amt) {
 		 if(type=='APPROVED')
 		 {
@@ -616,7 +661,10 @@
 		 }
 		 else if(type=='PENDING')
 		 {
-		 	   ajaxapprove(type,id,0,'remarks');
+		 	//alert('hod approved');
+		 	$('#hodaprvid').val(id);
+		 	$("#hodaprvmodal").modal('show');
+		 	   //ajaxapprove(type,id,0,'remarks');
 		 }
 		 else if(type=='PARTIALLY APPROVED')
 		 {
@@ -636,7 +684,8 @@
 
 	function ajaxapprove(type,id,amt,remarks)
 	{
-         	 $.ajaxSetup({
+		alert(remarks);
+	    $.ajaxSetup({
             headers:{
                 'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
             }
@@ -646,7 +695,7 @@
               $.ajax({
                type:'POST',
               
-               url:'{{url("/ajaxapproveadmin")}}',
+               url:'{{url("/ajaxapprovehod")}}',
               
                data: {
                      "_token": "{{ csrf_token() }}",
@@ -658,7 +707,7 @@
 
                success:function(data) { 
                
-                      location.reload();
+                      //location.reload();
 
                }
            });

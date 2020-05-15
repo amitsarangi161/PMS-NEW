@@ -192,7 +192,7 @@
 	   <tr>
         <tr>
 	   	<td><strong>REMARKS:-</strong></td>
-	   	<td><strong>{{$expenseentry->remarks}}</strong></td>
+	   	<td><strong>{{$expenseentry->hodremarks}}</strong></td>
 	   	<td><strong>created_at</strong></td>
 	   	<td><strong>{{$expenseentry->created_at}}</strong></td>
 	   </tr>

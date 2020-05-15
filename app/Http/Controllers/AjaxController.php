@@ -239,6 +239,40 @@ class AjaxController extends Controller
 
          return response()->json($expenseentry);
     }
+    public function ajaxapprovehod(Request $request)
+    {
+        //return $request->remarks;
+         $expenseentry=expenseentry::find($request->id);
+         $expenseentry->status=$request->type;
+         $expenseentry->approvalamount=$expenseentry->amount;
+         
+         if($request->type!='CANCELLED')
+         {
+            $expenseentry->hodremarks=$request->remarks;
+             $expenseentry->approvedby=Auth::id();
+         }
+         else
+         {
+              $expenseentry->remarks=$request->remarks;
+              $expenseentry->approvalamount=$request->amt;
+         }
+         $expenseentry->save();
+         $towalletchk=$expenseentry->towallet;
+         $employeeid=$expenseentry->employeeid;
+         if($towalletchk=='YES')
+         {
+             $wallet=new wallet();
+             $wallet->employeeid=$employeeid;
+             $wallet->credit=$expenseentry->amount;
+             $wallet->debit='0';
+             $wallet->rid=$request->id;
+             $wallet->addedby=Auth::id();
+             $wallet->save();
+         }
+         
+
+         return response()->json($expenseentry);
+    }
     public function accountkitverify(Request $request){
      
         // Initialize variables
