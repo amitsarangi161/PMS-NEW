@@ -224,7 +224,25 @@
              <li class="{{ Request::is('mdmain/currentemployeelist') ? 'active' : '' }}"><a href="/mdmain/currentemployeelist"><i class="fa fa-circle-o text-aqua"></i>Employee Database</a></li>
           </ul>
         </li>
-   
+    <li class="{{ Request::is('usermsg*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-envelope"></i> <span>MESSAGE</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+         
+              <span class="label label-danger pull-right" id="countmsg"></span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <!-- <li class="{{ Request::is('usermsg/writemsg') ? 'active' : '' }}"><a href="/usermsg/writemsg"><i class="fa fa-circle-o text-red"></i>SEND A MESSAGE</a></li> -->
+
+            <li class="{{ Request::is('usermsg/mymessages') ? 'active' : '' }}"><a href="/usermsg/mymessages"><i class="fa fa-circle-o text-red"></i>MESSAGES</a></li>
+            
+           
+
+          </ul>
+</li>
+
 
 
 

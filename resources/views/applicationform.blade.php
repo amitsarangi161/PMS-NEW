@@ -29,64 +29,66 @@
 </div> -->
 
 
-<form action="/saveuserrequisitions" method="post">
+<form action="/saveuserrequisitions" method="post" enctype="multipart/form-data">
 	{{csrf_field()}}
-
-	<table class="table table-responsive table-hover table-bordered table-striped">
-      <!-- <tr>
-      	 <td>SELECT EMPLOYEE</td>
-      	 <td>
-      	 	<select class="form-control select2" name="employeeid" required="">
-      	 		<option value="">Select a User</option>
-      	 		@foreach($users as $user)
-               <option value="{{$user->id}}">{{$user->name}}</option>
-
-      	 		@endforeach
-      	 		
-      	 	</select>
-      	 </td>
-      </tr> -->
-
-      <tr>
-      	 <td><strong>SELECT A SITE/PROJECT NAME *</strong></td>
-      	 <td>
-      	 	<select class="form-control select2" id="projectid" onchange="showclient();"  name="projectid" required="">
+<div class="col-sm-12">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>SELECT A SITE/PROJECT NAME *</label>
+          <select class="form-control select2" id="projectid" onchange="showclient();"  name="projectid" required="" style="width: 100%;">
             <option value="">SELECT A PROJECT</option>
                @foreach($projects as $key => $project)
                <option value="{{$project->id}}" title="{{$project->clientname}}">{{$project->projectname}}</option>
                @endforeach
-      	 	</select>
-      	 </td>
-      </tr>
-      <tr>
-      	<td><strong>CLIENT NAME *</strong></td>
-      	<td>
-      		<input type="text" class="form-control" name="clientname" id="clientname" readonly="">
-      	</td>
-      </tr>
-      <tr>
-        <td><strong>DATE FROM *</strong></td>
-        <td><input type="text" class="form-control readonly datepicker" id="fromdate" name="datefrom"  autocomplete="off"  required=""></td>
-       
-        
-      </tr>
-      <tr>
-         <td><strong>DATE TO *</strong></td>
-        <td><input type="text" class="form-control readonly datepicker" id="todate" name="dateto" autocomplete="off"   required="" ></td>
-      </tr>
-      <tr>
-        <td><strong>DESCRIPTION *</strong></td>
-        <td>
+          </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>CLIENT NAME *</label>
+          <input type="text" class="form-control" name="clientname" id="clientname" readonly="">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>DATE FROM *</label>
+          <input type="text" class="form-control readonly datepicker" id="fromdate" name="datefrom"  autocomplete="off"  required="">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>DATE TO *</label>
+          <input type="text" class="form-control readonly datepicker" id="todate" name="dateto" autocomplete="off"   required="">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>DESCRIPTION *</label>
           <textarea class="form-control" name="description1" required></textarea>
-        </td>
-      </tr>
-      <tr>
-        <td><strong>Author Name</strong></td>
-        <td>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Support Document *</label>
+          <input name="supportdocument" onchange="readURL1(this)" type="file">
+          <img id="imgshow1" src="#" alt="No Image Selected" style="height: 60px;width: 50px;">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Author Name *</label>
           <input type="text" class="form-control" name="reqaddby" required="">
-        </td>
-      </tr>
-	</table>
+      </div>
+    </div>
+  </div>
+</div>
 
 	<table class="table table-responsive table-hover table-bordered table-striped">
 	<tr class="bg-navy">
@@ -192,7 +194,17 @@
 
 
 <script type="text/javascript">
-  
+  function readURL1(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imgshow1').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+  }
 	function showclient()
 	{
 		var cn=$("#projectid option:selected" ).attr("title");

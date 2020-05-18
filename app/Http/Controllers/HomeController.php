@@ -1955,7 +1955,7 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
     }
      public function saverequisitions(Request $request)
     {
-        
+        //return $request->all();
         $requisitionheader=new requisitionheader();
         $requisitionheader->employeeid=Auth::id();
         $requisitionheader->description=$request->description1;
@@ -1966,6 +1966,15 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
         $requisitionheader->userid=Auth::id();
         $requisitionheader->status="PENDING MGR";
         $requisitionheader->reqaddby=$request->reqaddby;
+        $rarefile = $request->file('supportdocument');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/requistion/supportdocument";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $requisitionheader->supportdocument = $uplogoimg;
+        }
         $requisitionheader->save();
         $rid=$requisitionheader->id;
         $count=count($request->expenseheadid);

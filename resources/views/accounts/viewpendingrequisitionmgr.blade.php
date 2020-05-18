@@ -228,6 +228,16 @@ $balancep=$cost-$payment;
       <td><strong>DESCRIPTION</strong></td>
       <td>{{$requisitionheader->description}}</td>
       </tr>
+      <tr>
+         <td><strong>Author Name</strong></td>
+         <td>{{$requisitionheader->reqaddby}}</td>
+         <td>Support Document</td>
+         <td>
+              <a href="{{asset('/image/requistion/supportdocument/'.$requisitionheader->supportdocument)}}" class="btn btn-primary btn-sm" download style="color: #fff;">
+               <span class="glyphicon glyphicon-download-alt"></span> Download
+               </a>
+         </td>
+      </tr>
     
   </table>
   </div>
