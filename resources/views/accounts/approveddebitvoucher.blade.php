@@ -40,6 +40,7 @@
 		<th>Final Amount</th>
 		<th>Approval Amount</th>
 		<th>Paid Amount</th>
+    <th>Balance Amount</th>
 		<th>Inv. Scan</th>
 		<th>Status</th>
     <th>Created_at</th>
@@ -74,6 +75,9 @@
           	<td>{{$provider::moneyFormatIndia($debitvoucher['data']['finalamount'])}}</td>
           	<td>{{$provider::moneyFormatIndia($debitvoucher['data']['approvalamount'])}}</td>
           	<td>{{$provider::moneyFormatIndia($debitvoucher['paid'])}}</td>
+            <td style="background-color: #77d542;">
+               {{$provider::moneyFormatIndia($debitvoucher['data']['approvalamount']-$debitvoucher['paid'])}}
+            </td>
           	<td>
           		 <a href="{{asset('img/debitvoucher/'.$debitvoucher['data']['invoicecopy'])}}" target="_blank">
           		<img style="height:50px;width:50px;" src="{{asset('img/debitvoucher/'.$debitvoucher['data']['invoicecopy'])}}" alt="click here" id="imgshow">
