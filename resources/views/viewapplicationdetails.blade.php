@@ -96,6 +96,16 @@ $bal=($requisitionheader->approvalamount)-$paid;
 		  	 <td></td>
 		  </tr>
 		  @endif
+		  <tr>
+		  	 <td><strong>Author Name</strong></td>
+		  	 <td>{{$requisitionheader->reqaddby}}</td>
+		  	 <td>Support Document</td>
+		  	 <td>
+              <a href="{{asset('/image/requistion/supportdocument/'.$requisitionheader->supportdocument)}}" class="btn btn-primary btn-sm" download>
+               <span class="glyphicon glyphicon-download-alt"></span> Download
+               </a>
+		  	 </td>
+		  </tr>
 		
 	</table>
 	
