@@ -366,6 +366,7 @@ Route::get('/viewpendingexpenseentrydetailsadmin/{id}','AccountController@viewpe
 
 Route::get('/viewpendingexpenseentrydetailsadmin/{id}','AccountController@viewpendingexpenseentrydetailsadmin');
 Route::get('/viewdetailshodexpenseentry/{id}','AccountController@viewdetailshodexpenseentry');
+Route::get('/viewdetailshodexpenseentrybydate/{empid}/{dt}','AccountController@viewdetailshodexpenseentrybydate');
 
 Route::get('/viewuserexpenseentrydetails/{id}','HomeController@viewexpenseentrydetails');
 
@@ -659,6 +660,9 @@ Route::get('/vouchers/pendingdebitvoucheradmin','AccountController@pendingdebitv
 Route::post('/requisitionpaymentschedule','AccountController@requisitionpaymentschedule');
 Route::post('/drpaymentschedule','AccountController@drpaymentschedule');
 
+
+Route::get('/adminpendingexpenseentryview/{empid}','AccountController@adminpendingexpenseentryview');
+Route::get('/viewdetailsadminexpenseentrybydate/{empid}/{dt}','AccountController@viewdetailsadminexpenseentrybydate');
 //-------------END PMS ACCOUNT ROUTE------------//
 
 //-------------PMS MD ROUTE------------//

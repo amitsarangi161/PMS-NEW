@@ -54,6 +54,115 @@ use App\tempsalary;
 
 class AccountController extends Controller
 {  
+public function viewdetailsadminexpenseentrybydate($empid,$dt)
+       {
+        //return $dt;
+          $expenseentry=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname','u4.name as hodname')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
+                      ->leftJoin('users as u3','expenseentries.approvedby','=','u3.id')
+                      ->leftJoin('projects','expenseentries.projectid','=','projects.id')
+                      ->leftJoin('clients','projects.clientid','=','clients.id')
+                      ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
+                      ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
+                       ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
+                       ->leftJoin('userunderhods','expenseentries.employeeid','=','userunderhods.userid')
+                       ->leftJoin('users as u4','userunderhods.hodid','=','u4.id')
+                       ->where('expenseentries.employeeid',$empid)
+                      ->where('expenseentries.date',$dt)
+                      ->where('expenseentries.status','PENDING')
+                      ->get();
+  //return $expenseentry;
+  //return $empid;
+           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
+                      ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                       ->where('requisitionpayments.paymentstatus','PAID')
+                       ->where('requisitionpayments.paymenttype','!=','WALLET')
+                      ->where('requisitionheaders.employeeid',$empid)
+                      ->groupBy('requisitionpayments.id')
+                      ->get();
+          //return $requisition;
+          $totalamt=$requisition->sum('paidamt');
+        
+        $entries=expenseentry::where('employeeid',$empid)
+                ->where('towallet','!=','YES')
+                ->get();
+          $totalamtentry=$entries->sum('approvalamount');
+          $wallet=wallet::where('employeeid',$empid)
+                ->get();
+         $walletcr=$wallet->sum('credit');
+         $walletdr=$wallet->sum('debit');
+         $walletbalance=$walletcr-$walletdr;
+
+          $bal=($totalamt-$totalamtentry)-$walletbalance;
+
+          $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
+ 
+           //return $empid;;
+           return view('accounts.viewdetailsadminexpenseentrybydate',compact('expenseentry','totalamt','totalamtentry','bal','walletbalance','empid'));
+       }
+      public function adminpendingexpenseentryview($empid)
+    {
+       
+         $expenseentries=expenseentry::select('expenseentries.*','u1.name as for')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->where('expenseentries.status','PENDING')
+                      ->where('expenseentries.employeeid',$empid)
+                      ->groupBy('expenseentries.date')
+                      ->get();
+//return $expenseentries;
+          return view('accounts.adminpendingexpenseentryview',compact('expenseentries'));
+    } 
+
+  public function viewdetailshodexpenseentrybydate($empid,$dt)
+       {
+        //return $dt;
+          $expenseentry=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname','u4.name as hodname')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
+                      ->leftJoin('users as u3','expenseentries.approvedby','=','u3.id')
+                      ->leftJoin('projects','expenseentries.projectid','=','projects.id')
+                      ->leftJoin('clients','projects.clientid','=','clients.id')
+                      ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
+                      ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
+                       ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
+                       ->leftJoin('userunderhods','expenseentries.employeeid','=','userunderhods.userid')
+                       ->leftJoin('users as u4','userunderhods.hodid','=','u4.id')
+                       ->where('expenseentries.employeeid',$empid)
+                      ->where('expenseentries.date',$dt)
+                      ->where('expenseentries.status','HOD PENDING')
+                      ->get();
+  //return $expenseentry;
+  //return $empid;
+           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
+                      ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                       ->where('requisitionpayments.paymentstatus','PAID')
+                       ->where('requisitionpayments.paymenttype','!=','WALLET')
+                      ->where('requisitionheaders.employeeid',$empid)
+                      ->groupBy('requisitionpayments.id')
+                      ->get();
+          //return $requisition;
+          $totalamt=$requisition->sum('paidamt');
+        
+        $entries=expenseentry::where('employeeid',$empid)
+                ->where('towallet','!=','YES')
+                ->get();
+          $totalamtentry=$entries->sum('approvalamount');
+          $wallet=wallet::where('employeeid',$empid)
+                ->get();
+         $walletcr=$wallet->sum('credit');
+         $walletdr=$wallet->sum('debit');
+         $walletbalance=$walletcr-$walletdr;
+
+          $bal=($totalamt-$totalamtentry)-$walletbalance;
+
+          $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
+ 
+           //return $empid;;
+           return view('accounts.viewdetailshodexpenseentrybydate',compact('expenseentry','totalamt','totalamtentry','bal','walletbalance','empid'));
+       }
   public function drpaymentschedule(Request $request){
 
     $drscheduledate=debitvoucherpayment::find($request->paymentid);
@@ -636,7 +745,7 @@ class AccountController extends Controller
 
   public function pendinghodexpenseentry()
   {
-            $expenseentries=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname','u4.name as hodname')
+            /*$expenseentries=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname','u4.name as hodname')
                       ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
                       ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
                        ->leftJoin('users as u3','expenseentries.approvedby','=','u3.id')
@@ -649,7 +758,12 @@ class AccountController extends Controller
                        ->leftJoin('users as u4','userunderhods.hodid','=','u4.id')
 
                        ->where('expenseentries.status','HOD PENDING')
-                      ->groupBy('expenseentries.id')
+                      ->groupBy('expenseentries.employeeid')
+                      ->get();*/
+        $expenseentries=expenseentry::select('expenseentries.*','u1.name as for')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->where('expenseentries.status','HOD PENDING')
+                      ->groupBy('expenseentries.employeeid')
                       ->get();
 //return $expenseentries;
           return view('accounts.pendinghodexpenseentry',compact('expenseentries'));
@@ -2058,8 +2172,7 @@ public function no_to_words($no)
     }
     public function pendingexpenseentrydetailview($empid)
     {
-      
-        $expenseentries=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname')
+        /*$expenseentries=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname')
                       ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
                       ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
                        ->leftJoin('users as u3','expenseentries.approvedby','=','u3.id')
@@ -2068,12 +2181,18 @@ public function no_to_words($no)
                       ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
                       ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
                        ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
-                       ->where('expenseentries.status','PENDING')
+                       ->where('expenseentries.status','HOD PENDING')
                        ->where('expenseentries.employeeid',$empid)
-                      ->groupBy('expenseentries.id')
+                      ->groupBy('expenseentries.created_at')
+                      ->get();*/
+         $expenseentries=expenseentry::select('expenseentries.*','u1.name as for')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->where('expenseentries.status','HOD PENDING')
+                      ->where('expenseentries.employeeid',$empid)
+                      ->groupBy('expenseentries.date')
                       ->get();
-
-          return view('accounts.pendingexpenseentrydetailview',compact('expenseentries'));
+//return $expenseentries;
+          return view('accounts.pendinghodexpenseentrybydates',compact('expenseentries'));
     } 
     public function walletpaidexpenseentrydetailview($empid)
     {
@@ -3567,6 +3686,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
            //return $expenseentry;
           return view('accounts.viewdetailshodexpenseentry',compact('vehicledetail','expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr','paidamounts','totalamt','totalamtentry','bal','walletbalance'));
        }
+
 
        public function viewpendingexpenseentrydetailsadmin($id)
        {

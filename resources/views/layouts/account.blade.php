@@ -946,6 +946,10 @@ var jqf = $.noConflict();
      "iDisplayLength": 25,
      "order": [[ 0, "desc" ]]
   });
+ $('.mydatatable').DataTable({
+     "iDisplayLength": 25,
+     //"order": [[ 0, "desc" ]]
+  });
  $('.datatablescroll').DataTable({
 
      "order": [[ 0, "desc" ]],

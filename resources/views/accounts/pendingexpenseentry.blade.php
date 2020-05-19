@@ -18,7 +18,7 @@
 		<tr class="bg-navy" style="font-size: 10px;">
 			<th>ID</th>
 			<th>EMPLOYEE</th>
-      <th>VIEW</th>
+      		<th>VIEW</th>
 
 
 		</tr>
@@ -26,9 +26,9 @@
 	<tbody>
     @foreach($expenseentries as $expenseentry)
 		<tr style="font-size: 12px;">
-        <td><a href="/pendingexpenseentrydetailview/{{$expenseentry->employeeid}}" target="_blank" class="btn btn-info">{{$expenseentry->id}}</a></td>
+        <td><a href="/adminpendingexpenseentryview/{{$expenseentry->employeeid}}" target="_blank" class="btn btn-info">{{$expenseentry->id}}</a></td>
         <td>{{$expenseentry->for}}</td>
-        <td><a href="/pendingexpenseentrydetailview/{{$expenseentry->employeeid}}" target="_blank" class="btn btn-info">VIEW</a></td>
+        <td><a href="/adminpendingexpenseentryview/{{$expenseentry->employeeid}}" target="_blank" class="btn btn-info">VIEW</a></td>
 
 		</tr>
     @endforeach
