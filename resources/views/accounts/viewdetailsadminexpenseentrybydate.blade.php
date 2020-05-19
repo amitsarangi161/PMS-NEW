@@ -31,7 +31,7 @@
   
 </div>
 @foreach($expenseentry as $expenseentry)
-<div class="well">
+<div class="well countwell">
 	<div class="table-responsive">
 <table class="table">
 	<tr>
@@ -390,7 +390,14 @@
 
                success:function(data) { 
                
-                      location.reload();
+                       var count = $('.countwell').length;
+                       alert(count);
+                   if(count==1){
+                   	 window.location = "/adminpendingexpenseentryview/"+data.employeeid;
+                   }
+                  else{
+                  	window.location = "/viewdetailsadminexpenseentrybydate/"+data.employeeid+"/"+data.date;
+                  }
 
                }
            });

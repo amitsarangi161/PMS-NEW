@@ -204,7 +204,7 @@ class AjaxController extends Controller
          }
          
 
-         return "1";
+        return response()->json($expenseentry);
     }public function ajaxapproveadmin(Request $request)
     {
         
