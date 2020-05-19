@@ -356,6 +356,42 @@
 
 
 <script type="text/javascript">
+  $(document).ready(function(){
+          
+   countunreadmessage();
+
+
+     setInterval(function(){
+     countunreadmessage();
+     checkwalletbalance();
+ }, 100000);
+   });
+  function countunreadmessage()
+       {
+           $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+
+           $.ajax({
+               type:'POST',
+              
+               url:'{{url("/ajaxcountunreadmessage")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     
+                     },
+
+               success:function(data) { 
+                     $("#countmsg").html(data);
+                     $("#countmsg111").html(data);
+               }
+               
+             });
+       }
+
 
   window.onpageshow = function(event) {
 if (event.persisted) {

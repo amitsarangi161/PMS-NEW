@@ -456,6 +456,17 @@
 
 
 <script type="text/javascript">
+  $(document).ready(function(){
+          
+   countunreadmessage();
+
+
+     setInterval(function(){
+     countunreadmessage();
+     checkwalletbalance();
+ }, 100000);
+
+       });
  function countunreadmessage()
        {
            $.ajaxSetup({

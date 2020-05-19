@@ -630,7 +630,7 @@
 <!-- END TEMP SALARY -->
 
 <!-- Reports -->
-        @if(Auth::user()->usertype=='MASTER ADMIN')
+   
 
         <li class="{{ Request::is('reports*') ? 'active' : '' }} treeview">
                   <a href="#">
@@ -642,7 +642,7 @@
                   <ul class="treeview-menu">
                      <li class="{{ Request::is('reports/userwisepaymentreports') ? 'active' : '' }}"><a href="/reports/userwisepaymentreports"><i class="fa fa-circle-o text-red"></i>USER WISE PAYMENT REPORT</a></li>
                      <li class="{{ Request::is('reports/projectwisepaymentreports') ? 'active' : '' }}"><a href="/reports/projectwisepaymentreports"><i class="fa fa-circle-o text-red"></i>PROJECT WISE PAYMENT REPORT</a></li>
-                    <li class="{{ Request::is('reports/paymentreports') ? 'active' : '' }}"><a href="/reports/paymentreports"><i class="fa fa-circle-o text-red"></i> PAYMENT REPORT</a></li>
+                   <!--  <li class="{{ Request::is('reports/paymentreports') ? 'active' : '' }}"><a href="/reports/paymentreports"><i class="fa fa-circle-o text-red"></i> PAYMENT REPORT</a></li> -->
 
                     <li class="{{ Request::is('reports/transactionreport') ? 'active' : '' }}"><a href="/reports/transactionreport"><i class="fa fa-circle-o text-red"></i>TRANSACTION REPORT</a></li>
 
@@ -650,8 +650,7 @@
 
                   </ul>
         </li>
-        @endif
-<!-- End Reports -->
+    
        
  <li class="{{ Request::is('usermsg*') ? 'active' : '' }} treeview">
           <a href="#">

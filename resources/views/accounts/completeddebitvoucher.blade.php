@@ -32,6 +32,7 @@
 		<th>IT deduction</th>
 		<th>Other deduction</th>
 		<th>Final Amount</th>
+    <th>Approval Amount</th>
 		<th>Inv. Scan</th>
 		<th>Status</th>
 		<th>VIEW</th>
@@ -63,6 +64,7 @@
           	<td>{{$provider::moneyFormatIndia($debitvoucher->itdeduction)}}</td>
           	<td>{{$provider::moneyFormatIndia($debitvoucher->otherdeduction)}}</td>
           	<td>{{$provider::moneyFormatIndia($debitvoucher->finalamount)}}</td>
+            <td>{{$provider::moneyFormatIndia($debitvoucher->approvalamount)}}</td>
           	
           
           	<td>

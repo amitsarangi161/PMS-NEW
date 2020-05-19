@@ -165,7 +165,7 @@
 	    		<td width="50%"><input type="text" class="form-control" value="{{$debitvoucherheader->finalamount}}" id="finalamount" name="finalamount" readonly="" required=""></td> 
 	    		
 	    	  </tr>
-	    	    <tr>
+	    	    <tr style="visibility:hidden;">
 	    		<td width="50%"><strong>Approval Amount</strong></td>
 	    		<td width="50%"><input type="text" class="form-control" value="{{$debitvoucherheader->finalamount}}" id="approvalamount" name="approvalamount" required=""></td> 
 	    		
