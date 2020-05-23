@@ -16,6 +16,7 @@
         <th>NAME</th>
      		<th>AMOUNT</th>
      		<th>PAYMENT TYPE</th>
+        <th>CHEQUE NO</th>
      		<th>REMARKS</th>
         <th>PAYMENT STATUS</th>
      		<th>DATE OF PAYMENT</th>
@@ -33,6 +34,7 @@
            	  <td>{{$requisitionpayment->name}}</td>
            	  <td>{{$requisitionpayment->amount}}</td>
            	  <td>{{$requisitionpayment->paymenttype}}</td>
+              <td>{{$requisitionpayment->transactionid}}</td>
            	  <td>{{$requisitionpayment->remarks}}</td>
               <td>{{$requisitionpayment->paymentstatus}}</td>
            	  <td>{{$requisitionpayment->dateofpayment}}</td>

@@ -154,7 +154,7 @@
 		 @endif
 	</tr>
 
-        <tr>
+        <tr style="background-color: yellow;">
 	   	<td><strong>HOD REMARKS:-</strong></td>
 	   	<td><strong>{{$expenseentry->hodremarks}}</strong></td>
 	   	<td><strong>created_at</strong></td>

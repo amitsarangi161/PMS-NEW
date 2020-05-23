@@ -3421,6 +3421,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
        {
         $requisitionpayment=requisitionpayment::find($request->pid);
         $requisitionpayment->dateofpayment=$request->dateofpayment;
+        $requisitionpayment->transactionid=$request->transactionid;
         $requisitionpayment->paymentstatus="PAID";
         $requisitionpayment->save();
 

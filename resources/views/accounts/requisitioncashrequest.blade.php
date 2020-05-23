@@ -114,6 +114,10 @@
             <tr>
             <td><strong>DATE OF PAYMENT</strong></td>
             <td><input type="text" placeholder="Date of Payment" class="form-control datepicker1" name="dateofpayment" autocomplete="off" readonly="" required=""></td>
+            </tr>
+          <tr>
+            <td><strong>CHEQUE NO.</strong></td>
+            <td><input type="text" placeholder="Enter Trancaction Id" class="form-control" name="transactionid" value="NA" required=""></td>
           </tr>
           <tr>
             <td colspan="2" style="text-align: right;"><button type="submit" class="btn btn-success" onclick="return confirm('Are You confirm to proceed?')">PAID</button></td>

@@ -805,7 +805,6 @@ if (event.persisted) {
         dom: 'Bfrtip',
         "order": [[ 0, "desc" ]],
         "iDisplayLength": 25,
-
         buttons: [
             {
                 extend: 'pdfHtml5',

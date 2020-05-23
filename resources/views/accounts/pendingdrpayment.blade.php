@@ -8,7 +8,7 @@
 	</tr>
 </table>
 <div class="table-responsive">
-<table class="table table-responsive table-hover table-bordered table-striped datatable">
+<table class="table table-responsive table-hover table-bordered table-striped datatable1">
      <thead>
      	<tr class="bg-navy">
      		<td>ID</td>
