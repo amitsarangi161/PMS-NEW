@@ -175,6 +175,12 @@
             <td><strong>TRANACTION ID</strong></td>
             <td><input type="text" placeholder="Enter Trancaction Id" class="form-control" name="transactionid" required=""></td>
           </tr>
+          @if($requisitionpayments->paymenttype=='CHEQUE')
+          <tr>
+            <td><strong>CHEQUE NO</strong></td>
+            <td><input type="number" placeholder="Enter CHEQUE NO" class="form-control" name="chequeno" required=""></td>
+          </tr>
+          @endif
             <tr>
             <td><strong>DATE OF PAYMENT</strong></td>
             <td><input type="text" placeholder="Date of Payment" class="form-control datepicker1" name="dateofpayment" autocomplete="off" readonly="" required=""></td>

@@ -511,25 +511,25 @@
             </span>
           </a>
           <ul class="treeview-menu payrequistion">
-              <li class="{{ Request::is('prb/requisitiononlinepending') ? 'active' : '' }}"><a href="/prb/requisitiononlinepending"><i class="fa fa-circle-o text-blue"></i>PENDING REQUISITION BANK
+              <li class="{{ Request::is('prb/requisitiononlinepending') ? 'active' : '' }}"><a href="/prb/requisitiononlinepending"><i class="fa fa-circle-o text-blue"></i>PENDING REQUISITION BANK/CHEQUE
               <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{$pending_online_req_count}}</span>
+                  <span class="label label-success pull-right">{{$pending_online_req_count+$pending_cheque_req_count}}</span>
                 </span></a></li>
            
            <li class="{{ Request::is('prb/requisitiononlinepaid') ? 'active' : '' }}"><a href="/prb/requisitiononlinepaid"><i class="fa fa-circle-o text-blue"></i>PAID REQUISITION BANK
            <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{$paid_online_req_count}}</span>
+                  <span class="label label-success pull-right">{{$paid_online_req_count+$paid_cheque_req_count}}</span>
                 </span></a>
             </li>
-            <li class="{{ Request::is('prb/requisitioncashrequest') ? 'active' : '' }}"><a href="/prb/requisitioncashrequest"><i class="fa fa-circle-o text-blue"></i>REQUISITION CASH/CHEQUE REQUEST
+            <li class="{{ Request::is('prb/requisitioncashrequest') ? 'active' : '' }}"><a href="/prb/requisitioncashrequest"><i class="fa fa-circle-o text-blue"></i>REQUISITION CASH REQUEST
              <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{$pending_cheque_req_count+$pending_cash_req_count}}</span>
+                  <span class="label label-success pull-right">{{$pending_cash_req_count}}</span>
                 </span>
               </a></li>
            
-           <li class="{{ Request::is('prb/viewpaidrequisitioncash') ? 'active' : '' }}"><a href="/prb/viewpaidrequisitioncash"><i class="fa fa-circle-o text-blue"></i>VIEW PAID REQUISITION(CASH/CHEQUE)
+           <li class="{{ Request::is('prb/viewpaidrequisitioncash') ? 'active' : '' }}"><a href="/prb/viewpaidrequisitioncash"><i class="fa fa-circle-o text-blue"></i>VIEW PAID REQUISITION CASH
             <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{$paid_cheque_req_count+$paid_cash_req_count}}</span>
+                  <span class="label label-success pull-right">{{$paid_cash_req_count}}</span>
                 </span></a></li>
           </ul>
         </li>

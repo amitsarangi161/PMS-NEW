@@ -28,10 +28,10 @@
 
     @foreach($expenseentries as $key=>$expenseentry)
 		<tr style="font-size: 12px;">
-        <td><a href="/viewdetailshodexpenseentrybydate/{{$expenseentry->employeeid}}/{{$expenseentry->date}}" target="_blank" class="btn btn-info">{{++$key}}</a></td>
+        <td><a href="/viewdetailshodexpenseentrybydate/{{$expenseentry->employeeid}}/{{$expenseentry->date}}" class="btn btn-info">{{++$key}}</a></td>
         <td>{{$expenseentry->for}}</td>
         <td>{{$expenseentry->date}}</td>
-        <td><a href="/viewdetailshodexpenseentrybydate/{{$expenseentry->employeeid}}/{{$expenseentry->date}}" target="_blank" class="btn btn-info">VIEW</a></td>
+        <td><a href="/viewdetailshodexpenseentrybydate/{{$expenseentry->employeeid}}/{{$expenseentry->date}}" class="btn btn-info">VIEW</a></td>
 
 		</tr>
     @endforeach

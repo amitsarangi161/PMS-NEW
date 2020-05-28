@@ -3369,8 +3369,11 @@ public function approvedebitvoucheradmin(Request $request,$id)
            $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
-             ->where('paymenttype','=','ONLINE PAYMENT')
              ->where('requisitionpayments.paymentstatus','PAID')
+             ->where(function ($query) {
+                 $query->where('requisitionpayments.paymenttype', '=','ONLINE PAYMENT')
+                 ->orWhere('requisitionpayments.paymenttype', '=', 'CHEQUE');
+              })
              ->get();
              //return $requisitionpayments;
            return view('accounts.cashierpaidrequsitionamt',compact('requisitionpayments'));
@@ -3408,11 +3411,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PAID')
-             ->where(function ($query) {
-                 $query->where('requisitionpayments.paymenttype', '=','CASH')
-                 ->orWhere('requisitionpayments.paymenttype', '=', 'CHEQUE');
-              })
-             
+             ->where('requisitionpayments.paymenttype', '=','CASH')
              ->get();
            return view('accounts.viewpaidrequisitioncash',compact('requisitionpayments'));
        }
@@ -3442,13 +3441,8 @@ public function approvedebitvoucheradmin(Request $request,$id)
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
               ->where('requisitionpayments.paymentstatus','PENDING')
-              
-               ->where(function ($query) {
-                 $query->where('requisitionpayments.paymenttype', '=','CASH')
-                 ->orWhere('requisitionpayments.paymenttype', '=', 'CHEQUE');
-              })
-            
-             ->get();
+              ->where('requisitionpayments.paymenttype', '=','CASH')
+              ->get();
              //return $requisitionpayments;
           return view('accounts.requisitioncashrequest',compact('requisitionpayments'));
       }
@@ -3458,6 +3452,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
         $requisitionpayment->paymentstatus="PAID";
         $requisitionpayment->bankid=$request->bank;
         $requisitionpayment->transactionid=$request->transactionid;
+        $requisitionpayment->chequeno=$request->chequeno;
         $requisitionpayment->dateofpayment=$request->dateofpayment;
         $requisitionpayment->save();
 
@@ -3485,7 +3480,10 @@ public function approvedebitvoucheradmin(Request $request,$id)
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PENDING')
-             ->where('requisitionpayments.paymenttype','ONLINE PAYMENT')
+              ->where(function ($query) {
+                 $query->where('requisitionpayments.paymenttype', '=','ONLINE PAYMENT')
+                 ->orWhere('requisitionpayments.paymenttype', '=', 'CHEQUE');
+              })
              ->get();
 
             return view('accounts.viewallbankrequisitionpayment',compact('requisitionpayments'));
