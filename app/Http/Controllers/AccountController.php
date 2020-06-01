@@ -605,23 +605,58 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
 
   }
   public function saveaddledger(Request $request){
+    $date=Openingbalance::where('bankid',$request->bankid)->pluck('date')->first();
+   if($date>=$request->date)
+   {
     $ledger= new Bankledger();
     $ledger->bankid=$request->bankid;
     if($request->type == 'CR'){
-    $ledger->cr=$request->type;
+    $ledger->cr=$request->amount;
     $ledger->dr=0;
     }else{
-    $ledger->dr=$request->type;
+    $ledger->dr=$request->amount;
     $ledger->cr=0;
     }
     $ledger->date=$request->date;
-    $ledger->amount=$request->amount;
     $ledger->save();
     Session::flash('msg','Account Data Updated Successfully');
+   }
+   else
+   {
+      Session::flash('err','Failed to Insert');
+   }
+
+    
+    
     return back();
   }
   public function viewallledger(){
     
+    $banks=Openingbalance::select('openingbalances.*','banks.bankname','useraccounts.acno','useraccounts.accountholdername')
+            ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
+            ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+            ->get();
+    $custarr=array();
+
+    if($banks)
+    {
+        foreach ($banks as $key => $bank) {
+           $ob=$bank->amount;
+           $bal=Bankledger::where('bankid',$bank->bankid)->get();
+
+           $sumcr=$bal->sum('cr');
+           $sumdr=$bal->sum('dr');
+
+
+
+           $balance=($ob+$sumcr)-$sumdr;
+          
+           $custarr[]=array('bank'=>$bank->bankname,'acholdername'=>$bank->accountholdername,'balance'=>$balance);
+
+
+        }
+    }
+    return $custarr;
     return view('accounts.viewallledger');
   }
 
