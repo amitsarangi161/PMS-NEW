@@ -18,6 +18,7 @@ class CreateUseraccountsTable extends Migration {
 			$table->string('user', 200)->nullable();
 			$table->string('bankid', 200)->nullable();
 			$table->string('acno', 200)->nullable();
+			$table->string('accountholdername', 200)->nullable();
 			$table->string('branchname', 500)->nullable();
 			$table->string('ifsccode', 200)->nullable();
 			$table->string('userid', 100)->nullable();

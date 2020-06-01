@@ -33,6 +33,10 @@
 	  	<td><input type="number" name="acno" class="form-control" placeholder="Enter Acount No"></td>
 	  </tr>
 	  <tr>
+	  	<td><strong>ACCOUNT HOLDER NAME</strong></td>
+	  	<td><input type="text" name="accountholdername" class="form-control" placeholder="Enter Acount Holder Name"></td>
+	  </tr>
+	  <tr>
 	  	<td><strong>BRANCH NAME</strong></td>
 	  	<td><input type="text" name="branchname" class="form-control" placeholder="Enter Branch Name"></td>
 	  </tr>
@@ -67,6 +71,7 @@
 			<td>BANK NAME</td>
 			<td>BRANCH NAME</td>
 			<td>ACCOUNT NO</td>
+			<td>ACCOUNT HOLDER NAME</td>
 			<td>IFSC</td>
 			<td>IMAGE</td>
 			<td>EDIT</td>
@@ -83,10 +88,11 @@
 			<td>{{$useraccount->bankname}}</td>
 			<td>{{$useraccount->branchname}}</td>
 			<td>{{$useraccount->acno}}</td>
+			<td>{{$useraccount->accountholdername}}</td>
 			<td>{{$useraccount->ifsccode}}</td>
 			<td><a href="{{asset('/img/bankacscancopy/'.$useraccount->scancopy)}}" target="_blank"><img src="{{asset('/img/bankacscancopy/'.$useraccount->scancopy)}}" style="height:70px;width:95px;" alt="click to view"></a></td>
 			<td>
-				<button class="btn btn-info" onclick="edituseraccount('{{$useraccount->id}}','{{$useraccount->bankid}}','{{$useraccount->branchname}}','{{$useraccount->acno}}','{{$useraccount->ifsccode}}','{{$useraccount->scancopy}}','{{$useraccount->forcompany}}');" type="button">EDIT</button>
+				<button class="btn btn-info" onclick="edituseraccount('{{$useraccount->id}}','{{$useraccount->bankid}}','{{$useraccount->branchname}}','{{$useraccount->acno}}','{{$useraccount->accountholdername}}','{{$useraccount->ifsccode}}','{{$useraccount->scancopy}}','{{$useraccount->forcompany}}');" type="button">EDIT</button>
 			</td>
 			</tr>
 			@endforeach
@@ -131,6 +137,10 @@
 	  	<td><input type="number" name="acno" id="acno" class="form-control" placeholder="Enter Acount No"></td>
 	  </tr>
 	  <tr>
+	  	<td><strong>ACCOUNT HOLDER NAME</strong></td>
+	  	<td><input type="text" name="accountholdername" id="accountholdername" class="form-control" placeholder="Enter Acount Holder Name"></td>
+	  </tr>
+	  <tr>
 	  	<td><strong>BRANCH NAME</strong></td>
 	  	<td><input type="text" name="branchname" id="branchname" class="form-control" placeholder="Enter Branch Name"></td>
 	  </tr>
@@ -167,13 +177,14 @@
 </div>
 
 <script type="text/javascript">
-	function edituseraccount(id,bankid,branchname,acno,ifsccode,scancopy,forcompany) {
+	function edituseraccount(id,bankid,branchname,acno,accountholdername,ifsccode,scancopy,forcompany) {
 		 
 		
 		$('#bankid option[value="'+bankid+'"]').attr("selected", "selected");
 		$('#forcompany option[value="'+forcompany+'"]').attr("selected", "selected");
 		$("#branchname").val(branchname);
 		$("#acno").val(acno);
+		$("#accountholdername").val(accountholdername);
 		$("#ifsccode").val(ifsccode);
 		$("#uid").val(id);
 		$("#imgshow").attr('src', '/img/bankacscancopy/'+scancopy)

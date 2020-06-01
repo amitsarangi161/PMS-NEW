@@ -663,6 +663,12 @@ Route::post('/drpaymentschedule','AccountController@drpaymentschedule');
 
 Route::get('/adminpendingexpenseentryview/{empid}','AccountController@adminpendingexpenseentryview');
 Route::get('/viewdetailsadminexpenseentrybydate/{empid}/{dt}','AccountController@viewdetailsadminexpenseentrybydate');
+Route::get('/banks/openingbalance','AccountController@openingbalance');
+Route::post('/saveopeningbalance','AccountController@saveopeningbalance');
+Route::get('/banks/addledger','AccountController@addledger');
+Route::post('/saveaddledger','AccountController@saveaddledger');
+Route::get('/banks/viewallledger','AccountController@viewallledger');
+
 //-------------END PMS ACCOUNT ROUTE------------//
 
 //-------------PMS MD ROUTE------------//

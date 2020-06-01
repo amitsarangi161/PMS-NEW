@@ -49,6 +49,8 @@ use App\expenseentrydailyvehicle;
 use App\voucher;
 use Excel;
 use App\tempsalary;
+use App\Openingbalance;
+use App\Bankledger;
 
 
 
@@ -475,6 +477,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
 
         $useraccount->bankid=$request->bankid;
         $useraccount->acno=$request->acno;
+        $useraccount->accountholdername=$request->accountholdername;
         $useraccount->ifsccode=$request->ifsccode;
         $useraccount->branchname=$request->branchname;
         //$useraccount->forcompany=$request->forcompany;
@@ -505,6 +508,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
         $useraccount->user=$request->user;
         $useraccount->bankid=$request->bankid;
         $useraccount->acno=$request->acno;
+        $useraccount->accountholdername=$request->accountholdername;
         $useraccount->ifsccode=$request->ifsccode;
         $useraccount->branchname=$request->branchname;
         //$useraccount->forcompany=$request->forcompany;
@@ -559,6 +563,67 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
     Session::flash('msg','Bank Details Saved Successfully');
      return back();
   } 
+  public function openingbalance(){
+
+          $banks=useraccount::select('useraccounts.*','banks.bankname')
+                    
+                       ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                       ->where('useraccounts.type','COMPANY')
+                       ->get();
+          $openingbalances=Openingbalance::select('openingbalances.*','banks.bankname','useraccounts.acno','useraccounts.accountholdername','useraccounts.ifsccode')
+                        ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
+                        ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                        ->get();
+          //return $openingbalances;
+        return view('accounts.openingbalance',compact('users','banks','useraccounts','openingbalances'));
+
+       }
+  public function saveopeningbalance(Request $request){
+
+    $chk=Openingbalance::where('bankid','=',$request->bankid)->count();
+    if($chk == 0){
+    $openingbalance= new Openingbalance();
+    $openingbalance->bankid=$request->bankid;
+    $openingbalance->date=$request->date;
+    $openingbalance->amount=$request->amount;
+    $openingbalance->save();
+    Session::flash('msg','Account Data Updated Successfully');
+    }else{
+      Session::flash('err','Duplicate Upload please try Again');
+    }
+    return back();
+    
+  }
+  public function addledger(){
+    $banks=useraccount::select('useraccounts.*','banks.bankname')
+                    
+                       ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                       ->where('useraccounts.type','COMPANY')
+                       ->get();
+
+    return view('accounts.addledger',compact('banks'));
+
+  }
+  public function saveaddledger(Request $request){
+    $ledger= new Bankledger();
+    $ledger->bankid=$request->bankid;
+    if($request->type == 'CR'){
+    $ledger->cr=$request->type;
+    $ledger->dr=0;
+    }else{
+    $ledger->dr=$request->type;
+    $ledger->cr=0;
+    }
+    $ledger->date=$request->date;
+    $ledger->amount=$request->amount;
+    $ledger->save();
+    Session::flash('msg','Account Data Updated Successfully');
+    return back();
+  }
+  public function viewallledger(){
+    
+    return view('accounts.viewallledger');
+  }
 
 
   //---------End New Account Controller-----------//
