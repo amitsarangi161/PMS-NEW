@@ -1,7 +1,7 @@
 @extends('layouts.account')
 @section('content')
 <div class="table-responsive">
-<table class="table table-responsive table-hover table-bordered table-striped datatable1">
+<table class="table table-responsive table-hover table-bordered table-striped sortfalsedatatable">
 	<thead>
 		<tr class="bg-navy">
 			<th><strong>SL.No</strong></th>

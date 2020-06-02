@@ -58,7 +58,7 @@ class AccountController extends Controller
 {  
 
 public function viewdetailledgerbank($id){
-  $ob=Openingbalance::where('bankid',$id)->pluck('amount')->first();
+  $ob=Openingbalance::where('id',$id)->pluck('amount')->first();
   $bankledgers=Bankledger::where('bankid',$id)
               ->orderBy('date','asc')
               ->selectRaw('*, sum(cr) as sumcr,sum(dr) as sumdr')
@@ -635,7 +635,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
   public function saveaddledger(Request $request){
 
     $date=Openingbalance::where('bankid',$request->bankid)->pluck('date')->first();
-    $chk=Bankledger::where('date',date('Y-m-d'))->count();
+    $chk=Bankledger::where('date',date('Y-m-d') )->where('bankid',$request->bankid)->count();
     if($chk > 0){
        Session::flash('err','Failed!! Record Already Exist for date'.date('Y-m-d'));
        return back();
@@ -672,7 +672,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
     {
         foreach ($banks as $key => $bank) {
            $ob=$bank->amount;
-           $bal=Bankledger::where('bankid',$bank->bankid)->get();
+           $bal=Bankledger::where('bankid',$bank->id)->get();
 
            $sumcr=$bal->sum('cr');
            $sumdr=$bal->sum('dr');
@@ -1080,7 +1080,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
    {
        $debitvoucherheader=debitvoucherheader::find($id);
        $debitvoucherheader->status='CANCELLED';
-       $debitvoucherheader->author=Auth::id();
+       $debitvoucherheader->cancelledby=Auth::id();
        $debitvoucherheader->save();
        return back();
        /*return redirect('/vouchers/approveddebitvoucher');*/
