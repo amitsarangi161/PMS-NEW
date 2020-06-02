@@ -1080,7 +1080,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
    {
        $debitvoucherheader=debitvoucherheader::find($id);
        $debitvoucherheader->status='CANCELLED';
-       $debitvoucherheader->author=Auth::id();
+       $debitvoucherheader->cancelledby=Auth::id();
        $debitvoucherheader->save();
        return back();
        /*return redirect('/vouchers/approveddebitvoucher');*/
