@@ -56,6 +56,25 @@ use App\Bankledger;
 
 class AccountController extends Controller
 {  
+
+public function viewdetailledgerbank($id){
+  $ob=Openingbalance::where('bankid',$id)->pluck('amount')->first();
+  $bankledgers=Bankledger::where('bankid',$id)
+              ->orderBy('date','asc')
+              ->selectRaw('*, sum(cr) as sumcr,sum(dr) as sumdr')
+              ->groupBy('date')
+              ->get();
+
+  $details=Openingbalance::select('openingbalances.*','banks.bankname','useraccounts.acno','useraccounts.accountholdername','useraccounts.ifsccode')
+                        ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
+                        ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                        ->where('openingbalances.id',$id)
+                        ->first();
+  
+  //return compact('ob','bankledgers','details');
+  return view('accounts.viewdetailledgerbank',compact('ob','bankledgers','details'));
+
+}
 public function viewdetailsadminexpenseentrybydate($empid,$dt)
        {
         //return $dt;
@@ -595,18 +614,17 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
     
   }
   public function addledger(){
-    $banks=useraccount::select('useraccounts.*','banks.bankname')
-                    
-                       ->leftJoin('banks','useraccounts.bankid','=','banks.id')
-                       ->where('useraccounts.type','COMPANY')
-                       ->get();
+   $banks=Openingbalance::select('openingbalances.*','banks.bankname','useraccounts.acno','useraccounts.accountholdername','useraccounts.ifsccode')
+            ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
+            ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+            ->get();
 
     return view('accounts.addledger',compact('banks'));
 
   }
   public function saveaddledger(Request $request){
     $date=Openingbalance::where('bankid',$request->bankid)->pluck('date')->first();
-   if($date>=$request->date)
+   if($request->date >=$date)
    {
     $ledger= new Bankledger();
     $ledger->bankid=$request->bankid;
@@ -632,7 +650,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
   }
   public function viewallledger(){
     
-    $banks=Openingbalance::select('openingbalances.*','banks.bankname','useraccounts.acno','useraccounts.accountholdername')
+    $banks=Openingbalance::select('openingbalances.*','banks.bankname','useraccounts.acno','useraccounts.accountholdername','useraccounts.ifsccode')
             ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
             ->leftJoin('banks','useraccounts.bankid','=','banks.id')
             ->get();
@@ -651,13 +669,13 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
 
            $balance=($ob+$sumcr)-$sumdr;
           
-           $custarr[]=array('bank'=>$bank->bankname,'acholdername'=>$bank->accountholdername,'balance'=>$balance);
+           $custarr[]=array('id'=>$bank->id,'bank'=>$bank->bankname,'acholdername'=>$bank->accountholdername,'acno'=>$bank->acno,'ifsc'=>$bank->ifsccode,'balance'=>$balance);
 
 
         }
     }
-    return $custarr;
-    return view('accounts.viewallledger');
+    //return $custarr;
+    return view('accounts.viewallledger',compact('custarr'));
   }
 
 

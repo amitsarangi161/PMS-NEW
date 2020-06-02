@@ -668,6 +668,7 @@ Route::post('/saveopeningbalance','AccountController@saveopeningbalance');
 Route::get('/banks/addledger','AccountController@addledger');
 Route::post('/saveaddledger','AccountController@saveaddledger');
 Route::get('/banks/viewallledger','AccountController@viewallledger');
+Route::get('/viewdetailledgerbank/{id}','AccountController@viewdetailledgerbank');
 
 //-------------END PMS ACCOUNT ROUTE------------//
 

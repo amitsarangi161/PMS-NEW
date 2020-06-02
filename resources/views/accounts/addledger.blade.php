@@ -50,7 +50,7 @@
 	  	<td><input type="text" name="amount" class="form-control" placeholder="Enter Amount"></td>
 	  </tr>
 	  <tr>
-	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit">SUBMIT</button></td>
+	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit" onclick="return confirm('Do You want to save ?')">SUBMIT</button></td>
 	  </tr>
 
 </table>

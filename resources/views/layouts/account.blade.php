@@ -831,7 +831,34 @@ if (event.persisted) {
             },
 
        ],
-            });$('.datatable3').DataTable({
+            });
+      $('.sortfalsedatatable').DataTable({
+        dom: 'Bfrtip',
+        "iDisplayLength": 25,
+        "bSort" : false,
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                footer:true,
+                pageSize: 'A4',
+                title: 'Report',          
+            },
+            {
+                extend: 'excelHtml5',
+                footer:true,
+                title: 'Report'
+            },
+            {
+                extend: 'print',
+                footer:true,
+                title: 'Report'
+            },
+
+       ],
+            });
+
+      $('.datatable3').DataTable({
         dom: 'Bfrtip',
         "order": [[ 0, "asc" ]],
         "iDisplayLength": 25,
