@@ -257,9 +257,9 @@
 
              <li class="{{ Request::is('banks/openingbalance') ? 'active' : '' }}"><a href="/banks/openingbalance"><i class="fa fa-circle-o text-red"></i>OPENING BALANCE</a></li>
 
-             <li class="{{ Request::is('banks/addledger') ? 'active' : '' }}"><a href="/banks/addledger"><i class="fa fa-circle-o text-red"></i>ADD LEDGER</a></li>
+             <li class="{{ Request::is('banks/addledger') ? 'active' : '' }}"><a href="/banks/addledger"><i class="fa fa-circle-o text-red"></i>ADD BANK LEDGER</a></li>
 
-             <li class="{{ Request::is('banks/viewallledger') ? 'active' : '' }}"><a href="/banks/viewallledger"><i class="fa fa-circle-o text-red"></i>VIEW ALL LEDGER</a></li>
+             <li class="{{ Request::is('banks/viewallledger') ? 'active' : '' }}"><a href="/banks/viewallledger"><i class="fa fa-circle-o text-red"></i>VIEW BANK LEDGER</a></li>
           </ul>
         </li>
       <li class="{{ Request::is('acc-vouchers*') ? 'active' : '' }} treeview">
