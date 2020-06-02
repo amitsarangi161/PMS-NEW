@@ -601,6 +601,9 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
 
     $chk=Openingbalance::where('bankid','=',$request->bankid)->count();
     if($chk == 0){
+      $this->validate($request,[
+            'amount' => "required|regex:/^\d+(\.\d{1,2})?$/",
+       ]);
     $openingbalance= new Openingbalance();
     $openingbalance->bankid=$request->bankid;
     $openingbalance->date=$request->date;
@@ -608,7 +611,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
     $openingbalance->save();
     Session::flash('msg','Account Data Updated Successfully');
     }else{
-      Session::flash('err','Duplicate Upload please try Again');
+      Session::flash('err','Duplicate Entry please try Again');
     }
     return back();
     
@@ -618,24 +621,36 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
             ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
             ->leftJoin('banks','useraccounts.bankid','=','banks.id')
             ->get();
+    $ledgers=Bankledger::select('bankledgers.*','useraccounts.accountholdername','banks.bankname','useraccounts.acno')
+            ->leftJoin('openingbalances','bankledgers.bankid','=','openingbalances.id')
+            ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
+            ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+            ->get();
+    //return $ledgers;
+    //return date('Y-m-d');
+    return view('accounts.addledger',compact('banks','ledgers'));
 
-    return view('accounts.addledger',compact('banks'));
 
   }
   public function saveaddledger(Request $request){
+
     $date=Openingbalance::where('bankid',$request->bankid)->pluck('date')->first();
-   if($request->date >=$date)
+    $chk=Bankledger::where('date',date('Y-m-d'))->count();
+    if($chk > 0){
+       Session::flash('err','Failed!! Record Already Exist for date'.date('Y-m-d'));
+       return back();
+    }
+   if(date('Y-m-d') >=$date && $chk == 0)
    {
+    $this->validate($request,[
+            'cr' => "required|regex:/^\d+(\.\d{1,2})?$/",
+            'dr' => "required|regex:/^\d+(\.\d{1,2})?$/",
+       ]);
     $ledger= new Bankledger();
     $ledger->bankid=$request->bankid;
-    if($request->type == 'CR'){
-    $ledger->cr=$request->amount;
-    $ledger->dr=0;
-    }else{
-    $ledger->dr=$request->amount;
-    $ledger->cr=0;
-    }
-    $ledger->date=$request->date;
+    $ledger->cr=$request->cr;
+    $ledger->dr=$request->dr;
+    $ledger->date=date('Y-m-d');
     $ledger->save();
     Session::flash('msg','Account Data Updated Successfully');
    }
@@ -643,9 +658,6 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
    {
       Session::flash('err','Failed to Insert');
    }
-
-    
-    
     return back();
   }
   public function viewallledger(){

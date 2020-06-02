@@ -5,6 +5,11 @@
 		<td class="text-center">OPENING BALANCE</td>
 	</tr>
 </table>
+ @if ($errors->any())
+     @foreach ($errors->all() as $error)
+         <p class="alert alert-danger text-center">{{ $error }}</p>
+     @endforeach
+ @endif
   @if(Session::has('msg'))
    <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
    @endif
