@@ -64,6 +64,8 @@ use App\division;
 use App\assignuser;
 use App\voucher;
 use App\projectotherdocument;
+use App\Bankledger;
+use App\Openingbalance;
 use DataTables;
 use Excel;
 //use Barryvdh\DomPDF\Facade as PDF;
@@ -304,7 +306,31 @@ public function companydetails(){
     $pendingexpenseentry=expenseentry::where('status','PENDING')->count();
     $noofclients=client::count();
     $noofusers=user::count();
-      return view('home',compact('noofprojects','noofclients','noofusers','todos','completedprojects','pendingvouchers','pendingdrvouchers','pendingrequisitions','pendingexpenseentry'));
+    $banks=Openingbalance::select('openingbalances.*','banks.bankname','useraccounts.acno','useraccounts.accountholdername','useraccounts.ifsccode')
+            ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
+            ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+            ->get();
+    $custarr=array();
+
+    if($banks)
+    {
+        foreach ($banks as $key => $bank) {
+           $ob=$bank->amount;
+           $bal=Bankledger::where('bankid',$bank->id)->get();
+
+           $sumcr=$bal->sum('cr');
+           $sumdr=$bal->sum('dr');
+
+
+
+           $balance=($ob+$sumcr)-$sumdr;
+          
+           $custarr[]=array('id'=>$bank->id,'bank'=>$bank->bankname,'acholdername'=>$bank->accountholdername,'acno'=>$bank->acno,'ifsc'=>$bank->ifsccode,'balance'=>$balance);
+
+
+        }
+    }
+      return view('home',compact('noofprojects','noofclients','noofusers','todos','completedprojects','pendingvouchers','pendingdrvouchers','pendingrequisitions','pendingexpenseentry','custarr'));
        
 
   }

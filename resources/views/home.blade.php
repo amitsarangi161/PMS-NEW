@@ -218,9 +218,51 @@
           </div>
            </div>
           
+            <div class="col-md-6">
+    <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title"></h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="">
+              <div class="table-responsive">
+                <table class="table no-margin">
+                  <thead>
+                  <tr>
+                    <th>Sl No.</th>
+                    <th>Account Holder</th>
+                    <th>AC No.</th>
+                    <th>Balance</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  @foreach($custarr as $crr)
+                  <tr>
+                    <td><a href="/viewdetailledgerbank/{{$crr['id']}}">{{$crr['id']}}</a></td>
+                    <td>{{$crr['acholdername']}}</td>
+                    <td>{{$crr['acno']}}</td>
+                    <td><span class="label label-success">{{$crr['balance']}}</span></td>
+                  </tr>
+                  @endforeach
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix" style="">
+              <a href="/banks/viewallledger" class="btn btn-sm btn-info btn-flat pull-left">View all bank ledger</a>
+            </div>
+            <!-- /.box-footer -->
+          </div>
     </div>
-    
-  
+  </div>
 
     </section>
  <div id="myModal2" class="modal fade" role="dialog">

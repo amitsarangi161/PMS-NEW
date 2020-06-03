@@ -48,6 +48,15 @@
 	  	<td><strong>Debited Amount</strong></td>
 	  	<td><input type="text" name="dr" value="0" class="form-control" placeholder="Enter Debited Amount" required="" autocomplete="off" id="dr1"></td>
 	  </tr>
+	  @if(date('D')=='Sat')
+	  <tr id="image">
+        <td><strong>Upload Attachment</strong></td>
+        <td>
+         <input type="file" id="image" name="image" onchange="readURL(this);" required="">
+           <p class="help-block">Upload a File</p>
+        </td>
+      </tr>
+      @endif
 
 	  <tr>
 	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit" id="submitbutton" onclick="return confirm('Do You want to save ?')">SUBMIT</button></td>
@@ -67,6 +76,7 @@
 			<td>CR</td>
 			<td>DR</td>
 			<td>DATE</td>
+			<td>ATTACHMENT</td>
 			<td>Created At</td>
 		</tr>
 		
@@ -82,10 +92,40 @@
 			<td>{{$ledger->cr}}</td>
 			<td>{{$ledger->dr}}</td>
 			<td>{{$ledger->date}}</td>
+			@if($ledger->image != "")
+			<td>
+				<a href="{{asset('img/ledger/'.$ledger->image)}}" target="_blank">
+          		<img style="height:50px;width:50px;" src="{{asset('img/ledger/'.$ledger->image)}}" alt="click to view" id="imgshow">
+          		</a>
+			</td>
+			@else
+			<td>NO FILE FOUND</td>
+			@endif
 			<td>{{$ledger->created_at}}</td>
 			</tr>
 			@endforeach	
 	</tbody>
 </table>
+<script type="text/javascript">
+
+	function readURL(input) {
+    
+
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#imgshow')
+                    .attr('src', e.target.result)
+                    .width(95)
+                    .height(70);
+          
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
+</script>
 
 @endsection

@@ -626,8 +626,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
             ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
             ->leftJoin('banks','useraccounts.bankid','=','banks.id')
             ->get();
-    //return $ledgers;
-    //return date('Y-m-d');
+ 
     return view('accounts.addledger',compact('banks','ledgers'));
 
 
@@ -651,6 +650,13 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
     $ledger->cr=$request->cr;
     $ledger->dr=$request->dr;
     $ledger->date=date('Y-m-d');
+    $rarefile = $request->file('image');   
+         if($rarefile!=''){
+          $raupload = public_path() .'/img/ledger/';
+          $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+          $success=$rarefile->move($raupload,$rarefilename);
+          $ledger->image = $rarefilename;
+           }
     $ledger->save();
     Session::flash('msg','Account Data Updated Successfully');
    }
