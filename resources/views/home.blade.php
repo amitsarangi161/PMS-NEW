@@ -218,7 +218,7 @@
             </div>
           </div>
            </div>
-          
+            @if(Auth::user()->usertype=='MASTER ADMIN')
             <div class="col-md-6">
     <div class="box box-info collapsed-box">
             <div class="box-header with-border">
@@ -263,6 +263,7 @@
             <!-- /.box-footer -->
           </div>
     </div>
+    @endif
   </div>
 
     </section>
