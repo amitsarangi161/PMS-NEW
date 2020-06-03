@@ -3,6 +3,7 @@
 @extends('layouts.app')
 
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
    
 <link href="{{ URL::asset('css/bootstrap-timepicker.css') }}" rel="stylesheet" type="text/css" />
 <section class="content">
@@ -219,14 +220,14 @@
            </div>
           
             <div class="col-md-6">
-    <div class="box box-info">
+    <div class="box box-info collapsed-box">
             <div class="box-header with-border">
-              <h3 class="box-title"></h3>
+              <h3 class="box-title">BANK LEDGERS</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                 </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                
               </div>
             </div>
             <!-- /.box-header -->
@@ -244,10 +245,10 @@
                   <tbody>
                   @foreach($custarr as $crr)
                   <tr>
-                    <td><a href="/viewdetailledgerbank/{{$crr['id']}}">{{$crr['id']}}</a></td>
+                    <td><a href="/viewdetailledgerbank/{{$crr['id']}}" class="btn btn-primary">{{$crr['id']}}</a></td>
                     <td>{{$crr['acholdername']}}</td>
                     <td>{{$crr['acno']}}</td>
-                    <td><span class="label label-success">{{$crr['balance']}}</span></td>
+                    <td><span class="label label-success">{{$provider::moneyFormatIndia($crr['balance'])}}</span></td>
                   </tr>
                   @endforeach
                   </tbody>

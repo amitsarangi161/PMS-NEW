@@ -48,7 +48,7 @@
 	  	<td><strong>Debited Amount</strong></td>
 	  	<td><input type="text" name="dr" value="0" class="form-control" placeholder="Enter Debited Amount" required="" autocomplete="off" id="dr1"></td>
 	  </tr>
-	  @if(date('D')=='Sat')
+	  @if(date('D')=='Fri')
 	  <tr id="image">
         <td><strong>Upload Attachment</strong></td>
         <td>
