@@ -626,8 +626,9 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
             ->leftJoin('useraccounts','openingbalances.bankid','=','useraccounts.id')
             ->leftJoin('banks','useraccounts.bankid','=','banks.id')
             ->get();
+    //return $ledgers;
  
-    return view('accounts.addledger',compact('banks','ledgers'));
+    return view('accounts.add-ledger',compact('banks','ledgers'));
 
 
   }
@@ -694,6 +695,24 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
     }
     //return $custarr;
     return view('accounts.viewallledger',compact('custarr'));
+  }
+  public function updatebankledger(Request $request){
+    //return $request->all();
+    $ledger=Bankledger::find($request->uid);
+    $ledger->cr=$request->cr;
+    $ledger->dr=$request->dr;
+    $ledger->date=date('Y-m-d');
+    $rarefile = $request->file('image');   
+         if($rarefile!=''){
+          $raupload = public_path() .'/img/ledger/';
+          $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+          $success=$rarefile->move($raupload,$rarefilename);
+          $ledger->image = $rarefilename;
+           }
+    $ledger->save();
+    Session::flash('msg','Bank Ledger Updated Successfully');
+    return back();
+
   }
 
 
