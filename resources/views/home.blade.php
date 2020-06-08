@@ -243,15 +243,26 @@
                   </tr>
                   </thead>
                   <tbody>
+                  @php
+                     $total=array();
+                  @endphp
+
+
                   @foreach($custarr as $crr)
                   <tr>
                     <td><a href="/viewdetailledgerbank/{{$crr['id']}}" class="btn btn-primary">{{$crr['id']}}</a></td>
                     <td>{{$crr['acholdername']}}</td>
                     <td>{{$crr['acno']}}</td>
-                    <td><span class="label label-success">{{$provider::moneyFormatIndia($crr['balance'])}}</span></td>
+                    <td><span class="label label-success">{{$provider::moneyFormatIndia($total[]=$crr['balance'])}}</span></td>
                   </tr>
                   @endforeach
                   </tbody>
+                  <tfoot>
+                     <td></td>
+                     <td></td>
+                     <td style="font-weight: bold;background-color:#6aff6a;">Total Balance:</td>
+                     <td>{{$provider::moneyFormatIndia(array_sum($total))}}</td>
+                  </tfoot>
                 </table>
               </div>
               <!-- /.table-responsive -->
@@ -259,6 +270,8 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix" style="">
               <a href="/banks/viewallledger" class="btn btn-sm btn-info btn-flat pull-left">View all bank ledger</a>
+
+       
             </div>
             <!-- /.box-footer -->
           </div>
