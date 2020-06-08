@@ -391,6 +391,22 @@
           </ul>
         </li>
 
+
+        <li class="{{ Request::is('drvouchers*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-rupee"></i> <span>DEBIT VOUCHER NEW</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+                <span class="label label-warning pull-right">{{$countpendingdrmgr+$countpendingdradmin}}</span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('drvouchers/createdebitvoucher') ? 'active' : '' }}"><a href="/drvouchers/createdebitvoucher"><i class="fa fa-circle-o text-red"></i>CREATE DEBIT VOUCHER</a></li>
+           
+
+          </ul>
+        </li>
+
                 @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER')
          @php
 

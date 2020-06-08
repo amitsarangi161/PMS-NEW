@@ -3373,6 +3373,14 @@ public function approvedebitvoucheradmin(Request $request,$id)
        $units=unit::all();
        return view('accounts.debitvoucher',compact('vendors','units','projects','expenseheads'));
   }
+  public function createdebitvoucher()
+  {
+       $projects=project::all();
+       $expenseheads=expensehead::all();
+       $vendors=vendor::all();
+       $units=unit::all();
+       return view('accounts.createdebitvoucher',compact('vendors','units','projects','expenseheads'));
+  }
    public function mymessages()
     {
         $users=User::all();

@@ -653,6 +653,8 @@ Route::get('/vouchers/pendingdebitvouchermgr','AccountController@pendingdebitvou
 Route::get('/viewpendinfdebitvoucheradmin/{id}','AccountController@viewpendinfdebitvoucheradmin');
 Route::delete('/canceldrvoucher/{id}','AccountController@canceldrvoucher');
 
+Route::get('/drvouchers/createdebitvoucher','AccountController@createdebitvoucher');
+
 Route::post('/approvedebitvouchermgr/{id}','AccountController@approvedebitvouchermgr');
 Route::post('/approvedebitvoucheradmin/{id}','AccountController@approvedebitvoucheradmin');
 Route::get('/vouchers/pendingdebitvoucheradmin','AccountController@pendingdebitvoucheradmin');
