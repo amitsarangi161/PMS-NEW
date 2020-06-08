@@ -51,6 +51,7 @@ use Excel;
 use App\tempsalary;
 use App\Openingbalance;
 use App\Bankledger;
+use App\Pmsdebitvoucher;
 
 
 
@@ -3381,6 +3382,36 @@ public function approvedebitvoucheradmin(Request $request,$id)
        $units=unit::all();
        return view('accounts.createdebitvoucher',compact('vendors','units','projects','expenseheads'));
   }
+  public function savecreatedebitvouchers(Request $request){
+
+    $createdebitvoucher=new Pmsdebitvoucher();
+     $createdebitvoucher->vendorid=$request->vendorid;
+     $createdebitvoucher->billtype=$request->billtype;
+     $createdebitvoucher->projectid=$request->projectid;
+     $createdebitvoucher->expenseheadid=$request->expenseheadid;
+     $createdebitvoucher->billdate=$request->billdate;
+     $createdebitvoucher->billno=$request->billno;
+     $createdebitvoucher->tprice=$request->tprice;
+     $createdebitvoucher->discount=$request->discount;
+     $createdebitvoucher->tsgst=$request->tsgst;
+     $createdebitvoucher->tcgst=$request->tcgst;
+     $createdebitvoucher->tigst=$request->tigst;
+     $createdebitvoucher->totalamt=$request->totalamt;
+     $createdebitvoucher->itdeduction=$request->itdeduction;
+     $createdebitvoucher->otherdeduction=$request->otherdeduction;
+     $createdebitvoucher->finalamount=$request->finalamount;
+     $rarefile = $request->file('invoicecopy');    
+    if($rarefile!=''){
+    $raupload = public_path() .'/img/createdebitvoucher/';
+    $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+    $success=$rarefile->move($raupload,$rarefilename);
+    $createdebitvoucher->invoicecopy = $rarefilename;
+    }
+    $createdebitvoucher->narration=$request->narration;
+    $createdebitvoucher->save();
+     Session::flash('msg','Debit Voucher Added Successfully');
+     return back();
+    }
    public function mymessages()
     {
         $users=User::all();
