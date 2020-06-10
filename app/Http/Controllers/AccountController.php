@@ -52,6 +52,7 @@ use App\tempsalary;
 use App\Openingbalance;
 use App\Bankledger;
 use App\Pmsdebitvoucher;
+use App\Pmsdebitvoucherpayment;
 
 
 
@@ -3383,7 +3384,10 @@ public function approvedebitvoucheradmin(Request $request,$id)
        return view('accounts.createdebitvoucher',compact('vendors','units','projects','expenseheads'));
   }
   public function savecreatedebitvouchers(Request $request){
-
+      $this->validate($request, [
+            'finalamount' => "required|regex:/^\d+(\.\d{1,2})?$/",
+            'totalamt' => "required|regex:/^\d+(\.\d{1,2})?$/",
+       ]);
     $createdebitvoucher=new Pmsdebitvoucher();
      $createdebitvoucher->vendorid=$request->vendorid;
      $createdebitvoucher->billtype=$request->billtype;
@@ -3412,6 +3416,39 @@ public function approvedebitvoucheradmin(Request $request,$id)
      Session::flash('msg','Debit Voucher Added Successfully');
      return back();
     }
+    public function viewaccountverification(){
+      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.status','=','PENDING')
+                     ->get();
+      //return $createdebitvouchers;
+      return view('accounts.viewaccountverification',compact('createdebitvouchers'));
+    }
+    public function viewpendingaccountdr($id){
+      $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.id',$id)
+                     ->first();
+      $vid=$pmsdebitvoucher->vendorid;
+      $vendor=vendor::find($vid);
+      $previousbills=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.id','!=',$id)
+                     ->get();
+
+      $debitvoucherpayments=Pmsdebitvoucherpayment::where('vendorid',$pmsdebitvoucher->vendorid)->where('projectid',$pmsdebitvoucher->projectid)->get();
+      //return $debitvoucherpayments;
+      //return $pmsdebitvoucher;
+      return view('accounts.viewpendingaccountdr',compact('pmsdebitvoucher','vendor','previousbills','debitvoucherpayments'));
+
+    }
+
    public function mymessages()
     {
         $users=User::all();

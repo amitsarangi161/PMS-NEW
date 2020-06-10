@@ -1,9 +1,18 @@
 @extends('layouts.account')
 @section('content')
 
-@if(Session::has('msg'))
+@if ($errors->any())
+     @foreach ($errors->all() as $error)
+         <p class="alert alert-danger text-center">{{ $error }}</p>
+     @endforeach
+ @endif
+  @if(Session::has('msg'))
    <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
-@endif
+   @endif
+   @if(Session::has('err'))
+   <p class="alert alert-danger text-center">{{ Session::get('err') }}</p>
+   @endif
+
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr class="bg-navy">
@@ -262,6 +271,7 @@
       var totalamt=Number.parseFloat((parseFloat(gtprice)-parseFloat(gdiscount))+(parseFloat(gtcgst)+parseFloat(gtsgst)+parseFloat(gtigst))).toFixed(2);
 
       $("#totalamt").val(totalamt);
+      $("#finalamount").val(totalamt);
   }
 	
   $( ".calc" ).on("change paste keyup", function() {

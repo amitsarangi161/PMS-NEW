@@ -397,11 +397,12 @@
             <i class="fa fa-rupee"></i> <span>DEBIT VOUCHER NEW</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
-                <span class="label label-warning pull-right">{{$countpendingdrmgr+$countpendingdradmin}}</span>
+                <span class="label label-warning pull-right">0</span>
             </span>
           </a>
           <ul class="treeview-menu">
             <li class="{{ Request::is('drvouchers/createdebitvoucher') ? 'active' : '' }}"><a href="/drvouchers/createdebitvoucher"><i class="fa fa-circle-o text-red"></i>CREATE DEBIT VOUCHER</a></li>
+            <li class="{{ Request::is('drvouchers/viewaccountverification') ? 'active' : '' }}"><a href="/drvouchers/viewaccountverification"><i class="fa fa-circle-o text-red"></i>ACCOUNT VERIFICATION</a></li>
            
 
           </ul>
@@ -900,6 +901,32 @@ if (event.persisted) {
 
        ],
             });
+      $('.datatablescrollexport').DataTable({
+        dom: 'Bfrtip',
+        "scrollY": 500,
+        "scrollX": true,
+        "order": [[ 0, "desc" ]],
+        "iDisplayLength": 10,
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                footer:true,
+                pageSize: 'A4',
+                title: 'REPORT',            },
+            {
+                extend: 'excelHtml5',
+                footer:true,
+                title: 'REPORT'
+            },
+            {
+                extend: 'print',
+                footer:true,
+                title: 'REPORT'
+            }
+
+       ],
+            });
       $('.datatable2').DataTable({
         dom: 'Bfrtip',
         "order": [[ 0, "desc" ]],
@@ -1004,34 +1031,6 @@ var jqf = $.noConflict();
      "scrollX": true,
      "iDisplayLength": 25
   });
- $('.datatablescrollexport').DataTable({
-        dom: 'Bfrtip',
-        "order": [[ 0, "desc" ]],
-        "iDisplayLength": 25,
-        "scrollY": 450,
-        "scrollX": true,
-
-        buttons: [
-            {
-                extend: 'pdfHtml5',
-                orientation: 'landscape',
-                footer:true,
-                pageSize: 'A4',
-                title: 'Report',          
-            },
-            {
-                extend: 'excelHtml5',
-                footer:true,
-                title: 'Report'
-            },
-            {
-                extend: 'print',
-                footer:true,
-                title: 'Report'
-            },
-
-       ],
-            });
 
  
 </script>
