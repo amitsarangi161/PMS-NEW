@@ -3435,6 +3435,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                      ->first();
       $vid=$pmsdebitvoucher->vendorid;
       $vendor=vendor::find($vid);
+      //return $vendor;
       $previousbills=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
@@ -3446,6 +3447,25 @@ public function approvedebitvoucheradmin(Request $request,$id)
       //return $debitvoucherpayments;
       //return $pmsdebitvoucher;
       return view('accounts.viewpendingaccountdr',compact('pmsdebitvoucher','vendor','previousbills','debitvoucherpayments'));
+
+    }
+    public function pmsapprovedebitvouchermgr(Request $request, $id){
+
+      $updatepmsapprovedebitvoucher=Pmsdebitvoucher::find($id);
+         $updatepmsapprovedebitvoucher->status="ACCOUNT VERIFIED";
+         $updatepmsapprovedebitvoucher->tprice=$request->tprice;
+         $updatepmsapprovedebitvoucher->discount=$request->discount;
+         $updatepmsapprovedebitvoucher->tsgst=$request->tsgst;
+         $updatepmsapprovedebitvoucher->tcgst=$request->tcgst;
+         $updatepmsapprovedebitvoucher->tigst=$request->tigst;
+         $updatepmsapprovedebitvoucher->tigst=$request->tigst;
+         $updatepmsapprovedebitvoucher->totalamt=$request->totalamt;
+         $updatepmsapprovedebitvoucher->itdeduction=$request->itdeduction;
+         $updatepmsapprovedebitvoucher->otherdeduction=$request->otherdeduction;
+         $updatepmsapprovedebitvoucher->finalamount=$request->finalamount;
+         $updatepmsapprovedebitvoucher->save();
+         Session::flash('msg','Account Verified Successfully');
+        return back();
 
     }
 

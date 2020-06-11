@@ -1,6 +1,9 @@
 @extends('layouts.account')
 
 @section('content')
+@if(Session::has('msg'))
+   <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
+@endif
 <table class="table">
 	<tr class="bg-blue">
 		<td class="text-center">VIEW PENDING ACCOUNTVERIFICATION DEBIT VOUCHER</td>
@@ -15,7 +18,7 @@
 			<td width="20%"><strong>ID :</strong></td>
 			<td width="30%">#{{$pmsdebitvoucher->id}}</td>
 			<td width="20%"><strong>VENDOR :</strong></td>
-			<td width="30%"><button type="button" class="btn btn-success" onclick="openvendordetails('{{$vendor->vendorid}}','{{$vendor->vendorname}}','{{$vendor->mobile}}','{{$vendor->bankname}}','{{$vendor->acno}}','{{$vendor->branchname}}','{{$vendor->ifsccode}}','{{trim(preg_replace('/\s+/', ' ',$vendor->details))}}','{{$vendor->photo}}','{{$vendor->vendoridproof}}')">{{$pmsdebitvoucher->vendorname}}</button></td>
+			<td width="30%"><button type="button" class="btn btn-success" onclick="openvendordetails('{{$vendor->id}}','{{$vendor->vendorname}}','{{$vendor->mobile}}','{{$vendor->bankname}}','{{$vendor->acno}}','{{$vendor->branchname}}','{{$vendor->ifsccode}}','{{trim(preg_replace('/\s+/', ' ',$vendor->details))}}','{{$vendor->photo}}','{{$vendor->vendoridproof}}')">{{$pmsdebitvoucher->vendorname}}</button></td>
 		</tr>
 		<tr>
 	      <td width="10%"><strong>FOR PROJECT :</strong></td>
@@ -153,30 +156,30 @@
 	
 </table>
 
-<form action="/approvedebitvouchermgr/{{$pmsdebitvoucher->id}}" method="post">
+<form action="/pmsapprovedebitvouchermgr/{{$pmsdebitvoucher->id}}" method="post">
 
 	{{csrf_field()}}
 <table class="table">
 	    	<tr>
 	    		<td><strong>Total MRP</strong></td>
-	    		<td><input type="text" id="tprice" value="{{$pmsdebitvoucher->tprice}}" name="tprice" id="tprice" class="form-control" readonly="" required=""></td>
+	    		<td><input type="text" id="tprice" value="{{$pmsdebitvoucher->tprice}}" name="tprice" id="tprice" class="form-control calc" required="" autocomplete="off"></td>
 	    		<td><strong>Total Discount</strong></td>
 	    		@if($pmsdebitvoucher->discount=='')
-	    		<td><input type="text" value="0.00" class="form-control" id="discount" name="discount" readonly=""></td>
+	    		<td><input type="text" value="0.00" class="form-control calc" id="discount" name="discount" autocomplete="off"></td>
 	    		@else
-	    		<td><input type="text" value="{{$pmsdebitvoucher->discount}}" class="form-control" id="discount" name="discount" readonly=""></td>
+	    		<td><input type="text" value="{{$pmsdebitvoucher->discount}}" class="form-control calc" id="discount" name="discount" autocomplete="off"></td>
 	    		@endif
 	    	</tr>
 
 	    	<tr>
 	    		<td><strong>Total SGST</strong></td>
-	    		<td><input type="text" value="{{$pmsdebitvoucher->tsgst}}" class="form-control" id="tsgst" name="tsgst" readonly=""></td>
+	    		<td><input type="text" value="{{$pmsdebitvoucher->tsgst}}" class="form-control calc" id="tsgst" name="tsgst" autocomplete="off"></td>
 	    		<td><strong>Total CGST</strong></td>
-	    		<td><input type="text" value="{{$pmsdebitvoucher->tcgst}}" class="form-control" id="tcgst" name="tcgst" readonly=""></td>
+	    		<td><input type="text" value="{{$pmsdebitvoucher->tcgst}}" class="form-control calc" id="tcgst" name="tcgst" autocomplete="off"></td>
 	    	</tr>
 	    		<tr>
 	    		<td><strong>Total IGST</strong></td>
-	    		<td><input type="text" value="{{$pmsdebitvoucher->tigst}}" class="form-control" id="tigst" name="tigst" readonly=""></td>
+	    		<td><input type="text" value="{{$pmsdebitvoucher->tigst}}" class="form-control calc" id="tigst" name="tigst" autocomplete="off"></td>
 	    		<td><strong>Total Amount</strong></td>
 	    		<td><input type="text" value="{{$pmsdebitvoucher->totalamt}}" class="form-control" id="totalamt" name="totalamt" readonly="" required=""></td>
 	    		
@@ -202,19 +205,18 @@
                </a>
                </td>
 	    	 </tr>
-
-	    	    <tr style="visibility:hidden;">
+	    	    <!-- <tr style="visibility:hidden;">
 	    		<td><strong>Approval Amount</strong></td>
 	    		<td><input type="text" class="form-control" value="{{$pmsdebitvoucher->finalamount}}" id="approvalamount" name="approvalamount" required=""></td> 
 	    		
-	    	  </tr>
+	    	  </tr> -->
 	</table>
 	
 <table class="table table-responsive">
-	<!-- <tr>
+	<tr>
 		<p class="alert alert-danger" style="text-align: center;font-weight: bold;font-size: 20px;" hidden="" id="errormsg"></p>
-		<td ><button type="submit" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="return confirm('Do You Want to Proceed?')">APPROVE</button></td>
-	</tr> -->
+		<td ><button type="submit" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="return confirm('Do You Want to Proceed?')">VERIFIED</button></td>
+	</tr>
 </table>
 </form>
 </div>
@@ -271,71 +273,6 @@
   </div>
 </div>
 <script type="text/javascript">
-		var coll = document.getElementsByClassName("collapsible");
-		var i;
-		for (i = 0; i < coll.length; i++) {
-		  coll[i].addEventListener("click", function() {
-		    this.classList.toggle("active");
-		    var content = this.nextElementSibling;
-		    if (content.style.display === "block") {
-		      content.style.display = "none";
-		    } else {
-		      content.style.display = "block";
-		    }
-		  });
-		}
-	$( "#approvalamount" ).on("change paste keyup", function() {
-            var finalamount=parseFloat($("#finalamount").val());
-            var approvalamount=parseFloat($("#approvalamount").val());
-            if (approvalamount > finalamount+1) {
-             $('#submitbtn').prop('disabled', true);
-             $("#errormsg").show();
-             $("#errormsg").text('approval amount cant be greater than the final amount !' );
-            }
-            else
-            { 
-            	$("#errormsg").hide();
-            	$("#errormsg").text('');
-            	$('#submitbtn').prop('disabled', false);
-            }
-	});
-
-	$( ".dedcalc" ).on("change paste keyup", function() {
-
-        var itdeduction=$("#itdeduction").val();
-        if(itdeduction=='') {
-           gitdeduction = 0;
-
-          }
-          else
-          {
-            gitdeduction=itdeduction;
-          }
-
-         var otherdeduction=$("#otherdeduction").val();
-          if(otherdeduction=='') {
-           gotherdeduction = 0;
-
-          }
-          else
-          {
-            gotherdeduction=otherdeduction;
-          }
-          var subtot=$("#tmrp").val();
-          var totalamt=$("#totalamt").val();
-
-          var itdedamt=parseFloat(subtot)*(parseFloat(gitdeduction/100));
-          var otheramt=parseFloat(subtot)*(parseFloat(gotherdeduction/100));
-
-          var final=Number.parseFloat(parseFloat(totalamt)-(parseFloat(itdedamt)+parseFloat(otheramt))).toFixed(2);
-
-          $("#finalamount").val(final);
-          $("#approvalamount").val(final);
-          
-
-          
-
-	});
 	function openvendordetails(vendorid,vendorname,mobile,bankname,acno,branchname,ifsccode,details,photo,vendoridproof)
    {
 
@@ -356,6 +293,105 @@
 
              $("#vendormodal").modal('show');
    }
+
+   function calcu()
+  {
+     
+
+    var tprice=$("#tprice").val();
+         if(tprice=='') {
+           gtprice = 0;
+          }
+          else
+          {
+            gtprice=tprice;
+          }
+    var discount=$("#discount").val();
+           if(discount=='') {
+           gdiscount = 0;
+          }
+          else
+          {
+            gdiscount=discount;
+          }
+
+    var tsgst=$("#tsgst").val();
+    if(tsgst=='') {
+           gtsgst = 0;
+          }
+          else
+          {
+            gtsgst=tsgst;
+          }
+
+           var tcgst=$("#tcgst").val();
+        if(tcgst=='') {
+           gtcgst = 0;
+          }
+          else
+          {
+            gtcgst=tcgst;
+          }
+
+           var tigst=$("#tigst").val();
+        if(tigst=='') {
+           gtigst = 0;
+          }
+          else
+          {
+            gtigst=tigst;
+          }
+
+      
+      var totalamt=Number.parseFloat((parseFloat(gtprice)-parseFloat(gdiscount))+(parseFloat(gtcgst)+parseFloat(gtsgst)+parseFloat(gtigst))).toFixed(2);
+
+      $("#totalamt").val(totalamt);
+      $("#finalamount").val(totalamt);
+  }
+	
+  $( ".calc" ).on("change paste keyup", function() {
+
+   calcu();
+
+  
+});
+
+  $( ".dedcalc" ).on("change paste keyup", function() {
+
+        var itdeduction=$("#itdeduction").val();
+        if(itdeduction=='') {
+           gitdeduction = 0;
+
+          }
+          else
+          {
+            gitdeduction=itdeduction;
+          }
+
+         var otherdeduction=$("#otherdeduction").val();
+          if(otherdeduction=='') {
+           gotherdeduction = 0;
+
+          }
+          else
+          {
+            gotherdeduction=otherdeduction;
+          }
+          var subtot=$("#totalamt").val();
+
+          var itdedamt=parseFloat(subtot)*(parseFloat(gitdeduction/100));
+          var otheramt=parseFloat(subtot)*(parseFloat(gotherdeduction/100));
+
+          var final=Number.parseFloat(parseFloat(subtot)-(parseFloat(itdedamt)+parseFloat(otheramt))).toFixed(2);
+
+          $("#finalamount").val(final);
+
+
+          
+
+  });
+
+
 </script>
 
 

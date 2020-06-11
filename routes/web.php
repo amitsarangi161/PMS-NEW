@@ -658,6 +658,7 @@ Route::get('/drvouchers/createdebitvoucher','AccountController@createdebitvouche
 Route::post('/savecreatedebitvouchers','AccountController@savecreatedebitvouchers');
 Route::get('/drvouchers/viewaccountverification/','AccountController@viewaccountverification');
 Route::get('/viewpendingaccountdr/{id}','AccountController@viewpendingaccountdr');
+Route::post('/pmsapprovedebitvouchermgr/{id}','AccountController@pmsapprovedebitvouchermgr');
 
 
 
