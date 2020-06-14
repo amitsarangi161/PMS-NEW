@@ -595,6 +595,7 @@ Route::post('/ajaxassignuserlist','HomeController@ajaxassignuserlist');
 Route::post('/ajaxremoveassignuser','HomeController@ajaxremoveassignuser');
 
 Route::get('/useraccounts/expenseentry','HomeController@expenseentry');
+
 Route::post('/ajaxgetuserallrequistion','HomeController@ajaxgetuserallrequistion');
 Route::post('/ajaxgetparticulars','AjaxController@ajaxgetparticulars');
 //-------------END PMS MAIN ROUTE------------//
@@ -610,7 +611,7 @@ Route::get('/tempsalary/viewsalary','AccountController@viewsalary');
 
 /*end temp Salary ROUte*/
 
-
+Route::get('/drvouchers/viewdrpendingmgr','AccountController@viewdrpendingmgr');
 Route::get('/acc-vouchers/createvoucher','AccountController@createvoucher');
 Route::get('/acc-vouchers/viewallvouchers','AccountController@viewallvouchers');
 Route::get('/acc-vouchers/approvedvouchers','AccountController@approvedvouchers');

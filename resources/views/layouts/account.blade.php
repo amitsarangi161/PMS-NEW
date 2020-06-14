@@ -403,6 +403,8 @@
           <ul class="treeview-menu">
             <li class="{{ Request::is('drvouchers/createdebitvoucher') ? 'active' : '' }}"><a href="/drvouchers/createdebitvoucher"><i class="fa fa-circle-o text-red"></i>CREATE DEBIT VOUCHER</a></li>
             <li class="{{ Request::is('drvouchers/viewaccountverification') ? 'active' : '' }}"><a href="/drvouchers/viewaccountverification"><i class="fa fa-circle-o text-red"></i>ACCOUNT VERIFICATION</a></li>
+            <li class="{{ Request::is('drvouchers/viewdrpendingmgr') ? 'active' : '' }}"><a href="/drvouchers/viewdrpendingmgr"><i class="fa fa-circle-o text-red"></i>PENDING DR VOUCHER(MGR)</a></li>
+
            
 
           </ul>

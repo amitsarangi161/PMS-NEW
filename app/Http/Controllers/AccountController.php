@@ -59,6 +59,10 @@ use App\Pmsdebitvoucherpayment;
 class AccountController extends Controller
 {  
 
+public function viewdrpendingmgr(){
+       
+       return view('accounts.viewdrpendingmgr');
+}
 public function viewdetailledgerbank($id){
   $ob=Openingbalance::where('id',$id)->pluck('amount')->first();
   $bankledgers=Bankledger::where('bankid',$id)
