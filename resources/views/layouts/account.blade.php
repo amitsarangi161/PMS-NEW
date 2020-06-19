@@ -1005,6 +1005,15 @@ $(".datepicker4").datepicker({
        minDate: 0,
        setDate: 0
        });
+$(".datepicker5").datepicker({
+   dateFormat: 'yy-mm-dd',
+       showButtonPanel: true,
+       changeYear: true,
+       changeMonth: true,
+       minDate: -1,
+       maxDate: new Date()
+      
+       });
 
 
 </script> 

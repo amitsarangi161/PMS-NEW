@@ -22,7 +22,7 @@
 <table class="table table-responsive table-hover table-bordered table-striped">
 	  <tr>
 	  	<td><strong>LEDGER ENTRY FOR DATE</strong></td>
-	  	<td><input type="text" class="form-control" value="{{date('Y-m-d')}}" readonly=""></td>
+	  	<td><input type="text" class="form-control datepicker5" readonly=""></td>
 	  </tr>
 	  <tr>
 	  	<td>
