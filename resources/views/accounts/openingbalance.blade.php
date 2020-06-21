@@ -38,11 +38,11 @@
 	  </tr>
 	  <tr>
 	  	<td><strong>DATE</strong></td>
-	  	<td><input type="text" name="date" class="datepicker form-control" placeholder=""></td>
+	  	<td><input type="text" name="date" class="datepicker form-control" placeholder="" autocomplete="off" required=""></td>
 	  </tr>
 	  <tr>
 	  	<td><strong>AMOUNT</strong></td>
-	  	<td><input type="text" name="amount" class="form-control" placeholder="Enter Amount"></td>
+	  	<td><input type="text" name="amount" class="form-control" placeholder="Enter Amount" required=""></td>
 	  </tr>
 	  <tr>
 	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit">SUBMIT</button></td>
