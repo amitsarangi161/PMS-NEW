@@ -14,7 +14,6 @@ use App\bank;
 use App\deductiondefination;
 use App\vendor;
 use App\User;
-
 use App\project;
 use App\expenseentry;
 use App\requisition;
@@ -492,8 +491,9 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
             $expenseheads=expensehead::all();
             $projects=project::all();
             $banks=bank::all();
+            $vendors=vendor::all();
 
-            return view('accounts.createvoucher',compact('expenseheads','projects','banks'));
+            return view('accounts.createdebitvoucher',compact('expenseheads','projects','banks','vendors'));
        }
       public function updatecompanybankaccount(Request $request)
       {
@@ -3379,6 +3379,18 @@ public function approvedebitvoucheradmin(Request $request,$id)
        $units=unit::all();
        return view('accounts.debitvoucher',compact('vendors','units','projects','expenseheads'));
   }
+  public function showaccountreport($id)
+  {
+    $vendor = vendor::find($id);
+    $trns = DB::table('voucher_report')
+          ->where('vendorid',$id)
+          ->where('status','COMPLETED')
+          ->get();
+          
+    return view('accounts.account_report',compact('trns','vendor'));
+
+    
+  }
   public function createdebitvoucher()
   {
        $projects=project::all();
@@ -3394,7 +3406,10 @@ public function approvedebitvoucheradmin(Request $request,$id)
        ]);
     $createdebitvoucher=new Pmsdebitvoucher();
      $createdebitvoucher->vendorid=$request->vendorid;
-     $createdebitvoucher->billtype=$request->billtype;
+     $createdebitvoucher->voucher_type=$request->voucher_type;
+     if($request->voucher_type=="INVOICE"){
+      $createdebitvoucher->status="COMPLETED";
+     }
      $createdebitvoucher->projectid=$request->projectid;
      $createdebitvoucher->expenseheadid=$request->expenseheadid;
      $createdebitvoucher->billdate=$request->billdate;
@@ -3456,7 +3471,24 @@ public function approvedebitvoucheradmin(Request $request,$id)
     public function pmsapprovedebitvouchermgr(Request $request, $id){
 
       $updatepmsapprovedebitvoucher=Pmsdebitvoucher::find($id);
-         $updatepmsapprovedebitvoucher->status="ACCOUNT VERIFIED";
+      $current_status = $updatepmsapprovedebitvoucher->status;
+      if($current_status=="PENDING"){
+        $updatepmsapprovedebitvoucher->status="ACCOUNT VERIFIED";
+      }
+      if($current_status=="ACCOUNT VERIFIED"){
+        $updatepmsapprovedebitvoucher->status="MANAGER VERIFIED";
+      }
+      if($current_status=="MANAGER VERIFIED"){
+        $updatepmsapprovedebitvoucher->status="ADMIN VERIFIED";
+      }
+      if($current_status=="ADMIN VERIFIED"){
+        $updatepmsapprovedebitvoucher->status="COMPLETED";
+      }
+      if($current_status=="COMPLETED"){
+        Session::flash('msg','Already Verified');
+        return back();
+      }
+        
          $updatepmsapprovedebitvoucher->tprice=$request->tprice;
          $updatepmsapprovedebitvoucher->discount=$request->discount;
          $updatepmsapprovedebitvoucher->tsgst=$request->tsgst;

@@ -16,7 +16,7 @@
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr class="bg-navy">
-		 <td class="text-center">DEBIT VOUCHER ENTRY</td>
+		 <td class="text-center">VOUCHER POSTING</td>
 	</tr>
 
 </table>
@@ -38,12 +38,12 @@
       	 		
       	 	</select>
       	 </td>
-        <td style="width: 20%;"><strong>BILL TYPE*</strong></td>
+        <td style="width: 20%;"><strong>VOUCHER TYPE*</strong></td>
           <td style="width: 30%;">
-            <select class="form-control select2" name="billtype" required="">
+            <select class="form-control select2" name="voucher_type" required="">
             <option value=''>--Select a type--</option>
-            <option value='ADVANCE'>ADVANCE</option>
-            <option value='GST INVOICE'>GST INVOICE</option>
+            <option value='PAYMENT'>PAYMENT</option>
+            <option value='INVOICE'>INVOICE</option>
             </select>
            </td>
       </tr>
@@ -138,7 +138,7 @@
         <tr>
           <td><strong>Attachment</strong></td>
           <td>
-          <input name="invoicecopy" type="file" onchange="readURL(this);" required="">
+          <input name="invoicecopy" type="file" onchange="readURL(this);" >
             <img style="height:40px;width:40px;" alt="noimage" id="imgshow">
           </td>
          </tr>

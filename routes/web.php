@@ -672,6 +672,7 @@ Route::post('/savecreatedebitvouchers','AccountController@savecreatedebitvoucher
 Route::get('/drvouchers/viewaccountverification/','AccountController@viewaccountverification');
 Route::get('/viewpendingaccountdr/{id}','AccountController@viewpendingaccountdr');
 Route::post('/pmsapprovedebitvouchermgr/{id}','AccountController@pmsapprovedebitvouchermgr');
+Route::get('/account-report/{id}','AccountController@showaccountreport');
 
 
 

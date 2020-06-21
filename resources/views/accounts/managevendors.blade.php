@@ -49,6 +49,7 @@
             <th>BRANCH NAME</th>
             <th>AUTHOR</th>
        	   	<th>EDIT</th>
+       	   	<th>ACCOUNTS</th>
        	   </tr>
        </thead>
        <tbody>
@@ -68,6 +69,7 @@
             <td>{{$vendor->branchname}}</td>
             <td>{{$vendor->name}}</td>
            	<td><a href="/editvendor/{{$vendor->id}}" class="btn btn-primary">EDIT</a></td>
+           	<td><a href="/account-report/{{$vendor->id}}" class="btn btn-primary">AC Report</a></td>
            </tr>
        	@endforeach
        
