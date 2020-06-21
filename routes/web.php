@@ -611,6 +611,18 @@ Route::get('/tempsalary/viewsalary','AccountController@viewsalary');
 
 /*end temp Salary ROUte*/
 
+
+/* 
+Web route for debit voucher
+Author: Saibal Chakravarty
+*/
+Route::get('/debitvoucher/new','AccountController@createvoucher');
+
+
+
+
+/*Debit voucher*/
+
 Route::get('/drvouchers/viewdrpendingmgr','AccountController@viewdrpendingmgr');
 Route::get('/acc-vouchers/createvoucher','AccountController@createvoucher');
 Route::get('/acc-vouchers/viewallvouchers','AccountController@viewallvouchers');
