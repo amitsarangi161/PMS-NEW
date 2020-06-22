@@ -221,13 +221,129 @@
 		<tr>
 			<p class="alert alert-danger" style="text-align: center;font-weight: bold;font-size: 20px;" hidden="" id="errormsg"></p>
 			<td>
-				@if($pmsdebitvoucher->status!="COMPLETED")
-				<button type="submit" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="return confirm('Do You Want to Proceed?')">VERIFY</button></td>
-			@endif
-		</tr>
+				@if(
+					(
+					(Auth::user()->usertype == "ACCOUNTS" && $pmsdebitvoucher->status=="PENDING") 
+					||
+					 (Auth::user()->usertype == "MANAGER" && $pmsdebitvoucher->status=="ACCOUNT VERIFIED")
+					|| 
+					(Auth::user()->usertype == "MASTER ADMIN"))
+					&&
+					($pmsdebitvoucher->status!="APPROVED" && $pmsdebitvoucher->status!="COMPLETED")
+					)
+
+				<button type="submit" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="return confirm('Do You Want to Proceed?')">VERIFY</button>
+				@endif
+				@if(
+					(Auth::user()->usertype == "CASHIER" && $pmsdebitvoucher->status=="APPROVED") 
+					|| 
+					(Auth::user()->usertype == "MASTER ADMIN" && $pmsdebitvoucher->status=="APPROVED")
+					
+					)
+
+				<button type="button" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="payNow()">Pay Now</button>
+			
+				@endif
+			</td>
+		
+		
+			</tr>
 	</table>
 </form>
 </div>
+
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">VOUCHER PAYMENT ENTRY</h4>
+        </div>
+        <div class="modal-body">
+        	<form action="/createvoucherpayment" method="post">
+        		{{csrf_field()}}
+          <table class="table">
+          	
+          			<input type="hidden" name="voucher_id" class="form-control"  value="{{$pmsdebitvoucher->id}}" readonly>
+          			<input type="hidden" name="vendor_id" class="form-control"  value="{{$pmsdebitvoucher->vendorid}}" readonly>
+          			<input type="hidden" name="project_id" class="form-control"  value="{{$pmsdebitvoucher->projectid}}" readonly>
+          		
+          
+          	<tr>
+          		<td><strong>PAYMENT TYPE</strong></td>
+          		<td>
+          			<select class="form-control" name="paymenttype" onchange="getbank(this.value);" required="">
+          				<option value="">SELECT A PAYMENT TYPE</option>
+          				<option value="ONLINE PAYMENT">ONLINE PAYMENT</option>
+          				<option value="CASH">CASH</option>
+          				<option value="CHEQUE">CHEQUE</option>
+          				<option value="DD">DD</option>
+          				
+          			</select>
+				</td>
+          	</tr>
+          	<tr style="display: none;" id="showbank">
+          		<td><strong>SELECT BANK</strong></td>
+          		<td>
+          			<select class="form-control" name="bankid" id="reqbank">
+          				<option value="">Select a Bank</option>
+          				@foreach($banks as $bank)
+                          <option value="{{$bank->id}}">{{$bank->bankname}}/{{$bank->acno}}/{{$bank->branchname}}</option>
+          				@endforeach
+          				
+          			</select>
+          		</td>
+          	</tr>
+          	<tr>
+          		<td><strong>DAT OF PAYMENT</strong></td>
+          		<td>
+          			<input type="text" name="dop"  class="form-control datepicker" id="amt1" value="" readonly>
+          		</td>
+          	</tr>
+          	<tr>
+          		<td><strong>AMOUNT</strong></td>
+          		<td>
+          			<input type="text" name="amount"  class="form-control" id="amt1" value="{{$pmsdebitvoucher->finalamount}}" readonly>
+          		</td>
+          	</tr>
+          	<tr>
+          		<td><strong>TRANSACTION ID</strong></td>
+          		<td>
+          			<input type="text" name="trnid"  class="form-control" id="amt1" value="" >
+          		</td>
+          	</tr>
+          
+    
+          	<tr>
+          		<td><strong>REMARKS</strong></td>
+          		<td>
+          			<textarea name="remarks" class="form-control"></textarea>
+          		</td>
+          	</tr>
+          	 <tr>
+        <td colspan="2" style="text-align: center;font-size:15px;"> <p id="errormsg" style="color: red;"></p></td>
+      </tr>
+          	<tr>
+          		<td colspan="2"><button type="submit" id="subbutton" class="btn btn-success" onclick="return confirm('Do You Want to Proceed?')">SUBMIT</button></td>
+          	</tr>
+          
+          </table>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+
+
+
 <div id="vendormodal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
@@ -281,6 +397,20 @@
 	</div>
 </div>
 <script type="text/javascript">
+	  function getbank(type)
+  {
+  	if(type=='CASH')
+  	{
+  		$("#showbank").hide();
+  		$('#reqbank').prop('required',false);
+  	}
+  	else
+  	{
+  		$("#showbank").show();
+  		$('#reqbank').prop('required',true);
+  	}
+
+  }
 	function openvendordetails(vendorid, vendorname, mobile, bankname, acno, branchname, ifsccode, details, photo, vendoridproof) {
 
 
@@ -299,6 +429,11 @@
 		$("#idproof1").html('<a href="/img/vendor/' + vendoridproof + '" target="_blank"><img src="/img/vendor/' + vendoridproof + '" style="height:70px;width:95px;" alt="click to view"></a>');
 
 		$("#vendormodal").modal('show');
+	}
+
+	function payNow(){
+		
+		$("#myModal2").modal('show');
 	}
 
 	function calcu() {
