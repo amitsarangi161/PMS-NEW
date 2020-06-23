@@ -3417,6 +3417,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
      $createdebitvoucher->vendorid=$request->vendorid;
      $createdebitvoucher->voucher_type=$request->voucher_type;
     
+     $createdebitvoucher->reftype=$request->reftype;
      $createdebitvoucher->projectid=$request->projectid;
      $createdebitvoucher->expenseheadid=$request->expenseheadid;
      $createdebitvoucher->billdate=$request->billdate;

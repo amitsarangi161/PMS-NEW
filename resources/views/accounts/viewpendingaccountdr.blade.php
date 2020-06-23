@@ -232,7 +232,14 @@
 					($pmsdebitvoucher->status!="APPROVED" && $pmsdebitvoucher->status!="COMPLETED")
 					)
 
-				<button type="submit" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="return confirm('Do You Want to Proceed?')">VERIFY</button>
+				@php 
+				$name="Verify";
+				if($pmsdebitvoucher->status=="PENDING"){$name="Accounts Verify";}
+				if($pmsdebitvoucher->status=="ACCOUNT VERIFIED"){$name="Manager Verify";}
+				if($pmsdebitvoucher->status=="MANAGER VERIFIED"){$name="Admin Verify";}
+				@endphp
+
+				<button type="submit" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="return confirm('Do You Want to Proceed?')">{{$name}}</button>
 				@endif
 				@if(
 					(Auth::user()->usertype == "CASHIER" && $pmsdebitvoucher->status=="APPROVED") 

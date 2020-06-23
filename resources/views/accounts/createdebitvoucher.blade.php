@@ -47,6 +47,18 @@
             </select>
            </td>
       </tr>
+      <tr>
+        <td style="width: 20%;"><strong>PAYMENT TYPE*</strong></td>
+          <td style="width: 30%;">
+            <select class="form-control select2" name="reftype" required="">
+            <option value=''>--Select a type--</option>
+            <option value='PO'>PO</option>
+            <option value='PI'>PI</option>
+            <option value='ADVANCE'>ADVANCE</option>
+            <option value='NA'>NA</option>
+            </select>
+           </td>
+      </tr>
       <tr style="width: 100%">
         <td style="width: 20%;"><strong>Select a Project</strong></td>
         <td style="width: 30%;">
