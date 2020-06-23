@@ -2771,13 +2771,14 @@ public function no_to_words($no)
      }
      public function paiddramount()
      {
-           $debitvoucherpayments=debitvoucherpayment::select('debitvoucherpayments.*','banks.bankname','useraccounts.acno','useraccounts.branchname','vendors.vendorname','users.name as paidbyname')
+           $debitvoucherpayments=debitvoucherpayment::select('debitvoucherpayments.*','banks.bankname','useraccounts.acno','useraccounts.branchname','vendors.vendorname','users.name as paidbyname','projects.projectname')
                                 ->where('paymentstatus','PAID')
                                 ->leftJoin('useraccounts','debitvoucherpayments.bankid','=','useraccounts.id')
                                ->leftJoin('banks','useraccounts.bankid','=','banks.id')
                                ->leftJoin('debitvoucherheaders','debitvoucherpayments.did','=','debitvoucherheaders.id')
                                ->leftJoin('vendors','debitvoucherheaders.vendorid','=','vendors.id')
                                ->leftJoin('users','debitvoucherpayments.paidby','=','users.id')
+                               ->leftJoin('projects','debitvoucherheaders.projectid','=','projects.id')
                                 ->get();
            
           return view('accounts.paiddramount',compact('debitvoucherpayments'));       

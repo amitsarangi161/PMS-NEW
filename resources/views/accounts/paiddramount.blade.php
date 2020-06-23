@@ -1,6 +1,15 @@
 @extends('layouts.account')
 
 @section('content')
+<style type="text/css">
+    .b {
+    white-space: nowrap; 
+    width: 120px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+   
+}
+</style>
 
 <table class="table">
 	<tr class="bg-blue">
@@ -13,6 +22,7 @@
      	<tr class="bg-navy">
      		<td>ID</td>
      		<td>VENDOR NAME</td>
+               <td>PROJECT</td>
      		<td>AMOUNT</td>
      		<td>PAYMENT TYPE</td>
      		<td>REMARKS</td>
@@ -30,6 +40,7 @@
      	<tr>
      		<td>{{$debitvoucherpayment->id}}</td>
      		<td>{{$debitvoucherpayment->vendorname}}</td>
+               <td><strong><p class="b" title="{{$debitvoucherpayment->projectname}}">{{$debitvoucherpayment->projectname}}</p></strong></td>
      		<td>{{$debitvoucherpayment->amount}}</td>
      		<td>{{$debitvoucherpayment->paymenttype}}</td>
                <td>{{$debitvoucherpayment->remarks}}</td>
