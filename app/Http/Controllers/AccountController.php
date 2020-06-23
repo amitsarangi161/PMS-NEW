@@ -3462,7 +3462,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
       $voucher=Pmsdebitvoucher::find($request->voucher_id);
       $voucher->status="COMPLETED";
       $voucher->save();
-
+return back();
     }
     public function viewpendingaccountdr($id){
       $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
@@ -3496,7 +3496,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
       $updatepmsapprovedebitvoucher=Pmsdebitvoucher::find($id);
       $current_status = $updatepmsapprovedebitvoucher->status;
       if($current_status=="PENDING"){
-        if($request->voucher_type=="INVOICE"){
+        if($updatepmsapprovedebitvoucher->voucher_type=="INVOICE"){
           $updatepmsapprovedebitvoucher->status="COMPLETED";
          }
          else{
@@ -3514,10 +3514,10 @@ public function approvedebitvoucheradmin(Request $request,$id)
       //   $updatepmsapprovedebitvoucher->status="APPROVED";
        
       // }
-      if($current_status=="APPROVED"){
-        $updatepmsapprovedebitvoucher->status="COMPLETED";
+      // if($current_status=="APPROVED"){
+      //   $updatepmsapprovedebitvoucher->status="COMPLETED";
        
-      }
+      // }
       if($current_status=="COMPLETED"){
         Session::flash('msg','Already Verified');
         return back();
