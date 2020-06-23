@@ -3473,6 +3473,22 @@ public function approvedebitvoucheradmin(Request $request,$id)
       $voucher->save();
 return back();
     }
+    public function getVendorBalance($id){
+      $vendor_credit =  DB::table('voucher_report')
+                        ->where('vendorid',$id)
+                        ->where('status','COMPLETED')
+                        ->sum('credit');
+      $vendor_debit =  DB::table('voucher_report')
+                        ->where('vendorid',$id)
+                        ->where('status','COMPLETED')
+                        ->sum('debit');
+
+      $balance=$vendor_credit-$vendor_debit;
+      return response()->json([
+        'balance'=>$balance,
+        'clr'=>($balance<0)?"danger":"success"
+      ]);
+    }
     public function viewpendingaccountdr($id){
       $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')

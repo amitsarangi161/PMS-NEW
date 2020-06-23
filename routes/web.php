@@ -406,6 +406,7 @@ Route::get('/deleterequest/{id}','HomeController@deleterequest');
 Route::get('vouchers/viewalldebitvoucher','AccountController@viewalldebitvoucher');
 Route::get('/viewapproveddebitvoucher/{id}','AccountController@viewapproveddebitvoucher');
 Route::post('/createvoucherpayment','AccountController@createVoucherPayment');
+Route::get('/getvendorbalance/{id}','AccountController@getVendorBalance');
 
 
 
