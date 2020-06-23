@@ -238,6 +238,8 @@
 					(Auth::user()->usertype == "CASHIER" && $pmsdebitvoucher->status=="APPROVED") 
 					|| 
 					(Auth::user()->usertype == "MASTER ADMIN" && $pmsdebitvoucher->status=="APPROVED")
+					|| 
+					(Auth::user()->usertype == "ACCOUNTS" && $pmsdebitvoucher->status=="APPROVED")
 					
 					)
 
