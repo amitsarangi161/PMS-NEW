@@ -28,91 +28,30 @@
    <p class="alert alert-danger text-center">{{ Session::get('err') }}</p>
 @endif
 
-<div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <table class="table table-responsive table-hover table-bordered table-striped">
   <tr class="bg-navy">
-     <td class="text-center">VOUCHER POSTING</td>
+     <td class="text-center">CREATE VOUCHER</td>
   </tr>
 
 </table>
 
-<div class="col-md-12">
+
 <form action="/savevoucher" method="post" enctype="multipart/form-data">
   {{csrf_field()}}
 <div class="table-responsive">
   <table class="table table-responsive table-hover">
      <tr>
-         <td><strong>ENTER VOUCHER TYPE</strong> *</td>
-         <td>
-          <select class="form-control select2" name="vouchertype">
-              <option value="">Select Voucher Type</option>
-                  <option value="INVOICE">INVOICE</option>
-                  <option value="PAYMENT">PAYMENT</option>
-
-
-             </select>  
-         </td>
-      
-         <td><strong>ENTER PARTY/VENDOR</strong> *</td>
-         <td>
-          <select class="form-control select2" name="vouchertype">
-              <option value="">Select Vendor</option>
-              @foreach($vendors as $vendor)
-                  <option value="{{$vendor->id}}">{{$vendor->vendorname}}</option>
-                @endforeach
-
-
-             </select>  
-         </td>
-      </tr>
-      <tr>
-         <td><strong>PAYMENT MODE</strong> *</td>
-         <td>
-          <select class="form-control select2" name="vouchertype">
-              <option value="">Select Payment Mode</option>
-                  <option value="CASH">CASH</option>
-                  <option value="CHEQUE">CHEQUE</option>
-                  <option value="ONLINE">ONLINE</option>
-                  <option value="PDC">PDC</option>
-                  <option value="DD">DD</option>
-                  <option value="TDR">TDR</option>
-                  <option value="NSC">NSC</option>
-
-
-             </select>  
-         </td>
-      </tr>
-     <!-- <tr>
          <td><strong>ENTER PAYEE NAME</strong> *</td>
          <td>
           <input type="text" name="payeename" autocomplete="off" class="form-control" placeholder="Enter Payee Name" required="">
  
          </td>
-      </tr> -->
+      </tr>
         <tr>
          <td><strong>BANK</strong> </td>
          <td>
              <select class="form-control select2" name="bankid">
-              <option value="">Select a Bank</option>
+              <option value="">Selectr a Bank</option>
                 @foreach($banks as $bank)
                   <option value="{{$bank->id}}">{{$bank->bankname}}</option>
                 @endforeach
@@ -234,32 +173,7 @@
   </table>
 </div>
 </form>
-
-</div>
-<!-- <div class="col-md-4">
-
-
-</div> -->
-
 <script type="text/javascript">
-$(document).ready(function(){
-$('input,select').on('keypress', function (e) {
-    if (e.which == 13) {
-        e.preventDefault();
-        var $next = $('[tabIndex=' + (+this.tabIndex + 1) + ']');
-        console.log($next.length);
-        if (!$next.length) {
-            $next = $('[tabIndex=1]');
-        }
-        $next.focus();
-    }
-});
-
-});
-
-
-
-
   $( ".calc" ).on("change paste keyup", function() {
        var getamt=$('#amount').val();
        if (getamt=='') {

@@ -617,7 +617,7 @@ Route::get('/tempsalary/viewsalary','AccountController@viewsalary');
 Web route for debit voucher
 Author: Saibal Chakravarty
 */
-Route::get('/debitvoucher/new','AccountController@createvoucher');
+Route::get('/debitvoucher/new','AccountController@createnewdebitvoucher');
 
 
 

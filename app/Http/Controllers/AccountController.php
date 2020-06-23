@@ -486,7 +486,15 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
 
             return back();
        }
-       public function createvoucher()
+          public function createvoucher()
+       {
+            $expenseheads=expensehead::all();
+            $projects=project::all();
+            $banks=bank::all();
+
+            return view('accounts.createvoucher',compact('expenseheads','projects','banks'));
+       }
+       public function createnewdebitvoucher()
        {
             $expenseheads=expensehead::all();
             $projects=project::all();
