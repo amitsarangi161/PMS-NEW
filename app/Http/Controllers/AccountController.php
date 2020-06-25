@@ -3509,9 +3509,10 @@ return back();
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
                      ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
                      ->where('pmsdebitvouchers.id','!=',$id)
+                     ->where('vendorid',$vid)
                      ->get();
-
-      $debitvoucherpayments=Pmsdebitvoucherpayment::where('vendorid',$pmsdebitvoucher->vendorid)->where('projectid',$pmsdebitvoucher->projectid)->get();
+      //return $previousbills;
+      $debitvoucherpayments=Pmsdebitvoucherpayment::where('vendorid',$vid)->where('projectid',$pmsdebitvoucher->projectid)->get();
       //return $debitvoucherpayments;
       //return $pmsdebitvoucher;
       return view('accounts.viewpendingaccountdr',compact('pmsdebitvoucher','vendor','previousbills','debitvoucherpayments','banks'));
