@@ -402,7 +402,16 @@
           </a>
           <ul class="treeview-menu">
             <li class="{{ Request::is('drvouchers/createdebitvoucher') ? 'active' : '' }}"><a href="/drvouchers/createdebitvoucher"><i class="fa fa-circle-o text-red"></i>CREATE NEW VOUCHER</a></li>
-            <li class="{{ Request::is('drvouchers/viewaccountverification') ? 'active' : '' }}"><a href="/drvouchers/viewaccountverification"><i class="fa fa-circle-o text-red"></i>VOUCHER PENDING VERIFICATION</a></li>
+            <li class="{{ Request::is('drvouchers/viewaccountverification') ? 'active' : '' }}"><a href="/drvouchers/viewaccountverification"><i class="fa fa-circle-o text-red"></i>ACCOUNT VERIFICATION</a></li>
+            <li class="{{ Request::is('drvouchers/managerpendingdr') ? 'active' : '' }}"><a href="/drvouchers/managerpendingdr"><i class="fa fa-circle-o text-red"></i>MANAGER VERIFICATION</a></li>
+            <li class="{{ Request::is('drvouchers/adminverificationdr') ? 'active' : '' }}"><a href="/drvouchers/adminverificationdr"><i class="fa fa-circle-o text-red"></i>ADMIN VERIFICATION</a></li>
+
+            <li class="{{ Request::is('drvouchers/verifieddr') ? 'active' : '' }}"><a href="/drvouchers/verifieddr"><i class="fa fa-circle-o text-red"></i>APPROVED DR VOUCHER</a></li>
+
+            <li class="{{ Request::is('drvouchers/compliteddrvoucher') ? 'active' : '' }}"><a href="/drvouchers/compliteddrvoucher"><i class="fa fa-circle-o text-red"></i>COMPLETED DR VOUCHER</a></li>
+            <li class="{{ Request::is('drvouchers/cancelleddrvouchers') ? 'active' : '' }}"><a href="/drvouchers/cancelleddrvouchers"><i class="fa fa-circle-o text-red"></i>CANCELLED DR VOUCHERS</a></li>
+            <li class="{{ Request::is('drvouchers/viealldrvouchers') ? 'active' : '' }}"><a href="/drvouchers/viealldrvouchers"><i class="fa fa-circle-o text-red"></i>VIEW ALL DR VOUCHERS</a></li>
+
            
 
           </ul>

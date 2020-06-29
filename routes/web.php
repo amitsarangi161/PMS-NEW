@@ -671,7 +671,21 @@ Route::delete('/canceldrvoucher/{id}','AccountController@canceldrvoucher');
 
 Route::get('/drvouchers/createdebitvoucher','AccountController@createdebitvoucher');
 Route::post('/savecreatedebitvouchers','AccountController@savecreatedebitvouchers');
-Route::get('/drvouchers/viewaccountverification/','AccountController@viewaccountverification');
+
+Route::get('/drvouchers/viewaccountverification','AccountController@viewaccountverification');
+
+Route::get('/drvouchers/adminverificationdr','AccountController@adminverificationdr');
+
+
+
+Route::get('/drvouchers/verifieddr','AccountController@verifieddr');
+
+Route::get('/drvouchers/compliteddrvoucher','AccountController@compliteddrvoucher');
+
+
+Route::get('/drvouchers/managerpendingdr','AccountController@managerpendingdr');
+
+
 Route::get('/viewpendingaccountdr/{id}','AccountController@viewpendingaccountdr');
 Route::post('/pmsapprovedebitvouchermgr/{id}','AccountController@pmsapprovedebitvouchermgr');
 Route::get('/account-report/{id}','AccountController@showaccountreport');

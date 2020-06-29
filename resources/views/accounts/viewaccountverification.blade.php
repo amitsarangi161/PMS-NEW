@@ -64,7 +64,7 @@
           		@endif
           	</td>
             <td>{{$createdebitvoucher->expenseheadname}}</td>
-            <td>{{$createdebitvoucher->billtype}}</td>
+            <td>{{$createdebitvoucher->voucher_type}}</td>
             <td>{{$createdebitvoucher->billdate}}</td>
           	<td>{{$createdebitvoucher->billno}}</td>
           	<td>{{$provider::moneyFormatIndia($createdebitvoucher->tprice)}}</td>

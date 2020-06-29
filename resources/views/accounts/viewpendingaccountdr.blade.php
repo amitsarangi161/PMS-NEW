@@ -289,6 +289,9 @@
           				<option value="CASH">CASH</option>
           				<option value="CHEQUE">CHEQUE</option>
           				<option value="DD">DD</option>
+          				<option value="PDC">PDC</option>
+          				<option value="TDR">TDR</option>
+          				<option value="NSC">NSC</option>
           				
           			</select>
 				</td>

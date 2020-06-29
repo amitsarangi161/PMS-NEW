@@ -3448,9 +3448,49 @@ public function approvedebitvoucheradmin(Request $request,$id)
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
                      ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
-                     ->where('pmsdebitvouchers.status','!=','COMPLETED')
+                     ->where('pmsdebitvouchers.status','PENDING')
                      ->get();
-      //return $createdebitvouchers;
+
+      return view('accounts.viewaccountverification',compact('createdebitvouchers'));
+    }
+     public function managerpendingdr(){
+      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.status','ACCOUNT VERIFIED')
+                     ->get();
+                     
+      return view('accounts.viewaccountverification',compact('createdebitvouchers'));
+    }
+    public function adminverificationdr(){
+      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.status','MANAGER VERIFIED')
+                     ->get();
+                     
+      return view('accounts.viewaccountverification',compact('createdebitvouchers'));
+    } 
+    public function verifieddr(){
+      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.status','APPROVED')
+                     ->get();
+                     
+      return view('accounts.viewaccountverification',compact('createdebitvouchers'));
+    }
+     public function compliteddrvoucher(){
+      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.status','COMPLETED')
+                     ->get();
+                     
       return view('accounts.viewaccountverification',compact('createdebitvouchers'));
     }
     public function createVoucherPayment(Request $request){
@@ -3464,7 +3504,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
       $newPayment->transactionid = $request->trnid;
       $newPayment->paymenttype = $request->paymenttype;
       $newPayment->remarks = $request->remarks;
-      $newPayment->paymentstatus = "PAID";
+      $newPayment->paymentstatus = "PENDING";
       $newPayment->dateofpayment = $request->dop;
       $newPayment->paidby = Auth::user()->id;
       $newPayment->save();
@@ -3472,7 +3512,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
       $voucher=Pmsdebitvoucher::find($request->voucher_id);
       $voucher->status="COMPLETED";
       $voucher->save();
-return back();
+      return back();
     }
     public function getVendorBalance($id){
       $vendor_credit =  DB::table('voucher_report')
@@ -3522,7 +3562,7 @@ return back();
 
       $updatepmsapprovedebitvoucher=Pmsdebitvoucher::find($id);
       $current_status = $updatepmsapprovedebitvoucher->status;
-      if($current_status=="PENDING"){
+     if($current_status=="PENDING"){
         if($updatepmsapprovedebitvoucher->voucher_type=="INVOICE"){
           $updatepmsapprovedebitvoucher->status="COMPLETED";
          }
@@ -3537,14 +3577,7 @@ return back();
       if($current_status=="MANAGER VERIFIED"){
         $updatepmsapprovedebitvoucher->status="APPROVED";
       }
-      // if($current_status=="ADMIN VERIFIED"){
-      //   $updatepmsapprovedebitvoucher->status="APPROVED";
-       
-      // }
-      // if($current_status=="APPROVED"){
-      //   $updatepmsapprovedebitvoucher->status="COMPLETED";
-       
-      // }
+
       if($current_status=="COMPLETED"){
         Session::flash('msg','Already Verified');
         return back();
@@ -3561,6 +3594,28 @@ return back();
          $updatepmsapprovedebitvoucher->otherdeduction=$request->otherdeduction;
          $updatepmsapprovedebitvoucher->finalamount=$request->finalamount;
          $updatepmsapprovedebitvoucher->save();
+         $current_status = $updatepmsapprovedebitvoucher->status;
+     
+      if($current_status=="ACCOUNT VERIFIED"){
+        return redirect('/drvouchers/viewaccountverification');
+      }
+      if($current_status=="MANAGER VERIFIED"){
+        return redirect('/drvouchers/managerpendingdr');
+      }
+      if($current_status=="APPROVED"){
+        return redirect('/drvouchers/adminverificationdr');
+      }
+      if($current_status=="COMPLETED"){
+          if($updatepmsapprovedebitvoucher->voucher_type=='INVOICE')
+          {
+            return redirect('/drvouchers/compliteddrvoucher');
+          }
+          else{
+            return redirect('/drvouchers/verifieddr');
+          }
+        
+      }
+
          Session::flash('msg','Account Verified Successfully');
 
          

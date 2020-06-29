@@ -58,6 +58,7 @@
                   <option value="ACCOUNTS ENTRY">ACCOUNTS ENTRY</option>
                   <option value="CASHIER">CASHIER</option>
                   <option value="INVENTORY">INVENTORY</option>
+                  <option value="MANGER">MANAGER</option>
               </select>
             </td>
           </tr>        
@@ -165,6 +166,8 @@
                   <option value="ACCOUNTS">ACCOUNTS</option>
                   <option value="ACCOUNTS ENTRY">ACCOUNTS ENTRY</option>
                   <option value="CASHIER">CASHIER</option>
+                  <option value="INVENTORY">INVENTORY</option>
+                  <option value="MANGER">MANAGER</option>
               </select>
             </td>
           </tr>
