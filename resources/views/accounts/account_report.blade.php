@@ -36,15 +36,15 @@
 	<table class="table table-responsive table-bordered table-hover table-striped">
         <thead style="background: #0073b7;
     color: #fff;">
+            <th>ID</th>
             <th>Transaction Date</th>
-            <th>Trn Details</th>
             <th>Credit</th>
             <th>Debit</th>
         </thead>
         @foreach($trns as $key=>$trn)
 		<tr>
+            <td width="20%">{{$trn->id}}</td>
 			<td width="20%">{{$trn->created_at}}</td>
-            <td width="30%">{{$trn->created_at}}</td>
             <td style="text-align: right" width="30%">{{$trn->credit}}</td>
             <td style="text-align: right" width="30%">{{$trn->debit}}</td>
         </tr>

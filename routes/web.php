@@ -217,7 +217,7 @@ Route::post('/savediductiondefination','AccountController@savediductiondefinatio
 Route::post('/updatedeductiondefination','AccountController@updatedeductiondefination');
 Route::delete('/deletedeductiondefination/{id}','AccountController@deletedeductiondefination');
 
-Route::get('/defination/vendors','AccountController@vendors');
+//Route::get('/defination/vendors','AccountController@vendors');
 Route::get('/useraccounts/vendors','HomeController@vendors');
 Route::get('/viewexpenseentryuser/{id}','AccountController@viewexpenseentryuser');
 Route::post('/savevendor','AccountController@savevendor');
@@ -650,7 +650,7 @@ Route::post('/savecompanybankaccount','AccountController@savecompanybankaccount'
 Route::post('/updatecompanybankaccount','AccountController@updatecompanybankaccount');
 
 Route::post('/importvendor','AccountController@importvendor');
-Route::get('/defination/managevendors','AccountController@managevendors');
+//Route::get('/defination/managevendors','AccountController@managevendors');
 Route::get('prb/requisitiononlinepending','AccountController@viewallbankrequisitionpayment');
 Route::get('prb/requisitiononlinepaid','AccountController@cashierpaidrequsitionamt');
 Route::get('/prb/requisitioncashrequest','AccountController@requisitioncashrequest');
@@ -744,5 +744,13 @@ Route::get('/editstock/{id}','InventoryController@editstock');
 Route::post('/updatestock/{id}','InventoryController@updatestock');
 
 //-------------PMS END INVENTORY ROUTE------------//
+
+
+//-------------PMS VENDOR ROUTE------------//
+
+Route::get('/vendor/vendors','AccountController@vendors');
+Route::get('/vendor/managevendors','AccountController@managevendors');
+Route::get('/vendor/vendorwisepayment','AccountController@vendorwisepayment');
+//-------------PMS END VENDOR ROUTE------------//
 
 });

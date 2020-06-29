@@ -234,12 +234,26 @@
             
 
             <li class="{{ Request::is('defination/deductiondefination') ? 'active' : '' }}"><a href="/defination/deductiondefination"><i class="fa fa-circle-o text-aqua"></i>DEDUCTION DEFINATION</a></li>
-            <li class="{{ Request::is('defination/vendors') ? 'active' : '' }}"><a href="/defination/vendors"><i class="fa fa-circle-o text-aqua"></i>VENDORS</a></li>
-
-            <li class="{{ Request::is('defination/managevendors') ? 'active' : '' }}"><a href="/defination/managevendors"><i class="fa fa-circle-o text-aqua"></i>MANAGE ALL VENDORS</a></li>
              <li class="{{ Request::is('defination/units') ? 'active' : '' }}"><a href="/defination/units"><i class="fa fa-circle-o text-aqua"></i>UNITS</a></li>
 
              <li class="{{ Request::is('defination/hsn') ? 'active' : '' }}"><a href="/defination/hsn"><i class="fa fa-circle-o text-aqua"></i>HSN MASTER</a></li>
+          </ul>
+        </li>
+
+        <li class="{{ Request::is('vendor*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>VENDOR</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <li class="{{ Request::is('vendor/vendors') ? 'active' : '' }}"><a href="/vendor/vendors"><i class="fa fa-circle-o text-aqua"></i>VENDORS</a></li>
+
+            <li class="{{ Request::is('vendor/managevendors') ? 'active' : '' }}"><a href="/vendor/managevendors"><i class="fa fa-circle-o text-aqua"></i>MANAGE ALL VENDORS</a></li>
+            
+            <li class="{{ Request::is('vendor/vendorwisepayment') ? 'active' : '' }}"><a href="/vendor/vendorwisepayment"><i class="fa fa-circle-o text-aqua"></i>VENDOR WISE PAYMENT</a></li>
           </ul>
         </li>
 
@@ -391,6 +405,22 @@
           </ul>
         </li>
 
+        @php    
+        $countpending=\App\pmsdebitvoucher::where('status','PENDING')->count();
+        $countaccountverified=\App\pmsdebitvoucher::where('status','ACCOUNT VERIFIED')->count();
+        $countmanagerverified=\App\pmsdebitvoucher::where('status','MANAGER VERIFIED')
+        ->count();
+        $countapproved=\App\pmsdebitvoucher::where('status','APPROVED')
+        ->count();
+        $countcomplted=\App\pmsdebitvoucher::where('status','COMPLETED')
+        ->count();
+        $countcancelled=\App\pmsdebitvoucher::where('status','CANCELLED')
+        ->count();
+        $countviewalldr=\App\pmsdebitvoucher::where('id','>','0')
+        ->count();
+
+        @endphp
+
 
         <li class="{{ Request::is('drvouchers*') ? 'active' : '' }} treeview">
           <a href="#">
@@ -402,17 +432,48 @@
           </a>
           <ul class="treeview-menu">
             <li class="{{ Request::is('drvouchers/createdebitvoucher') ? 'active' : '' }}"><a href="/drvouchers/createdebitvoucher"><i class="fa fa-circle-o text-red"></i>CREATE NEW VOUCHER</a></li>
-            <li class="{{ Request::is('drvouchers/viewaccountverification') ? 'active' : '' }}"><a href="/drvouchers/viewaccountverification"><i class="fa fa-circle-o text-red"></i>ACCOUNT VERIFICATION</a></li>
-            <li class="{{ Request::is('drvouchers/managerpendingdr') ? 'active' : '' }}"><a href="/drvouchers/managerpendingdr"><i class="fa fa-circle-o text-red"></i>MANAGER VERIFICATION</a></li>
-            <li class="{{ Request::is('drvouchers/adminverificationdr') ? 'active' : '' }}"><a href="/drvouchers/adminverificationdr"><i class="fa fa-circle-o text-red"></i>ADMIN VERIFICATION</a></li>
+            <li class="{{ Request::is('drvouchers/viewaccountverification') ? 'active' : '' }}"><a href="/drvouchers/viewaccountverification"><i class="fa fa-circle-o text-red"></i>ACCOUNT VERIFICATION
+            <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$countpending}}</span>
+            </span>
+            </a></li>
 
-            <li class="{{ Request::is('drvouchers/verifieddr') ? 'active' : '' }}"><a href="/drvouchers/verifieddr"><i class="fa fa-circle-o text-red"></i>APPROVED DR VOUCHER</a></li>
+            <li class="{{ Request::is('drvouchers/managerpendingdr') ? 'active' : '' }}"><a href="/drvouchers/managerpendingdr"><i class="fa fa-circle-o text-red"></i>MANAGER VERIFICATION
+            <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$countaccountverified}}</span>
+            </span>
+            </a></li>
+            <li class="{{ Request::is('drvouchers/adminverificationdr') ? 'active' : '' }}"><a href="/drvouchers/adminverificationdr"><i class="fa fa-circle-o text-red"></i>ADMIN VERIFICATION
+            <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$countmanagerverified}}</span>
+            </span>
+            </a></li>
 
-            <li class="{{ Request::is('drvouchers/compliteddrvoucher') ? 'active' : '' }}"><a href="/drvouchers/compliteddrvoucher"><i class="fa fa-circle-o text-red"></i>COMPLETED DR VOUCHER</a></li>
-            <li class="{{ Request::is('drvouchers/cancelleddrvouchers') ? 'active' : '' }}"><a href="/drvouchers/cancelleddrvouchers"><i class="fa fa-circle-o text-red"></i>CANCELLED DR VOUCHERS</a></li>
-            <li class="{{ Request::is('drvouchers/viewalldrvouchers') ? 'active' : '' }}"><a href="/drvouchers/viewalldrvouchers"><i class="fa fa-circle-o text-red"></i>VIEW ALL DR VOUCHERS</a></li>
 
-           
+         
+            <li class="{{ Request::is('drvouchers/verifieddr') ? 'active' : '' }}"><a href="/drvouchers/verifieddr"><i class="fa fa-circle-o text-red"></i>APPROVED DR VOUCHER
+            <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$countapproved}}</span>
+            </span>
+            </a></li>
+
+
+
+            <li class="{{ Request::is('drvouchers/compliteddrvoucher') ? 'active' : '' }}"><a href="/drvouchers/compliteddrvoucher"><i class="fa fa-circle-o text-red"></i>COMPLETED DR VOUCHER
+            <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$countcomplted}}</span>
+            </span>
+            </a></li>
+            <li class="{{ Request::is('drvouchers/cancelleddrvouchers') ? 'active' : '' }}"><a href="/drvouchers/cancelleddrvouchers"><i class="fa fa-circle-o text-red"></i>CANCELLED DR VOUCHERS
+            <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$countcancelled}}</span>
+            </span>
+            </a></li>
+            <li class="{{ Request::is('drvouchers/viewalldrvouchers') ? 'active' : '' }}"><a href="/drvouchers/viewalldrvouchers"><i class="fa fa-circle-o text-red"></i>VIEW ALL DR VOUCHERS
+            <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$countviewalldr}}</span>
+            </span>
+            </a></li>
 
           </ul>
         </li>

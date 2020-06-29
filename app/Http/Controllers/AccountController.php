@@ -58,6 +58,33 @@ use App\Pmsdebitvoucherpayment;
 class AccountController extends Controller
 {  
 
+public function viewdetaillvendor($id){
+  $vendor = vendor::find($id);
+    $trns = DB::table('voucher_report')
+          ->where('vendorid',$id)
+          ->where('status','COMPLETED')
+          ->get();
+  return view('accounts.account_report',compact('trns','vendor'));
+}
+public function vendorwisepayment(){
+
+  $vendors=vendor::all();
+  $custarr=array();
+  foreach ($vendors as $key => $vendor) {
+    $trns = DB::table('voucher_report')
+          ->where('vendorid',$vendor->id)
+          ->where('status','COMPLETED')
+          ->get();
+    $sumcr=$trns->sum('credit');
+    $sumdr=$trns->sum('debit');
+    $balance=$sumcr-$sumdr;
+    $custarr[]=array('vendor'=>$vendor,'credit'=>$sumcr,'debit'=>$sumdr,'balance'=>$balance);
+     
+  }
+  //return $custarr;
+
+  return view('accounts.vendorwisepayment',compact('custarr'));
+}
 public function viewdrpendingmgr(){
        
        return view('accounts.viewdrpendingmgr');
@@ -5375,7 +5402,7 @@ public function changependingstatusmgr(Request $request,$id)
         $vendor->save();
         Session::flash('msg','vendor Updated successfully');
 
-        return redirect('/defination/managevendors');
+        return redirect('/vendor/managevendors');
 
    }
 
