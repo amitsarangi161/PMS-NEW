@@ -1142,15 +1142,15 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
        return redirect('/vouchers/approveddebitvoucher');
    }   
 
-   public function canceldrvoucher(Request $request,$id)
+  /* public function canceldrvoucher(Request $request,$id)
    {
        $debitvoucherheader=debitvoucherheader::find($id);
        $debitvoucherheader->status='CANCELLED';
        $debitvoucherheader->cancelledby=Auth::id();
        $debitvoucherheader->save();
        return back();
-       /*return redirect('/vouchers/approveddebitvoucher');*/
-   }  
+       
+   }  */
 
     public function drvouchermarkcompleted(Request $request,$id)
    {
@@ -3540,6 +3540,14 @@ public function approvedebitvoucheradmin(Request $request,$id)
                                        
       return view('accounts.viewaccountverification',compact('createdebitvouchers'));
     }
+    public function canceldrvoucher(Request $request,$id){
+      $debitvoucherheader=Pmsdebitvoucher::find($id);
+       $debitvoucherheader->status='CANCELLED';
+       $debitvoucherheader->cancelledby=Auth::id();
+       $debitvoucherheader->cancelledreason=$request->cancelledreason;
+       $debitvoucherheader->save();
+       return back();
+    }
     public function viewdrvoucher($id){
       $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
@@ -3636,57 +3644,57 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
       $updatepmsapprovedebitvoucher=Pmsdebitvoucher::find($id);
       $current_status = $updatepmsapprovedebitvoucher->status;
-     if($current_status=="PENDING"){
-        if($updatepmsapprovedebitvoucher->voucher_type=="INVOICE"){
-          $updatepmsapprovedebitvoucher->status="COMPLETED";
-         }
-         else{
-           $updatepmsapprovedebitvoucher->status="ACCOUNT VERIFIED";
-         }
-        
-      }
-      if($current_status=="ACCOUNT VERIFIED"){
-        $updatepmsapprovedebitvoucher->status="MANAGER VERIFIED";
-      }
-      if($current_status=="MANAGER VERIFIED"){
-        $updatepmsapprovedebitvoucher->status="APPROVED";
-      }
+        if($current_status=="PENDING"){
+            if($updatepmsapprovedebitvoucher->voucher_type=="INVOICE"){
+              $updatepmsapprovedebitvoucher->status="COMPLETED";
+             }
+             else{
+               $updatepmsapprovedebitvoucher->status="ACCOUNT VERIFIED";
+             }
+            
+          }
+          if($current_status=="ACCOUNT VERIFIED"){
+            $updatepmsapprovedebitvoucher->status="MANAGER VERIFIED";
+          }
+          if($current_status=="MANAGER VERIFIED"){
+            $updatepmsapprovedebitvoucher->status="APPROVED";
+          }
 
-      if($current_status=="COMPLETED"){
-        Session::flash('msg','Already Verified');
-        return back();
-      }
-        
-         $updatepmsapprovedebitvoucher->tprice=$request->tprice;
-         $updatepmsapprovedebitvoucher->discount=$request->discount;
-         $updatepmsapprovedebitvoucher->tsgst=$request->tsgst;
-         $updatepmsapprovedebitvoucher->tcgst=$request->tcgst;
-         $updatepmsapprovedebitvoucher->tigst=$request->tigst;
-         $updatepmsapprovedebitvoucher->tigst=$request->tigst;
-         $updatepmsapprovedebitvoucher->totalamt=$request->totalamt;
-         $updatepmsapprovedebitvoucher->itdeduction=$request->itdeduction;
-         $updatepmsapprovedebitvoucher->otherdeduction=$request->otherdeduction;
-         $updatepmsapprovedebitvoucher->finalamount=$request->finalamount;
-         $updatepmsapprovedebitvoucher->save();
-         $current_status = $updatepmsapprovedebitvoucher->status;
-     
-      if($current_status=="ACCOUNT VERIFIED"){
-        return redirect('/drvouchers/viewaccountverification');
-      }
-      if($current_status=="MANAGER VERIFIED"){
-        return redirect('/drvouchers/managerpendingdr');
-      }
-      if($current_status=="APPROVED"){
-        return redirect('/drvouchers/adminverificationdr');
-      }
-      if($current_status=="COMPLETED"){
-          if($updatepmsapprovedebitvoucher->voucher_type=='INVOICE')
-          {
-            return redirect('/drvouchers/compliteddrvoucher');
+          if($current_status=="COMPLETED"){
+            Session::flash('msg','Already Verified');
+            return back();
           }
-          else{
-            return redirect('/drvouchers/verifieddr');
+            
+             $updatepmsapprovedebitvoucher->tprice=$request->tprice;
+             $updatepmsapprovedebitvoucher->discount=$request->discount;
+             $updatepmsapprovedebitvoucher->tsgst=$request->tsgst;
+             $updatepmsapprovedebitvoucher->tcgst=$request->tcgst;
+             $updatepmsapprovedebitvoucher->tigst=$request->tigst;
+             $updatepmsapprovedebitvoucher->tigst=$request->tigst;
+             $updatepmsapprovedebitvoucher->totalamt=$request->totalamt;
+             $updatepmsapprovedebitvoucher->itdeduction=$request->itdeduction;
+             $updatepmsapprovedebitvoucher->otherdeduction=$request->otherdeduction;
+             $updatepmsapprovedebitvoucher->finalamount=$request->finalamount;
+             $updatepmsapprovedebitvoucher->save();
+             $current_status = $updatepmsapprovedebitvoucher->status;
+         
+          if($current_status=="ACCOUNT VERIFIED"){
+            return redirect('/drvouchers/viewaccountverification');
           }
+          if($current_status=="MANAGER VERIFIED"){
+            return redirect('/drvouchers/managerpendingdr');
+          }
+          if($current_status=="APPROVED"){
+            return redirect('/drvouchers/adminverificationdr');
+          }
+          if($current_status=="COMPLETED"){
+              if($updatepmsapprovedebitvoucher->voucher_type=='INVOICE')
+              {
+                return redirect('/drvouchers/compliteddrvoucher');
+              }
+              else{
+                return redirect('/drvouchers/verifieddr');
+              }
         
       }
 
