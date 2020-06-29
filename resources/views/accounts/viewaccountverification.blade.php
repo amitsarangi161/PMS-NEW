@@ -1,6 +1,7 @@
 @extends('layouts.account')
 @section('content')
 @inject('provider', 'App\Http\Controllers\AccountController')
+
 <style type="text/css">
     .b {
     white-space: nowrap; 
@@ -49,12 +50,20 @@
     <th>Created_at</th>
 		<th>View</th>
 		</tr>
-
 	</thead>
+
 	<tbody>
 		@foreach($createdebitvouchers as $createdebitvoucher)
           <tr>
-          	<td><a href="/viewpendingaccountdr/{{$createdebitvoucher->id}}"  class="btn btn-primary">{{$createdebitvoucher->id}}</a></td>
+          	<td>
+              @if (Request::is('drvouchers/viewalldrvouchers'))
+              <a href="/viewdrvoucher/{{$createdebitvoucher->id}}"  class="btn btn-primary">{{$createdebitvoucher->id}}</a>
+              @elseif(Request::is('drvouchers/cancelleddrvouchers'))
+               <a href="/viewdrvoucher/{{$createdebitvoucher->id}}"  class="btn btn-primary">{{$createdebitvoucher->id}}</a>
+              @else
+              <a href="/viewpendingaccountdr/{{$createdebitvoucher->id}}"  class="btn btn-primary">{{$createdebitvoucher->id}}</a>
+              @endif
+            </td>
           	<td>{{$createdebitvoucher->vendorname}}</td>
           	<td>
           		@if($createdebitvoucher->projectname)
@@ -84,7 +93,16 @@
             <td>{{$createdebitvoucher->narration}}</td>
           	<td>{{$createdebitvoucher->status}}</td>
             <td>{{$createdebitvoucher->created_at}}</td>
-          	<td><a href="/viewpendingaccountdr/{{$createdebitvoucher->id}}" class="btn btn-primary">View</a></td>
+          	<td>
+
+             @if (Request::is('drvouchers/viewalldrvouchers'))
+              <a href="/viewdrvoucher/{{$createdebitvoucher->id}}" class="btn btn-primary">View</a>
+               @elseif(Request::is('drvouchers/cancelleddrvouchers'))
+               <a href="/viewdrvoucher/{{$createdebitvoucher->id}}"  class="btn btn-primary">{{$createdebitvoucher->id}}</a>
+              @else
+              <a href="/viewpendingaccountdr/{{$createdebitvoucher->id}}" class="btn btn-primary">View</a>
+             @endif
+              </td>
           </tr>
    
    

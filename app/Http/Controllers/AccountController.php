@@ -3493,6 +3493,53 @@ public function approvedebitvoucheradmin(Request $request,$id)
                      
       return view('accounts.viewaccountverification',compact('createdebitvouchers'));
     }
+
+    public function cancelleddrvouchers(){
+      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.status','CANCELLED')
+                     ->get();
+                                       
+      return view('accounts.viewaccountverification',compact('createdebitvouchers'));
+    }
+    public function viewalldrvouchers(){
+      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->get();
+                                       
+      return view('accounts.viewaccountverification',compact('createdebitvouchers'));
+    }
+    public function viewdrvoucher($id){
+      $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.id',$id)
+                     ->first();
+      $banks=useraccount::select('useraccounts.*','banks.bankname')
+                     ->where('useraccounts.type','COMPANY')
+                     ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                     ->get();
+      $vid=$pmsdebitvoucher->vendorid;
+      $vendor=vendor::find($vid);
+      //return $vendor;
+      $previousbills=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.id','!=',$id)
+                     ->where('vendorid',$vid)
+                     ->get();
+      //return $previousbills;
+      $debitvoucherpayments=Pmsdebitvoucherpayment::where('vendorid',$vid)->where('projectid',$pmsdebitvoucher->projectid)->get();
+      //return $debitvoucherpayments;
+      //return $pmsdebitvoucher;
+      return view('accounts.viewdrvoucher',compact('pmsdebitvoucher','vendor','previousbills','debitvoucherpayments','banks'));
+    }
     public function createVoucherPayment(Request $request){
      // dd($request->all());
       $newPayment = new Pmsdebitvoucherpayment();

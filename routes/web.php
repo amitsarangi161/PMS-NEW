@@ -680,7 +680,13 @@ Route::get('/drvouchers/adminverificationdr','AccountController@adminverificatio
 
 Route::get('/drvouchers/verifieddr','AccountController@verifieddr');
 
+Route::get('/drvouchers/viewalldrvouchers','AccountController@viewalldrvouchers');
+
+Route::get('/viewdrvoucher/{id}','AccountController@viewdrvoucher');
+
 Route::get('/drvouchers/compliteddrvoucher','AccountController@compliteddrvoucher');
+
+Route::get('/drvouchers/cancelleddrvouchers','AccountController@cancelleddrvouchers');
 
 
 Route::get('/drvouchers/managerpendingdr','AccountController@managerpendingdr');

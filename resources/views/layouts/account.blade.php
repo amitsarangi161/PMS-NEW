@@ -410,7 +410,7 @@
 
             <li class="{{ Request::is('drvouchers/compliteddrvoucher') ? 'active' : '' }}"><a href="/drvouchers/compliteddrvoucher"><i class="fa fa-circle-o text-red"></i>COMPLETED DR VOUCHER</a></li>
             <li class="{{ Request::is('drvouchers/cancelleddrvouchers') ? 'active' : '' }}"><a href="/drvouchers/cancelleddrvouchers"><i class="fa fa-circle-o text-red"></i>CANCELLED DR VOUCHERS</a></li>
-            <li class="{{ Request::is('drvouchers/viealldrvouchers') ? 'active' : '' }}"><a href="/drvouchers/viealldrvouchers"><i class="fa fa-circle-o text-red"></i>VIEW ALL DR VOUCHERS</a></li>
+            <li class="{{ Request::is('drvouchers/viewalldrvouchers') ? 'active' : '' }}"><a href="/drvouchers/viewalldrvouchers"><i class="fa fa-circle-o text-red"></i>VIEW ALL DR VOUCHERS</a></li>
 
            
 
