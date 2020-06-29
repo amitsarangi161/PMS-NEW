@@ -238,8 +238,11 @@
 				if($pmsdebitvoucher->status=="ACCOUNT VERIFIED"){$name="Manager Verify";}
 				if($pmsdebitvoucher->status=="MANAGER VERIFIED"){$name="Admin Verify";}
 				@endphp
-
+				@if($pmsdebitvoucher->status=="CANCELLED" || $pmsdebitvoucher->status=="COMPLETED")
+				{{" "}}
+				@else
 				<button type="submit" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="return confirm('Do You Want to Proceed?')">{{$name}}</button>
+				@endif
 				@endif
 				@if(
 					(Auth::user()->usertype == "CASHIER" && $pmsdebitvoucher->status=="APPROVED") 
