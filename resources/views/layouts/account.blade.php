@@ -427,7 +427,7 @@
             <i class="fa fa-rupee"></i> <span>DEBIT VOUCHER NEW</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
-                <span class="label label-warning pull-right">0</span>
+                <span class="label label-warning pull-right"></span>
             </span>
           </a>
           <ul class="treeview-menu">
