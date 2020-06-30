@@ -238,8 +238,12 @@
 				if($pmsdebitvoucher->status=="ACCOUNT VERIFIED"){$name="Manager Verify";}
 				if($pmsdebitvoucher->status=="MANAGER VERIFIED"){$name="Admin Verify";}
 				@endphp
-
-				<button type="submit" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="return confirm('Do You Want to Proceed?')">{{$name}}</button>
+				@if($pmsdebitvoucher->status=="CANCELLED" || $pmsdebitvoucher->status=="COMPLETED")
+				{{" "}}
+				@else
+				<button type="submit" id="submitbtn" class="btn btn-success pull-right btn-flat btn-lg" onclick="return confirm('Do You Want to Proceed?')">{{$name}}</button>
+				@endif
+				
 				@endif
 				@if(
 					(Auth::user()->usertype == "CASHIER" && $pmsdebitvoucher->status=="APPROVED") 
@@ -250,11 +254,17 @@
 					
 					)
 
-				<button type="button" id="submitbtn" class="btn btn-success pull-right btn-lg" onclick="payNow()">Pay Now</button>
+				<button type="button" id="submitbtn" class="btn btn-success pull-right btn-flat btn-lg" onclick="payNow()">Pay Now</button>
 			
 				@endif
 			</td>
-		
+		<td>
+			@if($pmsdebitvoucher->status=="CANCELLED" || $pmsdebitvoucher->status=="COMPLETED")
+			{{" "}}
+			@else
+			<button type="button" id="cancelbtn" class="btn btn-warning btn-flat btn-lg" onclick="canceldr()">CANCEL</button>
+			@endif
+		</td>
 		
 			</tr>
 	</table>
@@ -408,6 +418,29 @@
 
 	</div>
 </div>
+
+<div class="modal fade" id="canceldrmodal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Cancel This Debit Voucher</h4>
+			</div>
+			<div class="modal-body">
+				<form action="/canceldrvoucher/{{$pmsdebitvoucher->id}}" method="post">
+					{{csrf_field()}}
+					<div class="form-group">
+						<label>Cancel Reason</label>
+						<textarea class="form-control" name="cancelledreason"></textarea>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-success btn-flat">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
 	  function getbank(type)
   {
@@ -447,7 +480,9 @@
 		
 		$("#myModal2").modal('show');
 	}
-
+function canceldr(){
+	$("#canceldrmodal").modal('show');
+}
 	function calcu() {
 
 
