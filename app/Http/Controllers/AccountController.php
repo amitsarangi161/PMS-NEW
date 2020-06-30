@@ -52,12 +52,144 @@ use App\Openingbalance;
 use App\Bankledger;
 use App\Pmsdebitvoucher;
 use App\Pmsdebitvoucherpayment;
+use App\pmspayment;
 
 
 
 class AccountController extends Controller
 {  
+public function editdrcashierpayvoucher(Request $request,$id)
+       {
+            $debitvoucherpayment=pmsdebitvoucherpayment::find($id);
+          $debitvoucherpayment->transactionid=$request->transactionid;
+          $debitvoucherpayment->dateofpayment=$request->dateofpayment;
+          $debitvoucherpayment->save();
+return back();
+          return redirect('/drpay/drpaidamount');
+       }
+public function drpaidview($id){
 
+   $debitvoucherpayment=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','pmsdebitvouchers.vendorid','pmsdebitvouchers.invoicecopy','users.name as paidbyname')
+                                ->where('pmsdebitvoucherpayments.paymentstatus','PAID')
+                                ->where('pmsdebitvoucherpayments.id',$id)
+                               ->leftJoin('banks','pmsdebitvoucherpayments.bankid','=','banks.id')
+                               ->leftJoin('pmsdebitvouchers','pmsdebitvoucherpayments.voucher_id','=','pmsdebitvouchers.id')
+                               ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                              ->leftJoin('users','pmsdebitvoucherpayments.paidby','=','users.id')
+                                ->first();
+            //return $debitvoucherpayment;
+             $vid=$debitvoucherpayment->vendorid;
+
+             $vendor=vendor::find($vid);
+
+            return view('accounts.viewdrpaid',compact('debitvoucherpayment','vendor'));
+}
+public function drpaidamount()
+     {
+           $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','useraccounts.acno','useraccounts.branchname','vendors.vendorname','users.name as paidbyname','projects.projectname')
+                                ->where('paymentstatus','PAID')
+                                ->leftJoin('useraccounts','pmsdebitvoucherpayments.bankid','=','useraccounts.id')
+                               ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                               ->leftJoin('debitvoucherheaders','pmsdebitvoucherpayments.voucher_id','=','debitvoucherheaders.id')
+                               ->leftJoin('vendors','pmsdebitvoucherpayments.vendorid','=','vendors.id')
+                               ->leftJoin('users','pmsdebitvoucherpayments.paidby','=','users.id')
+                               ->leftJoin('projects','pmsdebitvoucherpayments.projectid','=','projects.id')
+                                ->get();
+           
+          return view('accounts.drpaidamount',compact('debitvoucherpayments'));       
+     }
+
+public function updatevoucherpayment(Request $request,$id){
+      $updatepayment = Pmsdebitvoucherpayment::find($id);
+       $updatepayment->paymenttype = $request->paymenttype;
+      $updatepayment->bankid = $request->bankid;
+      $updatepayment->amount = $request->amount;
+      $updatepayment->transactionid = $request->trnid;
+      $updatepayment->dateofpayment = $request->dop;
+      $updatepayment->remarks = $request->remarks;
+      $updatepayment->paidby = Auth::user()->id;
+      //return $updatepayment;
+      $updatepayment->save();
+      return back();
+    }
+public function drcashierpayvoucher(Request $request,$id)
+      {
+        //return $request->all();
+          $debitvoucherpayment=pmsdebitvoucherpayment::find($id);
+          $debitvoucherpayment->transactionid=$request->transactionid;
+          $debitvoucherpayment->dateofpayment=$request->dateofpayment;
+          $debitvoucherpayment->paymentstatus="PAID";
+          $debitvoucherpayment->paidby=Auth::id();
+          $debitvoucherpayment->save();
+
+       $payment=new pmspayment();
+       $payment->amount=$debitvoucherpayment->amount;
+       $payment->type='DR';
+       $payment->bank=$debitvoucherpayment->bankid;
+       $payment->userid=Auth::id();
+       $payment->purpose='DEBIT VOUCHER PAYMENTS';
+       $payment->paythrough=$debitvoucherpayment->paymenttype;
+
+       $payment->save();
+
+
+
+          return redirect('/drpay/drpendingpayment');
+
+      }
+
+public function viewdrpending($id){
+  $debitvoucherpayment=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','pmsdebitvouchers.vendorid','pmsdebitvouchers.invoicecopy')
+                                ->where('pmsdebitvoucherpayments.paymentstatus','PENDING')
+                                ->where('pmsdebitvoucherpayments.id',$id)
+                               ->leftJoin('banks','pmsdebitvoucherpayments.bankid','=','banks.id')
+                               ->leftJoin('pmsdebitvouchers','pmsdebitvoucherpayments.voucher_id','=','pmsdebitvouchers.id')
+                               ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                                ->first();
+             $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.id',$id)
+                     ->first();
+      $banks=useraccount::select('useraccounts.*','banks.bankname')
+                     ->where('useraccounts.type','COMPANY')
+                     ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                     ->get();
+      //return $banks;
+      $vid=$pmsdebitvoucher->vendorid;
+      $vendor=vendor::find($vid);
+      //return $vendor;
+      $previousbills=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.id','!=',$id)
+                     ->where('vendorid',$vid)
+                     ->get();
+      //return $previousbills;
+      $debitvoucherpayments=Pmsdebitvoucherpayment::where('vendorid',$vid)->where('projectid',$pmsdebitvoucher->projectid)->get();
+      //return $debitvoucherpayments;
+      //return $debitvoucherpayment;
+     
+            return view('accounts.viewdrpending',compact('debitvoucherpayment','vendor','pmsdebitvoucher','vendor','previousbills','debitvoucherpayments','banks'));
+}
+public function paymentdrschedule(Request $request){
+  $drscheduledate=pmsdebitvoucherpayment::find($request->paymentid);
+    $drscheduledate->scheduledate=$request->scheduledate;
+    $drscheduledate->save();
+    return back();
+}
+public function drpendingpayment(){
+   $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','useraccounts.acno','useraccounts.branchname')
+                                ->where('paymentstatus','PENDING')
+                               ->leftJoin('useraccounts','pmsdebitvoucherpayments.bankid','=','useraccounts.id')
+                               ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                               ->leftJoin('pmsdebitvouchers','pmsdebitvoucherpayments.voucher_id','=','pmsdebitvouchers.id')
+                               ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                                ->get();
+             return view('accounts.drpendingpayment',compact('debitvoucherpayments'));
+}
 public function viewdetaillvendor($id){
   $vendor = vendor::find($id);
     $trns = DB::table('voucher_report')

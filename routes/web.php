@@ -308,12 +308,21 @@ Route::get('/viewpendingrequisition/{id}','AccountController@viewpendingrequisit
 Route::get('/viewcanceledrequisition/{id}','AccountController@viewcanceledrequisition');
 Route::get('/viewcompletedrequisition/{id}','AccountController@viewcompletedrequisition');
 Route::post('/cashierupdatepaydrvoucher/{id}','AccountController@cashierupdatepaydrvoucher');
-Route::get('/dvpay/paiddrpayment/view/{id}','AccountController@viewpaiddr');
+
 Route::post('/cashierpaydrvoucher/{id}','AccountController@cashierpaydrvoucher');
 Route::get('/dvpay/pendingdrpayment/view/{id}','AccountController@viewpendingdr');
 Route::get('/dvpay/pendingdrpayment','AccountController@pendingdrpayment');
 Route::get('/dvpay/paiddramount','AccountController@paiddramount');
 
+Route::get('/drpay/drpendingpayment','AccountController@drpendingpayment');
+Route::post('/paymentdrschedule','AccountController@paymentdrschedule');
+Route::get('/drpay/drpendingpayment/view/{id}','AccountController@viewdrpending');
+Route::post('/drcashierpayvoucher/{id}','AccountController@drcashierpayvoucher');
+
+
+
+
+Route::post('/drcashierupdatepayvoucher/{id}','AccountController@drcashierupdatepayvoucher');
 
 Route::post('/changependingstatus/{id}','AccountController@changependingstatus');
 Route::post('/changependingstatusmgr/{id}','AccountController@changependingstatusmgr');
@@ -406,6 +415,7 @@ Route::get('/deleterequest/{id}','HomeController@deleterequest');
 Route::get('vouchers/viewalldebitvoucher','AccountController@viewalldebitvoucher');
 Route::get('/viewapproveddebitvoucher/{id}','AccountController@viewapproveddebitvoucher');
 Route::post('/createvoucherpayment','AccountController@createVoucherPayment');
+Route::post('/updatevoucherpayment/{id}','AccountController@updatevoucherpayment');
 Route::get('/getvendorbalance/{id}','AccountController@getVendorBalance');
 
 
@@ -754,5 +764,12 @@ Route::get('/vendor/vendors','AccountController@vendors');
 Route::get('/vendor/managevendors','AccountController@managevendors');
 Route::get('/vendor/vendorwisepayment','AccountController@vendorwisepayment');
 //-------------PMS END VENDOR ROUTE------------//
+Route::get('/drpay/paiddrpayment/view/{id}','AccountController@viewdrpaidpayment');
+Route::get('/drpay/drpaindingpayment/view/{id}','AccountController@viewdrpending');
+Route::get('/drpay/drpaidamount','AccountController@drpaidamount');
+
+Route::get('/dvpay/paiddrpayment/view/{id}','AccountController@viewpaiddr');
+Route::get('/drpay/drpaidpayment/view/{id}','AccountController@drpaidview');
+Route::post('/editdrcashierpayvoucher/{id}','AccountController@editdrcashierpayvoucher');
 
 });
