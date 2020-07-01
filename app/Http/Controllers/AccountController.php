@@ -125,6 +125,10 @@ public function drcashierpayvoucher(Request $request,$id)
           $debitvoucherpayment->paymentstatus="PAID";
           $debitvoucherpayment->paidby=Auth::id();
           $debitvoucherpayment->save();
+      $voucher=$debitvoucherpayment->voucher_id;
+      $voucher=pmsdebitvoucher::find($voucher);
+      $voucher->status="COMPLETED";
+      $voucher->save();
           return redirect('/drpay/drpendingpayment');
 
       }
@@ -3718,7 +3722,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
       $newPayment->save();
 
       $voucher=Pmsdebitvoucher::find($request->voucher_id);
-      $voucher->status="COMPLETED";
+      $voucher->status="";
       $voucher->save();
       return back();
     }
