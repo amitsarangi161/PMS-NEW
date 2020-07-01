@@ -527,6 +527,7 @@
 
 		$("#totalamt").val(totalamt);
 		$("#finalamount").val(totalamt);
+		deduction();
 	}
 
 	$(".calc").on("change paste keyup", function() {
@@ -537,7 +538,14 @@
 	});
 
 	$(".dedcalc").on("change paste keyup", function() {
+		
 
+		deduction();
+
+
+	});
+	function deduction(){
+		
 		var itdeduction = $("#itdeduction").val();
 		if (itdeduction == '') {
 			gitdeduction = 0;
@@ -561,11 +569,7 @@
 		var final = Number.parseFloat(parseFloat(subtot) - (parseFloat(itdedamt) + parseFloat(otheramt))).toFixed(2);
 
 		$("#finalamount").val(final);
-
-
-
-
-	});
+	}
 </script>
 
 

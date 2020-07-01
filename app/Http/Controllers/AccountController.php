@@ -3577,7 +3577,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
           ->where('vendorid',$id)
           ->where('status','COMPLETED')
           ->get();
-          
+    //return $vendor;
     return view('accounts.account_report',compact('trns','vendor'));
 
     
