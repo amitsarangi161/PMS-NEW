@@ -99,62 +99,54 @@
                 <span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-    <table class="table table-responsive table-hover table-bordered table-striped">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleselect">Select a Project</label>
+                    <select name="projectid" class="form-control select2" style="width: 100%;">
+                      <option value="">NONE</option>
+                   
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>PAYMENT TYPE</label>
+                    <input type="text" name="reftype" readonly="" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleselect">Select a Expense Head</label>
+                    <select name="expenseheadid" class="form-control select2" style="width: 100%;">
+                      <option value="">NONE</option>
+                     
 
-      <tr>
-        <td style="width: 20%;"><strong>PAYMENT TYPE*</strong></td>
-          <td style="width: 30%;">
-            <select class="form-control select2" name="reftype" required="">
-            <option value=''>--Select a type--</option>
-            <option value='PO'>PO</option>
-            <option value='PI'>PI</option>
-            <option value='ADVANCE'>ADVANCE</option>
-            <option value='NA'>NA</option>
-            </select>
-           </td>
-      </tr>
-      <tr style="width: 100%">
-        <td style="width: 20%;"><strong>Select a Project</strong></td>
-        <td style="width: 30%;">
-          <select name="projectid" class="form-control select2">
-            <option value="">NONE</option>
-            @foreach($projects as $project)
-              <option value="{{$project->id}}">{{$project->projectname}}</option>
-            @endforeach
-
-          </select>
-        </td>
-
-        <td style="width: 20%;"><strong>Select a Expense Head</strong></td>
-        <td style="width: 30%;">
-          <select name="expenseheadid" class="form-control select2">
-            <option value="">NONE</option>
-            @foreach($expenseheads as $expensehead)
-              <option value="{{$expensehead->id}}">{{$expensehead->expenseheadname}}</option>
-            @endforeach
-
-          </select>
-        </td>
-      </tr>
-      <tr style="width: 100%">
-        <td style="width: 20%;"><strong>BILL DATE</strong></td>
-        <td style="width: 30%;">
-            <input type="text" class="form-control datepicker3" placeholder="Enter bill date" name="billdate" readonly="" required="">
-        </td>
-         <td style="width: 20%;"><strong>BILL NO</strong></td>
-         <td style="width: 30%;"><input type="text" name="billno" class="form-control calc" required="" placeholder="Enter Bill No Here" autocomplete="off" onkeyup="checkbill(this.value)" required="">
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>BILL DATE</label>
+                    <input type="text" class="form-control datepicker3" placeholder="Enter bill date" name="billdate" readonly="" required="">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleselect">BILL NO</label>
+                    <input type="text" name="billno" class="form-control calc" required="" placeholder="Enter Bill No Here" autocomplete="off" onkeyup="checkbill(this.value)" required="">
           <p  class="label label-danger">If Bill No not available then Enter "NA"</p>
-         </td>
-        
-      </tr>
-         
-      
-
-    </table>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-outline-light btn-success" onclick="return confirm('Are You confirm to proceed?')">Schedule Date</button>
+              <button type="submit" class="btn btn-outline-light btn-success" onclick="return confirm('Are You confirm to proceed?')">Submit</button>
             </div>
             </form>
           </div>
