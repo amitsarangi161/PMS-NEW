@@ -477,12 +477,21 @@
 
           </ul>
         </li>
+
+        @php
+
+               $pmspendingdrcount=\App\Pmsdebitvoucherpayment::where('paymentstatus','PENDING')
+                                                       ->count();
+                 $pmspaiddrcount=\App\Pmsdebitvoucherpayment::where('paymentstatus','PAID')
+                                                       ->count();
+           @endphp
+         @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER')
         <li class="{{ Request::is('drpay*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-book"></i> <span>DEBIT VOUCHER PAYMENT NEW</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
-              <span class="label label-warning pull-right">{{0}}</span>
+              <span class="label label-warning pull-right">{{$pmspendingdrcount}}</span>
                 </span>
           </a>
           <ul class="treeview-menu">
@@ -490,13 +499,13 @@
             <li class="{{ Request::is('drpay/drpendingpayment') ? 'active' : '' }}"><a href="/drpay/drpendingpayment"><i class="fa fa-circle-o text-aqua"></i>PENDING DR  PAYMENT
 
             <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{0}}</span>
+                  <span class="label label-success pull-right">{{$pmspendingdrcount}}</span>
                 </span>
            </a>
          </li>
              <li class="{{ Request::is('drpay/drpaidamount') ? 'active' : '' }}"><a href="/drpay/drpaidamount"><i class="fa fa-circle-o text-red"></i>PAID DR PAYMENTS
                <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{0}}</span>
+                  <span class="label label-success pull-right">{{$pmspaiddrcount}}</span>
                 </span>
              </a></li>
 
@@ -504,6 +513,7 @@
 
           </ul>
         </li>
+        @endif
 
                 @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER')
          @php
