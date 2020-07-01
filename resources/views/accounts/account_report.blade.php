@@ -17,11 +17,31 @@
 		<tr>
 			<td width="20%"><strong>VENDOR ID :</strong></td>
             <td width="30%">#{{$vendor->id}}</td>
-        </tr>
-        <tr>
+       
 			<td width="20%"><strong>VENDOR NAME:</strong></td>
 			<td width="30%">{{$vendor->vendorname}}</td>
 		</tr>
+        <tr>
+            <td width="20%"><strong>GST NUMBER:</strong></td>
+            <td width="30%">{{$vendor->gstno}}</td>
+            <td width="20%"><strong> PAN:</strong></td>
+            <td width="30%">{{$vendor->panno}}</td>
+        </tr>
+        <tr>
+            <td width="20%"><strong>AC NO:</strong></td>
+            <td width="30%">{{$vendor->acno}}</td>
+            <td width="20%"><strong> IFSC:</strong></td>
+            <td width="30%">{{$vendor->ifsccode}}</td>
+        </tr>
+        <tr>
+            <td width="20%"><strong>MOBILE NO:</strong></td>
+            <td width="30%">{{$vendor->acno}}</td>
+            <td width="20%"><strong>BRANCH NAME:</strong></td>
+            <td width="30%">{{$vendor->branchname}}</td>
+        </tr>
+        <tr>
+            <td colspan="4"><button type="button" class="btn btn-success pull-right btn-flat" onclick="payment();">PAY</button></td>
+        </tr>
     </table>
 </div>
 <table class="table">
@@ -61,10 +81,92 @@
 			<td colspan='3'>Balance</td>
             <td style="border-bottom:double ;text-align: right" width="30%">{{$trns->sum('credit')-$trns->sum('debit')}}</td>
 </tr>
+
+        
         </tfoot>
        
     </table>
 </div>
+<div class="modal fade" id="mymodal">
 
+        <div class="modal-dialog">
+          <div class="modal-content">
+             <form method="post" action="/drpaymentschedule">
+                {{csrf_field()}}
+            <div class="modal-header">
+              <h4 class="modal-title text-center">Vendor Payment</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+    <table class="table table-responsive table-hover table-bordered table-striped">
+
+      <tr>
+        <td style="width: 20%;"><strong>PAYMENT TYPE*</strong></td>
+          <td style="width: 30%;">
+            <select class="form-control select2" name="reftype" required="">
+            <option value=''>--Select a type--</option>
+            <option value='PO'>PO</option>
+            <option value='PI'>PI</option>
+            <option value='ADVANCE'>ADVANCE</option>
+            <option value='NA'>NA</option>
+            </select>
+           </td>
+      </tr>
+      <tr style="width: 100%">
+        <td style="width: 20%;"><strong>Select a Project</strong></td>
+        <td style="width: 30%;">
+          <select name="projectid" class="form-control select2">
+            <option value="">NONE</option>
+            @foreach($projects as $project)
+              <option value="{{$project->id}}">{{$project->projectname}}</option>
+            @endforeach
+
+          </select>
+        </td>
+
+        <td style="width: 20%;"><strong>Select a Expense Head</strong></td>
+        <td style="width: 30%;">
+          <select name="expenseheadid" class="form-control select2">
+            <option value="">NONE</option>
+            @foreach($expenseheads as $expensehead)
+              <option value="{{$expensehead->id}}">{{$expensehead->expenseheadname}}</option>
+            @endforeach
+
+          </select>
+        </td>
+      </tr>
+      <tr style="width: 100%">
+        <td style="width: 20%;"><strong>BILL DATE</strong></td>
+        <td style="width: 30%;">
+            <input type="text" class="form-control datepicker3" placeholder="Enter bill date" name="billdate" readonly="" required="">
+        </td>
+         <td style="width: 20%;"><strong>BILL NO</strong></td>
+         <td style="width: 30%;"><input type="text" name="billno" class="form-control calc" required="" placeholder="Enter Bill No Here" autocomplete="off" onkeyup="checkbill(this.value)" required="">
+          <p  class="label label-danger">If Bill No not available then Enter "NA"</p>
+         </td>
+        
+      </tr>
+         
+      
+
+    </table>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-outline-light btn-success" onclick="return confirm('Are You confirm to proceed?')">Schedule Date</button>
+            </div>
+            </form>
+          </div>
+         </div>
+        </div>
+
+<script>
+    function payment() {
+
+    $('#mymodal').modal('show');
+    }
+
+</script>
 
 @endsection
