@@ -353,12 +353,12 @@
           			<input type="text" name="amount"  class="form-control" id="amt1" value="{{$pmsdebitvoucher->finalamount}}" readonly>
           		</td>
           	</tr>
-          	<tr>
+          	<!-- <tr>
           		<td><strong>TRANSACTION ID</strong></td>
           		<td>
           			<input type="text" name="trnid"  class="form-control" id="amt1" value="" >
           		</td>
-          	</tr>
+          	</tr> -->
           
     
           	<tr>
