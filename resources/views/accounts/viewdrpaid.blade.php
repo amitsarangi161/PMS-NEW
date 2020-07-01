@@ -219,9 +219,7 @@
 
 
 <script type="text/javascript">
-       
-
-         function openeditmodal(paymenttype,bankid)
+       function openeditmodal(paymenttype,bankid)
          {
          
          $('#paymenttype option[value="'+paymenttype+'"]').attr("selected", "selected");
@@ -229,5 +227,20 @@
 		getbank(paymenttype);
          	   $("#myModal").modal('show');
          }
+
+        function getbank(type)
+  {
+  	if(type=='CASH')
+  	{
+  		$("#showbank").hide();
+  		$('#reqbank').prop('required',false);
+  	}
+  	else
+  	{
+  		$("#showbank").show();
+  		$('#reqbank').prop('required',true);
+  	}
+
+  }
 </script>
 @endsection
