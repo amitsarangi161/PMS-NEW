@@ -4,8 +4,6 @@
 
 <style type="text/css">
 
-
-
        .b {
     white-space: nowrap; 
     width: 120px; 

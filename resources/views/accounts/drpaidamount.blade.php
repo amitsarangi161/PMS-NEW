@@ -30,8 +30,9 @@
      		<td>BANK NAME</td>
      		<td>PAYMENT STATUS</td>
      		<td>DATE OF PAYMENT</td>
-               <td>PAID BY</td>
+            <td>PAID BY</td>
      		<td>VIEW</td>
+            <th>CANCEL</th>
      	</tr>
      </thead>
 
@@ -50,6 +51,15 @@
      		<td>{{$debitvoucherpayment->dateofpayment}}</td>
                <td>{{$debitvoucherpayment->paidbyname}}</td>
      		<td><a href="/drpay/drpaidpayment/view/{{$debitvoucherpayment->id}}" class="btn btn-primary">VIEW</a></td>
+            <td>
+          <form action="/canceldebitvoucherpayment/{{$debitvoucherpayment->id}}"  method="post">
+            {{csrf_field()}}
+            {{method_field('DELETE')}}
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Do You want to Cancel this Voucher Payment?')">CANCEL</button>
+            
+          </form>
+           
+        </td>
      	</tr>
 
      	@endforeach

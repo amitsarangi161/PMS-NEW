@@ -58,11 +58,31 @@ use App\pmspayment;
 
 class AccountController extends Controller
 {  
+
+public function canceldebitvoucherpayment(Request $request,$id)
+      {
+          $debitvoucherpayment=pmsdebitvoucherpayment::find($id);
+          $debitvoucherpayment->paymentstatus="CANCELLED";
+          $debitvoucherpayment->save();
+          $voucher_id= $debitvoucherpayment->voucher_id;
+          $debitvoucher=Pmsdebitvoucher::find($voucher_id);
+          $debitvoucher->status="CANCELLED";
+          $debitvoucher->save();
+          return back();
+      }
 public function editdrcashierpayvoucher(Request $request,$id)
        {
-            $debitvoucherpayment=pmsdebitvoucherpayment::find($id);
+          $debitvoucherpayment=pmsdebitvoucherpayment::find($id);
           $debitvoucherpayment->transactionid=$request->transactionid;
           $debitvoucherpayment->dateofpayment=$request->dateofpayment;
+          $debitvoucherpayment->paymenttype=$request->paymenttype;
+          $debitvoucherpayment->amount=$request->amount;
+          if($request->paymenttype=='ONLINE PAYMENT'){
+             $debitvoucherpayment->bankid=$request->bankid;
+           }else{
+             $debitvoucherpayment->bankid='';
+           }
+         
           $debitvoucherpayment->save();
 return back();
           return redirect('/drpay/drpaidamount');
@@ -106,11 +126,16 @@ public function drpaidamount()
 public function updatevoucherpayment(Request $request,$id){
       $updatepayment = Pmsdebitvoucherpayment::find($id);
        $updatepayment->paymenttype = $request->paymenttype;
-      $updatepayment->bankid = $request->bankid;
+      //$updatepayment->bankid = $request->bankid;
       $updatepayment->amount = $request->amount;
       $updatepayment->transactionid = $request->trnid;
       $updatepayment->dateofpayment = $request->dop;
       $updatepayment->remarks = $request->remarks;
+      if($request->paymenttype=='ONLINE PAYMENT'){
+             $updatepayment->bankid=$request->bankid;
+           }else{
+             $updatepayment->bankid='';
+           }
       $updatepayment->paidby = Auth::user()->id;
       //return $updatepayment;
       $updatepayment->save();

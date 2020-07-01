@@ -43,7 +43,7 @@
         </thead>
         @foreach($trns as $key=>$trn)
 		<tr>
-            <td width="20%">{{$trn->id}}</td>
+            <td width="20%"><a href="/viewdrvoucher/{{$trn->id}}" target="_blank" class="btn btn-info">{{$trn->id}}</a></td>
 			<td width="20%">{{$trn->created_at}}</td>
             <td style="text-align: right" width="30%">{{$trn->credit}}</td>
             <td style="text-align: right" width="30%">{{$trn->debit}}</td>
