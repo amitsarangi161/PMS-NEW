@@ -67,7 +67,7 @@
 	    	<button type="button" class="btn btn-info" style="width: 200px;" onclick="drpay('{{$debitvoucherpayment->id}}');">PAID</button>
 	    	@else
 	    	
-	    	<button type="button" class="btn btn-warning" style="width: 200px;" onclick="openeditmodal();">EDIT</button>
+	    	<button type="button" class="btn btn-warning" style="width: 200px;" onclick="openeditmodal('{{$debitvoucherpayment->paymenttype}}','{{$debitvoucherpayment->bankid}}');">EDIT</button>
 
 	    	@endif
 				</td>
@@ -221,8 +221,12 @@
 <script type="text/javascript">
        
 
-         function openeditmodal()
+         function openeditmodal(paymenttype,bankid)
          {
+         
+         $('#paymenttype option[value="'+paymenttype+'"]').attr("selected", "selected");
+		$('#reqbank option[value="'+bankid+'"]').attr("selected", "selected");
+		getbank(paymenttype);
          	   $("#myModal").modal('show');
          }
 </script>

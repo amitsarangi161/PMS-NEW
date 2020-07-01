@@ -77,12 +77,16 @@ public function drpaidview($id){
                                ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                               ->leftJoin('users','pmsdebitvoucherpayments.paidby','=','users.id')
                                 ->first();
+    $banks=useraccount::select('useraccounts.*','banks.bankname')
+                     ->where('useraccounts.type','COMPANY')
+                     ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                     ->get();
             //return $debitvoucherpayment;
              $vid=$debitvoucherpayment->vendorid;
 
              $vendor=vendor::find($vid);
 
-            return view('accounts.viewdrpaid',compact('debitvoucherpayment','vendor'));
+            return view('accounts.viewdrpaid',compact('debitvoucherpayment','vendor','banks'));
 }
 public function drpaidamount()
      {
