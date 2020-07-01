@@ -121,19 +121,6 @@ public function drcashierpayvoucher(Request $request,$id)
           $debitvoucherpayment->paymentstatus="PAID";
           $debitvoucherpayment->paidby=Auth::id();
           $debitvoucherpayment->save();
-
-       $payment=new pmspayment();
-       $payment->amount=$debitvoucherpayment->amount;
-       $payment->type='DR';
-       $payment->bank=$debitvoucherpayment->bankid;
-       $payment->userid=Auth::id();
-       $payment->purpose='DEBIT VOUCHER PAYMENTS';
-       $payment->paythrough=$debitvoucherpayment->paymenttype;
-
-       $payment->save();
-
-
-
           return redirect('/drpay/drpendingpayment');
 
       }
@@ -146,6 +133,7 @@ public function viewdrpending($id){
                                ->leftJoin('pmsdebitvouchers','pmsdebitvoucherpayments.voucher_id','=','pmsdebitvouchers.id')
                                ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                                 ->first();
+      
              $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
