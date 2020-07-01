@@ -162,6 +162,40 @@
       	<table class="table">
       		<input type="hidden" name="pid" id="pid">
       		<tr>
+          		<td><strong>PAYMENT TYPE</strong></td>
+          		<td>
+          			<select class="form-control" name="paymenttype" id="paymenttype" onchange="getbank(this.value);" required="" >
+          				<option value="">SELECT A PAYMENT TYPE</option>
+          				<option value="ONLINE PAYMENT">ONLINE PAYMENT</option>
+          				<option value="CASH">CASH</option>
+          				<option value="CHEQUE">CHEQUE</option>
+          				<option value="DD">DD</option>
+          				<option value="PDC">PDC</option>
+          				<option value="TDR">TDR</option>
+          				<option value="NSC">NSC</option>
+          				
+          			</select>
+				</td>
+          	</tr>
+          	<tr style="display: none;" id="showbank">
+          		<td><strong>SELECT BANK</strong></td>
+          		<td>
+          			<select class="form-control" name="bankid" id="reqbank">
+          				<option value="">Select a Bank account</option>
+          				@foreach($banks as $bank)
+                          <option value="{{$bank->bankid}}">{{$bank->bankname}}/{{$bank->acno}}/{{$bank->branchname}}</option>
+          				@endforeach
+          				
+          			</select>
+          		</td>
+          	</tr>
+          	<tr>
+          		<td><strong>AMOUNT</strong></td>
+          		<td>
+          			<input type="text" name="amount"  class="form-control" id="amt1" value="{{$debitvoucherpayment->amount}}" readonly>
+          		</td>
+          	</tr>
+      		<tr>
       			<td><strong>TRANACTION ID</strong></td>
       			<td><input type="text" placeholder="Enter Trancaction Id" class="form-control" autocomplete="off" value="{{$debitvoucherpayment->transactionid}}" name="transactionid" required=""></td>
       		</tr>

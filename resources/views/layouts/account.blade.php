@@ -488,10 +488,11 @@
          @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER')
         <li class="{{ Request::is('drpay*') ? 'active' : '' }} treeview">
           <a href="#">
-            <i class="fa fa-book"></i> <span>DEBIT VOUCHER PAYMENT NEW</span>
-            <span class="pull-right-container">
+            <i class="fa fa-book"></i> <span>DR VOUCHER PAYMENT NEW
+              <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
               <span class="label label-warning pull-right">{{$pmspendingdrcount}}</span>
+                </span>
                 </span>
           </a>
           <ul class="treeview-menu">
