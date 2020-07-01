@@ -126,14 +126,15 @@ public function drcashierpayvoucher(Request $request,$id)
       }
 
 public function viewdrpending($id){
-  $debitvoucherpayment=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','pmsdebitvouchers.vendorid','pmsdebitvouchers.invoicecopy')
+  $debitvoucherpayment=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','vendors.vendorname','pmsdebitvouchers.vendorid','pmsdebitvouchers.invoicecopy','banks.bankname','useraccounts.acno','useraccounts.branchname')
                                 ->where('pmsdebitvoucherpayments.paymentstatus','PENDING')
                                 ->where('pmsdebitvoucherpayments.id',$id)
-                               ->leftJoin('banks','pmsdebitvoucherpayments.bankid','=','banks.id')
+                               ->leftJoin('useraccounts','pmsdebitvoucherpayments.bankid','=','useraccounts.id')
+                               ->leftJoin('banks','useraccounts.bankid','=','banks.id')
                                ->leftJoin('pmsdebitvouchers','pmsdebitvoucherpayments.voucher_id','=','pmsdebitvouchers.id')
                                ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                                 ->first();
-      
+//return $debitvoucherpayment;
              $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
@@ -146,6 +147,7 @@ public function viewdrpending($id){
                      ->get();
       //return $banks;
       $vid=$pmsdebitvoucher->vendorid;
+      //return $vid;
       $vendor=vendor::find($vid);
       //return $vendor;
       $previousbills=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')

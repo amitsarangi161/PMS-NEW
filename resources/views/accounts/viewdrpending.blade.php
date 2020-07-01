@@ -30,7 +30,7 @@
 
 			<tr>
 				<td width="15%"><strong>FROM BANK:</strong></td>
-				<td width="35%">{{$debitvoucherpayment->bankname}}</td>
+				<td width="35%">{{$debitvoucherpayment->bankname.'/'.$debitvoucherpayment->acno.'/'.$debitvoucherpayment->branchname}}</td>
 				<td width="15%"><strong>PAYMENT STATUS :</strong></td>
 				<td width="35%"><span class="label label-success">{{$debitvoucherpayment->paymentstatus}}</span></td>
 			</tr>
