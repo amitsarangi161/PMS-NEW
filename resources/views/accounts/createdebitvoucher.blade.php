@@ -289,13 +289,20 @@
   $( ".calc" ).on("change paste keyup", function() {
 
    calcu();
+   deduction();
 
   
 });
 
   $( ".dedcalc" ).on("change paste keyup", function() {
 
-        var itdeduction=$("#itdeduction").val();
+      
+  deduction();
+
+          
+  });
+function deduction(){
+    var itdeduction=$("#itdeduction").val();
         if(itdeduction=='') {
            gitdeduction = 0;
 
@@ -322,11 +329,6 @@
           var final=Number.parseFloat(parseFloat(subtot)-(parseFloat(itdedamt)+parseFloat(otheramt))).toFixed(2);
 
           $("#finalamount").val(final);
-
-
-          
-
-  });
-
+}
 </script>
 @endsection
