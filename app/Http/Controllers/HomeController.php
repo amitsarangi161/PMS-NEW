@@ -277,7 +277,7 @@ public function companydetails(){
         }
        $todos=todo::where('userid',Auth::id())->whereDate('datetime', Carbon::today())->paginate(10);
 
-      if(Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER' || Auth::user()->usertype=='ACCOUNTS ENTRY')
+      if(Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER' || Auth::user()->usertype=='ACCOUNTS ENTRY'||Auth::user()->usertype=='MANAGER')
       {
           return view('accounts.home',compact('todos'));
       }
