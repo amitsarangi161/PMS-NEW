@@ -1,6 +1,12 @@
 @extends('layouts.account')
 
 @section('content')
+@if ($errors->any())
+     @foreach ($errors->all() as $error)
+         <p class="alert alert-danger text-center">{{ $error }}</p>
+     @endforeach
+ @endif
+
 @if(Session::has('msg'))
 <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
 @endif
@@ -91,7 +97,7 @@
 
         <div class="modal-dialog">
           <div class="modal-content">
-             <form method="post" action="/drpaymentschedule">
+             <form method="post" action="/vendorpayment/{{$vendor->id}}">
                 {{csrf_field()}}
             <div class="modal-header">
               <h4 class="modal-title text-center">Vendor Payment</h4>
@@ -105,14 +111,22 @@
                     <label for="exampleselect">Select a Project</label>
                     <select name="projectid" class="form-control select2" style="width: 100%;">
                       <option value="">NONE</option>
-                   
+                        @foreach($projects as $project)
+                          <option value="{{$project->id}}">{{$project->projectname}}</option>
+                        @endforeach
                     </select>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>PAYMENT TYPE</label>
-                    <input type="text" name="reftype" readonly="" class="form-control">
+                     <select class="form-control select2" name="reftype" required="" style="width: 100%;">
+                      <option value=''>--Select a type--</option>
+                      <option value='PO'>PO</option>
+                      <option value='PI'>PI</option>
+                      <option value='ADVANCE'>ADVANCE</option>
+                      <option value='NA'>NA</option>
+                      </select>
                   </div>
                 </div>
               </div>
@@ -122,7 +136,9 @@
                     <label for="exampleselect">Select a Expense Head</label>
                     <select name="expenseheadid" class="form-control select2" style="width: 100%;">
                       <option value="">NONE</option>
-                     
+                      @foreach($expenseheads as $expensehead)
+                      <option value="{{$expensehead->id}}">{{$expensehead->expenseheadname}}</option>
+                      @endforeach
 
                     </select>
                   </div>
@@ -139,7 +155,42 @@
                   <div class="form-group">
                     <label for="exampleselect">BILL NO</label>
                     <input type="text" name="billno" class="form-control calc" required="" placeholder="Enter Bill No Here" autocomplete="off" onkeyup="checkbill(this.value)" required="">
-          <p  class="label label-danger">If Bill No not available then Enter "NA"</p>
+                    <p  class="label label-danger">If Bill No not available then Enter "NA"</p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleselect">Total MRP</label>
+                    <input type="text" class="form-control calc" id="tprice" name="tprice" required="" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleselect">IT Deduction(in %)</label>
+                    <input type="text" class="form-control dedcalc" id="itdeduction" name="itdeduction" autocomplete="off"  value="0">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleselect">OTHER DEDUCTION</label>
+                   <input type="text" class="form-control dedcalc" id="otherdeduction" autocomplete="off" name="otherdeduction" value="0">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleselect">Final Price</label>
+                   <input type="text" class="form-control" id="finalamount" name="finalamount" readonly="" required="">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="exampleselect">Attachment</label>
+                   <input name="invoicecopy" type="file" onchange="readURL(this);" >
+                  <img style="height:40px;width:40px;" alt="noimage" id="imgshow">
                   </div>
                 </div>
               </div>
@@ -158,7 +209,73 @@
 
     $('#mymodal').modal('show');
     }
+function readURL(input) {
+    
 
+       if (input.files && input.files[0]) {
+            var reader = new FileReader();
+              
+            reader.onload = function (e) {
+                $('#imgshow')
+                    .attr('src', e.target.result)
+                    .width(90)
+                    .height(90);
+          
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+    }
+function calcu()
+  {
+     var tprice=$("#tprice").val();
+         if(tprice=='') {
+           gtprice = 0;
+          }
+          else
+          {
+            gtprice=tprice;
+          }
+      var totalamt=(parseFloat(gtprice)).toFixed(2);
+   $("#finalamount").val(totalamt);
+  }
+  
+  $( ".calc" ).on("change paste keyup", function() {
+   
+   calcu();
+});
+
+     $( ".dedcalc" ).on("change paste keyup", function() {
+
+        var itdeduction=$("#itdeduction").val();
+        if(itdeduction=='') {
+           gitdeduction = 0;
+
+          }
+          else
+          {
+            gitdeduction=itdeduction;
+          }
+
+          var otherdeduction=$("#otherdeduction").val();
+          if(otherdeduction=='') {
+           gotherdeduction = 0;
+
+          }
+          else
+          {
+            gotherdeduction=otherdeduction;
+          }
+          var subtot=$("#tprice").val();
+
+           var itdedamt=parseFloat(subtot)*(parseFloat(gitdeduction/100));
+           var otheramt=parseFloat(subtot)*(parseFloat(gotherdeduction/100));
+
+           var final=Number.parseFloat(parseFloat(subtot)-(parseFloat(itdedamt)+parseFloat(otheramt))).toFixed(2);
+
+           $("#finalamount").val(final);
+  });
 </script>
 
 @endsection
