@@ -406,17 +406,17 @@
         </li>
 
         @php    
-        $countpending=\App\pmsdebitvoucher::where('status','PENDING')->count();
-        $countaccountverified=\App\pmsdebitvoucher::where('status','ACCOUNT VERIFIED')->count();
-        $countmanagerverified=\App\pmsdebitvoucher::where('status','MANAGER VERIFIED')
+        $countpending=\App\Pmsdebitvoucher::where('status','PENDING')->count();
+        $countaccountverified=\App\Pmsdebitvoucher::where('status','ACCOUNT VERIFIED')->count();
+        $countmanagerverified=\App\Pmsdebitvoucher::where('status','MANAGER VERIFIED')
         ->count();
-        $countapproved=\App\pmsdebitvoucher::where('status','APPROVED')
+        $countapproved=\App\Pmsdebitvoucher::where('status','APPROVED')
         ->count();
-        $countcomplted=\App\pmsdebitvoucher::where('status','COMPLETED')
+        $countcomplted=\App\Pmsdebitvoucher::where('status','COMPLETED')
         ->count();
-        $countcancelled=\App\pmsdebitvoucher::where('status','CANCELLED')
+        $countcancelled=\App\Pmsdebitvoucher::where('status','CANCELLED')
         ->count();
-        $countviewalldr=\App\pmsdebitvoucher::where('id','>','0')
+        $countviewalldr=\App\Pmsdebitvoucher::where('id','>','0')
         ->count();
 
         @endphp
