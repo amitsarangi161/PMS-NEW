@@ -22,11 +22,11 @@
      	<tr class="bg-navy">
      		<td>ID</td>
      		<td>VENDOR NAME</td>
-               <td>PROJECT</td>
+            <td>PROJECT</td>
      		<td>AMOUNT</td>
      		<td>PAYMENT TYPE</td>
      		<td>REMARKS</td>
-               <td>TRANSACTION ID</td>
+            <td>TRANSACTION ID</td>
      		<td>BANK NAME</td>
      		<td>PAYMENT STATUS</td>
      		<td>DATE OF PAYMENT</td>

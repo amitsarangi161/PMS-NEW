@@ -363,7 +363,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="{{ Request::is('vouchers/debitvoucher') ? 'active' : '' }}"><a href="/vouchers/debitvoucher"><i class="fa fa-circle-o text-red"></i>DEBIT VOUCHER</a></li>
-          @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER')
+          @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER'||Auth::user()->usertype=='MANAGER')
             <li class="{{ Request::is('vouchers/pendingdebitvouchermgr') ? 'active' : '' }}"><a href="/vouchers/pendingdebitvouchermgr" title="PENDING DR VOUCHER(MGR)" class="chngdrfont"><i class="fa fa-circle-o text-red"></i>PENDING DR VOUCHER(MGR)
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countpendingdrmgr}}</span>
@@ -431,32 +431,41 @@
             </span>
           </a>
           <ul class="treeview-menu">
+             @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype !='MANAGER')
             <li class="{{ Request::is('drvouchers/createdebitvoucher') ? 'active' : '' }}"><a href="/drvouchers/createdebitvoucher"><i class="fa fa-circle-o text-red"></i>CREATE NEW VOUCHER</a></li>
+            @endif
+
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('drvouchers/viewaccountverification') ? 'active' : '' }}"><a href="/drvouchers/viewaccountverification"><i class="fa fa-circle-o text-red"></i>ACCOUNT VERIFICATION
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countpending}}</span>
             </span>
             </a></li>
+            @endif
 
+            @if(Auth::user()->usertype =='MANAGER'||Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('drvouchers/managerpendingdr') ? 'active' : '' }}"><a href="/drvouchers/managerpendingdr"><i class="fa fa-circle-o text-red"></i>MANAGER VERIFICATION
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countaccountverified}}</span>
             </span>
             </a></li>
+            @endif
+
+            @if(Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('drvouchers/adminverificationdr') ? 'active' : '' }}"><a href="/drvouchers/adminverificationdr"><i class="fa fa-circle-o text-red"></i>ADMIN VERIFICATION
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countmanagerverified}}</span>
             </span>
             </a></li>
+            @endif
 
-
-         
+           @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('drvouchers/verifieddr') ? 'active' : '' }}"><a href="/drvouchers/verifieddr"><i class="fa fa-circle-o text-red"></i>APPROVED DR VOUCHER
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countapproved}}</span>
             </span>
             </a></li>
-
+            @endif
 
 
             <li class="{{ Request::is('drvouchers/compliteddrvoucher') ? 'active' : '' }}"><a href="/drvouchers/compliteddrvoucher"><i class="fa fa-circle-o text-red"></i>COMPLETED DR VOUCHER
@@ -485,7 +494,7 @@
                  $pmspaiddrcount=\App\Pmsdebitvoucherpayment::where('paymentstatus','PAID')
                                                        ->count();
            @endphp
-         @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER')
+         @if(Auth::user()->usertype=='ACCOUNTS'||Auth::user()->usertype=='MASTER ADMIN')
         <li class="{{ Request::is('drpay*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-book"></i> <span>DR VOUCHER PAYMENT NEW
@@ -516,7 +525,7 @@
         </li>
         @endif
 
-                @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER')
+                @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS')
          @php
 
                $pendingdrcount=\App\debitvoucherpayment::where('paymentstatus','PENDING')
