@@ -154,7 +154,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="exampleselect">BILL NO</label>
-                    <input type="text" name="billno" class="form-control calc" required="" placeholder="Enter Bill No Here" autocomplete="off" onkeyup="checkbill(this.value)" required="">
+                    <input type="text" name="billno" class="form-control" required="" placeholder="Enter Bill No Here" autocomplete="off" onkeyup="checkbill(this.value)" required="">
                     <p  class="label label-danger">If Bill No not available then Enter "NA"</p>
                   </div>
                 </div>

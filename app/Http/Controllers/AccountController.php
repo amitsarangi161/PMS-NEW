@@ -67,7 +67,7 @@ class AccountController extends Controller
     $createdebitvoucher=new Pmsdebitvoucher();
 
      $createdebitvoucher->vendorid=$id;
-     $createdebitvoucher->voucher_type="INVOICE";
+     $createdebitvoucher->voucher_type="PAYMENT";
      $createdebitvoucher->reftype=$request->reftype;
      $createdebitvoucher->projectid=$request->projectid;
      $createdebitvoucher->expenseheadid=$request->expenseheadid;

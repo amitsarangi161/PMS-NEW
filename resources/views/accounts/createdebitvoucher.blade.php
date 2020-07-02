@@ -88,7 +88,7 @@
       		<input type="text" class="form-control datepicker3" placeholder="Enter bill date" name="billdate" readonly="" required="">
       	</td>
       	 <td style="width: 20%;"><strong>BILL NO</strong></td>
-      	 <td style="width: 30%;"><input type="text" name="billno" class="form-control calc" required="" placeholder="Enter Bill No Here" autocomplete="off" onkeyup="checkbill(this.value)" required="">
+      	 <td style="width: 30%;"><input type="text" name="billno" class="form-control" required="" placeholder="Enter Bill No Here" autocomplete="off" onkeyup="checkbill(this.value)" required="">
           <p  class="label label-danger">If Bill No not available then Enter "NA"</p>
          </td>
       	
