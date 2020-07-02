@@ -3779,9 +3779,10 @@ public function approvedebitvoucheradmin(Request $request,$id)
       $newPayment->save();
 
       $voucher=Pmsdebitvoucher::find($request->voucher_id);
-      $voucher->status="";
+      $voucher->status="PENDING PAYMENT";
       $voucher->save();
-      return back();
+      
+      return redirect('/drvouchers/verifieddr');
     }
     public function getVendorBalance($id){
       $vendor_credit =  DB::table('voucher_report')
@@ -3843,10 +3844,14 @@ public function approvedebitvoucheradmin(Request $request,$id)
           if($current_status=="ACCOUNT VERIFIED"){
             $updatepmsapprovedebitvoucher->status="MANAGER VERIFIED";
           }
+          if($current_status=="PENDING PAYMENT"){
+            $updatepmsapprovedebitvoucher->status="PENDING PAYMENT";
+          }
           if($current_status=="MANAGER VERIFIED"){
             $updatepmsapprovedebitvoucher->status="APPROVED";
           }
 
+      
           if($current_status=="COMPLETED"){
             Session::flash('msg','Already Verified');
             return back();
@@ -3864,7 +3869,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
              $updatepmsapprovedebitvoucher->finalamount=$request->finalamount;
              $updatepmsapprovedebitvoucher->save();
              $current_status = $updatepmsapprovedebitvoucher->status;
-         
+        
           if($current_status=="ACCOUNT VERIFIED"){
             return redirect('/drvouchers/viewaccountverification');
           }
@@ -3872,7 +3877,14 @@ public function approvedebitvoucheradmin(Request $request,$id)
             return redirect('/drvouchers/managerpendingdr');
           }
           if($current_status=="APPROVED"){
-            return redirect('/drvouchers/adminverificationdr');
+         
+              return redirect('/drvouchers/adminverificationdr');
+            
+          }
+          if($current_status=="PENDING PAYMENT"){
+         
+              return redirect('/drvouchers/verifieddr');
+            
           }
           if($current_status=="COMPLETED"){
               if($updatepmsapprovedebitvoucher->voucher_type=='INVOICE')
