@@ -39,7 +39,7 @@
      <tbody>
      	@foreach($debitvoucherpayments as $debitvoucherpayment)
      	<tr>
-     		<td>{{$debitvoucherpayment->id}}</td>
+     		<td><a href="/drpay/drpaidpayment/view/{{$debitvoucherpayment->id}}" class="btn btn-info">{{$debitvoucherpayment->id}}</a></td>
      		<td>{{$debitvoucherpayment->vendorname}}</td>
                <td><strong><p class="b" title="{{$debitvoucherpayment->projectname}}">{{$debitvoucherpayment->projectname}}</p></strong></td>
      		<td>{{$debitvoucherpayment->amount}}</td>

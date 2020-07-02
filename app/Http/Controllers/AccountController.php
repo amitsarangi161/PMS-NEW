@@ -58,7 +58,37 @@ use App\pmspayment;
 
 class AccountController extends Controller
 {  
+  public function vendorpayment(Request $request,$id){
 
+      $this->validate($request, [
+            'finalamount' => "required|regex:/^\d+(\.\d{1,2})?$/",
+            'tprice' => "required|regex:/^\d+(\.\d{1,2})?$/",
+       ]);
+    $createdebitvoucher=new Pmsdebitvoucher();
+
+     $createdebitvoucher->vendorid=$id;
+     $createdebitvoucher->voucher_type="INVOICE";
+     $createdebitvoucher->reftype=$request->reftype;
+     $createdebitvoucher->projectid=$request->projectid;
+     $createdebitvoucher->expenseheadid=$request->expenseheadid;
+     $createdebitvoucher->billdate=$request->billdate;
+     $createdebitvoucher->billno=$request->billno;
+     $createdebitvoucher->tprice=$request->tprice;
+     $createdebitvoucher->totalamt=$request->totalamt;
+     $createdebitvoucher->itdeduction=$request->itdeduction;
+     $createdebitvoucher->otherdeduction=$request->otherdeduction;
+     $createdebitvoucher->finalamount=$request->finalamount;
+     $rarefile = $request->file('invoicecopy');    
+    if($rarefile!=''){
+    $raupload = public_path() .'/img/createdebitvoucher/';
+    $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+    $success=$rarefile->move($raupload,$rarefilename);
+    $createdebitvoucher->invoicecopy = $rarefilename;
+    }
+    $createdebitvoucher->save();
+     Session::flash('msg','Debit Voucher Added Successfully');
+     return back();
+    }
 public function canceldebitvoucherpayment(Request $request,$id)
       {
           $debitvoucherpayment=pmsdebitvoucherpayment::find($id);
@@ -3577,8 +3607,10 @@ public function approvedebitvoucheradmin(Request $request,$id)
           ->where('vendorid',$id)
           ->where('status','COMPLETED')
           ->get();
+    $projects=project::all();
+    $expenseheads=expensehead::all();
     //return $vendor;
-    return view('accounts.account_report',compact('trns','vendor'));
+    return view('accounts.account_report',compact('trns','vendor','projects','expenseheads'));
 
     
   }

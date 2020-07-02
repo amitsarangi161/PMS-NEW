@@ -773,6 +773,7 @@ Route::get('/drpay/drpaidpayment/view/{id}','AccountController@drpaidview');
 Route::post('/editdrcashierpayvoucher/{id}','AccountController@editdrcashierpayvoucher');
 
 Route::delete('/canceldebitvoucherpayment/{id}','AccountController@canceldebitvoucherpayment');
+Route::post('/vendorpayment/{vid}','AccountController@vendorpayment');
 
 
 });

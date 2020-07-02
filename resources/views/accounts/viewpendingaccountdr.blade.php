@@ -34,13 +34,13 @@
 		</tr>
 		<tr>
 			<td width="20%"><strong>BILL TYPE :</strong></td>
-			<td width="30%">{{$pmsdebitvoucher->billtype}}</td>
+			<td width="30%">{{$pmsdebitvoucher->voucher_type}}</td>
 			<td width="20%"><strong>CREATED AT :</strong></td>
 			<td width="30%">{{$pmsdebitvoucher->created_at}}</td>
 		</tr>
 		<tr>
-			<td width="20%"></td>
-			<td width="30%"></td>
+			<td width="20%"><strong>PAYMENT TYPE</strong></td>
+			<td width="30%">{{$pmsdebitvoucher->reftype}}</td>
 			<td width="20%"><strong>STATUS :</strong></td>
 			<td width="30%"><span class="label label-warning">{{$pmsdebitvoucher->status}}</span></td>
 		</tr>
