@@ -67,8 +67,8 @@
           <td colspan="2">
             <select class="form-control" name="acctype"  required="">
             <option value=''>--Select a type--</option>
-            <option value='CA' {{($vendor->acctype =='CA')?'slected':''}}>CURRENT ACCOUNT</option>
-            <option value='SA' {{($vendor->acctype =='SA')?'slected':''}}>SAVING ACCOUNT</option>
+            <option value="CA" {{ ( $vendor->acctype == "CA") ? 'selected' : '' }}>CA</option>
+            <option value="SA" {{ ( $vendor->acctype == "SA") ? 'selected' : '' }}>SA</option>
             </select>
            </td>
       </tr>

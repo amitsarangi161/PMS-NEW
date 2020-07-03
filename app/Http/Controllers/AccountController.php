@@ -5621,6 +5621,7 @@ public function changependingstatusmgr(Request $request,$id)
    public function editvendor($id)
    {
       $vendor=vendor::find($id);
+     // return $vendor;
       return view('accounts.editvendor',compact('vendor'));
    }
   public function savevendor(Request $request)
