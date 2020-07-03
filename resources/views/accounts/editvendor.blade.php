@@ -63,6 +63,16 @@
         <td colspan="2"><input type="text" value="{{$vendor->bankname}}" name="bankname" class="form-control"></td>
       </tr>
       <tr>
+        <td colspan="2"><strong>ACCOUNT TYPE*</strong></td>
+          <td colspan="2">
+            <select class="form-control" name="acctype"  required="">
+            <option value=''>--Select a type--</option>
+            <option value='CA' {{($vendor->acctype =='CA')?'slected':''}}>CURRENT ACCOUNT</option>
+            <option value='SA' {{($vendor->acctype =='SA')?'slected':''}}>SAVING ACCOUNT</option>
+            </select>
+           </td>
+      </tr>
+      <tr>
         <td colspan="2"><strong>BANK ACCOUNT NO</strong></td>
         <td colspan="2"><input type="text" value="{{$vendor->acno}}" name="acno" class="form-control"></td>
       </tr>

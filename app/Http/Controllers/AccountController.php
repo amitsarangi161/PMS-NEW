@@ -5636,6 +5636,7 @@ public function changependingstatusmgr(Request $request,$id)
      $vendor->gstno=$request->gstno;
      $vendor->panno=$request->panno;
      $vendor->bankname=$request->bankname;
+     $vendor->acctype=$request->acctype;
      $vendor->acno=$request->acno;
      $vendor->branchname=$request->branchname;
      $vendor->ifsccode=$request->ifsccode;

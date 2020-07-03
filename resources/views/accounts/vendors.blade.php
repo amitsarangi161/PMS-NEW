@@ -64,12 +64,21 @@
         <td colspan="2"><strong>BANK NAME</strong></td>
         <td colspan="2"><input type="text" placeholder="Enter Bank Name" name="bankname" class="form-control"></td>
       </tr>
-
+      <tr>
+        <td colspan="2"><strong>ACCOUNT TYPE*</strong></td>
+          <td colspan="2">
+            <select class="form-control" name="acctype" required="">
+            <option value=''>--Select a type--</option>
+            <option value='CA'>CURRENT ACCOUNT</option>
+            <option value='SA'>SAVING ACCOUNT</option>
+            </select>
+           </td>
+      </tr>
       <tr>
         <td colspan="2"><strong>BANK ACCOUNT NO</strong></td>
         <td colspan="2"><input type="text" placeholder="Enter Bank Ac No" name="acno" class="form-control"></td>
       </tr>
-      
+     
       <tr>
         <td colspan="2"><strong>BRANCH NAME</strong></td>
         <td colspan="2"><input type="text" placeholder="Enter Branch Name" name="branchname" class="form-control"></td>
