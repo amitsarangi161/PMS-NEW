@@ -322,9 +322,10 @@ function deduction(){
             gotherdeduction=otherdeduction;
           }
           var subtot=$("#totalamt").val();
+          var mrp=$("#tprice").val();
 
-          var itdedamt=parseFloat(subtot)*(parseFloat(gitdeduction/100));
-          var otheramt=parseFloat(subtot)*(parseFloat(gotherdeduction/100));
+          var itdedamt=parseFloat(mrp)*(parseFloat(gitdeduction/100));
+          var otheramt=parseFloat(mrp)*(parseFloat(gotherdeduction/100));
 
           var final=Number.parseFloat(parseFloat(subtot)-(parseFloat(itdedamt)+parseFloat(otheramt))).toFixed(2);
 
