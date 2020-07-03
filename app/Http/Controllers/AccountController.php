@@ -3784,7 +3784,8 @@ public function approvedebitvoucheradmin(Request $request,$id)
       
       return redirect('/drvouchers/verifieddr');
     }
-    public function getVendorBalance($id){
+    public function getVendorBalance(Request $request){
+      $id=$request->vid;
       $vendor_credit =  DB::table('voucher_report')
                         ->where('vendorid',$id)
                         ->where('status','COMPLETED')
@@ -3796,6 +3797,8 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
       $balance=$vendor_credit-$vendor_debit;
       return response()->json([
+        'credit'=> $vendor_credit,
+        'debit'=> $vendor_debit,
         'balance'=>$balance,
         'clr'=>($balance<0)?"danger":"success"
       ]);

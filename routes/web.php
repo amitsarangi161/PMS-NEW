@@ -416,7 +416,7 @@ Route::get('vouchers/viewalldebitvoucher','AccountController@viewalldebitvoucher
 Route::get('/viewapproveddebitvoucher/{id}','AccountController@viewapproveddebitvoucher');
 Route::post('/createvoucherpayment','AccountController@createVoucherPayment');
 Route::post('/updatevoucherpayment/{id}','AccountController@updatevoucherpayment');
-Route::get('/getvendorbalance/{id}','AccountController@getVendorBalance');
+Route::post('/getvendorbalance','AccountController@getVendorBalance');
 
 
 

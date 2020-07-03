@@ -29,7 +29,7 @@
       <tr style="width: 100%">
       	 <td style="width:20%;"><strong>SELECT A VENDOR<strong></td>
       	 <td style="width:30%;">
-      	 	<select class="form-control select2" name="vendorid" id="vendorid" required="">
+      	 	<select class="form-control select2" name="vendorid" id="vendorid" required="" onchange="getVendorBalance();">
       	 		<option value="">Select a vendor</option>
       	 		@foreach($vendors as $vendor)
                <option value="{{$vendor->id}}">{{$vendor->vendorname}}</option>
@@ -46,6 +46,9 @@
             <option value='INVOICE'>INVOICE</option>
             </select>
            </td>
+      </tr>
+      <tr id="venderbalance">
+        
       </tr>
       <tr>
         <td style="width: 20%;"><strong>PAYMENT TYPE*</strong></td>
@@ -331,5 +334,46 @@ function deduction(){
 
           $("#finalamount").val(final);
 }
+
+
+function getVendorBalance() {
+  $("#venderbalance").removeClass('clr');
+  var vid=$("#vendorid").val();
+    $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+
+           $.ajax({
+               type:'POST',
+              
+               url:'{{url("/getvendorbalance")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     vid:vid,
+                     },
+
+               success:function(data) { 
+
+                        var vendor_credit=data.credit;
+                        var vendor_debit=data.debit;
+                        var balance=data.balance;
+
+                        var clr=data.clr;
+
+                        var x='<td class='+clr+'>'+"Total Credit : "+vendor_credit+'</td>'
+                              +'<td class='+clr+'>'+"Total Debit : "+vendor_debit+'</td>'
+                              +'<td colspan="2" class='+clr+'>'+"Clear Balance : "+balance+'</td>';
+                        $("#venderbalance").html(x);
+                         
+
+                    }
+
+
+                       });
+}
+
 </script>
 @endsection
