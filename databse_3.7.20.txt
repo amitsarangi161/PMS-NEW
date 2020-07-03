@@ -1,0 +1,3 @@
+ALTER TABLE `vendors` ADD `acctype` VARCHAR(100) NULL DEFAULT NULL AFTER `cancelcheque`;
+
+ALTER TABLE `pmsdebitvoucherpayments` ADD `checknumber` VARCHAR(100) NULL DEFAULT NULL AFTER `transactionid`;
