@@ -3709,22 +3709,24 @@ public function approvedebitvoucheradmin(Request $request,$id)
     }
 
     public function cancelleddrvouchers(){
-      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname','users.name')
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
                      ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->leftJoin('users','pmsdebitvouchers.cancelledby','=','users.id')
                      ->where('pmsdebitvouchers.status','CANCELLED')
                      ->get();
-                                       
+      //return $createdebitvouchers;                             
       return view('accounts.viewaccountverification',compact('createdebitvouchers'));
     }
     public function viewalldrvouchers(){
-      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+      $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname','users.name')
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
                      ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->leftJoin('users','pmsdebitvouchers.cancelledby','=','users.id')
                      ->get();
-                                       
+      //return $createdebitvouchers;                               
       return view('accounts.viewaccountverification',compact('createdebitvouchers'));
     }
     public function canceldrvoucher(Request $request,$id){

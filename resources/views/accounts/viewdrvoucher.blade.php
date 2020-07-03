@@ -68,7 +68,7 @@
 					<td>VENDOR NAME</td>
 					<td>FOR PROJECT</td>
 					<td>EXPENSE HEAD</td>
-					<td>BILL TYPE</td>
+					<td>VOUCHER TYPE</td>
 					<td>BILL DATE</td>
 					<td>BILL NO.</td>
 					<td>TOTAL MRP</td>
@@ -89,7 +89,7 @@
 					<td>{{$previousbill->vendorname}}</td>
 					<td>{{$previousbill->projectname}}</td>
 					<td>{{$previousbill->expenseheadname}}</td>
-					<td>{{$previousbill->billtype}}</td>
+					<td>{{$previousbill->voucher_type}}</td>
 					<td>{{$previousbill->billdate}}</td>
 					<td>{{$previousbill->billno}}</td>
 					<td>{{$previousbill->tprice}}</td>

@@ -58,6 +58,7 @@
             <option value='PO'>PO</option>
             <option value='PI'>PI</option>
             <option value='ADVANCE'>ADVANCE</option>
+            <option value='AGAINST INVOICE'>AGAINST INVOICE</option>
             <option value='NA'>NA</option>
             </select>
            </td>
