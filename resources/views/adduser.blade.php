@@ -58,7 +58,7 @@
                   <option value="ACCOUNTS ENTRY">ACCOUNTS ENTRY</option>
                   <option value="CASHIER">CASHIER</option>
                   <option value="INVENTORY">INVENTORY</option>
-                  <option value="MANGER">MANAGER</option>
+                  <option value="MANAGER">MANAGER</option>
               </select>
             </td>
           </tr>        

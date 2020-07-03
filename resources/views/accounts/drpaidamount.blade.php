@@ -32,7 +32,7 @@
      		<td>DATE OF PAYMENT</td>
             <td>PAID BY</td>
      		<td>VIEW</td>
-            <th>CANCEL</th>
+            <!-- <th>CANCEL</th> -->
      	</tr>
      </thead>
 
@@ -51,7 +51,7 @@
      		<td>{{$debitvoucherpayment->dateofpayment}}</td>
                <td>{{$debitvoucherpayment->paidbyname}}</td>
      		<td><a href="/drpay/drpaidpayment/view/{{$debitvoucherpayment->id}}" class="btn btn-primary">VIEW</a></td>
-            <td>
+            <!-- <td>
           <form action="/canceldebitvoucherpayment/{{$debitvoucherpayment->id}}"  method="post">
             {{csrf_field()}}
             {{method_field('DELETE')}}
@@ -59,11 +59,27 @@
             
           </form>
            
-        </td>
+        </td> -->
      	</tr>
 
      	@endforeach
      </tbody>
+     <tfoot>
+           <tr bgcolor="#97FFD7">
+               <td></td>
+               <td></td>
+               <td><strong>TOTAL AMOUNT</strong></td>
+               <td><strong>{{$debitvoucherpayments->sum('amount')}}</strong></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+           </tr>
+     </tfoot>
 
 	
 </table>

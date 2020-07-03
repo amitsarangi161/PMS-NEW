@@ -47,6 +47,7 @@
 		<th>ATTACHMENT</th>
     <th>Narration</th>
 		<th>Status</th>
+    <th>CANCELLED BY</th>
     <th>Created_at</th>
 		<th>View</th>
 		</tr>
@@ -92,6 +93,7 @@
           	</td>
             <td>{{$createdebitvoucher->narration}}</td>
           	<td>{{$createdebitvoucher->status}}</td>
+            <td>{{$createdebitvoucher->name}}</td>
             <td>{{$createdebitvoucher->created_at}}</td>
           	<td>
 
@@ -108,6 +110,31 @@
    
 		@endforeach
 	</tbody>
+  <tfoot>
+      <tr bgcolor="#97FFD7">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><strong>TOTAL</strong></td>
+          <td><strong>{{$createdebitvouchers->sum('tprice')}}</strong></td>
+          <td><strong>{{$createdebitvouchers->sum('discount')}}</strong></td>
+          <td><strong>{{$createdebitvouchers->sum('tsgst')}}</strong></td>
+          <td><strong>{{$createdebitvouchers->sum('tcgst')}}</strong></td>
+          <td><strong>{{$createdebitvouchers->sum('tigst')}}</strong></td>
+          <td><strong>{{$createdebitvouchers->sum('totalamt')}}</strong></td>
+          <td><strong>{{$createdebitvouchers->sum('itdeduction')}}</strong></td>
+          <td><strong>{{$createdebitvouchers->sum('otherdeduction')}}</strong></td>
+          <td><strong>{{$createdebitvouchers->sum('finalamount')}}</strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+  </tfoot>
 
 </table>
 </div>
