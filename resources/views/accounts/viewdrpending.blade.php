@@ -150,6 +150,10 @@
       			<td><strong>TRANACTION ID</strong></td>
       			<td><input type="text" placeholder="Enter Trancaction Id" class="form-control" autocomplete="off" name="transactionid" required=""></td>
       		</tr>
+          <tr>
+            <td><strong>Check Number</strong></td>
+            <td><input type="text" placeholder="Enter Check Number" class="form-control" autocomplete="off" name="checknumber" required=""></td>
+          </tr>
             <tr>
             <td><strong>DATE OF PAYMENT</strong></td>
             <td><input type="text" placeholder="Date of Payment" class="form-control datepicker1" name="dateofpayment" autocomplete="off" readonly="" required=""></td>

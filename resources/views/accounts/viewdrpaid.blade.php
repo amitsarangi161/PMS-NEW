@@ -60,7 +60,14 @@
                <span class="glyphicon glyphicon-download-alt"></span> Download
                </a>
 				</td>
+				<td width="15%"><strong>Check Number</strong></td>
+				<td width="35%">{{$debitvoucherpayment->checknumber}}</td>
 
+				
+			</tr>
+			<tr>
+				<td width="15%"><strong>PAID BY</strong></td>
+				<td width="35%">{{$debitvoucherpayment->paidbyname}}</td>
 				<td width="15%"><strong>EDIT TRANSCATION ID AND DATE OF PAYMENT</strong></td>
 				<td width="35%">
 						@if($debitvoucherpayment->paymentstatus=='PENDING')
@@ -71,10 +78,6 @@
 
 	    	@endif
 				</td>
-			</tr>
-			<tr>
-				<td width="15%"><strong>PAID BY</strong></td>
-				<td width="35%">{{$debitvoucherpayment->paidbyname}}</td>
 			</tr>
 			
 		</table>
@@ -198,6 +201,10 @@
       		<tr>
       			<td><strong>TRANACTION ID</strong></td>
       			<td><input type="text" placeholder="Enter Trancaction Id" class="form-control" autocomplete="off" value="{{$debitvoucherpayment->transactionid}}" name="transactionid" required=""></td>
+      		</tr>
+      		<tr>
+      			<td><strong>CHECK NUMBER</strong></td>
+      			<td><input type="text" placeholder="Enter Trancaction Id" class="form-control" autocomplete="off" value="{{$debitvoucherpayment->checknumber}}" name="checknumber" required=""></td>
       		</tr>
             <tr>
             <td><strong>DATE OF PAYMENT</strong></td>

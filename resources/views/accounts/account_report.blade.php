@@ -161,7 +161,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="exampleselect">Total MRP</label>
+                    <label for="exampleselect">Total Value</label>
                     <input type="text" class="form-control calc" id="tprice" name="tprice" required="" autocomplete="off">
                   </div>
                 </div>
@@ -207,8 +207,8 @@
 
 <script>
     function payment() {
-
     $('#mymodal').modal('show');
+
     }
 function readURL(input) {
     

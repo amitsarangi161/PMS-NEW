@@ -104,6 +104,7 @@ public function editdrcashierpayvoucher(Request $request,$id)
        {
           $debitvoucherpayment=pmsdebitvoucherpayment::find($id);
           $debitvoucherpayment->transactionid=$request->transactionid;
+          $debitvoucherpayment->checknumber=$request->checknumber;
           $debitvoucherpayment->dateofpayment=$request->dateofpayment;
           $debitvoucherpayment->paymenttype=$request->paymenttype;
           $debitvoucherpayment->amount=$request->amount;
@@ -176,6 +177,7 @@ public function drcashierpayvoucher(Request $request,$id)
         //return $request->all();
           $debitvoucherpayment=pmsdebitvoucherpayment::find($id);
           $debitvoucherpayment->transactionid=$request->transactionid;
+          $debitvoucherpayment->checknumber=$request->checknumber;
           $debitvoucherpayment->dateofpayment=$request->dateofpayment;
           $debitvoucherpayment->paymentstatus="PAID";
           $debitvoucherpayment->paidby=Auth::id();
@@ -5568,6 +5570,7 @@ public function changependingstatusmgr(Request $request,$id)
        $vendor->gstno=$request->gstno;
        $vendor->panno=$request->panno;
        $vendor->bankname=$request->bankname;
+       $vendor->acctype=$request->acctype;
        $vendor->acno=$request->acno;
        $vendor->branchname=$request->branchname;
        $vendor->ifsccode=$request->ifsccode;

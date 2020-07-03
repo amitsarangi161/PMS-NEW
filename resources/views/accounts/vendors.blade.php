@@ -69,8 +69,8 @@
           <td colspan="2">
             <select class="form-control" name="acctype" required="">
             <option value=''>--Select a type--</option>
-            <option value='CA'>CURRENT ACCOUNT</option>
-            <option value='SA'>SAVING ACCOUNT</option>
+            <option value='CA'>CA</option>
+            <option value='SA'>SA</option>
             </select>
            </td>
       </tr>

@@ -22,11 +22,12 @@
      	<tr class="bg-navy">
      		<td>ID</td>
      		<td>VENDOR NAME</td>
-            <td>PROJECT</td>
+        <td>PROJECT</td>
      		<td>AMOUNT</td>
      		<td>PAYMENT TYPE</td>
      		<td>REMARKS</td>
-            <td>TRANSACTION ID</td>
+        <td>TRANSACTION ID</td>
+        <td>CHECK NUMBER</td>
      		<td>BANK NAME</td>
      		<td>PAYMENT STATUS</td>
      		<td>DATE OF PAYMENT</td>
@@ -46,6 +47,7 @@
      		<td>{{$debitvoucherpayment->paymenttype}}</td>
                <td>{{$debitvoucherpayment->remarks}}</td>
      		<td>{{$debitvoucherpayment->transactionid}}</td>
+        <td>{{$debitvoucherpayment->checknumber}}</td>
      		<td>{{$debitvoucherpayment->bankname}}/{{$debitvoucherpayment->acno}}/{{$debitvoucherpayment->branchname}}</td>
      		<td>{{$debitvoucherpayment->paymentstatus}}</td>
      		<td>{{$debitvoucherpayment->dateofpayment}}</td>
