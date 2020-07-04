@@ -287,7 +287,7 @@
       var totalamt=Number.parseFloat((parseFloat(gtprice)-parseFloat(gdiscount))+(parseFloat(gtcgst)+parseFloat(gtsgst)+parseFloat(gtigst))).toFixed(2);
 
       $("#totalamt").val(totalamt);
-      $("#finalamount").val(totalamt);
+      $("#finalamount").val(Math.round(totalamt).toFixed(2));
   }
 	
   $( ".calc" ).on("change paste keyup", function() {
@@ -333,7 +333,7 @@ function deduction(){
 
           var final=Number.parseFloat(parseFloat(subtot)-(parseFloat(itdedamt)+parseFloat(otheramt))).toFixed(2);
 
-          $("#finalamount").val(final);
+          $("#finalamount").val(Math.round(final).toFixed(2));
 }
 
 
