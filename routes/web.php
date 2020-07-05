@@ -681,6 +681,7 @@ Route::get('/viewpendinfdebitvoucheradmin/{id}','AccountController@viewpendinfde
 
 Route::get('/drvouchers/createdebitvoucher','AccountController@createdebitvoucher');
 Route::post('/savecreatedebitvouchers','AccountController@savecreatedebitvouchers');
+Route::post('/updatedrvoucher/{id}','AccountController@updatedrvoucher');
 
 Route::get('/drvouchers/viewaccountverification','AccountController@viewaccountverification');
 
@@ -689,6 +690,7 @@ Route::get('/drvouchers/adminverificationdr','AccountController@adminverificatio
 
 
 Route::get('/drvouchers/verifieddr','AccountController@verifieddr');
+Route::get('/editdrvoucher/{id}','AccountController@editdrvoucher');
 
 Route::get('/drvouchers/viewalldrvouchers','AccountController@viewalldrvouchers');
 

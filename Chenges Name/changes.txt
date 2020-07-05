@@ -16,3 +16,12 @@ expenseentries           hodremarks
 
 
 Auth::guard('admin')->user()->id
+
+alter view voucher_report as SELECT pmsdebitvouchers.id,pmsdebitvouchers.vendorid,pmsdebitvouchers.billdate,
+pmsdebitvouchers.billno,pmsdebitvouchers.projectid,pmsdebitvouchers.status,
+pmsdebitvouchers.created_at,pmsdebitvoucherpayments.paymenttype,pmsdebitvoucherpayments.transactionid,
+pmsdebitvoucherpayments.bankid,pmsdebitvoucherpayments.dateofpayment,
+if(pmsdebitvouchers.voucher_type="INVOICE",pmsdebitvouchers.finalamount,0) AS credit,
+if(pmsdebitvouchers.voucher_type="PAYMENT",pmsdebitvouchers.finalamount,0) AS debit
+from pmsdebitvouchers 
+LEFT JOIN pmsdebitvoucherpayments ON pmsdebitvouchers.id = pmsdebitvoucherpayments.voucher_id;

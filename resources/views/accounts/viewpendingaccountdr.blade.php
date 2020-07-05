@@ -44,6 +44,12 @@
 			<td width="20%"><strong>STATUS :</strong></td>
 			<td width="30%"><span class="label label-warning">{{$pmsdebitvoucher->status}}</span></td>
 		</tr>
+			<tr>
+			 <td><strong>Narration</strong></td>
+          <td>
+           {{$pmsdebitvoucher->narration}}
+          </td>
+		</tr>
 
 
 	</table>

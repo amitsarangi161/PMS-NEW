@@ -58,6 +58,18 @@ use App\pmspayment;
 
 class AccountController extends Controller
 {  
+
+
+  public function editdrvoucher($id){
+
+       $pmsdebitvoucher=Pmsdebitvoucher::find($id);
+       $vendors=vendor::all();
+       $projects=project::all();
+       $expenseheads=expensehead::all();
+
+       return view('accounts.editdrvoucher',compact('pmsdebitvoucher','vendors','projects','expenseheads'));
+
+  }
   public function vendorpayment(Request $request,$id){
 
       $this->validate($request, [
@@ -3658,6 +3670,41 @@ public function approvedebitvoucheradmin(Request $request,$id)
     $createdebitvoucher->save();
      Session::flash('msg','Debit Voucher Added Successfully');
      return back();
+    } 
+
+    public function updatedrvoucher(Request $request,$id)
+    {
+    
+    $createdebitvoucher=Pmsdebitvoucher::find($id);
+     $createdebitvoucher->vendorid=$request->vendorid;
+     $createdebitvoucher->voucher_type=$request->voucher_type;
+    
+     $createdebitvoucher->reftype=$request->reftype;
+     $createdebitvoucher->projectid=$request->projectid;
+     $createdebitvoucher->expenseheadid=$request->expenseheadid;
+     $createdebitvoucher->billdate=$request->billdate;
+     $createdebitvoucher->billno=$request->billno;
+     $createdebitvoucher->tprice=$request->tprice;
+     $createdebitvoucher->discount=$request->discount;
+     $createdebitvoucher->tsgst=$request->tsgst;
+     $createdebitvoucher->tcgst=$request->tcgst;
+     $createdebitvoucher->tigst=$request->tigst;
+     $createdebitvoucher->totalamt=$request->totalamt;
+     $createdebitvoucher->itdeduction=$request->itdeduction;
+     $createdebitvoucher->otherdeduction=$request->otherdeduction;
+     $createdebitvoucher->finalamount=$request->finalamount;
+     $createdebitvoucher->status='PENDING';
+     $rarefile = $request->file('invoicecopy');    
+    if($rarefile!=''){
+    $raupload = public_path() .'/img/createdebitvoucher/';
+    $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+    $success=$rarefile->move($raupload,$rarefilename);
+    $createdebitvoucher->invoicecopy = $rarefilename;
+    }
+    $createdebitvoucher->narration=$request->narration;
+    $createdebitvoucher->save();
+     Session::flash('msg','Debit Voucher Updated Successfully');
+     return redirect('/drvouchers/viewalldrvouchers');
     }
     public function viewaccountverification(){
       $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')

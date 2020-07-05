@@ -50,6 +50,9 @@
     <th>CANCELLED BY</th>
     <th>Created_at</th>
 		<th>View</th>
+    @if (Request::is('drvouchers/viewalldrvouchers'))
+    <th>EDIT</th>
+    @endif
 		</tr>
 	</thead>
 
@@ -105,6 +108,12 @@
               <a href="/viewpendingaccountdr/{{$createdebitvoucher->id}}" class="btn btn-primary">View</a>
              @endif
               </td>
+               @if (Request::is('drvouchers/viewalldrvouchers'))
+              <td>
+              <a href="/editdrvoucher/{{$createdebitvoucher->id}}" class="btn btn-warning">EDIT</a>
+                
+              </td>
+              @endif
           </tr>
    
    
