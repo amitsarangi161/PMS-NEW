@@ -730,10 +730,6 @@ Route::get('/banks/viewallledger','AccountController@viewallledger');
 Route::get('/viewdetailledgerbank/{id}','AccountController@viewdetailledgerbank');
 Route::post('/updatebankledger','AccountController@updatebankledger');
 
-Route::get('/exportvcpayment/{acno}','AccountController@exportvcpayment');
-
-
-
 //-------------END PMS ACCOUNT ROUTE------------//
 
 //-------------PMS MD ROUTE------------//
