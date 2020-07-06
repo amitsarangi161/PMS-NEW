@@ -255,11 +255,16 @@ public function drpendingpayment(){
                                ->leftJoin('pmsdebitvouchers','pmsdebitvoucherpayments.voucher_id','=','pmsdebitvouchers.id')
                                ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                                 ->get();
-    $bankaccount=useraccount::select('useraccounts.acno','useraccounts.bankid')
-                              ->leftJoin('banks','useraccounts.bankid','=','banks.id')
-                              ->groupBy('bankid')
-                              ->get();
-      return $bankaccount;
+         //return $debitvoucherpayments;
+      $banks=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','useraccounts.acno','useraccounts.branchname')
+                                ->where('paymentstatus','PENDING')
+                               ->leftJoin('useraccounts','pmsdebitvoucherpayments.bankid','=','useraccounts.id')
+                               ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                               ->groupBy('useraccounts.bankid')
+                              
+                                ->get();
+
+      //return $banks;
              return view('accounts.drpendingpayment',compact('debitvoucherpayments'));
 }
 public function viewdetaillvendor($id){
