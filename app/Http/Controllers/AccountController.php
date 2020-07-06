@@ -60,6 +60,67 @@ class AccountController extends Controller
 {  
 
 
+  public function exportvcpayment($acno){
+
+$debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','useraccounts.acno','useraccounts.branchname','vendors.ifsccode','vendors.acno','vendors.acctype')
+                                ->where('paymentstatus','PENDING')
+                               ->leftJoin('useraccounts','pmsdebitvoucherpayments.bankid','=','useraccounts.id')
+                               ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+                               ->leftJoin('pmsdebitvouchers','pmsdebitvoucherpayments.voucher_id','=','pmsdebitvouchers.id')
+                               ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                               ->where('useraccounts.acno',$acno)
+                                ->get();
+//return $debitvoucherpayments;
+      $customer_array[] = array('SL_NO', 'SENDER A/C NO', 'AMOUNT', 'IFSC CODE', 'BENECIFIARY A/C NO ','BENECIFIARY NAME', 'TYPE OF A/C');
+
+      $bobacc[] = array('SL_NO','NAME OF THE BENECIFIARY', 'BANK A/C NO ','AMOUNT');
+
+       
+      $details=$acno.' Payment'.date('d-m-Y');
+     foreach($debitvoucherpayments as $key=>$value)
+     {
+      //return strtoupper($value->bankname).$acno;
+      if($acno=='33670500000207' && strtoupper($value->bankname)=="BANK OF BARODA"){
+        //return 1;
+
+  $bobacc[] = array(
+       'SL_NO'  => ++$key,
+       'BENECIFIARY NAME'   => $value->vendorname,
+       'BANK A/C NO'   => $value->acno,
+       'AMOUNT'    => $value->amount,
+      );
+   $bobacc[] = array('','', 'TOTAL',number_format((float)$debitvoucherpayments->sum('amount'), 2, '.', ''));
+     }
+     else{
+      $customer_array[] = array(
+       'SL_NO'  => ++$key,
+       'SENDER A/C NO'   => $acno,
+       'AMOUNT'    => $value->amount,
+       'IFSC CODE'   => $value->ifsccode,
+       'BENECIFIARY A/C NO'   => $value->acno,
+       'BENECIFIARY NAME'   => $value->vendorname,
+       'TYPE OF A/C'   => $value->acctype,
+      );
+      $customer_array[] = array('', 'TOTAL', number_format((float)$debitvoucherpayments->sum('amount'), 2, '.', ''), '', '','', '');
+     }
+      
+     }
+ 
+
+     Excel::create($details, function($excel) use ($customer_array,$details,$acno,$bobacc){
+      $excel->setTitle($acno);
+      $excel->sheet($acno.'Other Bank', function($sheet) use ($customer_array){
+       $sheet->fromArray($customer_array, null, 'A1', false, false);
+      });
+      if($acno=='33670500000207'){
+         $excel->sheet('BOB-33670500000207', function($sheet) use ($bobacc){
+         $sheet->fromArray($bobacc, null, 'A1', false, false);
+        });
+      }
+      
+     })->download('xlsx');
+
+  }
   public function editdrvoucher($id){
 
        $pmsdebitvoucher=Pmsdebitvoucher::find($id);
@@ -260,12 +321,12 @@ public function drpendingpayment(){
                                 ->where('paymentstatus','PENDING')
                                ->leftJoin('useraccounts','pmsdebitvoucherpayments.bankid','=','useraccounts.id')
                                ->leftJoin('banks','useraccounts.bankid','=','banks.id')
-                               ->groupBy('useraccounts.bankid')
+                               ->groupBy('pmsdebitvoucherpayments.bankid')
                               
                                 ->get();
 
       //return $banks;
-             return view('accounts.drpendingpayment',compact('debitvoucherpayments'));
+             return view('accounts.drpendingpayment',compact('debitvoucherpayments','banks'));
 }
 public function viewdetaillvendor($id){
   $vendor = vendor::find($id);

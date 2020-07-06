@@ -8,7 +8,9 @@
 	</tr>
 </table>
 <div class="well">
-  <button class="btn btn-success btn-flat">1010111111</button>
+  @foreach($banks as $bank)
+  <a href='/exportvcpayment/{{$bank->acno}}' class="btn btn-success btn-flat" >{{$bank->bankname}}<br>{{$bank->acno}}</a>
+  @endforeach
 </div>
 <div class="table-responsive">
 <table class="table table-responsive table-hover table-bordered table-striped datatable1">
