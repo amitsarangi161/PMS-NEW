@@ -70,13 +70,17 @@ $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*'
                                ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                                ->where('useraccounts.acno',$acno)
                                 ->get();
-//return $debitvoucherpayments;
+
       $customer_array[] = array('SL_NO', 'SENDER A/C NO', 'AMOUNT', 'IFSC CODE', 'BENECIFIARY A/C NO ','BENECIFIARY NAME', 'TYPE OF A/C');
 
       $bobacc[] = array('SL_NO','NAME OF THE BENECIFIARY', 'BANK A/C NO ','AMOUNT');
 
        
       $details=$acno.' Payment'.date('d-m-Y');
+      $sl1=0;
+      $sl2=0;
+      $total1=0;
+      $total2=0;
      foreach($debitvoucherpayments as $key=>$value)
      {
       //return strtoupper($value->bankname).$acno;
@@ -84,16 +88,16 @@ $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*'
         //return 1;
 
   $bobacc[] = array(
-       'SL_NO'  => ++$key,
+       'SL_NO'  => ++$sl1,
        'BENECIFIARY NAME'   => $value->vendorname,
        'BANK A/C NO'   => $value->acno,
        'AMOUNT'    => $value->amount,
       );
-   $bobacc[] = array('','', 'TOTAL',number_format((float)$debitvoucherpayments->sum('amount'), 2, '.', ''));
+  $total1= $total1+ $value->amount;
      }
      else{
       $customer_array[] = array(
-       'SL_NO'  => ++$key,
+       'SL_NO'  => ++$sl2,
        'SENDER A/C NO'   => $acno,
        'AMOUNT'    => $value->amount,
        'IFSC CODE'   => $value->ifsccode,
@@ -101,15 +105,17 @@ $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*'
        'BENECIFIARY NAME'   => $value->vendorname,
        'TYPE OF A/C'   => $value->acctype,
       );
-      $customer_array[] = array('', 'TOTAL', number_format((float)$debitvoucherpayments->sum('amount'), 2, '.', ''), '', '','', '');
+       $total2= $total2+ $value->amount;
      }
       
      }
- 
+  $bobacc[] = array('','', 'TOTAL',number_format((float)$total1, 2, '.', ''));
+
+  $customer_array[] = array('', 'TOTAL', number_format((float)$total2, 2, '.', ''), '', '','', '');
 
      Excel::create($details, function($excel) use ($customer_array,$details,$acno,$bobacc){
       $excel->setTitle($acno);
-      $excel->sheet($acno.'Other Bank', function($sheet) use ($customer_array){
+      $excel->sheet('OTHER BANK-'.$acno, function($sheet) use ($customer_array){
        $sheet->fromArray($customer_array, null, 'A1', false, false);
       });
       if($acno=='33670500000207'){
