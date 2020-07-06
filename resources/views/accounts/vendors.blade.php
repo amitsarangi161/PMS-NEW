@@ -62,7 +62,17 @@
     </tr>
       <tr>
         <td colspan="2"><strong>BANK NAME</strong></td>
-        <td colspan="2"><input type="text" placeholder="Enter Bank Name" name="bankname" class="form-control"></td>
+        <td colspan="2">
+        <select class="form-control" name="bankname" required="">
+
+          <option value="">Select a Bank</option>
+          @foreach($banks as $bank)
+                   <option value="{{strtoupper($bank->bankname)}}">{{strtoupper($bank->bankname)}}</option>
+
+          @endforeach
+          
+        </select>
+      </td>
       </tr>
       <tr>
         <td colspan="2"><strong>ACCOUNT TYPE*</strong></td>

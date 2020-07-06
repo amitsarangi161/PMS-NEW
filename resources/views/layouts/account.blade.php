@@ -265,7 +265,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN')
            <li class="{{ Request::is('banks/banks') ? 'active' : '' }}"><a href="/banks/banks"><i class="fa fa-circle-o text-aqua"></i>ADD BANKS</a></li>
+           @endif
             
              <li class="{{ Request::is('banks/companybankaccount') ? 'active' : '' }}"><a href="/banks/companybankaccount"><i class="fa fa-circle-o text-red"></i>COMPANY BANK ACCOUNTS</a></li>
 
@@ -296,46 +298,57 @@
             </span>
           </a>
           <ul class="treeview-menu">
-
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('acc-vouchers/createvoucher') ? 'active' : '' }}"><a href="/acc-vouchers/createvoucher">
               <i class="fa fa-circle-o text-red"></i>CREATE VOUCHER
               
 
             </a></li>
+            @endif
+            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER'||Auth::user()->usertype =='ACCOUNTS')
              <li class="{{ Request::is('acc-vouchers/pendingvouchersmgr') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchersmgr" class="chngdrfont">
               <i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS(MGR)
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$pendingmgr}}</span>
               </span>
             </a></li>
+            @endif
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('acc-vouchers/pendingvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchers"><i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS(ADMIN)
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$pendingvouchers}}</span>
               </span>
             </a></li>
+            @endif
 
+            @if(Auth::user()->usertype =='MASTER ADMIN')
              <li class="{{ Request::is('acc-vouchers/approvedvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/approvedvouchers"><i class="fa fa-circle-o text-red"></i>APPROVED VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$approvedvouchers}}</span>
             </span>
             </a></li>
+            @endif
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER')
              <li class="{{ Request::is('acc-vouchers/paidvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/paidvouchers"><i class="fa fa-circle-o text-red"></i>PAID VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$paidvouchers}}</span>
             </span>
             </a></li>
+            @endif
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER')
               <li class="{{ Request::is('acc-vouchers/cancelledvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/cancelledvouchers"><i class="fa fa-circle-o text-red"></i>CANCELLED VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$cancelledvouchers}}</span>
             </span>
             </a></li>
-
+            @endif
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER')
             <li class="{{ Request::is('acc-vouchers/viewallvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/viewallvouchers"><i class="fa fa-circle-o text-red"></i>VIEW ALL VOUCHERS
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$totalvouchers}}</span>
             </span>
             </a></li>
-
+            @endif
 
 
           </ul>

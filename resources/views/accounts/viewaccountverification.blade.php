@@ -51,7 +51,9 @@
     <th>Created_at</th>
 		<th>View</th>
     @if (Request::is('drvouchers/viewalldrvouchers'))
+    @if(Auth::user()->usertype=="MASTER ADMIN")
     <th>EDIT</th>
+    @endif
     @endif
 		</tr>
 	</thead>
@@ -109,10 +111,12 @@
              @endif
               </td>
                @if (Request::is('drvouchers/viewalldrvouchers'))
+               @if(Auth::user()->usertype=="MASTER ADMIN")
               <td>
               <a href="/editdrvoucher/{{$createdebitvoucher->id}}" class="btn btn-warning">EDIT</a>
                 
               </td>
+              @endif
               @endif
           </tr>
    

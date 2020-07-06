@@ -60,7 +60,16 @@
 
 	    <tr>
         <td colspan="2"><strong>BANK NAME</strong></td>
-        <td colspan="2"><input type="text" value="{{$vendor->bankname}}" name="bankname" class="form-control"></td>
+        <td colspan="2">
+        <select class="form-control" name="bankname" required="">
+
+          <option value="">Select a Bank</option>
+          @foreach($banks as $bank)
+                   <option value="{{strtoupper($bank->bankname)}}" {{ ( $vendor->bankname == strtoupper($bank->bankname)) ? 'selected' : '' }}>{{strtoupper($bank->bankname)}}</option>
+          @endforeach
+          
+        </select>
+      </td>
       </tr>
       <tr>
         <td colspan="2"><strong>ACCOUNT TYPE*</strong></td>

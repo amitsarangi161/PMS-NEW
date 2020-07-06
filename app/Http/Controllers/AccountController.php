@@ -5671,11 +5671,13 @@ public function changependingstatusmgr(Request $request,$id)
    public function editvendor($id)
    {
       $vendor=vendor::find($id);
+      $banks=bank::all();
      // return $vendor;
-      return view('accounts.editvendor',compact('vendor'));
+      return view('accounts.editvendor',compact('vendor','banks'));
    }
   public function savevendor(Request $request)
   {
+     //return $request->all();
      $vendor=new vendor();
      $vendor->vendorname=$request->vendorname;
      $vendor->mobile=$request->mobile;
@@ -5739,7 +5741,8 @@ public function changependingstatusmgr(Request $request,$id)
    public function vendors()
    {  
       $vendors=vendor::all();
-      return view('accounts.vendors',compact('vendors'));
+      $banks=bank::all();
+      return view('accounts.vendors',compact('vendors','banks'));
    }
    public function importvendor(Request $request){
     $this->validate($request, [
