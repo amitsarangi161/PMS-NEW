@@ -46,10 +46,14 @@
 		</tr>
 
 		<tr>
-			 <td><strong>Narration</strong></td>
-          <td>
-           {{$pmsdebitvoucher->narration}}
-          </td>
+			  <td width="20%"><strong>Narration</strong></td>
+	          <td width="30%">
+	           {{$pmsdebitvoucher->narration}}
+	          </td>
+	          <td width="20%"><strong>Cancellation Reason</strong></td>
+	          <td width="30%">
+	           {{$pmsdebitvoucher->cancelledreason}}
+	          </td>
 		</tr>
 
 
