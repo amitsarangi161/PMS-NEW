@@ -62,7 +62,7 @@ class AccountController extends Controller
 
   public function exportvcpayment($acno){
 
-$debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','useraccounts.acno','useraccounts.branchname','vendors.ifsccode','vendors.acno','vendors.acctype')
+$debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','useraccounts.acno','useraccounts.branchname','vendors.ifsccode','vendors.acno','vendors.acctype','vendors.bankname as vendorbank')
                                 ->where('paymentstatus','PENDING')
                                ->leftJoin('useraccounts','pmsdebitvoucherpayments.bankid','=','useraccounts.id')
                                ->leftJoin('banks','useraccounts.bankid','=','banks.id')
@@ -80,7 +80,7 @@ $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*'
      foreach($debitvoucherpayments as $key=>$value)
      {
       //return strtoupper($value->bankname).$acno;
-      if($acno=='33670500000207' && strtoupper($value->bankname)=="BANK OF BARODA"){
+      if($acno=='33670500000207' && strtoupper($value->vendorbank)=="BANK OF BARODA"){
         //return 1;
 
   $bobacc[] = array(
