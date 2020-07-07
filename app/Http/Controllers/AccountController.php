@@ -127,16 +127,18 @@ $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*'
      })->download('xlsx');
 
   }
+
   public function editdrvoucher($id){
 
-       $pmsdebitvoucher=Pmsdebitvoucher::find($id);
-       $vendors=vendor::all();
-       $projects=project::all();
-       $expenseheads=expensehead::all();
+     $pmsdebitvoucher=Pmsdebitvoucher::find($id);
+     $vendors=vendor::all();
+     $projects=project::all();
+     $expenseheads=expensehead::all();
 
-       return view('accounts.editdrvoucher',compact('pmsdebitvoucher','vendors','projects','expenseheads'));
+    return view('accounts.editdrvoucher',compact('pmsdebitvoucher','vendors','projects','expenseheads'));
 
   }
+
   public function vendorpayment(Request $request,$id){
 
       $this->validate($request, [
