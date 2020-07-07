@@ -25,3 +25,6 @@ if(pmsdebitvouchers.voucher_type="INVOICE",pmsdebitvouchers.finalamount,0) AS cr
 if(pmsdebitvouchers.voucher_type="PAYMENT",pmsdebitvouchers.finalamount,0) AS debit
 from pmsdebitvouchers 
 LEFT JOIN pmsdebitvoucherpayments ON pmsdebitvouchers.id = pmsdebitvoucherpayments.voucher_id;
+
+
+ALTER TABLE `schemes` CHANGE `client_id` `client_id` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL, CHANGE `schemename` `schemename` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL 
