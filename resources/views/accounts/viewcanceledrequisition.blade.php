@@ -74,6 +74,12 @@ $balancep=$cost-$payment;
             <td>OTHERS</td>
 			@endif
 		</tr>
+		 <tr>
+      <td><strong>SCHEME NAME</strong></td>
+      <td>{{$requisitionheader->schemename}}</td>
+      <td><strong>DIVISION NAME</strong></td>
+      <td>{{$requisitionheader->divisionname}}</td>
+     </tr>
          <tr>
 			<td><strong>NAME</strong></td>
 			<td>{{$requisitionheader->employee}}</td>

@@ -81,6 +81,30 @@
 		</tr>
 		@endforeach
 	</tbody>
+	 <tfoot>
+           <tr bgcolor="#97FFD7">
+               <td></td>
+               <td></td>
+               <td></td>
+               <td><strong>TOTAL AMOUNT</strong></td>
+               <td><strong>
+               	{{$provider::moneyFormatIndia($requisitions->sum('totalamount'))}}
+               </strong></td>
+               <td>
+               	<strong>
+               	{{$provider::moneyFormatIndia($requisitions->sum('approvalamount'))}}
+               </strong>
+               </td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               
+           </tr>
+     </tfoot>
 </table>
 
 </div>

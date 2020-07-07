@@ -36,6 +36,7 @@
       <th>AMOUNT TO PAY</th>
       <th>DESCRIPTION</th>
 		  <th>STATUS</th>
+      <th>FROM BANK</th>
       <th>ADDED BY</th>
 			<th>CREATED AT</th>
       <th>VIEW</th>
@@ -74,6 +75,11 @@
           <span class="label label-danger">{{$voucher->status}}</span>
          @endif
        </td>
+       @if($voucher->from_bankname && $voucher->from_acno && $voucher->from_branchname)
+        <td>{{$voucher->from_bankname}}<br>{{$voucher->from_acno}}||{{$voucher->from_branchname}}</td>
+      @else
+      <td>N/A</td>
+        @endif
         <td>{{$voucher->author}}</td>
         <td>{{$voucher->created_at}}</td>
         <td><a href="/viewvoucher/{{$voucher->id}}" class="btn btn-primary">VIEW</a></td>

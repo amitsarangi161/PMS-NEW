@@ -667,14 +667,16 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
 
        public function viewallvouchers()
        {
-            $vouchers=voucher::select('vouchers.*','projects.projectname','expenseheads.expenseheadname','particulars.particularname','users.name as author','banks.bankname')
+            $vouchers=voucher::select('vouchers.*','projects.projectname','expenseheads.expenseheadname','particulars.particularname','users.name as author','banks.bankname','useraccounts.acno as from_acno','useraccounts.branchname as from_branchname','b.bankname as from_bankname')
                     ->leftJoin('projects','vouchers.projectid','=','projects.id')
                     ->leftJoin('expenseheads','vouchers.expenseheadid','=','expenseheads.id')
                     ->leftJoin('particulars','vouchers.particularid','=','particulars.id')
                     ->leftJoin('banks','vouchers.bankid','=','banks.id')
+                    ->leftJoin('useraccounts','vouchers.frombankid','=','useraccounts.id')
+                    ->leftJoin('banks as b','useraccounts.bankid','=','b.id')
                     ->leftJoin('users','vouchers.author','=','users.id')
                     ->get();
-
+//return $vouchers;
           return view('accounts.viewallvouchers',compact('vouchers'));
 
        }
@@ -2942,19 +2944,23 @@ public function no_to_words($no)
                 ->leftJoin('clients','projects.clientid','=','clients.id')
                 ->get();
 
-          $requisitionheader=requisitionheader::select('requisitionheaders.*','projects.projectname','u1.name as employee','u2.name as author')
+          $requisitionheader=requisitionheader::select('requisitionheaders.*','projects.projectname','u1.name as employee','u2.name as author','schemes.schemename','divisions.divisionname')
                 ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                ->leftJoin('schemes','projects.clientid','=','schemes.client_id')
+                ->leftJoin('divisions','projects.clientid','=','divisions.client_id')
                 ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
                 ->leftJoin('users as u2','requisitionheaders.userid','=','u2.id')
-                ->where('requisitionheaders.id',$id)->first();
+                ->where('requisitionheaders.id',$id)
+                ->first();
 
+//return $requisitionheader;
           $requisitions=requisition::select('requisitions.*','expenseheads.expenseheadname','particulars.particularname','vendors.id as vendorid','vendors.vendorname','vendors.mobile','vendors.details','vendors.bankname','vendors.acno','vendors.branchname','vendors.ifsccode','vendors.photo','vendors.vendoridproof')
                        ->leftJoin('expenseheads','requisitions.expenseheadid','=','expenseheads.id')
                        ->leftJoin('particulars','requisitions.particularid','=','particulars.id')
                        ->leftJoin('vendors','requisitions.vendorid','=','vendors.id')
                        ->where('requisitions.requisitionheaderid',$id)
                        ->get();
-         //return $requisitions;
+         
          return view('accounts.viewpendingrequisitionmgr',compact('users','expenseheads','particulars','projects','requisitionheader','requisitions','totalamt','totalamtentry','bal','walletbalance'));
       }
 
@@ -5078,11 +5084,13 @@ public function changependingstatusmgr(Request $request,$id)
                              ->leftJoin('banks','useraccounts.bankid','=','banks.id')
                              ->get();
 
-                   $requisitionheader=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname')
+                   $requisitionheader=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname','schemes.schemename','divisions.divisionname')
                       ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
                       ->leftJoin('users as u2','requisitionheaders.userid','=','u2.id')
                       ->leftJoin('users as u3','requisitionheaders.approvedby','=','u3.id')
                       ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                      ->leftJoin('schemes','projects.clientid','=','schemes.client_id')
+                      ->leftJoin('divisions','projects.clientid','=','divisions.client_id')
                       ->where('requisitionheaders.status','APPROVED')
                       ->where('requisitionheaders.id',$id)
                       ->first();
@@ -5132,11 +5140,13 @@ public function changependingstatusmgr(Request $request,$id)
                              ->leftJoin('useraccounts','requisitionpayments.bankid','=','useraccounts.id')
                              ->leftJoin('banks','useraccounts.bankid','=','banks.id')
                              ->get();
-             $requisitionheader=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname')
+             $requisitionheader=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname','schemes.schemename','divisions.divisionname')
                       ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
                       ->leftJoin('users as u2','requisitionheaders.userid','=','u2.id')
                       ->leftJoin('users as u3','requisitionheaders.approvedby','=','u3.id')
                       ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                      ->leftJoin('schemes','projects.clientid','=','schemes.client_id')
+                      ->leftJoin('divisions','projects.clientid','=','divisions.client_id')
                       ->where('requisitionheaders.status','COMPLETED')
                       ->where('requisitionheaders.id',$id)
                       ->first();
@@ -5180,12 +5190,15 @@ public function changependingstatusmgr(Request $request,$id)
 
           $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
            $paidamounts=requisitionpayment::where('rid',$id)->get();
-          $requisitionheader=requisitionheader::select('requisitionheaders.*','u4.name as cancelledbyname','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname')
+
+          $requisitionheader=requisitionheader::select('requisitionheaders.*','u4.name as cancelledbyname','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname','schemes.schemename','divisions.divisionname')
                       ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
                       ->leftJoin('users as u2','requisitionheaders.userid','=','u2.id')
                       ->leftJoin('users as u3','requisitionheaders.approvedby','=','u3.id')
                       ->leftJoin('users as u4','requisitionheaders.cancelledby','=','u4.id')
                       ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                      ->leftJoin('schemes','projects.clientid','=','schemes.client_id')
+                      ->leftJoin('divisions','projects.clientid','=','divisions.client_id')
                       ->where('requisitionheaders.status','CANCELLED')
                       ->where('requisitionheaders.id',$id)
                       ->first();
@@ -5234,15 +5247,17 @@ public function changependingstatusmgr(Request $request,$id)
    
           $paidamounts=requisitionpayment::where('rid',$id)->get();
 
-          $requisitionheader=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname')
+          $requisitionheader=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname','schemes.schemename','divisions.divisionname')
                       ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
                       ->leftJoin('users as u2','requisitionheaders.userid','=','u2.id')
                       ->leftJoin('users as u3','requisitionheaders.approvedby','=','u3.id')
                       ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                      ->leftJoin('schemes','projects.clientid','=','schemes.client_id')
+                      ->leftJoin('divisions','projects.clientid','=','divisions.client_id')
                       ->where('requisitionheaders.status','PENDING')
                       ->where('requisitionheaders.id',$id)
                       ->first();
-           
+          // return $requisitionheader;
            $requisitions=requisition::select('requisitions.*','expenseheads.expenseheadname','particulars.particularname','vendors.id as vendorid','vendors.vendorname','vendors.mobile','vendors.details','vendors.bankname','vendors.acno','vendors.branchname','vendors.ifsccode','vendors.photo','vendors.vendoridproof')
                        ->leftJoin('expenseheads','requisitions.expenseheadid','=','expenseheads.id')
                       ->leftJoin('vendors','requisitions.vendorid','=','vendors.id')
@@ -5250,7 +5265,7 @@ public function changependingstatusmgr(Request $request,$id)
                        ->where('requisitions.requisitionheaderid',$id)
                        ->get();
            
-          //return $requisitions;
+          //return $requisitionheader;
           return view('accounts.viewpendingrequisition',compact('requisitionheader','requisitions','paidamounts','totalamt','totalamtentry','bal','walletbalance'));
      }
      public function pendingrequisitionsmgr()
@@ -5373,11 +5388,13 @@ public function changependingstatusmgr(Request $request,$id)
 
           $all=array('totalamt'=>$totalamt,'totalexpense'=>$totalamtentry,'balance'=>$bal);
            $paidamounts=requisitionpayment::where('rid',$id)->get();
-             $requisitionheader=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname')
+             $requisitionheader=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname','schemes.schemename','divisions.divisionname')
                       ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
                       ->leftJoin('users as u2','requisitionheaders.userid','=','u2.id')
                       ->leftJoin('users as u3','requisitionheaders.approvedby','=','u3.id')
                       ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                      ->leftJoin('schemes','projects.clientid','=','schemes.client_id')
+                      ->leftJoin('divisions','projects.clientid','=','divisions.client_id')
                       ->where('requisitionheaders.id',$id)
                       ->first();
            
