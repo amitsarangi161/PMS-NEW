@@ -298,7 +298,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN')
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN' || Auth::user()->usertype =='ACCOUNTS ENTRY')
             <li class="{{ Request::is('acc-vouchers/createvoucher') ? 'active' : '' }}"><a href="/acc-vouchers/createvoucher">
               <i class="fa fa-circle-o text-red"></i>CREATE VOUCHER
               
@@ -321,7 +321,7 @@
             </a></li>
             @endif
 
-            @if(Auth::user()->usertype =='MASTER ADMIN')
+            @if(Auth::user()->usertype =='MASTER ADMIN' || Auth::user()->usertype =='ACCOUNTS')
              <li class="{{ Request::is('acc-vouchers/approvedvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/approvedvouchers"><i class="fa fa-circle-o text-red"></i>APPROVED VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$approvedvouchers}}</span>
