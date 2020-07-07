@@ -88,7 +88,14 @@
           @foreach($projects as $project)
 
               @if($project->projectname!='')
-             <option value="{{$project->id}}" title="{{$project->projectname}}">{{$project->projectname}}</option>
+             <option value="{{$project->id}}" title="{{$project->projectname}}">{{$project->projectname}}
+              @if($project->schemename)
+              [ Scheme : {{$project->schemename}} ]  
+              @else
+              {{''}}
+              @endif
+
+             </option>
              @endif
 
                  

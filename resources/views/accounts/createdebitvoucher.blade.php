@@ -68,8 +68,18 @@
         <td style="width: 30%;">
           <select name="projectid" class="form-control select2">
             <option value="">NONE</option>
+
             @foreach($projects as $project)
-              <option value="{{$project->id}}">{{$project->projectname}}</option>
+           
+              <option value="{{$project->id}}">
+                {{$project->projectname}}
+                 @if($project->schemename)
+              [ Scheme : {{$project->schemename}} ]  
+              @else
+              {{''}}
+              @endif
+              </option>
+                       
             @endforeach
 
           </select>

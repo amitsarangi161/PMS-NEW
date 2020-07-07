@@ -2977,7 +2977,7 @@ return $message->sid;*/
     $projectotherdocuments=projectotherdocument::where('project_id',$id)
                           ->get();
     $project=project::find($id);
-    ///return $project;
+    //return $project;
     $clientid=$project->clientid;
     //return $clientid;
     $projectactivities=projectactivity::select('projectactivities.*','activities.activityname')
