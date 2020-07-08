@@ -60,6 +60,13 @@ class AccountController extends Controller
 {  
 
 
+  public function updatepaymentmethod(Request $request,$id){
+    $updatepaymentmethod=requisitionpayment::find($id);
+    $updatepaymentmethod->paymenttype = $request->paymenttype;
+    $updatepaymentmethod->save();
+    return back();
+  }
+
   public function exportvcpayment($acno){
 
 $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','useraccounts.acno','useraccounts.branchname','vendors.ifsccode','vendors.acno','vendors.acctype','vendors.bankname as vendorbank')
@@ -4318,7 +4325,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                  ->orWhere('requisitionpayments.paymenttype', '=', 'CHEQUE');
               })
              ->get();
-
+//return $requisitionpayments;
             return view('accounts.viewallbankrequisitionpayment',compact('requisitionpayments'));
      }
 

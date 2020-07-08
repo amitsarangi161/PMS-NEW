@@ -781,5 +781,6 @@ Route::post('/editdrcashierpayvoucher/{id}','AccountController@editdrcashierpayv
 Route::delete('/canceldebitvoucherpayment/{id}','AccountController@canceldebitvoucherpayment');
 Route::post('/vendorpayment/{vid}','AccountController@vendorpayment');
 
+Route::post('/updatepaymentmethod/{id}','AccountController@updatepaymentmethod');
 
 });

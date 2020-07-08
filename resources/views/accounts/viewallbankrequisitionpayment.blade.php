@@ -20,7 +20,7 @@
      		<th>PAYMENT STATUS</th>
      		<th>CREATED_AT</th>
          <th>Schedule Date</th>
-        <th>PAY TO</th>
+        <!-- <th>PAY TO</th> -->
      		<th>VIEW</th>
 
 
@@ -63,7 +63,7 @@
               @else
               <td><label class="label label-warning">Not Scheduled</label></td>
               @endif
-              <td>{{$requisitionpayment->type}}</td>
+              <!-- <td>{{$requisitionpayment->type}}</td> -->
            	  <!-- <td><button type="button" class="btn btn-primary" onclick="payonline('{{$requisitionpayment->id}}');">PAID</button></td> -->
               <td><a href="/cashierviewdetailsonlinepayment/{{$requisitionpayment->id}}" class="btn btn-primary">VIEW</a></td>
            </tr>
