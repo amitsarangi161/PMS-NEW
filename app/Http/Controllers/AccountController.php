@@ -4206,8 +4206,9 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
       public function cashierpaidrequsitionamt()
       {
-           $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
+           $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PAID')
              ->where(function ($query) {
@@ -4247,12 +4248,14 @@ public function approvedebitvoucheradmin(Request $request,$id)
        }
        public function viewpaidrequisitioncash()
        {
-             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
+             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PAID')
              ->where('requisitionpayments.paymenttype', '=','CASH')
              ->get();
+             //return $requisitionpayments;
            return view('accounts.viewpaidrequisitioncash',compact('requisitionpayments'));
        }
 
@@ -4277,8 +4280,9 @@ public function approvedebitvoucheradmin(Request $request,$id)
       public function requisitioncashrequest(Request $request)
       {   
 
-            $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
+            $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
               ->where('requisitionpayments.paymentstatus','PENDING')
               ->where('requisitionpayments.paymenttype', '=','CASH')
@@ -4316,8 +4320,9 @@ public function approvedebitvoucheradmin(Request $request,$id)
      {
            
 
-             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
+             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PENDING')
               ->where(function ($query) {

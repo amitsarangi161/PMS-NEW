@@ -19,6 +19,12 @@
   text-align: left;
   vertical-align: middle;
 }
+.b {
+    white-space: nowrap; 
+    width: 150px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
 </style>
 
 <table class="table">
@@ -32,6 +38,7 @@
      <thead>
      	<tr class="bg-navy">
      		<th>ID</th>
+        <th>PROJECT NAME</th>
         <th>REQUISITION ID</th>
      		<th>NAME</th>
      		<th>AMOUNT</th>
@@ -70,6 +77,7 @@
               @else
               <td>{{$requisitionpayment->id}}</td>
               @endif
+              <td><p class="b" title="{{$requisitionpayment->projectname}}">{{$requisitionpayment->projectname}}</p></td>
               <td>{{$requisitionpayment->rid}}</td>
            	  <td>{{$requisitionpayment->name}}</td>
            	  <td>{{$requisitionpayment->amount}}</td>

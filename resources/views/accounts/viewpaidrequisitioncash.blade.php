@@ -1,6 +1,15 @@
 @extends('layouts.account')
 @section('content')
 
+<style type="text/css">
+    .b {
+    white-space: nowrap; 
+    width: 150px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+   
+}
+</style>
 <table class="table">
 	<tr class="bg-blue">
 		<td class="text-center">REQUISITION PAYMENT CASH</td>
@@ -12,6 +21,7 @@
      <thead>
      	<tr class="bg-navy">
      		<th>ID</th>
+        <th>PROJECT NAME</th>
      		<th>REQUISITION ID</th>
         <th>NAME</th>
      		<th>AMOUNT</th>
@@ -30,6 +40,7 @@
      	@foreach($requisitionpayments as $requisitionpayment)
            <tr>
            	  <td>{{$requisitionpayment->id}}</td>
+              <td><p class="b" title="{{$requisitionpayment->projectname}}">{{$requisitionpayment->projectname}}</p></td>
               <td>{{$requisitionpayment->rid}}</td>
            	  <td>{{$requisitionpayment->name}}</td>
            	  <td>{{$requisitionpayment->amount}}</td>
