@@ -47,6 +47,7 @@
 	
      </thead>
      <tbody>
+      @if($requisitionpayments)
      	@foreach($requisitionpayments as $requisitionpayment)
        @php
         $today=Carbon\Carbon::now();
@@ -83,16 +84,12 @@
               @else
               <td><label class="label label-warning">Not Scheduled</label></td>
               @endif
-          <!--  	  <td>
-                 <form action="/cashierpaidrequsitioncash/{{$requisitionpayment->id}}" method="post">
-                  {{csrf_field()}}
-                <button type="submit" class="btn btn-success" onclick="return confirm('Are You confirm to proceed?')">PAID</button>
-                 </form>
-              </td> -->
+    
               <td> <button type="submit" class="btn btn-success" onclick="openpaymodal('{{$requisitionpayment->id}}');">PAID</button></td>
            </tr>
 
      	@endforeach
+      @endif
      </tbody>
 </table>
 
