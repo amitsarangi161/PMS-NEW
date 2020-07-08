@@ -1,6 +1,15 @@
 @extends('layouts.account')
 @section('content')
 
+<style type="text/css">
+    .b {
+    white-space: nowrap; 
+    width: 150px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+   
+}
+</style>
 <table class="table">
 	<tr class="bg-blue">
 		<td class="text-center">REQUISITION PAYMENT FROM BANK</td>
@@ -12,6 +21,7 @@
      <thead>
      	<tr class="bg-navy">
      		<th>ID</th>
+        <th>PROJECT NAME</th>
         <th>REQUISITION ID</th>
      		<th>NAME</th>
      		<th>AMOUNT</th>
@@ -20,7 +30,7 @@
      		<th>PAYMENT STATUS</th>
      		<th>CREATED_AT</th>
          <th>Schedule Date</th>
-        <th>PAY TO</th>
+        <!-- <th>PAY TO</th> -->
      		<th>VIEW</th>
 
 
@@ -51,6 +61,7 @@
               @else
               <td>{{$requisitionpayment->id}}</td>
               @endif
+              <td><p class="b" title="{{$requisitionpayment->projectname}}">{{$requisitionpayment->projectname}}</p></td>
               <td>{{$requisitionpayment->rid}}</td>
            	  <td>{{$requisitionpayment->name}}</td>
            	  <td>{{$requisitionpayment->amount}}</td>
@@ -63,7 +74,7 @@
               @else
               <td><label class="label label-warning">Not Scheduled</label></td>
               @endif
-              <td>{{$requisitionpayment->type}}</td>
+              <!-- <td>{{$requisitionpayment->type}}</td> -->
            	  <!-- <td><button type="button" class="btn btn-primary" onclick="payonline('{{$requisitionpayment->id}}');">PAID</button></td> -->
               <td><a href="/cashierviewdetailsonlinepayment/{{$requisitionpayment->id}}" class="btn btn-primary">VIEW</a></td>
            </tr>

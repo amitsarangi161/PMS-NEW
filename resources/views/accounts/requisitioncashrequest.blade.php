@@ -19,6 +19,12 @@
   text-align: left;
   vertical-align: middle;
 }
+.b {
+    white-space: nowrap; 
+    width: 150px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
 </style>
 
 <table class="table">
@@ -32,6 +38,7 @@
      <thead>
      	<tr class="bg-navy">
      		<th>ID</th>
+        <th>PROJECT NAME</th>
         <th>REQUISITION ID</th>
      		<th>NAME</th>
      		<th>AMOUNT</th>
@@ -71,10 +78,13 @@
               @else
               <td>{{$requisitionpayment->id}}</td>
               @endif
+              <td><p class="b" title="{{$requisitionpayment->projectname}}">{{$requisitionpayment->projectname}}</p></td>
               <td>{{$requisitionpayment->rid}}</td>
            	  <td>{{$requisitionpayment->name}}</td>
            	  <td>{{$requisitionpayment->amount}}</td>
-           	  <td>{{$requisitionpayment->paymenttype}}</td>
+           	  <td style="cursor: pointer;" onclick="updatepaymentmethod('{{$requisitionpayment->paymenttype}}','{{$requisitionpayment->bankid}}');">{{$requisitionpayment->paymenttype}}
+                  <i class="fa fa-pencil" style="color: #0983b3; padding: 5px;"></i> 
+              </td>
            	  <td>{{$requisitionpayment->remarks}}</td>
               <td>{{$requisitionpayment->paymentstatus}}</td>
           
@@ -92,6 +102,48 @@
       @endif
      </tbody>
 </table>
+
+<div class="modal fade" id="updatepaymentmethod" role="dialog">
+    <div class="modal-dialog modal-sm">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header bg-navy">
+          <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+          <h4 class="modal-title text-center">UPDATE REQUISTION PAYMENT</h4>
+        </div>
+        <div class="modal-body">
+          <form action="/updatepaymentmethod/{{$requisitionpayment->id}}" method="post">
+            {{csrf_field()}}
+          <table class="table">           
+          
+            <tr>
+              <td><strong>PAYMENT TYPE</strong></td>
+              <td>
+                <select class="form-control" name="paymenttype" id="paymenttype" onchange="getbank(this.value);" required="" >
+                  <option value="">SELECT A PAYMENT TYPE</option>
+                  <option value="ONLINE PAYMENT">ONLINE PAYMENT</option>
+                  <option value="CASH">CASH</option>
+                  <option value="CHEQUE">CHEQUE</option>                  
+                </select>
+        </td>
+            </tr>
+          
+             <tr>
+        <td colspan="2" style="text-align: center;font-size:15px;"> <p id="errormsg" style="color: red;"></p></td>
+      </tr>
+            <tr>
+              <td colspan="2"><button type="submit" id="subbutton" class="btn btn-success pull-right" onclick="return confirm('Do You Want to Proceed?')">SUBMIT</button></td>
+            </tr>
+          
+          </table>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -178,7 +230,12 @@
     $("#amount").val(amount);
     $('#scheduledate').modal('show');
   }
-  
+    function updatepaymentmethod(paymenttype,bankid){
+
+    $('#paymenttype option[value="'+paymenttype+'"]').attr("selected", "selected");
+    $('#reqbank option[value="'+bankid+'"]').attr("selected", "selected");
+    $("#updatepaymentmethod").modal('show');
+  }
 </script>
 
 

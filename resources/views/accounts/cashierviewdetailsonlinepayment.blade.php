@@ -51,7 +51,10 @@
 		<td><strong>REQUISITION AMOUNT</strong></td>
 		<td>{{ $requisitionpayments->amount}}</td>
 		<td><strong>PAYMENT METHOD</strong></td>
-		<td>{{ $requisitionpayments->paymenttype}}</td>
+
+		<td>{{ $requisitionpayments->paymenttype}}
+      <button class="label label-primary" onclick="updatepaymentmethod('{{$requisitionpayments->paymenttype}}','{{$requisitionpayments->bankid}}');"> <i class="fa fa-pencil"></i> Edit</button>
+    </td>
 	</tr>
 
 	<tr>
@@ -64,10 +67,10 @@
 		<td><strong>CREATED_AT</strong></td>
 		<td>{{$requisitionpayments->created_at}}</td>
 	</tr>
-  <tr>
+  <!-- <tr>
      <td><strong>PAY TO</strong></td>
     <td><strong>{{$requisitionpayments->type}}</strong></td>
-  </tr>
+  </tr> -->
 	@if($requisitionpayments->paymentstatus=='PAID')
 	<tr>
 		<td><strong>TRANSACTION ID</strong></td>
@@ -293,6 +296,46 @@
   </div>
 </div>
 
+<div class="modal fade" id="updatepaymentmethod" role="dialog">
+    <div class="modal-dialog modal-sm">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header bg-navy">
+          <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+          <h4 class="modal-title text-center">UPDATE REQUISTION PAYMEN</h4>
+        </div>
+        <div class="modal-body">
+          <form action="/updatepaymentmethod/{{$requisitionpayments->id}}" method="post">
+            {{csrf_field()}}
+          <table class="table">           
+          
+            <tr>
+              <td><strong>PAYMENT TYPE</strong></td>
+              <td>
+                <select class="form-control" name="paymenttype" id="paymenttype" onchange="getbank(this.value);" required="" >
+                  <option value="">SELECT A PAYMENT TYPE</option>
+                  <option value="ONLINE PAYMENT">ONLINE PAYMENT</option>
+                  <option value="CASH">CASH</option>
+                  <option value="CHEQUE">CHEQUE</option>                  
+                </select>
+        </td>
+            </tr>
+          
+             <tr>
+        <td colspan="2" style="text-align: center;font-size:15px;"> <p id="errormsg" style="color: red;"></p></td>
+      </tr>
+            <tr>
+              <td colspan="2"><button type="submit" id="subbutton" class="btn btn-success pull-right" onclick="return confirm('Do You Want to Proceed?')">SUBMIT</button></td>
+            </tr>
+          
+          </table>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 
 
@@ -310,6 +353,12 @@
   function openedit()
   {
     $("#myModal2").modal('show');
+  }
+  function updatepaymentmethod(paymenttype,bankid){
+
+    $('#paymenttype option[value="'+paymenttype+'"]').attr("selected", "selected");
+    $('#reqbank option[value="'+bankid+'"]').attr("selected", "selected");
+    $("#updatepaymentmethod").modal('show');
   }
 </script>
 @endsection
