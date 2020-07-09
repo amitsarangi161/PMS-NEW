@@ -60,13 +60,6 @@ class AccountController extends Controller
 {  
 
 
-  public function updatepaymentmethod(Request $request,$id){
-    $updatepaymentmethod=requisitionpayment::find($id);
-    $updatepaymentmethod->paymenttype = $request->paymenttype;
-    $updatepaymentmethod->save();
-    return back();
-  }
-
   public function exportvcpayment($acno){
 
 $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','useraccounts.acno','useraccounts.branchname','vendors.ifsccode','vendors.acno','vendors.acctype','vendors.bankname as vendorbank')
@@ -4206,9 +4199,8 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
       public function cashierpaidrequsitionamt()
       {
-           $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
+           $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
-             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PAID')
              ->where(function ($query) {
@@ -4248,14 +4240,12 @@ public function approvedebitvoucheradmin(Request $request,$id)
        }
        public function viewpaidrequisitioncash()
        {
-             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
+             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
-             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PAID')
              ->where('requisitionpayments.paymenttype', '=','CASH')
              ->get();
-             //return $requisitionpayments;
            return view('accounts.viewpaidrequisitioncash',compact('requisitionpayments'));
        }
 
@@ -4280,9 +4270,8 @@ public function approvedebitvoucheradmin(Request $request,$id)
       public function requisitioncashrequest(Request $request)
       {   
 
-            $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
+            $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
-             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
               ->where('requisitionpayments.paymentstatus','PENDING')
               ->where('requisitionpayments.paymenttype', '=','CASH')
@@ -4320,9 +4309,8 @@ public function approvedebitvoucheradmin(Request $request,$id)
      {
            
 
-             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
+             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
-             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PENDING')
               ->where(function ($query) {
@@ -4330,7 +4318,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                  ->orWhere('requisitionpayments.paymenttype', '=', 'CHEQUE');
               })
              ->get();
-//return $requisitionpayments;
+
             return view('accounts.viewallbankrequisitionpayment',compact('requisitionpayments'));
      }
 

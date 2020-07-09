@@ -412,7 +412,7 @@
     }
 	$( ".dedcalc" ).on("change paste keyup", function() {
 
-        var itdeduction=$("#itdeduction").val();
+       var itdeduction=$("#itdeduction").val();
         if(itdeduction=='') {
            gitdeduction = 0;
 
@@ -431,14 +431,16 @@
           {
             gotherdeduction=otherdeduction;
           }
-          var subtot=$("#totalamt").val();
+          var subtot=$("#tmrp").val();
+          var totalamt=$("#totalamt").val();
 
           var itdedamt=parseFloat(subtot)*(parseFloat(gitdeduction/100));
           var otheramt=parseFloat(subtot)*(parseFloat(gotherdeduction/100));
 
-          var final=Number.parseFloat(parseFloat(subtot)-(parseFloat(itdedamt)+parseFloat(otheramt))).toFixed(2);
+          var final=Number.parseFloat(parseFloat(totalamt)-(parseFloat(itdedamt)+parseFloat(otheramt))).toFixed(2);
 
           $("#finalamount").val(final);
+          $("#approvalamount").val(final);
 
 
           
