@@ -711,15 +711,17 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
 
         public function paidvouchers()
        {
-            $vouchers=voucher::select('vouchers.*','projects.projectname','expenseheads.expenseheadname','particulars.particularname','users.name as author','banks.bankname')
+            $vouchers=voucher::select('vouchers.*','projects.projectname','expenseheads.expenseheadname','particulars.particularname','users.name as author','banks.bankname','useraccounts.acno as from_acno','useraccounts.branchname as from_branchname','b.bankname as from_bankname')
                     ->leftJoin('projects','vouchers.projectid','=','projects.id')
                     ->leftJoin('expenseheads','vouchers.expenseheadid','=','expenseheads.id')
                     ->leftJoin('particulars','vouchers.particularid','=','particulars.id')
                     ->leftJoin('banks','vouchers.bankid','=','banks.id')
+                    ->leftJoin('useraccounts','vouchers.frombankid','=','useraccounts.id')
+                    ->leftJoin('banks as b','useraccounts.bankid','=','b.id')
                     ->leftJoin('users','vouchers.author','=','users.id')
                     ->where('vouchers.status','PAID')
                     ->get();
-
+//return $vouchers;
           return view('accounts.paidvouchers',compact('vouchers'));
 
        } 
