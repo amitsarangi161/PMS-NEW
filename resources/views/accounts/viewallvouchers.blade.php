@@ -100,7 +100,7 @@
     @endforeach
 	</tbody>
 <tfoot>
-  <tr style="background-color: #cecdcd;">
+  <tr style="background-color: #97FFD7;">
       <td></td>
       <td></td>
       <td></td>
@@ -114,6 +114,7 @@
       <td></td>
      <td>{{$vouchers->sum('tdsamt')}}</td>
       <td>{{$vouchers->sum('amounttopay')}}</td>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>

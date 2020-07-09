@@ -1,6 +1,18 @@
 @extends('layouts.account')
 @section('content')
-
+<style type="text/css">
+  .mybox{
+    padding-bottom: 0px;
+    padding-top: 0px;
+     background-color: #29678c;
+    color: #fff;
+  }
+/*.box-body .row{font-size: 12px;
+line-height: 1!important;
+font-weight: 520;
+padding: 4px;}*/
+label {font-size: 12px;}
+</style>
  <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr class="bg-blue">
 		<td class="text-center">VIEW EXPENSE ENTRY DETAILS</td>
@@ -30,6 +42,74 @@
   </div>
   
 </div>
+
+<!-- <div class="row">
+  @foreach($expenseentry as $expenseentry1)
+  <div class="col-lg-6">
+    <div class="box box-primary">
+            <div class="box-header  bg-info mybox">
+              <h5>PROJECT NAME : {{$expenseentry1->projectname}}</h5>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <label>EXPENSE ENTRY ID :</label> <p class="label label-info"> #{{$expenseentry1->id}}</p>
+                </div>
+                <div class="col-md-6">
+                  <label>FOR EMPLOYEE : <span> {{$expenseentry1->for}}</span></label>
+                </div>
+              </div>
+               <div class="row">
+                <div class="col-md-6">
+                 <label> FOR CLIENT : <span> {{$expenseentry1->clientname}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>FOR EMPLOYEE : <span> {{$expenseentry1->for}}</span></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                 <label> EXPENSE HEAD NAME : <span> {{$expenseentry1->expenseheadname}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>PARTICULAR NAME : <span> {{$expenseentry1->particularname}}</span></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                 <label> VENDOR NAME : <span> {{$expenseentry1->vendorname}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>AMOUNT : <span> {{$expenseentry1->amount}}</span></label>
+                </div>
+              </div>
+          
+              <div class="row">
+                <div class="col-md-6">
+                 <label> APPROVAL AMOUNT : <span> {{$expenseentry1->approvalamount}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>APPROVED BY : <span> {{$expenseentry1->approvedbyname}}</span></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                 <label> APPROVAL AMOUNT : <span> {{$expenseentry1->approvalamount}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>APPROVED BY : <span> {{$expenseentry1->approvedbyname}}</span></label>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+  </div>
+@endforeach
+</div> -->
 @foreach($expenseentry as $expenseentry)
 <div class="well countwell">
 	<div class="table-responsive">

@@ -90,8 +90,8 @@
 
 
 
-
-<table class="table table-responsive table-hover table-bordered table-striped datatable1">
+<div class="table-responsive">
+<table class="table  table-hover table-bordered table-striped datatable1">
      <thead>
      	<tr class="bg-navy">
      		<th>ID</th>
@@ -153,6 +153,7 @@
        </tr>
      </tbody>
 </table>
+</div>
 <script type="text/javascript">
   function filter()
   {
