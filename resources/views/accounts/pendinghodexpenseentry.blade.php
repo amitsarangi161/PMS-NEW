@@ -13,7 +13,7 @@
 }
 </style>
 <div style="overflow-x:auto;">
-<table class="table table-responsive table-hover table-bordered table-striped datatable1">
+<table class="table table-responsive table-hover table-bordered table-striped datatable2">
   <thead>
     <tr class="bg-navy" style="font-size: 10px;">
       <th>Sl. No.</th>

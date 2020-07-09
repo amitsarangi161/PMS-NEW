@@ -1,7 +1,29 @@
 @extends('layouts.account')
 @section('content')
 
-  	<!--  -->
+<style type="text/css">
+  .mybox{
+    padding-bottom: 0px;
+    padding-top: 0px;
+     background-color: #29678c;
+    color: #fff;
+  }
+
+.b {
+    display: inline-block;
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+.acc{
+color: #089d89;
+font-size: 14px;
+text-decoration: underline;
+}
+
+label {font-size: 12px;}
+</style>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr class="bg-blue">
@@ -32,7 +54,7 @@
   </div>
   
 </div>
-
+<!-- 
 <table class="table">
 	 <tr>
 
@@ -40,8 +62,162 @@
 	   	
 	   </tr>
 	
-</table>
-@foreach($expenseentry as $expenseentry)
+</table> -->
+
+<div class="row">
+  @foreach($expenseentry as $expenseentry1)
+  <div class="col-lg-6">
+    <div class="box box-primary">
+            <div class="box-header  bg-info mybox">
+              <h5>PROJECT NAME : {{$expenseentry1->projectname}}</h5>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <label>EXPENSE ENTRY ID :</label>
+                  <span  class="label btn-success">#{{$expenseentry1->id}}</span>
+                </div>
+                <div class="col-md-6">
+                  <label>FOR EMPLOYEE : <span class="text-muted"> {{$expenseentry1->for}}</span></label>
+                </div>
+              </div>
+               <div class="row">
+                <div class="col-md-6">
+                 <label> FOR CLIENT : <span class="text-muted"> {{$expenseentry1->clientname}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>FOR EMPLOYEE : <span class="text-muted"> {{$expenseentry1->for}}</span></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                 <label> EXPENSE HEAD NAME : <span class="text-muted"> {{$expenseentry1->expenseheadname}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>PARTICULAR NAME : <span class="text-muted"> {{$expenseentry1->particularname}}</span></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                 <label> VENDOR NAME : <span class="text-muted"> {{$expenseentry1->vendorname}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>AMOUNT : <span class="text-muted acc"> Rs. {{$expenseentry1->amount}}</span></label>
+                </div>
+              </div>
+          
+              <div class="row">
+                <div class="col-md-6">
+                 <label> APPROVAL AMOUNT : <span class="text-muted acc"> Rs. {{$expenseentry1->approvalamount}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>APPROVED BY : <span class="text-muted"> {{$expenseentry1->approvedbyname}}</span></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                 <label> DATE FROM : <span class="text-muted"> {{$expenseentry1->fromdate}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>DATE TO : <span class="text-muted"> {{$expenseentry1->todate}}</span></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                 <label> STATUS : <span class="text-muted label label-info">  
+                  {{$expenseentry1->status}}</span>
+                </label>
+                </div>
+                <div class="col-md-6">
+                  <label>TYPE OF EXPENSES : 
+                     @if($expenseentry1->type)
+                    <span class="text-muted  label label-warning"> {{$expenseentry1->type}}</span>
+                     @endif
+                  </label>
+                </div>
+              </div>
+
+               <div class="row">
+                <div class="col-md-6">
+                 <label> DATE FROM : <span class="text-muted"> {{$expenseentry1->fromdate}}</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label>DATE TO : <span class="text-muted"> {{$expenseentry1->todate}}</span></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                 <label> DESCRIPTION :  
+               @if($expenseentry1->towallet=='YES')
+                <span class="b text-muted"  title="{{$expenseentry1->description}}">{{$expenseentry->description}} ||Requested to Transfer the balance to wallet.
+                </span>
+                      @else
+                        <span class="b text-muted" title="{{$expenseentry1->description}}">{{$expenseentry1->description}}</span>
+                      @endif
+                </label>
+                </div>
+                <div class="col-md-6">
+                  <label>TRANSFER TO WALLET REQUEST : <span class="text-muted"> {{$expenseentry1->towallet}}</span></label>
+                </div>
+              </div>
+
+
+               <div class="row">
+                <div class="col-md-6">
+                <!-- <label>HOD REMARKS: <span class="text-muted"> {{$expenseentry1->hodremarks}}</span></label> -->
+                </div>
+                <div class="col-md-6">
+                  <label>created_at : <span class="text-muted"> {{$expenseentry1->created_at}}</span></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <label>UPLOADED FILE: </label> 
+
+                  @if($expenseentry1->uploadedfile)
+                         <a href="{{ asset('/img/expenseuploadedfile/'.$expenseentry1->uploadedfile )}}" target="_blank">
+                        <img title="click to view the image" style="height:50px;width:50px;" alt="no uploadedfile" src="{{ asset('/img/expenseuploadedfile/'.$expenseentry1->uploadedfile )}}"></a>
+                       
+                         <a href="{{ asset('/img/expenseuploadedfile/'.$expenseentry1->uploadedfile )}}" download>
+                          <button class="btn"><i class="fa fa-download"></i> Download</button>
+                         </a>
+                  @else
+                  {{N/A}}
+                  @endif
+                </div>
+                <div class="col-md-6">
+                  <label>Approve :  
+    @if($expenseentry1->status != "PENDING" && $expenseentry1->towallet=='YES')
+
+        <strong class="text-muted">Can't Revert the Wallet Added Amount</strong>
+     @else
+    
+     <select id="approvepending" class="form-control" onchange="approve(this.value,'{{$expenseentry1->id}}','{{$expenseentry1->amount}}')">
+		 		<option value="">select a type</option>
+		 		<option value="HOD PENDING" {{ ( $expenseentry1->status == "HOD PENDING") ? 'selected' : '' }}>HOD PENDING</option>
+
+		 		<option value="PENDING" {{ ( $expenseentry1->status == "PENDING") ? 'selected' : '' }}>HOD APPROVED</option>
+		 		<option value="CANCELLED" {{ ( $expenseentry1->status == "CANCELLED") ? 'selected' : '' }}>CANCELLED</option>
+		 	</select>
+    
+     @endif</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+  </div>
+@endforeach
+
+</div>
+
+<!-- @foreach($expenseentry as $expenseentry)
 <div class="well countwell">
 	<div class="table-responsive">
 <table class="table">
@@ -180,7 +356,7 @@
 
 </div>
 </div>
-@endforeach
+@endforeach -->
 
 </div>
 
