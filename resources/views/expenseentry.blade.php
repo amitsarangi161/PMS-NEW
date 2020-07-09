@@ -21,9 +21,19 @@
 }
 
 </style>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @if(Session::has('msg'))
    <p class="alert alert-warning text-center">{{ Session::get('msg') }}</p>
 @endif
+
 
 <table class="table table-responsive table-hover table-bordered table-striped">
   <tr class="bg-navy">
@@ -222,6 +232,7 @@
         <td>
            <input type="text" name="amount" id="amount" placeholder="Enter Amount Here" autocomplete="off" class="form-control" required="">
            <p id="balanceexceed" style="color: red;"></p>
+           
         </td>
       </tr>
         <tr>

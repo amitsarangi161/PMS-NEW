@@ -218,7 +218,7 @@
             </span>
           </a>
           </li>
- 
+        @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS ENTRY')
        <li class="{{ Request::is('defination*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>DEFINATION</span>
@@ -239,7 +239,9 @@
              <li class="{{ Request::is('defination/hsn') ? 'active' : '' }}"><a href="/defination/hsn"><i class="fa fa-circle-o text-aqua"></i>HSN MASTER</a></li>
           </ul>
         </li>
+        @endif
 
+        @if(Auth::user()->usertype !='CASHIER')
         <li class="{{ Request::is('vendor*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>VENDOR</span>
@@ -256,7 +258,7 @@
             <li class="{{ Request::is('vendor/vendorwisepayment') ? 'active' : '' }}"><a href="/vendor/vendorwisepayment"><i class="fa fa-circle-o text-aqua"></i>VENDOR WISE PAYMENT</a></li>
           </ul>
         </li>
-
+        @endif
         <li class="{{ Request::is('banks*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-university"></i> <span>BANKS</span>
@@ -298,14 +300,16 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN' || Auth::user()->usertype =='ACCOUNTS ENTRY')
+
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS ENTRY')
             <li class="{{ Request::is('acc-vouchers/createvoucher') ? 'active' : '' }}"><a href="/acc-vouchers/createvoucher">
               <i class="fa fa-circle-o text-red"></i>CREATE VOUCHER
               
 
             </a></li>
             @endif
-            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER'||Auth::user()->usertype =='ACCOUNTS')
+            
+           @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER')
              <li class="{{ Request::is('acc-vouchers/pendingvouchersmgr') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchersmgr" class="chngdrfont">
               <i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS(MGR)
               <span class="pull-right-container">
@@ -313,7 +317,8 @@
               </span>
             </a></li>
             @endif
-            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN')
+
+            @if(Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('acc-vouchers/pendingvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/pendingvouchers"><i class="fa fa-circle-o text-red"></i>PENDING VOUCHERS(ADMIN)
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$pendingvouchers}}</span>
@@ -321,34 +326,35 @@
             </a></li>
             @endif
 
-            @if(Auth::user()->usertype =='MASTER ADMIN' || Auth::user()->usertype =='ACCOUNTS')
+            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='CASHIER')
              <li class="{{ Request::is('acc-vouchers/approvedvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/approvedvouchers"><i class="fa fa-circle-o text-red"></i>APPROVED VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$approvedvouchers}}</span>
             </span>
             </a></li>
             @endif
-            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER')
+          
+           @if(Auth::user()->usertype =='MASTER ADMIN')
              <li class="{{ Request::is('acc-vouchers/paidvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/paidvouchers"><i class="fa fa-circle-o text-red"></i>PAID VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$paidvouchers}}</span>
             </span>
             </a></li>
             @endif
-            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER')
+
+            @if(Auth::user()->usertype =='MASTER ADMIN')
               <li class="{{ Request::is('acc-vouchers/cancelledvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/cancelledvouchers"><i class="fa fa-circle-o text-red"></i>CANCELLED VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$cancelledvouchers}}</span>
             </span>
             </a></li>
             @endif
-            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER')
+           
             <li class="{{ Request::is('acc-vouchers/viewallvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/viewallvouchers"><i class="fa fa-circle-o text-red"></i>VIEW ALL VOUCHERS
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$totalvouchers}}</span>
             </span>
             </a></li>
-            @endif
 
 
           </ul>
@@ -366,6 +372,7 @@
         ->count();
       @endphp
 
+        @if(Auth::user()->usertype !='CASHIER')
         <li class="{{ Request::is('vouchers*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-rupee"></i> <span>DEBIT VOUCHER</span>
@@ -375,38 +382,50 @@
             </span>
           </a>
           <ul class="treeview-menu">
+
+            @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS ENTRY')
             <li class="{{ Request::is('vouchers/debitvoucher') ? 'active' : '' }}"><a href="/vouchers/debitvoucher"><i class="fa fa-circle-o text-red"></i>DEBIT VOUCHER</a></li>
-          @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS' || Auth::user()->usertype=='CASHIER'||Auth::user()->usertype=='MANAGER')
+            @endif
+            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER')
             <li class="{{ Request::is('vouchers/pendingdebitvouchermgr') ? 'active' : '' }}"><a href="/vouchers/pendingdebitvouchermgr" title="PENDING DR VOUCHER(MGR)" class="chngdrfont"><i class="fa fa-circle-o text-red"></i>PENDING DR VOUCHER(MGR)
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countpendingdrmgr}}</span>
             </span>
 
             </a></li>
+            @endif
 
+            @if(Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('vouchers/pendingdebitvoucheradmin') ? 'active' : '' }}"><a href="/vouchers/pendingdebitvoucheradmin" class="chngdrfont" title="PENDING DR VOUCHER(ADMIN)"><i class="fa fa-circle-o text-red"></i>PENDING DR VOUCHER(ADMIN)
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countpendingdradmin}}</span>
             </span>
             </a></li>
+            @endif
 
+            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER'||Auth::user()->usertype =='ACCOUNTS')
              <li class="{{ Request::is('vouchers/approveddebitvoucher') ? 'active' : '' }}"><a href="/vouchers/approveddebitvoucher"><i class="fa fa-circle-o text-red"></i>APPROVED DR VOUCHER 
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countapproveddrvoucher}}</span>
             </span>
              </a></li>
+             @endif
+
+               @if(Auth::user()->usertype =='MASTER ADMIN')
                <li class="{{ Request::is('vouchers/completeddebitvoucher') ? 'active' : '' }}"><a href="/vouchers/completeddebitvoucher"><i class="fa fa-circle-o text-red"></i>COMPLETED DR VOUCHER 
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countcompleteddrvoucher}}</span>
             </span>
              </a></li>
+
                <li class="{{ Request::is('vouchers/cancelleddebitvoucher') ? 'active' : '' }}"><a href="/vouchers/cancelleddebitvoucher"><i class="fa fa-circle-o text-red"></i>CANCELLED DR VOUCHER 
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countcancelleddrvoucher}}</span>
             </span>
              </a></li>
+             @endif
 
-          @endif
+          
             <li class="{{ Request::is('vouchers/viewalldebitvoucher') ? 'active' : '' }}"><a href="/vouchers/viewalldebitvoucher"><i class="fa fa-circle-o text-red"></i>ALL DEBIT VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$alldr}}</span>
@@ -417,6 +436,7 @@
 
           </ul>
         </li>
+        @endif
 
         @php    
         $countpending=\App\Pmsdebitvoucher::where('status','PENDING')->count();
@@ -434,7 +454,7 @@
 
         @endphp
 
-
+        @if(Auth::user()->usertype !='CASHIER')
         <li class="{{ Request::is('drvouchers*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-rupee"></i> <span>DEBIT VOUCHER NEW</span>
@@ -444,7 +464,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-             @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype !='MANAGER')
+             @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS ENTRY')
             <li class="{{ Request::is('drvouchers/createdebitvoucher') ? 'active' : '' }}"><a href="/drvouchers/createdebitvoucher"><i class="fa fa-circle-o text-red"></i>CREATE NEW VOUCHER</a></li>
             @endif
 
@@ -480,17 +500,20 @@
             </a></li>
             @endif
 
-
+            @if(Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('drvouchers/compliteddrvoucher') ? 'active' : '' }}"><a href="/drvouchers/compliteddrvoucher"><i class="fa fa-circle-o text-red"></i>COMPLETED DR VOUCHER
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countcomplted}}</span>
             </span>
             </a></li>
+
             <li class="{{ Request::is('drvouchers/cancelleddrvouchers') ? 'active' : '' }}"><a href="/drvouchers/cancelleddrvouchers"><i class="fa fa-circle-o text-red"></i>CANCELLED DR VOUCHERS
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countcancelled}}</span>
             </span>
             </a></li>
+            @endif
+
             <li class="{{ Request::is('drvouchers/viewalldrvouchers') ? 'active' : '' }}"><a href="/drvouchers/viewalldrvouchers"><i class="fa fa-circle-o text-red"></i>VIEW ALL DR VOUCHERS
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countviewalldr}}</span>
@@ -499,6 +522,7 @@
 
           </ul>
         </li>
+        @endif
 
         @php
 
@@ -507,7 +531,7 @@
                  $pmspaiddrcount=\App\Pmsdebitvoucherpayment::where('paymentstatus','PAID')
                                                        ->count();
            @endphp
-         @if(Auth::user()->usertype=='ACCOUNTS'||Auth::user()->usertype=='MASTER ADMIN')
+         @if(Auth::user()->usertype=='ACCOUNTS'||Auth::user()->usertype=='MASTER ADMIN'||Auth::user()->usertype=='CASHIER')
         <li class="{{ Request::is('drpay*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-book"></i> <span>DR VOUCHER PAYMENT NEW
@@ -538,7 +562,7 @@
         </li>
         @endif
 
-                @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS')
+        @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='ACCOUNTS'||Auth::user()->usertype=='CASHIER')
          @php
 
                $pendingdrcount=\App\debitvoucherpayment::where('paymentstatus','PENDING')
@@ -587,6 +611,7 @@
           $cancelledreqcount=\App\requisitionheader::where('status','CANCELLED')
                           ->count();
           @endphp
+          @if(Auth::user()->usertype !='CASHIER')
          <li class="{{ Request::is('viewrequisitions*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-paper-plane "></i> <span>VIEW REQUISITIONS</span>
@@ -598,41 +623,47 @@
 
        
           <ul class="treeview-menu">
-
+                @if(Auth::user()->usertype =='MANAGER'||Auth::user()->usertype =='MASTER ADMIN')
               <li class="{{ Request::is('viewrequisitions/pendingrequisitionsmgr') ? 'active' : '' }}"><a title="PENDING REQUISITIONS(FOR ACCOUNTS)" class="chngreqfont" href="/viewrequisitions/pendingrequisitionsmgr"><i class="fa fa-circle-o text-blue"></i>PENDING REQUISITIONS(MGR)
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$mgrpendingreqcount}}</span>
                 </span>
             </a></li>
-
+            @endif
+            @if(Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('viewrequisitions/pendingrequisitions') ? 'active' : '' }}"><a class="chngreqfont"  href="/viewrequisitions/pendingrequisitions"><i class="fa fa-circle-o text-blue"></i>PENDING REQUISITIONS(ADMIN)
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$pendingreqcount}}</span>
                 </span>
             </a></li>
+            @endif
+            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER'||Auth::user()->usertype =='ACCOUNTS')
             <li class="{{ Request::is('viewrequisitions/approvedrequisitions') ? 'active' : '' }}"><a class="chngreqfont" href="/viewrequisitions/approvedrequisitions"><i class="fa fa-circle-o text-blue"></i>APPROVED REQUISITIONS
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$approvedreqcount}}</span>
                 </span>
             </a></li>
-
+            @endif
+            @if(Auth::user()->usertype =='MASTER ADMIN')
              <li class="{{ Request::is('viewrequisitions/completedrequisitions') ? 'active' : '' }}"><a class="chngreqfont" href="/viewrequisitions/completedrequisitions"><i class="fa fa-circle-o text-blue"></i>COMPLETED REQUISITIONS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$completedreqcount}}</span>
                 </span>
              </a></li>
-           
+            
               <li class="{{ Request::is('viewrequisitions/cancelledrequisitions') ? 'active' : '' }}"><a class="chngreqfont" href="/viewrequisitions/cancelledrequisitions"><i class="fa fa-circle-o text-blue"></i>CANCELLED REQUISITIONS
                <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$cancelledreqcount}}</span>
                 </span>
 
               </a></li>
+              @endif
               <li class="{{ Request::is('viewrequisitions/viewapplicationform') ? 'active' : '' }}"><a class="chngreqfont" href="/viewrequisitions/viewapplicationform"><i class="fa fa-circle-o text-red"></i>VIEW ALL APPLICATION FORM</a></li>
 
           </ul>
 
         </li>
+        @endif
         @php
                             
           $pending_online_req_count=\App\requisitionpayment::where('paymentstatus','PENDING')
@@ -712,6 +743,7 @@
     $countallexp=\App\expenseentry::count();
   @endphp
 
+        @if(Auth::user()->usertype !='CASHIER')
         <li class="{{ Request::is('expense*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-dollar"></i> <span>EXPENSES ENTRY</span>
@@ -723,31 +755,37 @@
 
           </a>
           <ul class="treeview-menu">
+            @if(Auth::user()->usertype =='MANAGER'||Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('expense/pendinghodexpenseentry') ? 'active' : '' }}"><a href="/expense/pendinghodexpenseentry"><i class="fa fa-circle-o text-red"></i>PENDING HOD EXPENSE ENTRY
 
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$counthodpendingexp}}</span>
               </span>
             </a></li>
+            @endif
+            @if(Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('expense/pendingexpenseentry') ? 'active' : '' }}"><a href="/expense/pendingexpenseentry"><i class="fa fa-circle-o text-red"></i>PENDING EXPENSE ENTRY
 
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countpendingexp}}</span>
                 </span>
             </a></li>
+            @endif
+            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER'||Auth::user()->usertype =='ACCOUNTS')
             <li class="{{ Request::is('expense/approvedexpenseentry') ? 'active' : '' }}"><a href="/expense/approvedexpenseentry"><i class="fa fa-circle-o text-red"></i>APPROVED EXPENSE ENTRY
 
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countapprovedexp}}</span>
                 </span>
             </a></li>
-
+            @endif
+            @if(Auth::user()->usertype =='MASTER ADMIN')
             <li class="{{ Request::is('expense/cancelledexpenseentry') ? 'active' : '' }}"><a href="/expense/cancelledexpenseentry"><i class="fa fa-circle-o text-red"></i>CANCELLED EXPENSE ENTRY
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countcancelledexp}}</span>
                 </span>
             </a></li>
-
+            @endif
             <li class="{{ Request::is('expense/walletpaidexpenseentry') ? 'active' : '' }}"><a href="/expense/walletpaidexpenseentry"><i class="fa fa-circle-o text-red"></i>WALLET PAID EXPENSE ENTRY
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countwalletpaidexp}}</span>
@@ -764,8 +802,10 @@
 
           </ul>
         </li>
+        @endif
 
 <!-- TEMP SALAY MODULE -->
+@if(Auth::user()->usertype !='CASHIER')
 <li class="{{ Request::is('tempsalary*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-spinner"></i> <span>TEMP SALARY ENTRY</span>
@@ -779,12 +819,13 @@
              <li class="{{ Request::is('tempsalary/viewsalary') ? 'active' : '' }}"><a href="/tempsalary/viewsalary"><i class="fa fa-circle-o text-red"></i>VIEW SALARY</a></li>
           </ul>
         </li>
+        @endif
 
 <!-- END TEMP SALARY -->
 
 <!-- Reports -->
    
-
+        @if(Auth::user()->usertype !='CASHIER')
         <li class="{{ Request::is('reports*') ? 'active' : '' }} treeview">
                   <a href="#">
                     <i class="fa fa-money"></i> <span>REPORTS</span>
@@ -803,6 +844,7 @@
 
                   </ul>
         </li>
+        @endif
     
        
  <li class="{{ Request::is('usermsg*') ? 'active' : '' }} treeview">

@@ -2216,7 +2216,9 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
       }
       public function saveexpenseentry(Request $request)
      {
-
+        $this->validate($request, [
+        'amount'  => 'required|numeric',
+       ]);
         if($request->bala1<0)
         {
              Session::flash('msg','Balance amount cant be negetive');

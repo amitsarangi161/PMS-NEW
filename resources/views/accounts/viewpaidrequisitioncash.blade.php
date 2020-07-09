@@ -17,7 +17,7 @@
 	 
 </table>
 <div class="table-responsive">
-<table class="table  table-hover table-bordered table-striped datatable1">
+<table class="table  table-hover table-bordered table-striped datatablescrollexport">
      <thead>
      	<tr class="bg-navy">
      		<th>ID</th>
@@ -60,6 +60,7 @@
         <td></td>
         <td></td>
         <td></td>
+        <td>TOTAL</td>
         <td><strong>Rs .{{$requisitionpayments->sum('amount')}}</strong></td>
         <td></td>
         <td></td>

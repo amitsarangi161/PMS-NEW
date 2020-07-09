@@ -4995,7 +4995,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                       ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
                       ->where('requisitionheaders.status','APPROVED')
                       ->get();
-
+        //return $requisitions;
          return view('accounts.approvedrequisitions',compact('requisitions'));
      }
      public function completedrequisitions()

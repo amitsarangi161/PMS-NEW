@@ -14,7 +14,7 @@
 <div class="table-responsive">
 	
 
-<table class="table table-responsive table-hover table-bordered table-striped datatable2">
+<table class="table table-responsive table-hover table-bordered table-striped datatablescrollexport">
 	<thead>
 		<tr class="bg-navy" style="font-size: 10px;">
 			<th>RID</th>
@@ -85,6 +85,24 @@
 		</tr>
 		@endforeach
 	</tbody>
+	<tfoot>
+		<tr bgcolor="#97FFD7">
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>Total</td>
+			<td>{{$requisitions->sum('totalamount')}}</td>
+			<td>{{$requisitions->sum('approvalamount')}}</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tfoot>
 </table>
 
 </div>

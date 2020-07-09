@@ -17,12 +17,12 @@
 	</tr>
 </table>
 <div class="table-responsive">
-<table class="table table-responsive table-hover table-bordered table-striped datatable1">
+<table class="table table-responsive table-hover table-bordered table-striped datatablescrollexport">
      <thead>
      	<tr class="bg-navy">
      		<td>ID</td>
      		<td>VENDOR NAME</td>
-               <td>PROJECT</td>
+            <td>PROJECT</td>
      		<td>AMOUNT</td>
      		<td>PAYMENT TYPE</td>
      		<td>REMARKS</td>
@@ -54,7 +54,23 @@
 
      	@endforeach
      </tbody>
+     <tfoot>
+         <tr style="background-color: greenyellow;">
+             <td></td>
+             <td></td>
+             <td>Total</td>
+             <td>{{$debitvoucherpayments->sum('amount')}}</td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
 
+         </tr>
+     </tfoot>
 	
 </table>
 

@@ -17,7 +17,7 @@
 	 
 </table>
 <div class="table-responsive">
-<table class="table  table-hover table-bordered table-striped datatable1">
+<table class="table  table-hover table-bordered table-striped datatablescrollexport">
      <thead>
      	<tr class="bg-navy">
      		<th>ID</th>
@@ -58,8 +58,9 @@
 
      	@endforeach
      </tbody>
-     <tbody>
+     <tfoot>
        <tr style="background-color: greenyellow;">
+         <td></td>
          <td></td>
          <td></td>
          <td><strong>TOTAL</strong></td>
@@ -73,7 +74,7 @@
          <td></td>
 
        </tr>
-     </tbody>
+     </tfoot>
 </table>
 </div>
 

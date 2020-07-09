@@ -13,7 +13,7 @@
 <div class="table-responsive">
 	
 
-<table class="table table-responsive table-hover table-bordered table-striped datatable1">
+<table class="table table-responsive table-hover table-bordered table-striped datatablescrollexport">
 	<thead>
 		<tr class="bg-navy" style="font-size: 10px;">
 			<th>ID</th>
