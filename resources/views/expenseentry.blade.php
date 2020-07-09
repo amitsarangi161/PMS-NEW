@@ -21,7 +21,7 @@
 }
 
 </style>
-<!-- @if ($errors->any())
+@if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -29,7 +29,7 @@
             @endforeach
         </ul>
     </div>
-@endif -->
+@endif
 @if(Session::has('msg'))
    <p class="alert alert-warning text-center">{{ Session::get('msg') }}</p>
 @endif
