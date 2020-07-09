@@ -21,7 +21,7 @@
 }
 
 </style>
-@if ($errors->any())
+<!-- @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -29,7 +29,7 @@
             @endforeach
         </ul>
     </div>
-@endif
+@endif -->
 @if(Session::has('msg'))
    <p class="alert alert-warning text-center">{{ Session::get('msg') }}</p>
 @endif
@@ -232,7 +232,6 @@
         <td>
            <input type="text" name="amount" id="amount" placeholder="Enter Amount Here" autocomplete="off" class="form-control" required="">
            <p id="balanceexceed" style="color: red;"></p>
-           
         </td>
       </tr>
         <tr>
