@@ -719,7 +719,6 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
                     ->leftJoin('users','vouchers.author','=','users.id')
                     ->where('vouchers.status','PAID')
                     ->get();
-
           return view('accounts.paidvouchers',compact('vouchers'));
 
        } 

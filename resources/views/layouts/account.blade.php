@@ -334,7 +334,7 @@
             </a></li>
             @endif
           
-           @if(Auth::user()->usertype =='MASTER ADMIN')
+           @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS')
              <li class="{{ Request::is('acc-vouchers/paidvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/paidvouchers"><i class="fa fa-circle-o text-red"></i>PAID VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$paidvouchers}}</span>
@@ -411,7 +411,7 @@
              </a></li>
              @endif
 
-               @if(Auth::user()->usertype =='MASTER ADMIN')
+               @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS')
                <li class="{{ Request::is('vouchers/completeddebitvoucher') ? 'active' : '' }}"><a href="/vouchers/completeddebitvoucher"><i class="fa fa-circle-o text-red"></i>COMPLETED DR VOUCHER 
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countcompleteddrvoucher}}</span>
@@ -500,7 +500,7 @@
             </a></li>
             @endif
 
-            @if(Auth::user()->usertype =='MASTER ADMIN')
+            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS')
             <li class="{{ Request::is('drvouchers/compliteddrvoucher') ? 'active' : '' }}"><a href="/drvouchers/compliteddrvoucher"><i class="fa fa-circle-o text-red"></i>COMPLETED DR VOUCHER
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countcomplted}}</span>
@@ -644,7 +644,7 @@
                 </span>
             </a></li>
             @endif
-            @if(Auth::user()->usertype =='MASTER ADMIN')
+            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS')
              <li class="{{ Request::is('viewrequisitions/completedrequisitions') ? 'active' : '' }}"><a class="chngreqfont" href="/viewrequisitions/completedrequisitions"><i class="fa fa-circle-o text-blue"></i>COMPLETED REQUISITIONS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$completedreqcount}}</span>
