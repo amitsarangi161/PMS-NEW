@@ -17,26 +17,33 @@
 	 
 </table>
 
-  <table class="table">
-    <tr>
-
-    <form action="/prb/requisitiononlinepaid" method="get">
-    <td>
-      <select class="form-control select2" name="projectname" required="">
+ <div class="row">
+   <form action="/prb/requisitiononlinepaid" method="get">
+  <div class="col-md-6">
+     <select class="form-control select2" name="projectname" required="">
             
             <option value="ALL" {{(Request::get('projectname')=='ALL')?'selected':''}}>PROJECT</option>
             @foreach($projects as $project)
-            <option value="{{$project->id}}" {{($project->id==Request::get('projectname'))?'selected':''}}>{{$project->projectname}}</option>
+            <option value="{{$project->id}}" {{($project->id==Request::get('projectname'))?'selected':''}}>{{$project->projectname}}@if($project->schemename!='') [Scheme : {{$project->schemename}}]@endif</option>
             @endforeach
       </select>
-    </td>
-
-  <td><button type="submit" class="btn btn-primary">Filter</button></td>
+  </div>
+  <div class="col-md-3">
+    <button type="submit" class="btn btn-primary">Filter</button>
    @if(Request::has('projectname') )
-   <td><a href="/prb/requisitiononlinepaid" class="btn btn-danger">Clear</a></td>
+ <a href="/prb/requisitiononlinepaid" class="btn btn-danger">Clear</a>
   @endif
-</form>
-    </tr>
+  </div>
+  </form>
+</div>
+   
+
+     
+
+
+
+
+
 
     
   </table>
@@ -66,7 +73,14 @@
      	@foreach($requisitionpayments as $requisitionpayment)
            <tr>
            	  <td>{{$requisitionpayment->id}}</td>
-              <td><p class="b" title="{{$requisitionpayment->projectname}}">{{$requisitionpayment->projectname}}</p></td>
+              <td><p class="b" title="{{$requisitionpayment->projectname}}">{{$requisitionpayment->projectname}}
+              </p>
+              <p>
+              @if($requisitionpayment->schemename!='')
+                [Scheme : {{$requisitionpayment->schemename}}]
+                @endif
+              </p>
+            </td>
               <td>{{$requisitionpayment->rid}}</td>
            	  <td>{{$requisitionpayment->name}}</td>
            	  <td>{{$requisitionpayment->amount}}</td>
