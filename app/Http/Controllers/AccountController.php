@@ -281,30 +281,32 @@ public function viewdrpending($id){
                                ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                                 ->first();
 //return $debitvoucherpayment;
-             $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+            /* $pmsdebitvoucher=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
                      ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
                      ->where('pmsdebitvouchers.id',$id)
-                     ->first();
+                     ->first();*/
+
       $banks=useraccount::select('useraccounts.*','banks.bankname')
                      ->where('useraccounts.type','COMPANY')
                      ->leftJoin('banks','useraccounts.bankid','=','banks.id')
                      ->get();
       //return $banks;
-      $vid=$pmsdebitvoucher->vendorid;
+      $vid=$debitvoucherpayment->vendorid;
       //return $vid;
       $vendor=vendor::find($vid);
       //return $vendor;
-      $previousbills=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+     /* $previousbills=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
                      ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
                      ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
                      ->where('pmsdebitvouchers.id','!=',$id)
                      ->where('vendorid',$vid)
-                     ->get();
+                     ->get();*/
       //return $previousbills;
-      $debitvoucherpayments=Pmsdebitvoucherpayment::where('vendorid',$vid)->where('projectid',$pmsdebitvoucher->projectid)->get();
+      /*$debitvoucherpayments=Pmsdebitvoucherpayment::where('vendorid',$vid)->where('projectid',$pmsdebitvoucher->projectid)->get();*/
+      
       //return $debitvoucherpayments;
       //return $debitvoucherpayment;
      

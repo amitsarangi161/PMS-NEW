@@ -14,7 +14,7 @@
 		<table class="table">
 			<tr>
 				<td width="15%"><strong>DEBIT VOUCHER ID :</strong></td>
-				<td width="35%">{{$debitvoucherpayment->did}}</td>
+				<td width="35%">{{$debitvoucherpayment->voucher_id}}</td>
 				<td width="15%"><strong>VENDOR NAME :</strong></td>
 				<td width="35%">{{$debitvoucherpayment->vendorname}}</td>
 			</tr>
