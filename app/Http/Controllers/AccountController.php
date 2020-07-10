@@ -218,7 +218,7 @@ public function drpaidview($id){
 
              $vendor=vendor::find($vid);
 
-            return view('accounts.viewdrpaid',compact('debitvoucherpayment','vendor','banks'));
+      return view('accounts.viewdrpaid',compact('debitvoucherpayment','vendor','banks'));
 }
 public function drpaidamount()
      {
@@ -306,7 +306,7 @@ public function viewdrpending($id){
                      ->get();*/
       //return $previousbills;
       /*$debitvoucherpayments=Pmsdebitvoucherpayment::where('vendorid',$vid)->where('projectid',$pmsdebitvoucher->projectid)->get();*/
-      
+
       //return $debitvoucherpayments;
       //return $debitvoucherpayment;
      
