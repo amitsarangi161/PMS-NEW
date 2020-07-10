@@ -16,6 +16,30 @@
 	</tr>
 	 
 </table>
+
+  <table class="table">
+    <tr>
+
+    <form action="/prb/requisitiononlinepaid" method="get">
+    <td>
+      <select class="form-control select2" name="projectname" required="">
+            
+            <option value="ALL" {{(Request::get('projectname')=='ALL')?'selected':''}}>PROJECT</option>
+            @foreach($projects as $project)
+            <option value="{{$project->projectname}}" {{($project->id==Request::get('projectname'))?'selected':''}}>{{$project->projectname}}</option>
+            @endforeach
+      </select>
+    </td>
+
+  <td><button type="submit" class="btn btn-primary">Filter</button></td>
+   @if(Request::has('projectname') )
+   <td><a href="/prb/requisitiononlinepaid" class="btn btn-danger">Clear</a></td>
+  @endif
+</form>
+    </tr>
+
+    
+  </table>
 <div class="table-responsive">
 <table class="table  table-hover table-bordered table-striped datatablescrollexport">
      <thead>
