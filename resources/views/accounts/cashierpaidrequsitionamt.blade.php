@@ -26,7 +26,7 @@
             
             <option value="ALL" {{(Request::get('projectname')=='ALL')?'selected':''}}>PROJECT</option>
             @foreach($projects as $project)
-            <option value="{{$project->projectname}}" {{($project->id==Request::get('projectname'))?'selected':''}}>{{$project->projectname}}</option>
+            <option value="{{$project->id}}" {{($project->id==Request::get('projectname'))?'selected':''}}>{{$project->projectname}}</option>
             @endforeach
       </select>
     </td>

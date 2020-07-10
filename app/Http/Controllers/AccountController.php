@@ -4210,15 +4210,15 @@ public function approvedebitvoucheradmin(Request $request,$id)
                  $query->where('requisitionpayments.paymenttype', '=','ONLINE PAYMENT')
                  ->orWhere('requisitionpayments.paymenttype', '=', 'CHEQUE');
               });
+
              if($request->has('projectname') && $request->get('projectname')!='ALL')
             {
-              $requisitionpayments=$requisitionpayments->where('projects.id',$request)->get('projectname');
+              $requisitionpayments=$requisitionpayments->where('projects.id',$request->get('projectname'));
             }
 
              $requisitionpayments=$requisitionpayments->get();
              
-
-        $projects=project::all();
+             $projects=project::all();
              //return $project;
            return view('accounts.cashierpaidrequsitionamt',compact('requisitionpayments','projects'));
       }
