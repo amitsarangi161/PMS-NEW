@@ -4199,19 +4199,28 @@ public function approvedebitvoucheradmin(Request $request,$id)
     /*CAHSIER SECTION*/
 
 
-      public function cashierpaidrequsitionamt()
+          public function cashierpaidrequsitionamt(Request $request)
       {
-           $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
+           $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PAID')
              ->where(function ($query) {
                  $query->where('requisitionpayments.paymenttype', '=','ONLINE PAYMENT')
                  ->orWhere('requisitionpayments.paymenttype', '=', 'CHEQUE');
-              })
-             ->get();
-             //return $requisitionpayments;
-           return view('accounts.cashierpaidrequsitionamt',compact('requisitionpayments'));
+              });
+
+             if($request->has('projectname') && $request->get('projectname')!='ALL')
+            {
+              $requisitionpayments=$requisitionpayments->where('projects.id',$request->get('projectname'));
+            }
+
+             $requisitionpayments=$requisitionpayments->get();
+             
+             $projects=project::all();
+             //return $project;
+           return view('accounts.cashierpaidrequsitionamt',compact('requisitionpayments','projects'));
       }
 
        public function cashierviewdetailsonlinepayment($id)
@@ -4242,8 +4251,9 @@ public function approvedebitvoucheradmin(Request $request,$id)
        }
        public function viewpaidrequisitioncash()
        {
-             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
+             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
              ->where('requisitionpayments.paymentstatus','PAID')
              ->where('requisitionpayments.paymenttype', '=','CASH')
@@ -4272,8 +4282,9 @@ public function approvedebitvoucheradmin(Request $request,$id)
       public function requisitioncashrequest(Request $request)
       {   
 
-            $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
+            $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
               ->where('requisitionpayments.paymentstatus','PENDING')
               ->where('requisitionpayments.paymenttype', '=','CASH')
@@ -4311,16 +4322,17 @@ public function approvedebitvoucheradmin(Request $request,$id)
      {
            
 
-             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name')
+             $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
              ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
              ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
              ->where('requisitionpayments.paymentstatus','PENDING')
               ->where(function ($query) {
                  $query->where('requisitionpayments.paymenttype', '=','ONLINE PAYMENT')
                  ->orWhere('requisitionpayments.paymenttype', '=', 'CHEQUE');
               })
              ->get();
-
+//return $requisitionpayments;
             return view('accounts.viewallbankrequisitionpayment',compact('requisitionpayments'));
      }
 
