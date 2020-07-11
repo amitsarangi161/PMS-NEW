@@ -41,7 +41,7 @@
         </tr>
         <tr>
             <td width="20%"><strong>MOBILE NO:</strong></td>
-            <td width="30%">{{$vendor->acno}}</td>
+            <td width="30%">{{$vendor->mobile}}</td>
             <td width="20%"><strong>BRANCH NAME:</strong></td>
             <td width="30%">{{$vendor->branchname}}</td>
         </tr>
