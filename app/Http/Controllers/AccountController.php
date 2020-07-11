@@ -245,7 +245,11 @@ public function updatevoucherpayment(Request $request,$id){
       $updatepayment->remarks = $request->remarks;
       if($request->paymenttype=='ONLINE PAYMENT'){
              $updatepayment->bankid=$request->bankid;
-           }else{
+           }
+      elseif($request->paymenttype=='CHEQUE'){
+             $updatepayment->bankid=$request->bankid;
+           }
+           else{
              $updatepayment->bankid='';
            }
       $updatepayment->paidby = Auth::user()->id;
