@@ -201,14 +201,16 @@ return back();
        }
 public function drpaidview($id){
 
-   $debitvoucherpayment=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','pmsdebitvouchers.vendorid','pmsdebitvouchers.invoicecopy','users.name as paidbyname')
+   $debitvoucherpayment=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','pmsdebitvouchers.vendorid','pmsdebitvouchers.invoicecopy','users.name as paidbyname','useraccounts.acno','useraccounts.branchname')
                                 ->where('pmsdebitvoucherpayments.paymentstatus','PAID')
                                 ->where('pmsdebitvoucherpayments.id',$id)
-                               ->leftJoin('banks','pmsdebitvoucherpayments.bankid','=','banks.id')
+                               ->leftJoin('useraccounts','pmsdebitvoucherpayments.bankid','=','useraccounts.id')
+                               ->leftJoin('banks','useraccounts.bankid','=','banks.id')
                                ->leftJoin('pmsdebitvouchers','pmsdebitvoucherpayments.voucher_id','=','pmsdebitvouchers.id')
                                ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
                               ->leftJoin('users','pmsdebitvoucherpayments.paidby','=','users.id')
                                 ->first();
+    //return $debitvoucherpayment;
     $banks=useraccount::select('useraccounts.*','banks.bankname')
                      ->where('useraccounts.type','COMPANY')
                      ->leftJoin('banks','useraccounts.bankid','=','banks.id')
@@ -3981,6 +3983,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
                      ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
                      ->where('pmsdebitvouchers.id','!=',$id)
+                     ->where('status','!=','CANCELLED')
                      ->where('vendorid',$vid)
                      ->get();
       //return $previousbills;
