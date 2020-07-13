@@ -215,6 +215,7 @@ public function drpaidview($id){
                      ->where('useraccounts.type','COMPANY')
                      ->leftJoin('banks','useraccounts.bankid','=','banks.id')
                      ->get();
+                     //return $banks;
             //return $debitvoucherpayment;
              $vid=$debitvoucherpayment->vendorid;
 
@@ -3983,7 +3984,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
                      ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
                      ->where('pmsdebitvouchers.id','!=',$id)
-                     ->where('status','!=','CANCELLED')
+                     ->where('pmsdebitvouchers.status','!=','CANCELLED')
                      ->where('vendorid',$vid)
                      ->get();
       //return $previousbills;

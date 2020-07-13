@@ -187,7 +187,7 @@
           			<select class="form-control" name="bankid" id="reqbank">
           				<option value="">Select a Bank account</option>
           				@foreach($banks as $bank)
-                          <option value="{{$bank->bankid}}">{{$bank->bankname}}/{{$bank->acno}}/{{$bank->branchname}}</option>
+                          <option value="{{$bank->id}}">{{$bank->bankname}}/{{$bank->acno}}/{{$bank->branchname}}</option>
           				@endforeach
           				
           			</select>
@@ -229,7 +229,6 @@
 <script type="text/javascript">
        function openeditmodal(paymenttype,bankid)
          {
-         
          $('#paymenttype option[value="'+paymenttype+'"]').attr("selected", "selected");
 		$('#reqbank option[value="'+bankid+'"]').attr("selected", "selected");
 		getbank(paymenttype);
