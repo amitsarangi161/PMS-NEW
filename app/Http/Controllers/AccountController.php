@@ -314,7 +314,7 @@ public function viewdrpending($id){
       //return $debitvoucherpayments;
       //return $debitvoucherpayment;
      
-            return view('accounts.viewdrpending',compact('debitvoucherpayment','vendor','pmsdebitvoucher','vendor','previousbills','debitvoucherpayments','banks'));
+            return view('accounts.viewdrpending',compact('debitvoucherpayment','vendor','vendor','banks'));
 }
 public function paymentdrschedule(Request $request){
   $drscheduledate=pmsdebitvoucherpayment::find($request->paymentid);
