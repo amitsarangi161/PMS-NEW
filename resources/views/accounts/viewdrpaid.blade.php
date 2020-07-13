@@ -70,11 +70,13 @@
 				<td width="35%">{{$debitvoucherpayment->paidbyname}}</td>
 				<td width="15%"><strong>EDIT TRANSCATION ID AND DATE OF PAYMENT</strong></td>
 				<td width="35%">
-						@if($debitvoucherpayment->paymentstatus=='PENDING')
+			@if($debitvoucherpayment->paymentstatus=='PENDING')
 	    	<button type="button" class="btn btn-info" style="width: 200px;" onclick="drpay('{{$debitvoucherpayment->id}}');">PAID</button>
 	    	@else
 	    	
+	    	@if(Auth::user()->usertype=="MASTER ADMIN")
 	    	<button type="button" class="btn btn-warning" style="width: 200px;" onclick="openeditmodal('{{$debitvoucherpayment->paymenttype}}','{{$debitvoucherpayment->bankid}}');">EDIT</button>
+	    	@endif
 
 	    	@endif
 				</td>

@@ -3794,7 +3794,14 @@ public function approvedebitvoucheradmin(Request $request,$id)
      $createdebitvoucher->itdeduction=$request->itdeduction;
      $createdebitvoucher->otherdeduction=$request->otherdeduction;
      $createdebitvoucher->finalamount=$request->finalamount;
-     $createdebitvoucher->status='PENDING';
+     if($createdebitvoucher->status=="COMPLETED"){
+      $createdebitvoucher->status='COMPLETED';
+     }elseif($createdebitvoucher->status=="PENDING PAYMENT"){
+      $createdebitvoucher->status='PENDING PAYMENT';
+     }else{
+      $createdebitvoucher->status='PENDING';
+     }
+     
      $rarefile = $request->file('invoicecopy');    
     if($rarefile!=''){
     $raupload = public_path() .'/img/createdebitvoucher/';
