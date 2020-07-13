@@ -30,7 +30,7 @@
 
 			<tr>
 				<td width="15%"><strong>FROM BANK:</strong></td>
-				<td width="35%">{{$debitvoucherpayment->bankname}}</td>
+				<td width="35%">{{$debitvoucherpayment->bankname}}/{{$debitvoucherpayment->acno}}/{{$debitvoucherpayment->branchname}}</td>
 				<td width="15%"><strong>PAYMENT STATUS :</strong></td>
 				<td width="35%"><span class="label label-success">{{$debitvoucherpayment->paymentstatus}}</span></td>
 			</tr>
@@ -74,9 +74,8 @@
 	    	<button type="button" class="btn btn-info" style="width: 200px;" onclick="drpay('{{$debitvoucherpayment->id}}');">PAID</button>
 	    	@else
 	    	
-	    	@if(Auth::user()->usertype=="MASTER ADMIN")
 	    	<button type="button" class="btn btn-warning" style="width: 200px;" onclick="openeditmodal('{{$debitvoucherpayment->paymenttype}}','{{$debitvoucherpayment->bankid}}');">EDIT</button>
-	    	@endif
+	    	
 
 	    	@endif
 				</td>
