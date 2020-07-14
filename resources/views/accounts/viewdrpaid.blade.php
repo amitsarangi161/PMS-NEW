@@ -177,7 +177,6 @@
           				<option value="PDC">PDC</option>
           				<option value="TDR">TDR</option>
           				<option value="NSC">NSC</option>
-          				
           			</select>
 				</td>
           	</tr>
