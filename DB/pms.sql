@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
--- http://www.phpmyadmin.net
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2020 at 10:34 AM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: Jul 14, 2020 at 08:01 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `pms`
@@ -26,8 +28,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `activities`
 --
 
-CREATE TABLE IF NOT EXISTS `activities` (
-`id` int(11) NOT NULL,
+CREATE TABLE `activities` (
+  `id` int(11) NOT NULL,
   `activityname` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `userid` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -41,8 +43,8 @@ CREATE TABLE IF NOT EXISTS `activities` (
 -- Table structure for table `assignusers`
 --
 
-CREATE TABLE IF NOT EXISTS `assignusers` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `assignusers` (
+  `id` int(10) UNSIGNED NOT NULL,
   `project_id` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `employee_id` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
@@ -56,8 +58,8 @@ CREATE TABLE IF NOT EXISTS `assignusers` (
 -- Table structure for table `attendances`
 --
 
-CREATE TABLE IF NOT EXISTS `attendances` (
-`id` int(11) NOT NULL,
+CREATE TABLE `attendances` (
+  `id` int(11) NOT NULL,
   `userid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `latitude` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `longitude` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -78,8 +80,8 @@ CREATE TABLE IF NOT EXISTS `attendances` (
 -- Table structure for table `bankledgers`
 --
 
-CREATE TABLE IF NOT EXISTS `bankledgers` (
-`id` int(11) NOT NULL,
+CREATE TABLE `bankledgers` (
+  `id` int(11) NOT NULL,
   `bankid` varchar(200) DEFAULT NULL,
   `cr` varchar(100) DEFAULT NULL,
   `dr` varchar(100) DEFAULT NULL,
@@ -87,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `bankledgers` (
   `image` varchar(500) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `bankledgers`
@@ -123,14 +125,14 @@ INSERT INTO `bankledgers` (`id`, `bankid`, `cr`, `dr`, `date`, `image`, `created
 -- Table structure for table `banks`
 --
 
-CREATE TABLE IF NOT EXISTS `banks` (
-`id` int(11) NOT NULL,
+CREATE TABLE `banks` (
+  `id` int(11) NOT NULL,
   `bankname` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `branchname` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `userid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `banks`
@@ -155,8 +157,9 @@ INSERT INTO `banks` (`id`, `bankname`, `branchname`, `userid`, `created_at`, `up
 
 --
 -- Stand-in structure for view `chatjoins`
+-- (See below for the actual view)
 --
-CREATE TABLE IF NOT EXISTS `chatjoins` (
+CREATE TABLE `chatjoins` (
 `seen` varchar(200)
 ,`id` int(11)
 ,`sender` varchar(200)
@@ -170,14 +173,15 @@ CREATE TABLE IF NOT EXISTS `chatjoins` (
 ,`sendername` varchar(191)
 ,`recivername` varchar(191)
 );
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `chats`
 --
 
-CREATE TABLE IF NOT EXISTS `chats` (
-`id` int(11) NOT NULL,
+CREATE TABLE `chats` (
+  `id` int(11) NOT NULL,
   `sender` varchar(200) NOT NULL,
   `reciver` varchar(200) NOT NULL,
   `message` text,
@@ -187,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `chats` (
   `seen` varchar(200) DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `chats`
@@ -208,8 +212,8 @@ INSERT INTO `chats` (`id`, `sender`, `reciver`, `message`, `attachment`, `conver
 -- Table structure for table `clients`
 --
 
-CREATE TABLE IF NOT EXISTS `clients` (
-`id` int(11) NOT NULL,
+CREATE TABLE `clients` (
+  `id` int(11) NOT NULL,
   `clientname` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `orgname` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `contact1` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -230,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `tanno` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `clients`
@@ -274,8 +278,8 @@ INSERT INTO `clients` (`id`, `clientname`, `orgname`, `contact1`, `contact2`, `o
 -- Table structure for table `companysetups`
 --
 
-CREATE TABLE IF NOT EXISTS `companysetups` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `companysetups` (
+  `id` int(10) UNSIGNED NOT NULL,
   `companyname` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -300,8 +304,8 @@ CREATE TABLE IF NOT EXISTS `companysetups` (
 -- Table structure for table `complaintlogs`
 --
 
-CREATE TABLE IF NOT EXISTS `complaintlogs` (
-`id` int(11) NOT NULL,
+CREATE TABLE `complaintlogs` (
+  `id` int(11) NOT NULL,
   `complaintid` varchar(200) DEFAULT NULL,
   `writerid` varchar(200) DEFAULT NULL,
   `message` text,
@@ -310,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `complaintlogs` (
   `attachment` varchar(1000) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complaintlogs`
@@ -334,8 +338,8 @@ INSERT INTO `complaintlogs` (`id`, `complaintid`, `writerid`, `message`, `differ
 -- Table structure for table `complaints`
 --
 
-CREATE TABLE IF NOT EXISTS `complaints` (
-`id` int(11) NOT NULL,
+CREATE TABLE `complaints` (
+  `id` int(11) NOT NULL,
   `type` varchar(200) DEFAULT NULL,
   `fromuserid` varchar(200) DEFAULT NULL,
   `touserid` varchar(200) DEFAULT NULL,
@@ -350,7 +354,7 @@ CREATE TABLE IF NOT EXISTS `complaints` (
   `differdateto` date DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `complaints`
@@ -362,13 +366,13 @@ INSERT INTO `complaints` (`id`, `type`, `fromuserid`, `touserid`, `description`,
 (3, 'REQUEST', '1', '1', 'SUKANTA BISWAL...', '2020-04-27', 'PENDING', 'BALANCE PAYMENT-100000.00', NULL, NULL, '0', NULL, NULL, '2020-04-27 11:08:58', '2020-04-27 11:14:57'),
 (4, 'REQUEST', '1', '1', 'MARCH SALARY OF PEW', '2020-04-27', 'PENDING', 'BALANCE LEFT OUT', NULL, NULL, '0', NULL, NULL, '2020-04-27 11:14:02', '2020-04-27 11:14:57'),
 (5, 'REQUEST', '1', '1', 'PRAVIN KHANDUAL', '2020-04-27', 'PENDING', 'DIESEL-3000.00 BOLERO FOR NGSL\r\nDRIVER ADVANCE --1000.00 NGSL\r\nOFFICE SANITATION AND CLEANING-3000.00\r\nTOTAL=7000.00', NULL, NULL, '0', NULL, NULL, '2020-04-27 11:23:59', '2020-04-27 11:52:32'),
-(6, 'REQUEST', '10', '1', 'Respected Sir ,due to my mother''s medical problem and my home expenditure I want salary advance 20,000 /-(Rupees Twenty thousand)for the month of March-2020 for your kind persual.', '2020-05-01', 'PROCESSING', 'Paid Salary Adv', NULL, NULL, '0', NULL, NULL, '2020-04-27 11:25:10', '2020-05-01 20:22:41'),
+(6, 'REQUEST', '10', '1', 'Respected Sir ,due to my mother\'s medical problem and my home expenditure I want salary advance 20,000 /-(Rupees Twenty thousand)for the month of March-2020 for your kind persual.', '2020-05-01', 'PROCESSING', 'Paid Salary Adv', NULL, NULL, '0', NULL, NULL, '2020-04-27 11:25:10', '2020-05-01 20:22:41'),
 (7, 'REQUEST', '62', '276', 'SALARY INCETIVE', '2020-05-04', 'PENDING', NULL, NULL, NULL, '0', NULL, NULL, '2020-05-04 11:55:22', '2020-05-04 16:08:58'),
-(9, 'REQUEST', '10', '1', 'Sir due to my mother''s medical problem and home expenditure , I want salary advance Rs. 15000/- (Rupees fifteen thousand for your kind consideration.', '2020-05-19', 'PENDING', NULL, NULL, NULL, '0', NULL, NULL, '2020-05-19 10:01:32', '2020-05-19 18:14:46'),
+(9, 'REQUEST', '10', '1', 'Sir due to my mother\'s medical problem and home expenditure , I want salary advance Rs. 15000/- (Rupees fifteen thousand for your kind consideration.', '2020-05-19', 'PENDING', NULL, NULL, NULL, '0', NULL, NULL, '2020-05-19 10:01:32', '2020-05-19 18:14:46'),
 (10, 'REQUEST', '254', '1', 'Need Salary Advance of amount-Rs. 17000 for month Apr 2020 for personal expenses.', '2020-05-19', 'PENDING', NULL, NULL, NULL, '0', NULL, NULL, '2020-05-19 12:39:17', '2020-05-19 18:14:46'),
 (11, 'REQUEST', '271', '1', 'Advance salary Rs.5000/-', '2020-05-21', 'PENDING', NULL, NULL, NULL, '0', NULL, NULL, '2020-05-21 12:11:35', '2020-05-31 20:09:01'),
 (12, 'REQUEST', '239', '1', 'Need salary advance for personal  loan and family need.', '2020-05-25', 'REQ DIFFER DATE', 'Sir, \r\nPlease I need my salary for my family and personal need.', NULL, NULL, '0', '1590116981.15901168994363125124694252363469.jpg', '2020-05-27', '2020-05-22 08:39:41', '2020-05-31 20:09:01'),
-(13, 'REQUEST', '10', '1', 'Sir due to my mother''s medical treatment(paralysis disease, required salary advance Rs.10000 (Rupees Ten thousand) for your kind consideration.', '2020-05-29', 'PENDING', NULL, NULL, NULL, '0', NULL, NULL, '2020-05-29 20:20:05', '2020-05-31 20:09:01');
+(13, 'REQUEST', '10', '1', 'Sir due to my mother\'s medical treatment(paralysis disease, required salary advance Rs.10000 (Rupees Ten thousand) for your kind consideration.', '2020-05-29', 'PENDING', NULL, NULL, NULL, '0', NULL, NULL, '2020-05-29 20:20:05', '2020-05-31 20:09:01');
 
 -- --------------------------------------------------------
 
@@ -376,8 +380,8 @@ INSERT INTO `complaints` (`id`, `type`, `fromuserid`, `touserid`, `description`,
 -- Table structure for table `debitvoucherheaders`
 --
 
-CREATE TABLE IF NOT EXISTS `debitvoucherheaders` (
-`id` int(11) NOT NULL,
+CREATE TABLE `debitvoucherheaders` (
+  `id` int(11) NOT NULL,
   `vendorid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `billdate` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `billno` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -401,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `debitvoucherheaders` (
   `expenseheadid` int(11) DEFAULT NULL,
   `cancelledby` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `reqaddby` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=309 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `debitvoucherheaders`
@@ -724,8 +728,8 @@ INSERT INTO `debitvoucherheaders` (`id`, `vendorid`, `billdate`, `billno`, `tmrp
 -- Table structure for table `debitvoucherpayments`
 --
 
-CREATE TABLE IF NOT EXISTS `debitvoucherpayments` (
-`id` int(11) NOT NULL,
+CREATE TABLE `debitvoucherpayments` (
+  `id` int(11) NOT NULL,
   `did` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `paymenttype` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -738,7 +742,7 @@ CREATE TABLE IF NOT EXISTS `debitvoucherpayments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `scheduledate` date DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=254 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `debitvoucherpayments`
@@ -991,8 +995,8 @@ INSERT INTO `debitvoucherpayments` (`id`, `did`, `amount`, `paymenttype`, `remar
 -- Table structure for table `debitvouchers`
 --
 
-CREATE TABLE IF NOT EXISTS `debitvouchers` (
-`id` int(11) NOT NULL,
+CREATE TABLE `debitvouchers` (
+  `id` int(11) NOT NULL,
   `headerid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `itemname` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `unit` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1009,7 +1013,7 @@ CREATE TABLE IF NOT EXISTS `debitvouchers` (
   `grossamt` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=741 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `debitvouchers`
@@ -1214,7 +1218,7 @@ INSERT INTO `debitvouchers` (`id`, `headerid`, `itemname`, `unit`, `qty`, `mrp`,
 (314, '101', 'AMOUNT TO BE PAID AS PER BILL', '1', '1', '166941.58', '0', '166941.58', '0', '0', '0', '0', '0', '0', '166941.58', '2020-05-14 15:54:25', '2020-05-14 15:54:25'),
 (315, '102', 'AMOUNT TO BE PAID FOR PAPER COST(Non-refundable)', '1', '1', '5000', '0', '5000', '0', '0', '0', '0', '0', '0', '5000.00', '2020-05-14 18:20:41', '2020-05-14 18:20:41'),
 (316, '103', 'AMOUNT TO BE PAID FOR EMD(Non interst &  refundable)', '1', '1', '50000', '0', '50000', '0', '0', '0', '0', '0', '0', '50000.00', '2020-05-14 18:23:20', '2020-05-14 18:23:20'),
-(317, '104', 'PURCHASE IRON MATERIALS FOR SITE. 1) 4'''' LIGHT CHANNEL =500 KG 2)3'''' LIGHT CHANNEL=500 KG 3)3'''' MEDIUM CHANNEL=200 KG 4)35X5 MM ANGLE=300 KG 5)40X5 MM FLAT=300 KG 6)50X5 MM ANGLE =300 KG', '1', '1', '100000', '0', '100000', '0', '0', '0', '0', '0', '0', '100000.00', '2020-05-14 19:13:47', '2020-05-14 19:13:47'),
+(317, '104', 'PURCHASE IRON MATERIALS FOR SITE. 1) 4\'\' LIGHT CHANNEL =500 KG 2)3\'\' LIGHT CHANNEL=500 KG 3)3\'\' MEDIUM CHANNEL=200 KG 4)35X5 MM ANGLE=300 KG 5)40X5 MM FLAT=300 KG 6)50X5 MM ANGLE =300 KG', '1', '1', '100000', '0', '100000', '0', '0', '0', '0', '0', '0', '100000.00', '2020-05-14 19:13:47', '2020-05-14 19:13:47'),
 (318, '105', 'AMOUNT PAYABLE AS PER LEDGER', '1', '1', '44044', '0', '44044', '0', '0', '0', '0', '0', '0', '44044.00', '2020-05-15 12:52:41', '2020-05-15 12:52:41'),
 (319, '106', 'AMOUNT PAID AGAINST LIABILITY', '1', '1', '35000', '0', '35000', '0', '0', '0', '0', '0', '0', '35000.00', '2020-05-16 11:37:28', '2020-05-16 11:37:28'),
 (320, '107', 'AMOUNT TO BE PAID', '1', '1', '20000', '0', '20000', '0', '0', '0', '0', '0', '0', '20000.00', '2020-05-16 11:44:41', '2020-05-16 11:44:41'),
@@ -1617,14 +1621,14 @@ INSERT INTO `debitvouchers` (`id`, `headerid`, `itemname`, `unit`, `qty`, `mrp`,
 -- Table structure for table `deductiondefinations`
 --
 
-CREATE TABLE IF NOT EXISTS `deductiondefinations` (
-`id` int(11) NOT NULL,
+CREATE TABLE `deductiondefinations` (
+  `id` int(11) NOT NULL,
   `deductionname` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deductionpercentage` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `userid` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `deductiondefinations`
@@ -1642,8 +1646,8 @@ INSERT INTO `deductiondefinations` (`id`, `deductionname`, `deductionpercentage`
 -- Table structure for table `departments`
 --
 
-CREATE TABLE IF NOT EXISTS `departments` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `departments` (
+  `id` int(10) UNSIGNED NOT NULL,
   `departmentname` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1656,8 +1660,8 @@ CREATE TABLE IF NOT EXISTS `departments` (
 -- Table structure for table `designations`
 --
 
-CREATE TABLE IF NOT EXISTS `designations` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `designations` (
+  `id` int(10) UNSIGNED NOT NULL,
   `deptartment_id` varchar(22) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `designationname` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1671,13 +1675,13 @@ CREATE TABLE IF NOT EXISTS `designations` (
 -- Table structure for table `districts`
 --
 
-CREATE TABLE IF NOT EXISTS `districts` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `districts` (
+  `id` int(10) UNSIGNED NOT NULL,
   `districtname` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `districts`
@@ -1724,14 +1728,14 @@ INSERT INTO `districts` (`id`, `districtname`, `created_at`, `updated_at`, `dele
 -- Table structure for table `divisions`
 --
 
-CREATE TABLE IF NOT EXISTS `divisions` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `divisions` (
+  `id` int(10) UNSIGNED NOT NULL,
   `district_id` varchar(22) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `client_id` varchar(22) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `divisionname` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `divisions`
@@ -1788,8 +1792,8 @@ INSERT INTO `divisions` (`id`, `district_id`, `client_id`, `divisionname`, `crea
 -- Table structure for table `documents`
 --
 
-CREATE TABLE IF NOT EXISTS `documents` (
-`id` int(11) NOT NULL,
+CREATE TABLE `documents` (
+  `id` int(11) NOT NULL,
   `docname` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `attachment` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1802,8 +1806,8 @@ CREATE TABLE IF NOT EXISTS `documents` (
 -- Table structure for table `employeebankaccountsdetails`
 --
 
-CREATE TABLE IF NOT EXISTS `employeebankaccountsdetails` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `employeebankaccountsdetails` (
+  `id` int(10) UNSIGNED NOT NULL,
   `employee_id` varchar(22) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `accountholdername` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `accountnumber` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1815,7 +1819,7 @@ CREATE TABLE IF NOT EXISTS `employeebankaccountsdetails` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `employeebankaccountsdetails`
@@ -2104,8 +2108,8 @@ INSERT INTO `employeebankaccountsdetails` (`id`, `employee_id`, `accountholderna
 -- Table structure for table `employeecompanydetails`
 --
 
-CREATE TABLE IF NOT EXISTS `employeecompanydetails` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `employeecompanydetails` (
+  `id` int(10) UNSIGNED NOT NULL,
   `employee_id` varchar(22) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remarks` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `completionyear` varchar(22) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2123,7 +2127,7 @@ CREATE TABLE IF NOT EXISTS `employeecompanydetails` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `employeecompanydetails`
@@ -2413,8 +2417,8 @@ INSERT INTO `employeecompanydetails` (`id`, `employee_id`, `remarks`, `completio
 -- Table structure for table `employeedetails`
 --
 
-CREATE TABLE IF NOT EXISTS `employeedetails` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `employeedetails` (
+  `id` int(10) UNSIGNED NOT NULL,
   `employeename` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` date DEFAULT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2435,7 +2439,7 @@ CREATE TABLE IF NOT EXISTS `employeedetails` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `employeedetails`
@@ -2725,8 +2729,8 @@ INSERT INTO `employeedetails` (`id`, `employeename`, `dob`, `email`, `qualificat
 -- Table structure for table `employeedocuments`
 --
 
-CREATE TABLE IF NOT EXISTS `employeedocuments` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `employeedocuments` (
+  `id` int(10) UNSIGNED NOT NULL,
   `employee_id` varchar(22) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `resume` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `offerletter` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2740,7 +2744,7 @@ CREATE TABLE IF NOT EXISTS `employeedocuments` (
   `aadhaarcard` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pancard` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `photo` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `employeedocuments`
@@ -3029,15 +3033,15 @@ INSERT INTO `employeedocuments` (`id`, `employee_id`, `resume`, `offerletter`, `
 -- Table structure for table `employeeotherdocuments`
 --
 
-CREATE TABLE IF NOT EXISTS `employeeotherdocuments` (
-`id` int(11) NOT NULL,
+CREATE TABLE `employeeotherdocuments` (
+  `id` int(11) NOT NULL,
   `employee_id` varchar(20) DEFAULT NULL,
   `documentname` varchar(50) DEFAULT NULL,
   `document` varchar(1000) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `employeeotherdocuments`
@@ -3054,8 +3058,8 @@ INSERT INTO `employeeotherdocuments` (`id`, `employee_id`, `documentname`, `docu
 -- Table structure for table `expenseentries`
 --
 
-CREATE TABLE IF NOT EXISTS `expenseentries` (
-`id` int(11) NOT NULL,
+CREATE TABLE `expenseentries` (
+  `id` int(11) NOT NULL,
   `employeeid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `projectid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `requistion_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3081,7 +3085,7 @@ CREATE TABLE IF NOT EXISTS `expenseentries` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `hodremarks` text COLLATE utf8mb4_unicode_ci
-) ENGINE=InnoDB AUTO_INCREMENT=485 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `expenseentries`
@@ -3104,7 +3108,7 @@ INSERT INTO `expenseentries` (`id`, `employeeid`, `projectid`, `requistion_id`, 
 (15, '100', '154', '60', '2', NULL, '200', '100', NULL, '1588767687.petrol 4-5-2020.jpg', 'APPROVED', '200', '1', NULL, NULL, NULL, 'Petrol for Bhawanipatna to Kesinga', NULL, NULL, '2020-05-06', 'NO', 'NEW', '2020-05-06 17:51:27', '2020-05-07 04:35:35', NULL, NULL),
 (16, '64', '92', '23', '4', NULL, '5776', '64', NULL, '1588767971.WhatsApp Image 2020-05-06 at 5.23.37 PM.jpeg', 'APPROVED', '5776', '1', NULL, NULL, NULL, '1.Cement 5 Bags-Rs.1850\r\n2.White Cement 1kg-Rs.30\r\n3.Freight for Materials-Rs.200\r\n4.Pencil Battery 14 pcs-Rs.346\r\n5.Petrol for office bike-OD-08E-5565\r\n6.Baleno Car tyre punctre work 2.92 ltr-Rs.200\r\n7.S.K Dash Adv. for exp.-Rs.3000', NULL, NULL, '2020-04-30', 'NO', 'NEW', '2020-05-06 17:56:11', '2020-05-07 04:33:43', NULL, NULL),
 (17, '100', '154', '60', '10', NULL, '1000', '100', NULL, '1588768194.Labour.jpg', 'APPROVED', '1000', '1', NULL, NULL, NULL, 'Kesinga Store Labour Charges (for Pole and Material Unloading)', NULL, NULL, '2020-05-06', 'NO', 'NEW', '2020-05-06 17:59:54', '2020-05-07 04:35:11', NULL, NULL),
-(18, '64', '92', '23', '4', NULL, '3613', '64', NULL, '1588768223.WhatsApp Image 2020-05-06 at 5.23.37 PM.jpeg', 'APPROVED', '3613', '1', NULL, NULL, NULL, '1.Home exp.(Biscuit & Mixture for Gopal)-Rs.200\r\n2.Tution Fee  2 month @Rs.1500(Jan & Feb-20) of Jagabandhu Swain-Rs.3000\r\n3.Purchase Veg. Goods for MD''s Residence mess exp.-Rs.413', NULL, NULL, '2020-05-04', 'NO', 'NEW', '2020-05-06 18:00:23', '2020-05-07 04:33:59', NULL, NULL),
+(18, '64', '92', '23', '4', NULL, '3613', '64', NULL, '1588768223.WhatsApp Image 2020-05-06 at 5.23.37 PM.jpeg', 'APPROVED', '3613', '1', NULL, NULL, NULL, '1.Home exp.(Biscuit & Mixture for Gopal)-Rs.200\r\n2.Tution Fee  2 month @Rs.1500(Jan & Feb-20) of Jagabandhu Swain-Rs.3000\r\n3.Purchase Veg. Goods for MD\'s Residence mess exp.-Rs.413', NULL, NULL, '2020-05-04', 'NO', 'NEW', '2020-05-06 18:00:23', '2020-05-07 04:33:59', NULL, NULL),
 (19, '100', '154', '60', '3', NULL, '60', '100', NULL, '1588768240.fooding.jpg', 'APPROVED', '60', '1', NULL, NULL, NULL, 'fooding', NULL, NULL, '2020-05-06', 'NO', 'NEW', '2020-05-06 18:00:40', '2020-05-07 04:34:43', NULL, NULL),
 (20, '29', '95', '6', '1', NULL, '3000', '29', NULL, '1588769034.3000.jpg', 'APPROVED', '3000', '1', NULL, NULL, NULL, 'Benudhar Sahu-2000 (Site Adv for Charbahal 33Kv Work )\r\nUmesh Kumar MRT Linemen PC-1000 ( Dharmagarh GYM )', NULL, NULL, '2020-05-06', 'NO', 'NEW', '2020-05-06 18:13:54', '2020-05-07 04:30:47', NULL, NULL),
 (21, '29', '95', '6', '3', NULL, '1000', '29', NULL, '1588769215.fooding-1000.jpg', 'CANCELLED', '0', NULL, 'Exp Details not mention', NULL, NULL, 'Junagarh Linemen Fooding-1000', NULL, NULL, '2020-05-06', 'NO', 'NEW', '2020-05-06 18:16:55', '2020-05-07 04:31:46', NULL, NULL),
@@ -3114,7 +3118,7 @@ INSERT INTO `expenseentries` (`id`, `employeeid`, `projectid`, `requistion_id`, 
 (25, '273', '20', '38', '107', NULL, '300', '273', NULL, '1588825459.WhatsApp Image 2020-05-06 at 9.45.09 PM.jpeg', 'HOD PENDING ', '300', NULL, NULL, NULL, NULL, 'PAID BY CHANDRA SEKHAR BEHERA', NULL, NULL, '2020-03-19', 'NO', 'NEW', '2020-05-07 16:54:19', '2020-05-07 16:54:19', NULL, NULL),
 (26, '273', '20', '38', '107', NULL, '380', '273', NULL, '1588825685.WhatsApp Image 2020-05-06 at 8.13.57 PM.jpeg', 'HOD PENDING ', '380', NULL, NULL, NULL, NULL, 'PAID BY CHANDRA SEKHAR BEHERA TO COMPU WORLD', NULL, NULL, '2020-03-12', 'NO', 'NEW', '2020-05-07 16:58:05', '2020-05-07 16:58:05', NULL, NULL),
 (27, '273', '20', '38', '116', NULL, '350', '273', NULL, '1588826257.5.jpeg', 'PENDING', '350', '276', NULL, NULL, NULL, 'PAID BY CHANDRA SEKHAR BEHERA FOR SAFETY DAY', NULL, NULL, '2020-03-04', 'NO', 'NEW', '2020-05-07 17:07:37', '2020-06-07 12:48:55', NULL, 'ok'),
-(28, '273', '20', '38', '11', NULL, '2000', '273', NULL, '1588826565.21.jpeg', 'HOD PENDING ', '2000', NULL, NULL, NULL, NULL, 'PAID TO TARUN MAJHI\r\nADV. PAYMENT FOR SINGH CONTRACTOR PERSON''S FOODING', NULL, NULL, '2020-03-10', 'NO', 'NEW', '2020-05-07 17:12:45', '2020-05-07 17:12:45', NULL, NULL),
+(28, '273', '20', '38', '11', NULL, '2000', '273', NULL, '1588826565.21.jpeg', 'HOD PENDING ', '2000', NULL, NULL, NULL, NULL, 'PAID TO TARUN MAJHI\r\nADV. PAYMENT FOR SINGH CONTRACTOR PERSON\'S FOODING', NULL, NULL, '2020-03-10', 'NO', 'NEW', '2020-05-07 17:12:45', '2020-05-07 17:12:45', NULL, NULL),
 (29, '273', '20', '38', '11', NULL, '1000', '273', NULL, '1588826879.36.jpeg', 'APPROVED', '1000', '1', NULL, NULL, NULL, 'PAID TO IQBAL KHAN(KHAN JCB) ADV. FOR MESS', NULL, NULL, '2020-03-14', 'NO', 'NEW', '2020-05-07 17:17:59', '2020-05-07 17:52:09', NULL, NULL),
 (30, '273', '20', '38', '11', NULL, '2000', '273', NULL, '1588827043.51.jpeg', 'HOD PENDING ', '2000', NULL, NULL, NULL, NULL, 'PAID TO TARUN MAJHI\r\nADV FOR FOODING', NULL, NULL, '2020-03-18', 'NO', 'NEW', '2020-05-07 17:20:43', '2020-05-07 17:20:43', NULL, NULL),
 (31, '273', '20', '38', '11', NULL, '1000', '273', NULL, '1588827248.57.jpeg', 'HOD PENDING ', '1000', NULL, NULL, NULL, NULL, 'PAID TO IKBAL KHAN(KHAN JCB)\r\nADV FOR SAHIL KHAN', NULL, NULL, '2020-03-20', 'NO', 'NEW', '2020-05-07 17:24:08', '2020-05-07 17:24:08', NULL, NULL),
@@ -3218,7 +3222,7 @@ INSERT INTO `expenseentries` (`id`, `employeeid`, `projectid`, `requistion_id`, 
 (129, '273', '20', '38', '3', NULL, '130', '273', NULL, '1589000379.130.jpeg', 'HOD PENDING ', '130', NULL, NULL, NULL, NULL, 'PAID TO BRAJABANDHU PARIDA FOR TIFFIN', NULL, NULL, '2020-03-24', 'NO', 'NEW', '2020-05-09 10:29:39', '2020-05-09 10:29:39', NULL, NULL),
 (130, '273', '20', '38', '3', NULL, '90', '273', NULL, '1589000480.90.jpeg', 'HOD PENDING ', '90', NULL, NULL, NULL, NULL, 'PAID TO CS BEHERA FOR GROCERY', NULL, NULL, '2020-03-18', 'NO', 'NEW', '2020-05-09 10:31:20', '2020-05-09 10:31:20', NULL, NULL),
 (131, '273', '20', '38', '3', NULL, '555', '273', NULL, '1589000725.555.jpeg', 'HOD PENDING ', '555', NULL, NULL, NULL, NULL, 'PAID TO BHRAMABAR SWAIN FOR 5 PERSONS BREAKFAST', NULL, NULL, '2020-03-18', 'NO', 'NEW', '2020-05-09 10:35:25', '2020-05-09 10:35:25', NULL, NULL),
-(132, '239', '134', '14', '1', NULL, '270.00', '239', NULL, '1589000843.WhatsApp Image 2020-05-09 at 10.35.07.jpeg', 'CANCELLED', '0', NULL, 'Soubhagya Project Cash Don''t  exp Elephant corridor project plz change exp', NULL, NULL, 'KALAMPUR( ELEPHANT CORRIDOR WORK)\r\nFUEL-200.00\r\nFOODING-70.00', NULL, NULL, '2020-05-06', 'NO', 'NEW', '2020-05-09 10:37:23', '2020-05-09 21:29:24', NULL, NULL),
+(132, '239', '134', '14', '1', NULL, '270.00', '239', NULL, '1589000843.WhatsApp Image 2020-05-09 at 10.35.07.jpeg', 'CANCELLED', '0', NULL, 'Soubhagya Project Cash Don\'t  exp Elephant corridor project plz change exp', NULL, NULL, 'KALAMPUR( ELEPHANT CORRIDOR WORK)\r\nFUEL-200.00\r\nFOODING-70.00', NULL, NULL, '2020-05-06', 'NO', 'NEW', '2020-05-09 10:37:23', '2020-05-09 21:29:24', NULL, NULL),
 (133, '273', '20', '38', '36', NULL, '1017.5', '273', NULL, '1589001125.WhatsApp Image 2020-05-06 at 10.28.00 PM.jpeg', 'HOD PENDING ', '1017.5', NULL, NULL, NULL, NULL, 'PAID TO CS BEHERA', NULL, NULL, '2020-03-24', 'NO', 'NEW', '2020-05-09 10:42:05', '2020-05-09 10:42:05', NULL, NULL),
 (134, '273', '20', '38', '36', NULL, '231.5', '273', NULL, '1589001268.231.5.jpeg', 'HOD PENDING ', '231.5', NULL, NULL, NULL, NULL, 'PAID TO CS BEHERA', NULL, NULL, '2020-03-11', 'NO', 'NEW', '2020-05-09 10:44:28', '2020-05-09 10:44:28', NULL, NULL),
 (135, '273', '20', '38', '36', NULL, '160', '273', NULL, '1589001662.8.jpeg', 'PENDING', '160', '276', NULL, NULL, NULL, 'PAID TO CS BEHERA', NULL, NULL, '2020-03-06', 'NO', 'NEW', '2020-05-09 10:51:02', '2020-06-07 12:52:22', NULL, 'ok'),
@@ -3297,7 +3301,7 @@ INSERT INTO `expenseentries` (`id`, `employeeid`, `projectid`, `requistion_id`, 
 (207, '284', '92', NULL, '4', NULL, '1000', '284', NULL, '1589796605.Baba Book Store.jpg', 'APPROVED', '1000', '276', NULL, NULL, NULL, 'Purchased A4 size paper', NULL, NULL, '2020-05-18', 'NO', 'NEW', '2020-05-18 15:40:05', '2020-05-21 13:07:00', NULL, 'ok'),
 (209, '284', '92', NULL, '132', NULL, '16034', '284', NULL, '1589869755.expenditure.pdf', 'APPROVED', '16034', '276', NULL, NULL, NULL, 'Material loading & unloading charges Rs.1000/-, Adv. paid to driver Rs.14000/-, Office bike petrol Rs.200/-,Parcel charges Rs.184/-,purchased antivirus for computer Rs.650/-', NULL, NULL, '2020-05-19', 'NO', 'NEW', '2020-05-19 11:59:15', '2020-05-21 13:07:07', NULL, 'ok'),
 (210, '284', '92', NULL, '47', NULL, '3100', '284', NULL, '1589870677.expenditure.pdf', 'APPROVED', '3100', '276', NULL, NULL, NULL, 'Purchased grocery items, LPG, Vegetables', NULL, NULL, '2020-05-19', 'NO', 'NEW', '2020-05-19 12:14:37', '2020-05-21 13:07:15', NULL, 'ok'),
-(211, '284', '92', NULL, '4', NULL, '1771', '284', NULL, '1589876906.expenditure.pdf', 'APPROVED', '1771', '276', NULL, NULL, NULL, 'Printer cartridge refilling Rs.1200/-, unloading charges of returned materials from Infocity-II Rs.400/-,  purchased grocery items for MD''s mess exp. Rs.422/-', NULL, NULL, '2020-05-19', 'NO', 'NEW', '2020-05-19 13:58:26', '2020-05-21 13:07:23', NULL, 'ok'),
+(211, '284', '92', NULL, '4', NULL, '1771', '284', NULL, '1589876906.expenditure.pdf', 'APPROVED', '1771', '276', NULL, NULL, NULL, 'Printer cartridge refilling Rs.1200/-, unloading charges of returned materials from Infocity-II Rs.400/-,  purchased grocery items for MD\'s mess exp. Rs.422/-', NULL, NULL, '2020-05-19', 'NO', 'NEW', '2020-05-19 13:58:26', '2020-05-21 13:07:23', NULL, 'ok'),
 (212, '284', '92', NULL, '135', NULL, '10000', '284', NULL, '1589877126.WhatsApp Image 2020-05-18 at 15.47.49.jpeg', 'APPROVED', '10000', '276', NULL, NULL, NULL, 'Paid to MD Sir', NULL, NULL, '2020-05-18', 'NO', 'NEW', '2020-05-19 14:02:06', '2020-05-21 13:07:33', NULL, 'ok'),
 (213, '284', '92', NULL, '135', NULL, '3000', '284', NULL, '1589877414.voucher.jpg', 'APPROVED', '3000', '276', NULL, NULL, NULL, 'Diesel for Baleno car Rs.2000/-, Other misc. exp Rs.1000/-', NULL, NULL, '2020-05-14', 'NO', 'NEW', '2020-05-19 14:06:54', '2020-05-21 13:06:26', NULL, 'ok'),
 (214, '206', '158', NULL, '2', NULL, '1000', '206', NULL, '1589959832.IMG_20200520_110939.jpg', 'CANCELLED', '0', NULL, 'Details Exp Not Entry', NULL, NULL, 'Upon and down of labour from office to shrikrishna apartment for soubhagya work', NULL, NULL, '2020-05-20', 'NO', 'NEW', '2020-05-20 13:00:32', '2020-05-22 21:03:27', NULL, NULL),
@@ -3334,7 +3338,7 @@ INSERT INTO `expenseentries` (`id`, `employeeid`, `projectid`, `requistion_id`, 
 (245, '239', '134', NULL, '1', NULL, '350.00', '239', NULL, '1590411571.WhatsApp Image 2020-05-25 at 18.04.42.jpeg', 'PENDING', '350.00', '1', NULL, NULL, NULL, 'TH RAMPUR-BARAKAUDI-THRAMPUR- ADRI- THRAMPUR- BADCHHATRANG -180 KM\r\nFOODING-150.00( TIFFIN+LUNCH+DINNER)\r\nUPENDRA NAIK- FUEL( LOCAL PURCHASE) AND FOODING-200.00', NULL, NULL, '2020-05-23', 'NO', 'NEW', '2020-05-25 18:29:31', '2020-06-06 14:17:03', NULL, NULL),
 (246, '239', '134', NULL, '1', NULL, '2130.00', '239', NULL, '1590411981.WhatsApp Image 2020-05-25 at 18.05.02.jpeg', 'PENDING', '2130.00', '1', NULL, NULL, NULL, 'TH RAMPUR-BARAKAUDI-THRAMPUR- DABRIGUDA-GUNPUR-BHAWANIPATNA-190 KM\r\nFUEL (LOCAL PURCHASE AT TH RAMPUR)- 2LTR-180.00\r\nFOODING-150.00(TIFFIN+LUNCH+ DINNER)\r\nUPENDRA NAIK-100.00 (FUEL)\r\nDIESEL  LOCAL PURCHASE ON 15-5-2020 FOR BHOOMI PUTRA- 20 LTR-1700.00', NULL, NULL, '2020-05-25', 'NO', 'NEW', '2020-05-25 18:36:21', '2020-06-06 14:19:28', NULL, NULL),
 (247, '239', '88', NULL, '9', NULL, '430', '239', NULL, NULL, 'WALLET PAID', '430', NULL, NULL, NULL, NULL, 'WALLET TRANSFER', NULL, NULL, '2020-05-25', 'YES', 'NEW', '2020-05-25 18:37:44', '2020-05-25 18:37:44', NULL, NULL),
-(248, '284', '92', NULL, '82', NULL, '15410', '284', NULL, '1590489801.voucher.pdf', 'APPROVED', '15410', '276', NULL, NULL, NULL, 'for purchased of MD''s father medicines', NULL, NULL, '2020-05-22', 'NO', 'NEW', '2020-05-26 16:13:21', '2020-06-07 13:06:17', NULL, 'ok'),
+(248, '284', '92', NULL, '82', NULL, '15410', '284', NULL, '1590489801.voucher.pdf', 'APPROVED', '15410', '276', NULL, NULL, NULL, 'for purchased of MD\'s father medicines', NULL, NULL, '2020-05-22', 'NO', 'NEW', '2020-05-26 16:13:21', '2020-06-07 13:06:17', NULL, 'ok'),
 (249, '284', '92', NULL, '132', NULL, '966', '284', NULL, NULL, 'WALLET PAID', '966', NULL, NULL, NULL, NULL, 'balance amt.', NULL, NULL, '2020-05-26', 'YES', 'NEW', '2020-05-26 17:40:42', '2020-05-26 17:40:42', NULL, NULL),
 (250, '254', '157', NULL, '8', NULL, '100', '254', NULL, '1590562746.15905627186064066702793993765370.jpg', 'PENDING', '100', '1', NULL, NULL, NULL, 'Plumber charges for repair pipe', NULL, NULL, '2020-05-19', 'NO', 'NEW', '2020-05-27 12:29:06', '2020-06-06 21:43:46', NULL, NULL),
 (251, '254', '157', NULL, '9', NULL, '660', '254', NULL, '1590563404.12.jpg', 'PENDING', '660', '1', NULL, NULL, NULL, 'Pvc pipes & fitting', NULL, NULL, '2020-05-19', 'NO', 'NEW', '2020-05-27 12:40:04', '2020-06-06 21:47:32', NULL, NULL),
@@ -3352,7 +3356,7 @@ INSERT INTO `expenseentries` (`id`, `employeeid`, `projectid`, `requistion_id`, 
 (263, '284', '92', NULL, '4', NULL, '100', '284', NULL, '1590654603.2.jpeg', 'APPROVED', '100', '276', NULL, NULL, NULL, 'PETROL FOR OFFICE BIKE', NULL, NULL, '2020-05-19', 'NO', 'NEW', '2020-05-28 14:00:03', '2020-06-07 13:06:05', NULL, 'ok'),
 (264, '284', '92', NULL, '4', NULL, '100', '284', NULL, '1590654661.1.jpeg', 'APPROVED', '100', '276', NULL, NULL, NULL, 'PETROL FOR OFFICE BIKE', NULL, NULL, '2020-05-24', 'NO', 'NEW', '2020-05-28 14:01:01', '2020-06-07 13:06:38', NULL, 'ok'),
 (265, '284', '80', NULL, '100', NULL, '2200', '284', NULL, '1590660126.EXP5.pdf', 'APPROVED', '2200', '276', NULL, NULL, NULL, 'PAID TO KRUSHNA CH. PANIGRAHI FOR PUJA EXP', NULL, NULL, '2020-05-18', 'NO', 'NEW', '2020-05-28 15:32:06', '2020-06-07 13:05:31', NULL, 'ok'),
-(266, '284', '80', NULL, '141', NULL, '2026', '284', NULL, '1590660465.EXP1.pdf', 'APPROVED', '2026', '276', NULL, NULL, NULL, 'PAID TO ANANTA KU JENA FOR MD''S RESIDENCE MESS EXP', NULL, NULL, '2020-05-18', 'NO', 'NEW', '2020-05-28 15:37:45', '2020-06-07 13:05:40', NULL, 'ok'),
+(266, '284', '80', NULL, '141', NULL, '2026', '284', NULL, '1590660465.EXP1.pdf', 'APPROVED', '2026', '276', NULL, NULL, NULL, 'PAID TO ANANTA KU JENA FOR MD\'S RESIDENCE MESS EXP', NULL, NULL, '2020-05-18', 'NO', 'NEW', '2020-05-28 15:37:45', '2020-06-07 13:05:40', NULL, 'ok'),
 (267, '284', '80', NULL, '107', NULL, '5840', '284', NULL, '1590660871.EXP7.pdf', 'APPROVED', '5840', '276', NULL, NULL, NULL, 'PAID TO MANOJ KUMAR SWAIN FOR OFFICE BUILDING RENOVATION WORK', NULL, NULL, '2020-05-18', 'NO', 'NEW', '2020-05-28 15:44:31', '2020-06-07 13:05:53', NULL, 'ok'),
 (268, '163', '196', NULL, '8', NULL, '2500', '163', NULL, '1590661000.Labour Payment.pdf', 'PENDING', '2500', '1', NULL, NULL, NULL, 'LABOUR PAYMENT FOR PLINTH WORK OF CHARBHATI BANDAPADA SITE BGJY JUNAGARH WORK', NULL, NULL, '2020-05-28', 'NO', 'NEW', '2020-05-28 15:46:40', '2020-06-06 22:15:02', NULL, NULL),
 (269, '163', '196', NULL, '9', NULL, '7850', '163', NULL, '1590661260.Materials Purchase.pdf', 'PENDING', '7850', '1', NULL, NULL, NULL, 'MATERIALS PURCHASE FOR CHARBHATI BANDHPADA PLINTH WORK (CHIPS, CEMENT, SAND & ROD)', NULL, NULL, '2020-05-28', 'NO', 'NEW', '2020-05-28 15:51:00', '2020-06-06 22:15:10', NULL, NULL),
@@ -3555,7 +3559,7 @@ INSERT INTO `expenseentries` (`id`, `employeeid`, `projectid`, `requistion_id`, 
 (470, '163', '200', NULL, '62', NULL, '5000.00', '163', NULL, '1591934387.WhatsApp Image 2020-06-12 at 09.04.44.jpeg', 'HOD PENDING', '5000.00', NULL, NULL, NULL, NULL, 'LABOUR CHARGE FOR -2 NOS OF PLINTH-5000.00', NULL, NULL, '2020-06-12', 'NO', 'NEW', '2020-06-12 16:29:47', '2020-06-12 16:29:47', NULL, NULL),
 (471, '163', '202', NULL, '9', NULL, '8500', '163', NULL, '1591934533.WhatsApp Image 2020-06-12 at 09.05.25.jpeg', 'HOD PENDING', '8500', NULL, NULL, NULL, NULL, '1 NO OF PLINTH WORK LOCAL MATERIAL PURCHASE\r\nSAND-1500\r\nBRICKS-3750\r\nCEMENT-1750\r\nCHIPS-1000\r\nROD-400\r\nAUTO FARE-100', NULL, NULL, '2020-06-12', 'NO', 'NEW', '2020-06-12 16:32:13', '2020-06-12 16:32:13', NULL, NULL),
 (472, '163', '202', NULL, '8', NULL, '2500', '163', NULL, '1591934593.WhatsApp Image 2020-06-12 at 09.05.25.jpeg', 'HOD PENDING', '2500', NULL, NULL, NULL, NULL, 'LABOUR PAYMENT FOR 1 NO OF PLINTH-2500', NULL, NULL, '2020-06-12', 'NO', 'NEW', '2020-06-12 16:33:13', '2020-06-12 16:33:13', NULL, NULL),
-(473, '284', '92', NULL, '104', NULL, '20000', '284', NULL, '1591948628.SUSANT.jpeg', 'HOD PENDING', '20000', NULL, NULL, NULL, NULL, 'LINEMAN''S LICENCE RENEWAL', NULL, NULL, '2020-06-11', 'NO', 'NEW', '2020-06-12 20:27:08', '2020-06-12 20:27:08', NULL, NULL),
+(473, '284', '92', NULL, '104', NULL, '20000', '284', NULL, '1591948628.SUSANT.jpeg', 'HOD PENDING', '20000', NULL, NULL, NULL, NULL, 'LINEMAN\'S LICENCE RENEWAL', NULL, NULL, '2020-06-11', 'NO', 'NEW', '2020-06-12 20:27:08', '2020-06-12 20:27:08', NULL, NULL),
 (474, '284', '92', NULL, '141', NULL, '2072', '284', NULL, '1591948916.anant.pdf', 'HOD PENDING', '2072', NULL, NULL, NULL, NULL, 'bhubaneswar residence mess exp', NULL, NULL, '2020-06-08', 'NO', 'NEW', '2020-06-12 20:31:56', '2020-06-12 20:31:56', NULL, NULL),
 (475, '287', '125', NULL, '4', NULL, '50', '287', NULL, '1591962690.Scan.jpg', 'PENDING', '50', '1', NULL, NULL, NULL, 'PAID TO SUKANTA BISWAL TOWARDS DOCUMENT SEND TO BBSR BY BUS', NULL, NULL, '2020-06-12', 'NO', 'NEW', '2020-06-13 00:21:30', '2020-06-13 15:53:34', NULL, NULL),
 (476, '239', '93', NULL, '2', NULL, '1000', '239', NULL, '1592035130.WhatsApp Image 2020-06-13 at 13.17.27.jpeg', 'HOD PENDING', '1000', NULL, NULL, NULL, NULL, 'HIRE VEHICLE FUEL-1000', NULL, NULL, '2020-06-10', 'NO', 'NEW', '2020-06-13 20:28:50', '2020-06-13 20:28:50', NULL, NULL),
@@ -3566,7 +3570,8 @@ INSERT INTO `expenseentries` (`id`, `employeeid`, `projectid`, `requistion_id`, 
 (481, '29', '187', NULL, '2', NULL, '1000', '29', NULL, '1592050267.WhatsApp Image 2020-06-13 at 5.23.47 PM (1).jpeg', 'HOD PENDING', '1000', NULL, NULL, NULL, NULL, 'fuel from 28.05.20 to 02.06.20=1000', NULL, NULL, '2020-06-13', 'NO', 'NEW', '2020-06-14 00:41:07', '2020-06-14 00:41:07', NULL, NULL),
 (482, '21', '75', NULL, '2', NULL, '1000', '21', NULL, '1592058728.WhatsApp Image 2020-06-13 at 19.58.40.jpeg', 'HOD PENDING', '1000', NULL, NULL, NULL, NULL, 'FUEL FOR FIVE DAYS BELAMBA R&L  SITE WORK', NULL, NULL, '2020-06-05', 'NO', 'NEW', '2020-06-14 03:02:08', '2020-06-14 03:02:08', NULL, NULL),
 (483, '21', '75', NULL, '3', NULL, '350', '21', NULL, '1592058808.WhatsApp Image 2020-06-13 at 19.58.40.jpeg', 'HOD PENDING', '350', NULL, NULL, NULL, NULL, '1-6-2020 TO 5-6-2020 -FOODING FOR 5 DAYS-350', NULL, NULL, '2020-06-13', 'NO', 'NEW', '2020-06-14 03:03:28', '2020-06-14 03:03:28', NULL, NULL),
-(484, '254', '86', NULL, '11', NULL, '3000', '254', NULL, '1592060116.15920600741056475028826882636016.jpg', 'HOD PENDING', '3000', NULL, NULL, NULL, NULL, 'Site advance for gaya gopal team for Raxi 1 RWSS', NULL, NULL, '2020-06-11', 'NO', 'NEW', '2020-06-14 03:25:16', '2020-06-14 03:25:16', NULL, NULL);
+(484, '254', '86', NULL, '11', NULL, '3000', '254', NULL, '1592060116.15920600741056475028826882636016.jpg', 'HOD PENDING', '3000', NULL, NULL, NULL, NULL, 'Site advance for gaya gopal team for Raxi 1 RWSS', NULL, NULL, '2020-06-11', 'NO', 'NEW', '2020-06-14 03:25:16', '2020-06-14 03:25:16', NULL, NULL),
+(485, '163', '125', NULL, '84', NULL, '100.32', '163', NULL, '1594290382.Screenshot (23).png', 'HOD PENDING', '100.32', NULL, NULL, NULL, NULL, 'vfjhghj', NULL, NULL, '2020-07-09', 'NO', 'NEW', '2020-07-09 10:26:22', '2020-07-09 10:26:22', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3574,13 +3579,13 @@ INSERT INTO `expenseentries` (`id`, `employeeid`, `projectid`, `requistion_id`, 
 -- Table structure for table `expenseheads`
 --
 
-CREATE TABLE IF NOT EXISTS `expenseheads` (
-`id` int(11) NOT NULL,
+CREATE TABLE `expenseheads` (
+  `id` int(11) NOT NULL,
   `expenseheadname` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `userid` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `expenseheads`
@@ -3747,8 +3752,8 @@ INSERT INTO `expenseheads` (`id`, `expenseheadname`, `userid`, `created_at`, `up
 -- Table structure for table `hsncodes`
 --
 
-CREATE TABLE IF NOT EXISTS `hsncodes` (
-`id` int(11) NOT NULL,
+CREATE TABLE `hsncodes` (
+  `id` int(11) NOT NULL,
   `hsncode` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -3761,8 +3766,8 @@ CREATE TABLE IF NOT EXISTS `hsncodes` (
 -- Table structure for table `labours`
 --
 
-CREATE TABLE IF NOT EXISTS `labours` (
-`id` int(11) NOT NULL,
+CREATE TABLE `labours` (
+  `id` int(11) NOT NULL,
   `labourname` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` text COLLATE utf8mb4_unicode_ci,
   `mobile` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3777,8 +3782,8 @@ CREATE TABLE IF NOT EXISTS `labours` (
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE IF NOT EXISTS `migrations` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -3789,15 +3794,15 @@ CREATE TABLE IF NOT EXISTS `migrations` (
 -- Table structure for table `notices`
 --
 
-CREATE TABLE IF NOT EXISTS `notices` (
-`id` int(11) NOT NULL,
+CREATE TABLE `notices` (
+  `id` int(11) NOT NULL,
   `subject` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   `attachment` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ACTIVE',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `notices`
@@ -3812,8 +3817,8 @@ INSERT INTO `notices` (`id`, `subject`, `description`, `attachment`, `status`, `
 -- Table structure for table `notifications`
 --
 
-CREATE TABLE IF NOT EXISTS `notifications` (
-`id` int(11) NOT NULL,
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   `type` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `paymentalert` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3829,7 +3834,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
 -- Table structure for table `oauth_access_tokens`
 --
 
-CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
+CREATE TABLE `oauth_access_tokens` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `client_id` int(11) NOT NULL,
@@ -3860,7 +3865,7 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 -- Table structure for table `oauth_auth_codes`
 --
 
-CREATE TABLE IF NOT EXISTS `oauth_auth_codes` (
+CREATE TABLE `oauth_auth_codes` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
@@ -3875,8 +3880,8 @@ CREATE TABLE IF NOT EXISTS `oauth_auth_codes` (
 -- Table structure for table `oauth_clients`
 --
 
-CREATE TABLE IF NOT EXISTS `oauth_clients` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `oauth_clients` (
+  `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `secret` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -3886,7 +3891,7 @@ CREATE TABLE IF NOT EXISTS `oauth_clients` (
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `oauth_clients`
@@ -3904,12 +3909,12 @@ INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `redirect`, `per
 -- Table structure for table `oauth_personal_access_clients`
 --
 
-CREATE TABLE IF NOT EXISTS `oauth_personal_access_clients` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `oauth_personal_access_clients` (
+  `id` int(10) UNSIGNED NOT NULL,
   `client_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `oauth_personal_access_clients`
@@ -3925,7 +3930,7 @@ INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `u
 -- Table structure for table `oauth_refresh_tokens`
 --
 
-CREATE TABLE IF NOT EXISTS `oauth_refresh_tokens` (
+CREATE TABLE `oauth_refresh_tokens` (
   `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `revoked` tinyint(1) NOT NULL,
@@ -3938,14 +3943,14 @@ CREATE TABLE IF NOT EXISTS `oauth_refresh_tokens` (
 -- Table structure for table `openingbalances`
 --
 
-CREATE TABLE IF NOT EXISTS `openingbalances` (
-`id` int(11) NOT NULL,
+CREATE TABLE `openingbalances` (
+  `id` int(11) NOT NULL,
   `bankid` varchar(200) NOT NULL,
   `date` date NOT NULL,
   `amount` varchar(200) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `openingbalances`
@@ -3969,8 +3974,8 @@ INSERT INTO `openingbalances` (`id`, `bankid`, `date`, `amount`, `created_at`, `
 -- Table structure for table `particulars`
 --
 
-CREATE TABLE IF NOT EXISTS `particulars` (
-`id` int(11) NOT NULL,
+CREATE TABLE `particulars` (
+  `id` int(11) NOT NULL,
   `expenseheadid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `particularname` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `userid` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3984,7 +3989,7 @@ CREATE TABLE IF NOT EXISTS `particulars` (
 -- Table structure for table `password_resets`
 --
 
-CREATE TABLE IF NOT EXISTS `password_resets` (
+CREATE TABLE `password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -3996,8 +4001,8 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 -- Table structure for table `payments`
 --
 
-CREATE TABLE IF NOT EXISTS `payments` (
-`id` int(11) NOT NULL,
+CREATE TABLE `payments` (
+  `id` int(11) NOT NULL,
   `amount` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `userid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4006,7 +4011,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `paythrough` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=632 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `payments`
@@ -4652,8 +4657,9 @@ INSERT INTO `payments` (`id`, `amount`, `type`, `userid`, `purpose`, `bank`, `pa
 -- Table structure for table `pmsdebitvoucherpayments`
 --
 
-CREATE TABLE IF NOT EXISTS `pmsdebitvoucherpayments` (
-`id` int(11) NOT NULL,
+CREATE TABLE `pmsdebitvoucherpayments` (
+  `id` int(11) NOT NULL,
+  `voucher_id` int(11) DEFAULT '0',
   `vendorid` varchar(100) DEFAULT NULL,
   `projectid` varchar(100) DEFAULT NULL,
   `amount` varchar(200) DEFAULT NULL,
@@ -4662,6 +4668,7 @@ CREATE TABLE IF NOT EXISTS `pmsdebitvoucherpayments` (
   `bankid` varchar(200) DEFAULT NULL,
   `paymentstatus` varchar(100) DEFAULT 'PENDING',
   `transactionid` varchar(100) DEFAULT NULL,
+  `checknumber` varchar(100) DEFAULT NULL,
   `dateofpayment` date DEFAULT NULL,
   `paidby` varchar(100) DEFAULT NULL,
   `scheduledate` date DEFAULT NULL,
@@ -4669,16 +4676,28 @@ CREATE TABLE IF NOT EXISTS `pmsdebitvoucherpayments` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `pmsdebitvoucherpayments`
+--
+
+INSERT INTO `pmsdebitvoucherpayments` (`id`, `voucher_id`, `vendorid`, `projectid`, `amount`, `paymenttype`, `remarks`, `bankid`, `paymentstatus`, `transactionid`, `checknumber`, `dateofpayment`, `paidby`, `scheduledate`, `created_at`, `updated_at`) VALUES
+(1, 1, '1', '1', '9999.00', 'ONLINE PAYMENT', 'good', '8', 'PENDING', '123456', NULL, '2020-07-01', '1', NULL, '2020-07-01 10:37:30', '2020-07-06 11:39:02'),
+(2, 3, '3', '1', '8991.00', 'ONLINE PAYMENT', 'good', '1', 'PENDING', '123456', NULL, '2020-07-02', '1', NULL, '2020-07-02 06:21:14', '2020-07-02 06:22:03'),
+(3, 5, '12', '1', '100.00', 'ONLINE PAYMENT', 'good', '1', 'PENDING', '123', '2345', '2020-07-06', '1', NULL, '2020-07-02 07:13:24', '2020-07-06 11:25:19'),
+(4, 6, '18', '1', '1000.00', 'ONLINE PAYMENT', 'good', '8', 'PENDING', '123456', NULL, '2020-07-02', '1', NULL, '2020-07-02 07:41:52', '2020-07-06 11:33:24'),
+(5, 8, '11', '1', '1000.00', 'ONLINE PAYMENT', NULL, '1', 'PAID', '1234567', '58658521', '2020-07-13', '1', NULL, '2020-07-13 05:26:44', '2020-07-13 05:28:55');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `pmsdebitvouchers`
 --
 
-CREATE TABLE IF NOT EXISTS `pmsdebitvouchers` (
-`id` int(11) NOT NULL,
+CREATE TABLE `pmsdebitvouchers` (
+  `id` int(11) NOT NULL,
   `vendorid` varchar(200) DEFAULT NULL,
-  `billtype` varchar(200) DEFAULT NULL,
+  `voucher_type` varchar(200) DEFAULT NULL,
+  `reftype` varchar(200) DEFAULT NULL,
   `billdate` varchar(200) DEFAULT NULL,
   `billno` varchar(200) NOT NULL,
   `projectid` int(11) DEFAULT NULL,
@@ -4696,19 +4715,26 @@ CREATE TABLE IF NOT EXISTS `pmsdebitvouchers` (
   `narration` varchar(5000) DEFAULT NULL,
   `invoicecopy` varchar(500) DEFAULT NULL,
   `status` varchar(200) NOT NULL DEFAULT 'PENDING',
+  `cancelledby` varchar(100) DEFAULT NULL,
+  `cancelledreason` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pmsdebitvouchers`
 --
 
-INSERT INTO `pmsdebitvouchers` (`id`, `vendorid`, `billtype`, `billdate`, `billno`, `projectid`, `expenseheadid`, `tprice`, `discount`, `tsgst`, `tcgst`, `tigst`, `totalamt`, `itdeduction`, `otherdeduction`, `finalamount`, `approvalamount`, `narration`, `invoicecopy`, `status`, `created_at`, `updated_at`) VALUES
-(1, '50', 'GST INVOICE', '2020-06-08', '99', 312, 9, '25350', '0', '2281.50', '2281.50', '0', '29913.00', '0', '0', NULL, NULL, NULL, '1591618540.kamdhenu.pdf', 'PENDING', '2020-06-08 17:45:40', '2020-06-08 17:45:40'),
-(2, '50', 'ADVANCE', '2020-06-10', 'NA', 312, 9, '1500000', '0', '5021', '5021', '0', '1510042.00', '0', '0', '1510042.00', NULL, NULL, '1591796076.1591260740788FB7fFqBXar4fvn0q.pdf', 'PENDING', '2020-06-11 02:04:36', '2020-06-11 02:04:36'),
-(3, '1', 'ADVANCE', '2020-06-01', '12345', 1, 1, '100', '0', '0', '0', '0', '100.00', '0', '0', '100.00', NULL, NULL, '1592116673.1531919068.pic1.jpg', 'ACCOUNT VERIFIED', '2020-06-14 06:37:53', '2020-06-14 06:38:25'),
-(4, '2', 'ADVANCE', NULL, 'NA', 3, 1, '80000', '0', '0', '0', '0', '80000.00', '2', '0', '78400.00', NULL, NULL, '1592122622.1531741913.p5.jpg', 'ACCOUNT VERIFIED', '2020-06-14 08:17:02', '2020-06-14 08:21:23');
+INSERT INTO `pmsdebitvouchers` (`id`, `vendorid`, `voucher_type`, `reftype`, `billdate`, `billno`, `projectid`, `expenseheadid`, `tprice`, `discount`, `tsgst`, `tcgst`, `tigst`, `totalamt`, `itdeduction`, `otherdeduction`, `finalamount`, `approvalamount`, `narration`, `invoicecopy`, `status`, `cancelledby`, `cancelledreason`, `created_at`, `updated_at`) VALUES
+(1, '1', 'PAYMENT', 'PO', '2020-07-01', '12345', 1, 1, '10000', '1', '0', '0', '0', '9999.00', '0', '0', '9999.00', NULL, NULL, NULL, 'PENDING', NULL, NULL, '2020-07-01 10:36:40', '2020-07-13 05:25:31'),
+(2, '1', 'INVOICE', 'NA', '2020-07-02', 'NA', 1, 1, '1200', '0', '0', '0', '0', '1200.00', '2', '0', '1176.00', NULL, NULL, NULL, 'COMPLETED', NULL, NULL, '2020-07-01 11:03:46', '2020-07-01 11:09:04'),
+(3, '3', 'PAYMENT', 'PO', '2020-07-02', '12345', 1, 2, '10000', '10', '0', '0', '0', '9990.00', '10', '0', '8991.00', NULL, NULL, NULL, 'CANCELLED', NULL, NULL, '2020-07-02 06:19:26', '2020-07-02 06:22:03'),
+(4, '1', 'INVOICE', 'PO', '2020-07-02', '12345', 1, 1, '1000', '0.00', NULL, NULL, NULL, NULL, '10', '20', '700.00', NULL, NULL, NULL, 'COMPLETED', NULL, NULL, '2020-07-02 06:22:48', '2020-07-02 06:23:09'),
+(5, '12', 'PAYMENT', 'PO', '2020-07-02', '132', 1, 2, '100', '0', '0', '0', '0', '100.00', '0', '0', '100.00', NULL, NULL, NULL, 'COMPLETED', NULL, NULL, '2020-07-02 07:12:40', '2020-07-03 04:48:20'),
+(6, '18', 'PAYMENT', 'PO', '2020-07-02', '12345', 1, 1, '1000', '0', '0', '0', '0', '1000.00', '0', '0', '1000.00', NULL, NULL, NULL, 'CANCELLED', NULL, NULL, '2020-07-02 07:41:08', '2020-07-02 07:42:31'),
+(7, '5', 'PAYMENT', 'PO', '2020-07-03', '123', 1, 2, '100', '0', '0', '0', '0', '100.00', '0', '0', '100.00', NULL, NULL, NULL, 'CANCELLED', '1', 'this is not applicable', '2020-07-03 05:50:46', '2020-07-03 05:57:25'),
+(8, '11', 'PAYMENT', 'PO', '2020-07-03', '123456', 1, 2, '1000', '0', '0', '0', '0', '1000.00', '0', '0', '1000.00', NULL, NULL, NULL, 'COMPLETED', NULL, NULL, '2020-07-03 06:59:18', '2020-07-13 05:28:55'),
+(9, '13', 'PAYMENT', 'PO', '2020-07-03', '56214', 1, 3, '10000', '0', '0', '0', '0', '10000.00', '10', '0', '9000.00', NULL, NULL, NULL, 'ACCOUNT VERIFIED', NULL, NULL, '2020-07-03 10:11:40', '2020-07-06 11:15:14');
 
 -- --------------------------------------------------------
 
@@ -4716,14 +4742,14 @@ INSERT INTO `pmsdebitvouchers` (`id`, `vendorid`, `billtype`, `billdate`, `billn
 -- Table structure for table `productcatagories`
 --
 
-CREATE TABLE IF NOT EXISTS `productcatagories` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `productcatagories` (
+  `id` int(10) UNSIGNED NOT NULL,
   `catagoryname` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `catagoryimage` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `productcatagories`
@@ -4761,7 +4787,7 @@ INSERT INTO `productcatagories` (`id`, `catagoryname`, `catagoryimage`, `created
 (29, '33 Kv Stay', NULL, '2020-04-14 11:38:44', '2020-04-14 11:38:44', NULL),
 (30, 'Hard wire Fitting', NULL, '2020-04-14 11:49:43', '2020-04-14 11:49:43', NULL),
 (31, 'GI Pin', NULL, '2020-04-14 11:52:49', '2020-04-14 11:52:49', NULL),
-(32, '"V" Cross Arm', NULL, '2020-04-14 12:02:43', '2020-04-14 12:02:43', NULL),
+(32, '\"V\" Cross Arm', NULL, '2020-04-14 12:02:43', '2020-04-14 12:02:43', NULL),
 (33, 'Al. Armour Cable', NULL, '2020-04-14 12:07:18', '2020-04-14 12:07:18', NULL),
 (34, 'Polymer Disc', NULL, '2020-04-14 12:18:08', '2020-04-14 12:18:08', NULL),
 (35, 'XLPE Cable', NULL, '2020-04-14 12:22:33', '2020-04-14 12:22:33', NULL),
@@ -4778,7 +4804,7 @@ INSERT INTO `productcatagories` (`id`, `catagoryname`, `catagoryimage`, `created
 (46, 'Out door VCB', NULL, '2020-04-14 16:56:47', '2020-04-14 16:56:47', NULL),
 (47, 'VCB Panel Box', NULL, '2020-04-14 17:00:28', '2020-04-14 17:00:28', NULL),
 (48, 'LT Distribution Box', NULL, '2020-04-14 17:08:21', '2020-04-14 17:08:21', NULL),
-(49, '"V" Back Clamp', NULL, '2020-04-14 17:16:18', '2020-04-14 17:16:18', NULL),
+(49, '\"V\" Back Clamp', NULL, '2020-04-14 17:16:18', '2020-04-14 17:16:18', NULL),
 (50, 'F Clamp', NULL, '2020-04-14 17:19:03', '2020-04-14 17:19:03', NULL),
 (51, '11 kv Lightening Arresstor with clamp', NULL, '2020-04-15 09:59:27', '2020-04-15 09:59:27', NULL),
 (52, '11 kv Lightening Arresstor(Station Type)', NULL, '2020-04-15 10:01:04', '2020-04-15 10:01:04', NULL),
@@ -4907,27 +4933,27 @@ INSERT INTO `productcatagories` (`id`, `catagoryname`, `catagoryimage`, `created
 -- Table structure for table `products`
 --
 
-CREATE TABLE IF NOT EXISTS `products` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `products` (
+  `id` int(10) UNSIGNED NOT NULL,
   `productcatagory_id` varchar(22) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `productname` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `productdescription` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=368 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `productcatagory_id`, `productname`, `productdescription`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, '4', 'Base Channel For Transformer', '(4'''' X  9 FT)', '2020-03-20 11:41:11', '2020-04-14 08:41:58', NULL),
-(2, '3', 'HG Fuse Channel (Plane)', '(3'''' X 9 FT)', '2020-03-22 18:14:12', '2020-04-14 08:40:26', NULL),
-(3, '3', 'HG Fuse Channel(Cantilever)', '(3'''' X 9.6 FT)', '2020-04-13 18:26:00', '2020-04-14 08:39:25', NULL),
-(4, '2', 'AB Switch Channel', '(3'''' X 9 FT)', '2020-04-13 18:26:09', '2020-04-14 08:37:38', NULL),
-(5, '1', 'LA Top Channel', '(4'''' X 9 FT)', '2020-04-13 18:26:39', '2020-04-14 08:35:51', NULL),
-(6, '1', 'LA Top Channel', '(4'''' X 4 FT)', '2020-04-14 08:35:17', '2020-04-14 08:35:17', NULL),
+(1, '4', 'Base Channel For Transformer', '(4\'\' X  9 FT)', '2020-03-20 11:41:11', '2020-04-14 08:41:58', NULL),
+(2, '3', 'HG Fuse Channel (Plane)', '(3\'\' X 9 FT)', '2020-03-22 18:14:12', '2020-04-14 08:40:26', NULL),
+(3, '3', 'HG Fuse Channel(Cantilever)', '(3\'\' X 9.6 FT)', '2020-04-13 18:26:00', '2020-04-14 08:39:25', NULL),
+(4, '2', 'AB Switch Channel', '(3\'\' X 9 FT)', '2020-04-13 18:26:09', '2020-04-14 08:37:38', NULL),
+(5, '1', 'LA Top Channel', '(4\'\' X 9 FT)', '2020-04-13 18:26:39', '2020-04-14 08:35:51', NULL),
+(6, '1', 'LA Top Channel', '(4\'\' X 4 FT)', '2020-04-14 08:35:17', '2020-04-14 08:35:17', NULL),
 (7, '6', 'Single Pole S/S Channel', NULL, '2020-04-14 08:47:27', '2020-04-14 08:47:27', NULL),
 (8, '5', 'Belting Angle For Transformer', '9.2 FT LONG', '2020-04-14 08:48:29', '2020-04-14 08:48:29', NULL),
 (9, '7', '11kv AB Switch', '(3 POLE-200 AMP.)', '2020-04-14 09:28:12', '2020-04-14 09:28:12', NULL),
@@ -4941,7 +4967,7 @@ INSERT INTO `products` (`id`, `productcatagory_id`, `productname`, `productdescr
 (17, '8', 'Earthing Pipe', '(40 MM X 10 FT)', '2020-04-14 09:36:03', '2020-04-14 09:36:03', NULL),
 (18, '9', 'AB Switch bearing', NULL, '2020-04-14 09:37:44', '2020-04-14 09:37:44', NULL),
 (19, '9', 'AB Switch handle', NULL, '2020-04-14 09:38:08', '2020-04-14 09:38:08', NULL),
-(20, '9', 'AB Switch handle channel', '(3'''' x 21'''')', '2020-04-14 09:38:39', '2020-04-14 09:38:39', NULL),
+(20, '9', 'AB Switch handle channel', '(3\'\' x 21\'\')', '2020-04-14 09:38:39', '2020-04-14 09:38:39', NULL),
 (21, '9', '33kv AB Switch', '(3 POLE-400 AMP.)', '2020-04-14 09:39:29', '2020-04-14 09:39:29', NULL),
 (22, '9', '33 Kv AB Switch bearing', NULL, '2020-04-14 09:40:18', '2020-04-14 09:40:18', NULL),
 (23, '9', '33 KV AB Switch handle', NULL, '2020-04-14 09:40:41', '2020-04-14 09:40:41', NULL),
@@ -4982,45 +5008,45 @@ INSERT INTO `products` (`id`, `productcatagory_id`, `productname`, `productdescr
 (58, '17', 'All. Socket', '70 mm', '2020-04-14 10:29:58', '2020-04-14 10:29:58', NULL),
 (59, '17', 'All. Socket', '50 mm', '2020-04-14 10:30:23', '2020-04-14 10:30:23', NULL),
 (60, '17', 'All. Socket', '95 mm', '2020-04-14 10:31:01', '2020-04-14 10:31:01', NULL),
-(61, '18', '5/8 X 13'''' NUT BOLT', NULL, '2020-04-14 10:32:38', '2020-04-14 10:32:38', NULL),
-(62, '18', '5/8 X 12'''' NUT BOLT', NULL, '2020-04-14 10:33:04', '2020-04-14 10:33:04', NULL),
-(63, '18', '5/8 X 11'''' NUT BOLT', NULL, '2020-04-14 10:33:32', '2020-04-14 10:33:32', NULL),
-(64, '18', '5/8 X 10'''' NUT BOLT', NULL, '2020-04-14 10:33:55', '2020-04-14 10:33:55', NULL),
-(65, '18', '5/8 X 9'''' NUT BOLT', NULL, '2020-04-14 10:34:19', '2020-04-14 10:34:19', NULL),
-(66, '18', '5/8 X 8'''' NUT BOLT', NULL, '2020-04-14 10:34:47', '2020-04-14 10:34:47', NULL),
-(67, '18', '5/8 X 7'''' NUT BOLT', NULL, '2020-04-14 10:35:10', '2020-04-14 10:35:10', NULL),
-(68, '18', '5/8 X 6'''' NUT BOLT', NULL, '2020-04-14 10:35:37', '2020-04-14 10:35:37', NULL),
-(69, '18', '5/8 X 5'''' NUT BOLT', NULL, '2020-04-14 10:38:02', '2020-04-14 10:38:02', NULL),
-(70, '18', '5/8 X 4'''' NUT BOLT', NULL, '2020-04-14 10:38:42', '2020-04-14 10:38:42', NULL),
-(71, '18', '5/8 X 3'''' NUT BOLT', NULL, '2020-04-14 10:39:05', '2020-04-14 10:39:05', NULL),
-(72, '18', '1/2 X 3'''' NUT BOLT', NULL, '2020-04-14 10:39:30', '2020-04-14 10:39:30', NULL),
-(73, '18', '5/8 X 2.5'''' NUT BOLT', NULL, '2020-04-14 10:39:55', '2020-04-14 10:39:55', NULL),
-(74, '18', '5/8 X 1.5'''' NUT BOLT', NULL, '2020-04-14 10:41:04', '2020-04-14 10:41:04', NULL),
+(61, '18', '5/8 X 13\'\' NUT BOLT', NULL, '2020-04-14 10:32:38', '2020-04-14 10:32:38', NULL),
+(62, '18', '5/8 X 12\'\' NUT BOLT', NULL, '2020-04-14 10:33:04', '2020-04-14 10:33:04', NULL),
+(63, '18', '5/8 X 11\'\' NUT BOLT', NULL, '2020-04-14 10:33:32', '2020-04-14 10:33:32', NULL),
+(64, '18', '5/8 X 10\'\' NUT BOLT', NULL, '2020-04-14 10:33:55', '2020-04-14 10:33:55', NULL),
+(65, '18', '5/8 X 9\'\' NUT BOLT', NULL, '2020-04-14 10:34:19', '2020-04-14 10:34:19', NULL),
+(66, '18', '5/8 X 8\'\' NUT BOLT', NULL, '2020-04-14 10:34:47', '2020-04-14 10:34:47', NULL),
+(67, '18', '5/8 X 7\'\' NUT BOLT', NULL, '2020-04-14 10:35:10', '2020-04-14 10:35:10', NULL),
+(68, '18', '5/8 X 6\'\' NUT BOLT', NULL, '2020-04-14 10:35:37', '2020-04-14 10:35:37', NULL),
+(69, '18', '5/8 X 5\'\' NUT BOLT', NULL, '2020-04-14 10:38:02', '2020-04-14 10:38:02', NULL),
+(70, '18', '5/8 X 4\'\' NUT BOLT', NULL, '2020-04-14 10:38:42', '2020-04-14 10:38:42', NULL),
+(71, '18', '5/8 X 3\'\' NUT BOLT', NULL, '2020-04-14 10:39:05', '2020-04-14 10:39:05', NULL),
+(72, '18', '1/2 X 3\'\' NUT BOLT', NULL, '2020-04-14 10:39:30', '2020-04-14 10:39:30', NULL),
+(73, '18', '5/8 X 2.5\'\' NUT BOLT', NULL, '2020-04-14 10:39:55', '2020-04-14 10:39:55', NULL),
+(74, '18', '5/8 X 1.5\'\' NUT BOLT', NULL, '2020-04-14 10:41:04', '2020-04-14 10:41:04', NULL),
 (75, '18', 'Earthing Nut bolt', NULL, '2020-04-14 10:41:43', '2020-04-14 10:41:43', NULL),
 (76, '19', '13mtr long joist pole', '150x150', '2020-04-14 10:43:54', '2020-04-14 10:43:54', NULL),
 (77, '19', '11mtr long joist pole', '150x150', '2020-04-14 10:44:26', '2020-04-14 10:44:26', NULL),
 (78, '19', '9mtr long joist pole', '150x150', '2020-04-14 10:44:55', '2020-04-14 10:44:55', NULL),
 (79, '19', '10mtr long joist pole', '150x150', '2020-04-14 10:45:26', '2020-04-14 10:45:26', NULL),
 (80, '19', '5.5 mtr long joist pole', '150x150', '2020-04-14 10:46:40', '2020-04-14 10:46:40', NULL),
-(81, '20', 'Cut Point Channel', '(3'''' X 4 FT)', '2020-04-14 10:48:53', '2020-04-14 10:48:53', NULL),
-(82, '20', 'Cut Point Channel', '(4'''' X 4.6 FT)', '2020-04-14 10:49:34', '2020-04-14 10:49:34', NULL),
-(83, '21', 'LT Straight Cross arm', '(3'''' X 4.6 FT)', '2020-04-14 10:53:04', '2020-04-14 10:53:04', NULL),
-(84, '21', '11 kv Straight Cross arm', '(3'''' X 4 FT)', '2020-04-14 10:53:35', '2020-04-14 10:53:35', NULL),
-(85, '21', '11 kv Straight Cross arm', '(3'''' X 4.5 FT)', '2020-04-14 10:54:06', '2020-04-14 10:54:06', NULL),
-(86, '21', '11 KV ''''V'''' Cross Arm', NULL, '2020-04-14 10:54:35', '2020-04-14 10:54:35', NULL),
-(87, '21', '33 KV ''''V'''' Cross Arm', NULL, '2020-04-14 10:55:07', '2020-04-14 10:55:07', NULL),
-(88, '22', 'Top Piece', '(3'''' X 11'''')', '2020-04-14 11:10:57', '2020-04-14 11:10:57', NULL),
+(81, '20', 'Cut Point Channel', '(3\'\' X 4 FT)', '2020-04-14 10:48:53', '2020-04-14 10:48:53', NULL),
+(82, '20', 'Cut Point Channel', '(4\'\' X 4.6 FT)', '2020-04-14 10:49:34', '2020-04-14 10:49:34', NULL),
+(83, '21', 'LT Straight Cross arm', '(3\'\' X 4.6 FT)', '2020-04-14 10:53:04', '2020-04-14 10:53:04', NULL),
+(84, '21', '11 kv Straight Cross arm', '(3\'\' X 4 FT)', '2020-04-14 10:53:35', '2020-04-14 10:53:35', NULL),
+(85, '21', '11 kv Straight Cross arm', '(3\'\' X 4.5 FT)', '2020-04-14 10:54:06', '2020-04-14 10:54:06', NULL),
+(86, '21', '11 KV \'\'V\'\' Cross Arm', NULL, '2020-04-14 10:54:35', '2020-04-14 10:54:35', NULL),
+(87, '21', '33 KV \'\'V\'\' Cross Arm', NULL, '2020-04-14 10:55:07', '2020-04-14 10:55:07', NULL),
+(88, '22', 'Top Piece', '(3\'\' X 11\'\')', '2020-04-14 11:10:57', '2020-04-14 11:10:57', NULL),
 (89, '23', '100 KVA Transformer', NULL, '2020-04-14 11:18:22', '2020-04-14 11:18:22', NULL),
 (90, '23', '250 KVA Transformer', NULL, '2020-04-14 11:18:50', '2020-04-14 11:18:50', NULL),
 (91, '23', '160 KVA Transformer', NULL, '2020-04-14 11:20:12', '2020-04-14 11:20:12', NULL),
 (92, '23', '63 KVA Transformer', NULL, '2020-04-14 11:20:40', '2020-04-14 11:20:40', NULL),
 (93, '23', '25 KVA Transformer', NULL, '2020-04-14 11:21:01', '2020-04-14 11:21:01', NULL),
 (94, '23', '16 KVA Transformer', NULL, '2020-04-14 11:21:23', '2020-04-14 11:21:23', NULL),
-(95, '24', '4'''' Stay Clamp', NULL, '2020-04-14 11:25:34', '2020-04-14 11:25:34', NULL),
-(96, '24', '6'''' Stay Clamp', NULL, '2020-04-14 11:26:50', '2020-04-14 11:26:50', NULL),
-(97, '24', '7'''' Stay Clamp', NULL, '2020-04-14 11:27:08', '2020-04-14 11:27:08', NULL),
-(98, '24', '8'''' Stay Clamp', NULL, '2020-04-14 11:27:32', '2020-04-14 11:27:32', NULL),
-(99, '24', '9'''' Stay Clamp', NULL, '2020-04-14 11:29:50', '2020-04-14 11:29:50', NULL),
+(95, '24', '4\'\' Stay Clamp', NULL, '2020-04-14 11:25:34', '2020-04-14 11:25:34', NULL),
+(96, '24', '6\'\' Stay Clamp', NULL, '2020-04-14 11:26:50', '2020-04-14 11:26:50', NULL),
+(97, '24', '7\'\' Stay Clamp', NULL, '2020-04-14 11:27:08', '2020-04-14 11:27:08', NULL),
+(98, '24', '8\'\' Stay Clamp', NULL, '2020-04-14 11:27:32', '2020-04-14 11:27:32', NULL),
+(99, '24', '9\'\' Stay Clamp', NULL, '2020-04-14 11:29:50', '2020-04-14 11:29:50', NULL),
 (100, '25', 'H T Stay Wire', '7/10mm', '2020-04-14 11:32:52', '2020-04-14 11:32:52', NULL),
 (101, '25', 'L T  Stay Wire', '7/12mm', '2020-04-14 11:33:37', '2020-04-14 11:33:37', NULL),
 (102, '25', '33 kv stay Wire', '7/8mm', '2020-04-14 11:34:11', '2020-04-14 11:34:11', NULL),
@@ -5094,8 +5120,8 @@ INSERT INTO `products` (`id`, `productcatagory_id`, `productname`, `productdescr
 (170, '48', 'LT distribution box', NULL, '2020-04-14 17:09:44', '2020-04-14 17:09:44', NULL),
 (171, '48', 'LT distribution box', '(Single door)100 AMP.', '2020-04-14 17:10:55', '2020-04-14 17:10:55', NULL),
 (172, '48', 'LT distribution box', '(Double door)200AMP.', '2020-04-14 17:11:36', '2020-04-14 17:11:36', NULL),
-(173, '49', '11 KV ''''V'''' Back Clamp', NULL, '2020-04-14 17:17:13', '2020-04-14 17:17:13', NULL),
-(174, '49', '33 KV ''''V'''' Back Clamp', NULL, '2020-04-14 17:17:59', '2020-04-14 17:17:59', NULL),
+(173, '49', '11 KV \'\'V\'\' Back Clamp', NULL, '2020-04-14 17:17:13', '2020-04-14 17:17:13', NULL),
+(174, '49', '33 KV \'\'V\'\' Back Clamp', NULL, '2020-04-14 17:17:59', '2020-04-14 17:17:59', NULL),
 (175, '50', '11 KV F Clamp', NULL, '2020-04-14 17:19:56', '2020-04-14 17:19:56', NULL),
 (176, '50', '33 KV F Clamp', NULL, '2020-04-14 17:26:36', '2020-04-14 17:26:36', NULL),
 (177, '58', '11 kv Lightening Arresstor with clamp', NULL, '2020-04-15 10:00:19', '2020-04-15 10:26:28', NULL),
@@ -5202,8 +5228,8 @@ INSERT INTO `products` (`id`, `productcatagory_id`, `productname`, `productdescr
 (278, '98', 'Main switch', '63 AMP', '2020-04-15 12:44:03', '2020-04-15 12:44:03', NULL),
 (279, '97', 'Spinkler pipe(2.5 kg110 mm)with all fittings', '6 mtr', '2020-04-15 12:44:54', '2020-04-15 12:44:54', NULL),
 (280, '119', 'Wire Rope', '8mm', '2020-04-15 16:33:51', '2020-04-15 16:33:51', NULL),
-(281, '120', 'Wel Cap(Bore cover)', '(200 MM X2.5'''')', '2020-04-15 16:34:39', '2020-04-15 16:34:39', NULL),
-(282, '120', 'Wel Cap(Bore cover)', '(200 MM X2.0'''')', '2020-04-15 16:35:28', '2020-04-15 16:35:28', NULL),
+(281, '120', 'Wel Cap(Bore cover)', '(200 MM X2.5\'\')', '2020-04-15 16:34:39', '2020-04-15 16:34:39', NULL),
+(282, '120', 'Wel Cap(Bore cover)', '(200 MM X2.0\'\')', '2020-04-15 16:35:28', '2020-04-15 16:35:28', NULL),
 (283, '121', 'S.S  Nipple', '(50X40)MM', '2020-04-15 16:36:11', '2020-04-15 16:36:11', NULL),
 (284, '121', 'S.S  Nipple', '(50X50)MM', '2020-04-15 16:36:53', '2020-04-15 16:36:53', NULL),
 (285, '84', 'G.I Bend', '50mm', '2020-04-15 16:37:50', '2020-04-15 16:37:50', NULL),
@@ -5296,8 +5322,8 @@ INSERT INTO `products` (`id`, `productcatagory_id`, `productname`, `productdescr
 -- Table structure for table `projectactivities`
 --
 
-CREATE TABLE IF NOT EXISTS `projectactivities` (
-`id` int(11) NOT NULL,
+CREATE TABLE `projectactivities` (
+  `id` int(11) NOT NULL,
   `projectid` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `activityid` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `position` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5314,15 +5340,15 @@ CREATE TABLE IF NOT EXISTS `projectactivities` (
 -- Table structure for table `projectotherdocuments`
 --
 
-CREATE TABLE IF NOT EXISTS `projectotherdocuments` (
-`id` int(11) NOT NULL,
+CREATE TABLE `projectotherdocuments` (
+  `id` int(11) NOT NULL,
   `project_id` varchar(20) DEFAULT NULL,
   `documentname` varchar(50) DEFAULT NULL,
   `document` varchar(1000) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `projectotherdocuments`
@@ -5337,8 +5363,8 @@ INSERT INTO `projectotherdocuments` (`id`, `project_id`, `documentname`, `docume
 -- Table structure for table `projectreports`
 --
 
-CREATE TABLE IF NOT EXISTS `projectreports` (
-`id` int(11) NOT NULL,
+CREATE TABLE `projectreports` (
+  `id` int(11) NOT NULL,
   `reportfordate` date DEFAULT NULL,
   `clientid` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `projectid` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5361,8 +5387,8 @@ CREATE TABLE IF NOT EXISTS `projectreports` (
 -- Table structure for table `projects`
 --
 
-CREATE TABLE IF NOT EXISTS `projects` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `projects` (
+  `id` int(10) UNSIGNED NOT NULL,
   `clientid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `clientname` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `district_id` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5409,7 +5435,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `workorderno` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estimateno` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `scheme_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `projects`
@@ -5432,7 +5458,7 @@ INSERT INTO `projects` (`id`, `clientid`, `clientname`, `district_id`, `division
 (14, '3', NULL, '26', '2', 'Shifting of lines & S/S  from the premises of school & Anganawadi', 'PMS17', '2020-03-04', '2020-04-19', NULL, NULL, 'ASSIGNED', NULL, NULL, '2222', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-17 12:55:01', '2020-03-17 12:58:53', NULL, NULL, NULL),
 (15, '3', NULL, '26', '2', 'Shifting of lines & S/S  from the premises of school & Anganawadi', 'PMS17', '2020-03-04', '2020-04-19', NULL, NULL, 'ASSIGNED', NULL, NULL, '2219', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-17 12:56:36', '2020-03-17 12:58:33', NULL, NULL, NULL),
 (16, '3', NULL, '26', '2', 'Shifting of lines & S/S  from the premises of school & Anganawadi', 'PMS16', '2020-03-04', '2020-04-19', NULL, NULL, 'ASSIGNED', NULL, NULL, '2206', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-17 12:58:09', '2020-03-17 12:58:09', NULL, NULL, NULL),
-(17, '8', NULL, '30', NULL, 'Power supply to 22 nos of water pump (440HP) at  5 different locations from Sibantpur to Kurdapali and Beldihi area along Rukura Canal side from 11 KV Gurundia feeder under ESO Bonai".', 'PMS24', '2019-11-13', '2019-12-13', NULL, NULL, 'ASSIGNED', '15844452364335403615e70b734734a1RUKURA ROURKELA.pdf', NULL, '2040/WE', NULL, NULL, NULL, NULL, NULL, '2019-11-02', '51200', NULL, NULL, '2019-10-29', '75000', '2019-10-29', NULL, '2019-11-02', '1112250', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '10000', NULL, '2020-03-17 16:29:06', '2020-04-19 17:11:14', NULL, NULL, NULL),
+(17, '8', NULL, '30', NULL, 'Power supply to 22 nos of water pump (440HP) at  5 different locations from Sibantpur to Kurdapali and Beldihi area along Rukura Canal side from 11 KV Gurundia feeder under ESO Bonai\".', 'PMS24', '2019-11-13', '2019-12-13', NULL, NULL, 'ASSIGNED', '15844452364335403615e70b734734a1RUKURA ROURKELA.pdf', NULL, '2040/WE', NULL, NULL, NULL, NULL, NULL, '2019-11-02', '51200', NULL, NULL, '2019-10-29', '75000', '2019-10-29', NULL, '2019-11-02', '1112250', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '10000', NULL, '2020-03-17 16:29:06', '2020-04-19 17:11:14', NULL, NULL, NULL),
 (18, '1', NULL, '19', '5', 'providing LED street lighting for median of Electronics Road (4.9 km long) at Electronics park, infocity-ii janal', 'PMS20', '2019-10-01', '2020-01-01', NULL, NULL, 'ASSIGNED', '15844451771092192845e70b6f9ea138INFOCITY-II.pdf', NULL, 'BBSR/ELECT/B-3918/18-19/3679', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-19', '198000', '2019-10-19', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-17 16:31:19', '2020-03-17 17:09:37', NULL, NULL, NULL),
 (19, '2', NULL, '19', '6', 'SUPPLY & ERECTION OF FP STRUCTURES,GI FENCHING & CTPT,INCLUDES CIVIL,FAUNDATION-2 SETS (At-Biju Pattanaik International airport)', 'PMS20', '2019-11-15', '2019-12-15', NULL, NULL, 'ASSIGNED', '158444497513437785435e70b62f7a131AIRPORT WORK ORDER.doc', NULL, '4200366674', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-17 16:32:35', '2020-03-17 17:06:15', NULL, NULL, NULL),
 (20, '4', NULL, '30', '7', 'NGSL(Civil Work Of 33/6.6 KV Substation at mines end)', 'PMS321', '2019-12-06', '2020-08-06', '84000000', 'HIGH', 'ASSIGNED', '15844476332764084225e70c09118d80WO-00075- Civil- Pabitra (2).pdf', 'LOI/NTPCGE/OCPL/CIVIL/19-20/014', NULL, 'pankajk@ngsl.co.in', NULL, '2019-12-06', 'WO/19-20/00075', '15845075318965360465e71aa8be1cd2WO-00075- Civil- Pabitra (2).pdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-17 17:34:49', '2020-06-08 16:54:07', 'NA', 'NA', NULL),
@@ -5512,7 +5538,7 @@ INSERT INTO `projects` (`id`, `clientid`, `clientname`, `district_id`, `division
 (94, '13', NULL, '15', '16', 'Kuliamal-II-RWSS', 'PMS94', '2020-02-20', '2020-05-20', '467751', NULL, 'ASSIGNED', NULL, NULL, '438', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-22 20:30:32', '2020-04-22 20:30:32', NULL, NULL, NULL),
 (95, '15', NULL, '15', '12', 'Elephant Corridor Work', 'PMS95', '2019-05-31', '2019-08-29', '5716936', NULL, 'COMPLETED', NULL, NULL, '532', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-22 20:40:13', '2020-05-04 16:13:28', NULL, NULL, NULL),
 (96, '16', NULL, '15', '18', 'FUSE CALL TO ESWARIYA VIDYALAYA-R&B', 'PMS96', '2020-02-19', '2020-03-18', '430157', NULL, 'ASSIGNED', NULL, NULL, '955 P1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-23 10:13:12', '2020-04-23 10:13:12', NULL, NULL, NULL),
-(97, '16', NULL, '15', '18', 'NEAR MEDICAL FUSE CALL CENTER-R&B', 'PMS97', '2020-02-18', '2020-03-18', '422613', NULL, 'ASSIGNED', NULL, NULL, '975 P1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-23 10:15:00', '2020-04-23 10:15:00', NULL, NULL, NULL),
+(97, '16', NULL, '15', '20', 'NEAR MEDICAL FUSE CALL CENTER-R&B', 'PMS323', '2020-02-18', '2020-03-18', '422613', NULL, 'ASSIGNED', NULL, NULL, '975 P1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-23 10:15:00', '2020-07-08 06:57:38', '12101', '122', 15),
 (98, '16', NULL, '15', '18', 'NEAR DEWANSAHEB PADA& GOPABANDHU CLUB-R&B', 'PMS98', '2020-02-19', '2020-03-18', '428898', NULL, 'ASSIGNED', NULL, NULL, '974 P1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-23 10:17:28', '2020-04-23 10:17:28', NULL, NULL, NULL),
 (99, '16', NULL, '15', '18', 'ESWARIYA VIDYALAYA TO GOPABANDHU CHHAKA-R&B', 'PMS99', '2020-02-18', '2020-03-18', '360015', NULL, 'ASSIGNED', NULL, NULL, '973 P1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-23 10:20:09', '2020-04-23 10:20:09', NULL, NULL, NULL),
 (100, '16', NULL, '15', '18', 'FUSE CALL CENTER TO DEWANSAHEB PADA-R&B', 'PMS100', '2020-02-19', '2020-03-18', '432786', NULL, 'ASSIGNED', NULL, NULL, '970', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-04-23 10:22:11', '2020-04-23 10:22:11', NULL, NULL, NULL),
@@ -5747,8 +5773,8 @@ INSERT INTO `projects` (`id`, `clientid`, `clientname`, `district_id`, `division
 -- Table structure for table `requisitionheaders`
 --
 
-CREATE TABLE IF NOT EXISTS `requisitionheaders` (
-`id` int(11) NOT NULL,
+CREATE TABLE `requisitionheaders` (
+  `id` int(11) NOT NULL,
   `employeeid` int(11) DEFAULT NULL,
   `projectid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `userid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5766,7 +5792,7 @@ CREATE TABLE IF NOT EXISTS `requisitionheaders` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `reqaddby` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `supportdocument` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=558 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `requisitionheaders`
@@ -5815,7 +5841,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (41, 174, '134', '174', '5000', '5000', 'CANCELLED', '1', NULL, '1', 'project', 'site advance for fuel ,fooding, bike maintainance', '2020-05-04', '2020-05-11', '2020-05-03 18:58:17', '2020-05-03 22:32:06', NULL, NULL),
 (42, 239, '133', '239', '280', '280', 'CANCELLED', '1', NULL, '1', NULL, 'FUEL AND FOODING  EXPENCE FOR RWED ARTAL PHC PROJECT FINAL MEASUREMENT', '2020-05-02', '2020-05-02', '2020-05-03 19:04:31', '2020-05-03 22:31:07', NULL, NULL),
 (43, 273, '20', '273', '4300', '4300', 'COMPLETED', '276', NULL, NULL, NULL, 'Give to chandar sekhara behera', '2020-05-04', '2020-05-04', '2020-05-04 07:08:31', '2020-05-04 16:51:10', NULL, NULL),
-(44, 245, '62', '245', '6600', '0', 'CANCELLED', NULL, NULL, '276', 'PL GIVE HOUSE OWNER ACCOUNT AND IFSC COAD DETAILS SEND', 'Gauste House rent of titilagarh\r\n\r\n2month''s rent(march and April month)\r\n\r\n(1month rent=3300)', '2020-03-01', '2020-04-01', '2020-05-04 08:33:14', '2020-05-04 16:13:20', NULL, NULL),
+(44, 245, '62', '245', '6600', '0', 'CANCELLED', NULL, NULL, '276', 'PL GIVE HOUSE OWNER ACCOUNT AND IFSC COAD DETAILS SEND', 'Gauste House rent of titilagarh\r\n\r\n2month\'s rent(march and April month)\r\n\r\n(1month rent=3300)', '2020-03-01', '2020-04-01', '2020-05-04 08:33:14', '2020-05-04 16:13:20', NULL, NULL),
 (45, 163, '125', '163', '1000', '1000', 'COMPLETED', '1', NULL, NULL, NULL, 'BHAWANIPATNA STAFF MESS EXP.', '2020-05-04', '2020-05-04', '2020-05-04 09:33:00', '2020-05-06 16:55:20', NULL, NULL),
 (46, 273, '20', '273', '3290', '3290', 'CANCELLED', '276', NULL, '276', NULL, 'Give to Sonu bolero driver', '2020-05-04', '2020-05-04', '2020-05-04 09:48:44', '2020-05-04 16:13:46', NULL, NULL),
 (47, 62, '92', '62', '11470', '11470', 'COMPLETED', '1', NULL, NULL, NULL, 'MESS EXPENSE FOR BHUBANESWAR', '2020-05-04', '2020-05-04', '2020-05-04 11:41:49', '2020-05-08 16:26:37', NULL, NULL),
@@ -5831,7 +5857,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (59, 273, '20', '273', '920', '920', 'COMPLETED', '1', NULL, NULL, NULL, 'Repair(vehicle) bolero tyre puncture and spanner set bill give me Sanu driver', '2020-05-04', '2020-05-04', '2020-05-04 20:50:46', '2020-05-06 16:57:02', NULL, NULL),
 (60, 100, '154', '100', '1260', '1260', 'COMPLETED', '1', NULL, NULL, NULL, 'Kesinga Store', '2020-05-05', '2020-05-05', '2020-05-05 09:48:49', '2020-05-06 16:51:18', NULL, NULL),
 (61, 285, '125', '285', '3100', '0', 'CANCELLED', NULL, NULL, '1', NULL, 'Extra amount paid for MD sir house work to Purusottam Mangaraj\r\nExtra amount paid for MD sir house work to Sameer Pattanaik\r\nPurchase nut boult for elephant  corrider  site and grinder wheel for  fabrication work', '2020-05-01', '2020-05-01', '2020-05-05 10:13:20', '2020-05-05 13:38:03', NULL, NULL),
-(62, 285, '125', '285', '4600', '0', 'CANCELLED', NULL, NULL, '1', NULL, 'Adv. for contractual  fabrication work 500\r\nWages from 01.03.20 to 24.03.20 of MD Sir''s House-4100', '2020-05-04', '2020-05-04', '2020-05-05 10:18:41', '2020-05-05 13:38:17', NULL, NULL),
+(62, 285, '125', '285', '4600', '0', 'CANCELLED', NULL, NULL, '1', NULL, 'Adv. for contractual  fabrication work 500\r\nWages from 01.03.20 to 24.03.20 of MD Sir\'s House-4100', '2020-05-04', '2020-05-04', '2020-05-05 10:18:41', '2020-05-05 13:38:17', NULL, NULL),
 (63, 1, '75', '1', '5000', '0', 'CANCELLED', NULL, NULL, '1', 'project Name Not mantion', 'Agreement check list test report Issue Exp', '2020-05-05', '2020-05-07', '2020-05-05 12:46:53', '2020-05-05 12:48:38', NULL, NULL),
 (64, 14, '156', '14', NULL, '0', 'CANCELLED', NULL, NULL, '1', NULL, 'Agreement, checklist,test report', '2020-05-06', '2020-05-07', '2020-05-05 12:55:27', '2020-05-05 13:39:13', NULL, NULL),
 (65, 14, '156', '14', NULL, '0', 'CANCELLED', NULL, NULL, '1', NULL, 'Agreement, checklist,test report', '2020-05-06', '2020-05-07', '2020-05-05 12:56:22', '2020-05-05 13:25:25', NULL, NULL),
@@ -5846,7 +5872,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (74, 209, '92', '209', '10000', '10000', 'COMPLETED', '1', NULL, NULL, NULL, 'Salary Advance Against April 2020 (Due to Emergency)', '2020-04-01', '2020-04-30', '2020-05-07 18:26:41', '2020-05-12 16:41:03', NULL, NULL),
 (76, 9, '75', '9', '5000', '0', 'CANCELLED', NULL, NULL, '1', 'already pAID', 'Praharaj Sir PC', '2020-05-07', '2020-05-08', '2020-05-07 21:01:52', '2020-05-09 12:35:33', NULL, NULL),
 (77, 163, '125', '163', '2600', '2500', 'COMPLETED', '1', NULL, NULL, NULL, 'Bhawanipatna Mess and Krishna Apartment LPG Gas Refill', '2020-05-07', '2020-05-07', '2020-05-07 21:03:06', '2020-05-09 18:52:08', NULL, NULL),
-(78, 58, '133', '58', '3000', '3000', 'COMPLETED', '1', NULL, NULL, NULL, 'AFFIDAVIT FOR 15 NOS TENDER''S', '2020-05-07', '2020-05-08', '2020-05-07 17:31:33', '2020-05-08 16:25:48', NULL, NULL),
+(78, 58, '133', '58', '3000', '3000', 'COMPLETED', '1', NULL, NULL, NULL, 'AFFIDAVIT FOR 15 NOS TENDER\'S', '2020-05-07', '2020-05-08', '2020-05-07 17:31:33', '2020-05-08 16:25:48', NULL, NULL),
 (79, 174, '95', '174', '2700', '1500', 'COMPLETED', '1', NULL, NULL, NULL, 'site advance for fuel & fooding', '2020-05-01', '2020-05-10', '2020-05-07 19:07:15', '2020-05-09 18:51:02', NULL, NULL),
 (80, 29, '95', '29', '16820', '0', 'CANCELLED', NULL, NULL, '1', 'site exp Book Wrong Site Name', 'cement,house rent,bike repairing,fuel,fooding', '2020-05-08', '2020-05-08', '2020-05-07 19:29:34', '2020-05-09 14:26:47', NULL, NULL),
 (81, 254, '158', '254', '1200', '1200', 'COMPLETED', '1', NULL, NULL, NULL, 'Cement 4 bag for pole cuping at shrikrishna apartment under section 4 soubhagya work', '2020-05-07', '2020-05-07', '2020-05-07 20:54:14', '2020-05-09 18:32:03', NULL, NULL),
@@ -5875,7 +5901,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (106, 29, '53', '29', '6800', '6800', 'COMPLETED', '276', NULL, NULL, NULL, 'Site Adv', '2020-05-11', '2020-05-13', '2020-05-11 10:45:09', '2020-05-12 16:50:25', NULL, NULL),
 (107, 57, '92', '57', '1900', '1900', 'COMPLETED', '1', NULL, NULL, NULL, 'EXPENSES', '2020-05-11', '2020-05-11', '2020-05-11 11:06:20', '2020-05-12 18:39:24', NULL, NULL),
 (108, 285, '125', '285', '2650', '2650', 'COMPLETED', '276', NULL, NULL, NULL, 'purchase nutbolt for elephant corridor site and aluminium paint for factory (iron materials colouring work) \r\ntotal amount=3750  , requisition given before=1100, balance required =2650', '2020-05-11', '2020-05-13', '2020-05-11 12:50:51', '2020-05-12 17:07:44', NULL, NULL),
-(109, 284, '92', '284', '3100', '3100', 'COMPLETED', '1', NULL, NULL, NULL, 'Grocery , vegetables & LPG purchase for MD''s Residence Mess', '2020-05-11', '2020-05-17', '2020-05-11 12:54:43', '2020-05-15 16:59:31', NULL, NULL),
+(109, 284, '92', '284', '3100', '3100', 'COMPLETED', '1', NULL, NULL, NULL, 'Grocery , vegetables & LPG purchase for MD\'s Residence Mess', '2020-05-11', '2020-05-17', '2020-05-11 12:54:43', '2020-05-15 16:59:31', NULL, NULL),
 (110, 285, '125', '285', '1000', '1000', 'COMPLETED', '276', NULL, NULL, NULL, 'UNLOADING OF SOLAR LIGHT AND PANNEL OF HALONIX(EXTRA WAGES) 06 PERSON (200 SET)', '2020-05-11', '2020-05-13', '2020-05-11 12:57:41', '2020-05-12 17:08:44', NULL, NULL),
 (113, 285, '125', '285', '3000', '3000', 'COMPLETED', '276', NULL, NULL, NULL, 'FOR MESS EXP.(VEGETABLE AND OTHER  EXP.)', '2020-05-11', '2020-05-13', '2020-05-11 13:10:47', '2020-05-12 17:06:38', NULL, NULL),
 (114, 12, '20', '12', '1300', '1300', 'COMPLETED', '1', NULL, NULL, NULL, 'OLA CAB FROM BBSR OFFICE TO AIIMS HOSPITAL FOR SCRAP WEILDING WORK', '2020-05-11', '2020-05-11', '2020-05-11 13:12:41', '2020-05-12 18:38:52', NULL, NULL),
@@ -5890,8 +5916,8 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (123, 254, '157', '254', '500', '500', 'COMPLETED', '1', NULL, NULL, NULL, 'Fuel for bike from 13/5/2020 to 17/5/2020', '2020-05-13', '2020-05-17', '2020-05-12 19:37:48', '2020-05-15 17:04:32', NULL, NULL),
 (124, 31, '171', '31', '4400', '4400', 'COMPLETED', '1', NULL, NULL, NULL, 'ADV. FOR SITE WORK', '2020-05-13', '2020-05-13', '2020-05-13 09:51:47', '2020-05-15 17:01:29', NULL, NULL),
 (125, 284, '92', '284', '13000', '13000', 'COMPLETED', '1', NULL, NULL, NULL, 'Vehicle hire charges from BBSR to Brajarajnagar, NGSL', '2020-05-12', '2020-05-12', '2020-05-13 10:34:30', '2020-05-15 17:32:42', NULL, NULL),
-(126, 285, '125', '285', '100000', '100000', 'CANCELLED', '276', NULL, '1', 'WRONG ENTRY', 'PURCHASE IRON MATERIALS  FOR SITE.\r\n1) 4'''' LIGHT CHANNEL =500 KG\r\n2)3'''' LIGHT CHANNEL=500 KG\r\n3)3'''' MEDIUM CHANNEL=200 KG\r\n4)35X5 MM ANGLE=300 KG\r\n5)40X5 MM FLAT=300 KG\r\n6)50X5 MM ANGLE =300 KG', '2020-05-13', '2020-05-14', '2020-05-13 10:38:21', '2020-05-14 19:13:00', NULL, NULL),
-(127, 284, '92', '284', '1870', '1870', 'COMPLETED', '1', NULL, NULL, NULL, 'Printer cartridge refilling 3 nos. @ Rs.350=1050, material return from site (Infocity-II to BBSR store) labour loading & unloading charges-400, MD''s mess exp (grocery item purchase)-420', '2020-05-13', '2020-05-13', '2020-05-13 10:45:39', '2020-05-15 16:57:39', NULL, NULL),
+(126, 285, '125', '285', '100000', '100000', 'CANCELLED', '276', NULL, '1', 'WRONG ENTRY', 'PURCHASE IRON MATERIALS  FOR SITE.\r\n1) 4\'\' LIGHT CHANNEL =500 KG\r\n2)3\'\' LIGHT CHANNEL=500 KG\r\n3)3\'\' MEDIUM CHANNEL=200 KG\r\n4)35X5 MM ANGLE=300 KG\r\n5)40X5 MM FLAT=300 KG\r\n6)50X5 MM ANGLE =300 KG', '2020-05-13', '2020-05-14', '2020-05-13 10:38:21', '2020-05-14 19:13:00', NULL, NULL),
+(127, 284, '92', '284', '1870', '1870', 'COMPLETED', '1', NULL, NULL, NULL, 'Printer cartridge refilling 3 nos. @ Rs.350=1050, material return from site (Infocity-II to BBSR store) labour loading & unloading charges-400, MD\'s mess exp (grocery item purchase)-420', '2020-05-13', '2020-05-13', '2020-05-13 10:45:39', '2020-05-15 16:57:39', NULL, NULL),
 (128, 284, '92', '284', '2000', '2000', 'COMPLETED', '1', NULL, NULL, NULL, 'Purchase of register A,B,C,D & E (As per labour Act.) FY 2020-21 for NGSL Site (Auth. by HR)', '2020-05-13', '2020-05-13', '2020-05-13 11:38:28', '2020-05-15 16:56:49', NULL, NULL),
 (129, 29, '125', '29', '4400', '4400', 'COMPLETED', '1', NULL, NULL, NULL, 'Bike servicing and Tyre and tube change', '2020-05-13', '2020-05-13', '2020-05-13 15:12:28', '2020-05-15 16:54:03', NULL, NULL),
 (130, 29, '95', '29', '1020', '1020', 'COMPLETED', '1', NULL, NULL, NULL, 'Site adv. For materials purchase', '2020-05-13', '2020-05-13', '2020-05-13 15:15:25', '2020-05-15 16:52:57', NULL, NULL),
@@ -5934,7 +5960,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (173, 286, '20', '286', '570', '570', 'COMPLETED', '1', NULL, NULL, NULL, 'Paid', '2020-05-18', '2020-05-18', '2020-05-18 07:52:42', '2020-06-02 13:08:21', 'PravinKumar n nayak', NULL),
 (174, 206, '134', '206', '13925', '0', 'CANCELLED', '276', NULL, '1', 'DIRECT VENDOR PAYMENT (PROVIDE VENDOR BANK DETAILS)', 'RENT PICK UP PAYMENT ( ADRI )', '2020-05-18', '2020-05-19', '2020-05-18 09:42:25', '2020-05-18 12:38:42', 'SAMEER KUMAR ACHARYA', NULL),
 (175, 163, '180', '163', '3670', '3670', 'COMPLETED', '276', NULL, NULL, NULL, 'Balance payment against exp 27670.00 Advance recive 24000.00 balance amount 3670', '2020-05-18', '2020-05-18', '2020-05-18 11:21:11', '2020-05-27 10:12:58', 'Pradeep Majhi', NULL),
-(176, 284, '80', '284', '10066', '10066', 'COMPLETED', '1', NULL, NULL, NULL, 'Purchased vegetables, milk items, grocery items for MD''s Mess.', '2020-05-16', '2020-05-18', '2020-05-18 11:39:59', '2020-05-18 13:19:15', 'Tapaswini Mohapatra', NULL),
+(176, 284, '80', '284', '10066', '10066', 'COMPLETED', '1', NULL, NULL, NULL, 'Purchased vegetables, milk items, grocery items for MD\'s Mess.', '2020-05-16', '2020-05-18', '2020-05-18 11:39:59', '2020-05-18 13:19:15', 'Tapaswini Mohapatra', NULL),
 (177, 163, '125', '163', '1000', '1000', 'COMPLETED', '276', NULL, NULL, NULL, 'Mess exp for vegetable', '2020-05-18', '2020-05-18', '2020-05-18 11:55:28', '2020-05-27 10:12:46', 'Pradeep Majhi', NULL),
 (178, 14, '125', '14', '1600', '1600', 'COMPLETED', '276', NULL, NULL, NULL, 'Work man permit submit at SE office balangir', '2020-05-17', '2020-05-20', '2020-05-19 11:21:17', '2020-05-27 11:01:04', 'Janmejaya behera', NULL),
 (179, 209, '172', '209', '2000', '2000', 'COMPLETED', '1', NULL, NULL, NULL, 'Document Submission at Angul Division', '2020-05-19', '2020-05-19', '2020-05-19 12:15:20', '2020-05-27 10:12:18', 'Brahmananda Swain', NULL),
@@ -5958,9 +5984,9 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (198, 275, '162', '275', '1000', '0', 'CANCELLED', NULL, NULL, '1', NULL, 'DRIVER NAME- MANORANJAN SINGH\r\nVEHICLE NO- OD08-9270\r\nWORK- POLE SHIFTING FOR TRACTOR\r\nADV FOR FOODING CHARGE', '2020-05-01', '2020-05-24', '2020-05-21 06:58:32', '2020-05-22 19:12:34', 'SAMEER ACHARYA', NULL),
 (199, 288, '160', '288', '1000', '1000', 'COMPLETED', '276', NULL, NULL, NULL, 'DRIVER NAME- BHAKTARAM PATEL\r\nVEHICLE NO- OD08A-8761 [ BHUMIPUTRA ]\r\nWORK- PSC POLE SHIFTING\r\nADV FOR FOODING CHARGE', '2020-05-14', '2020-05-24', '2020-05-21 07:25:44', '2020-05-23 12:05:50', 'SAMEER ACHARYA', NULL),
 (200, 14, '182', '14', '2700', '2700', 'COMPLETED', '1', NULL, NULL, NULL, 'Fuel charges,GED BPT Agreement', '2020-05-20', '2020-05-20', '2020-05-21 08:00:05', '2020-05-23 12:03:42', 'Janmajaya Behera', '159002820518020050195ec5e7adb8caaWhatsApp Image 2020-05-20 at 6.10.01 PM.jpeg'),
-(201, 284, '92', '284', '33485', '33485', 'CANCELLED', '276', NULL, '1', NULL, 'Office renovation work Rs.8075/-, Medicine purchased for MD''s father RS.15410/-, office expenses Rs.10000/-', '2020-05-21', '2020-05-21', '2020-05-21 10:49:15', '2020-05-21 22:26:30', 'Tapaswini Mohapatra', '15900383556081649125ec60f53dc59aIMG_20200521_104118~01.jpg'),
+(201, 284, '92', '284', '33485', '33485', 'CANCELLED', '276', NULL, '1', NULL, 'Office renovation work Rs.8075/-, Medicine purchased for MD\'s father RS.15410/-, office expenses Rs.10000/-', '2020-05-21', '2020-05-21', '2020-05-21 10:49:15', '2020-05-21 22:26:30', 'Tapaswini Mohapatra', '15900383556081649125ec60f53dc59aIMG_20200521_104118~01.jpg'),
 (202, 138, '5', '138', '19500', '19500', 'CANCELLED', '276', NULL, '276', 'enter expense head wise', 'House rent for 3month(mar, April, may)- Rs.13500/-, Fooding/fuel/electricity bill-Rs.6000/-', '2020-05-21', '2020-05-31', '2020-05-21 11:15:58', '2020-05-28 12:39:31', 'Hrusikesh Pradhan', '159003995820762637495ec61596f3600IMG-20200521-WA0000.jpg'),
-(203, 284, '80', '284', '10000', '10000', 'COMPLETED', '1', NULL, NULL, NULL, 'MD''s father Medicines to be purchase', '2020-05-21', '2020-05-21', '2020-05-21 11:35:33', '2020-05-23 12:02:30', 'Tapaswini Mohapatra', NULL),
+(203, 284, '80', '284', '10000', '10000', 'COMPLETED', '1', NULL, NULL, NULL, 'MD\'s father Medicines to be purchase', '2020-05-21', '2020-05-21', '2020-05-21 11:35:33', '2020-05-23 12:02:30', 'Tapaswini Mohapatra', NULL),
 (204, 286, '20', '286', '17727', '17727', 'CANCELLED', '1', NULL, NULL, NULL, 'santosh singh (tractor owner) for the month of march \r\ntotal working days 20@903/- =18060/-\r\nAdv 5ltr diesel- 333/- net payable = 17727/-\r\npayment to be made on santosh singh account.', '2020-05-21', '2020-05-21', '2020-05-21 11:59:52', '2020-05-23 12:01:47', 'Ankit shah', NULL),
 (205, 286, '20', '286', '60000', '60000', 'COMPLETED', '1', NULL, NULL, NULL, 'Prasanta Swain house rent for gandhi chaak for 03 months (feb-aprl)total 60000/-\r\naccounts details- prasanta swain\r\naccount number- 4019002100003639\r\nifsc code- PUNB0401900\r\nPUNJAB NATIONAL BANK', '2020-05-21', '2020-05-21', '2020-05-21 12:05:01', '2020-05-22 17:24:25', 'Ankit shah', NULL),
 (206, 286, '20', '286', '37465', '37465', 'CANCELLED', '276', NULL, '1', 'PL  DR PAYMENT', 'ISWAR PRADHAN- 37465/- \r\n16MM ROD & 12MM ROD \r\nAS PER SIKHAR SIR', '2020-05-21', '2020-05-21', '2020-05-21 12:07:46', '2020-05-21 22:06:01', 'Ankit shah', NULL),
@@ -5970,7 +5996,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (213, 239, '134', '239', '6750', '6750', 'COMPLETED', '276', NULL, NULL, NULL, 'Raw material  puchase for Barakaudi pole concrete', '2020-05-22', '2020-05-30', '2020-05-22 08:14:29', '2020-05-23 11:53:29', 'Shubhabrata  Dey', NULL),
 (214, 239, '91', '239', '6100', '5900', 'COMPLETED', '276', NULL, NULL, NULL, 'Jcb charge\r\nPoleshifting by tractor\r\nShutdown charge\r\nFuel and fooding', '2020-05-18', '2020-05-20', '2020-05-22 08:19:31', '2020-05-23 11:52:30', 'Shubhabrata  Dey', NULL),
 (215, 200, '188', '200', '1800', '1800', 'COMPLETED', '1', NULL, NULL, NULL, 'Releasing SD & EMD', '2020-05-22', '2020-05-27', '2020-05-22 11:18:35', '2020-05-23 11:50:31', 'PRIYABRATA ROUT', '159012651520209854735ec767b3bddab20200522_111744.jpg'),
-(216, 284, '92', '284', '26110', '26110', 'COMPLETED', '1', NULL, NULL, NULL, 'MD Sir''s father Medicines credit purchase-Rs.15410/-, office expenses-Rs.10000/-, Register postal for NGSL site & bill postal for Agalpur', '2020-05-22', '2020-05-31', '2020-05-22 11:49:59', '2020-05-22 12:50:40', 'Tapaswini Mohapatra', NULL),
+(216, 284, '92', '284', '26110', '26110', 'COMPLETED', '1', NULL, NULL, NULL, 'MD Sir\'s father Medicines credit purchase-Rs.15410/-, office expenses-Rs.10000/-, Register postal for NGSL site & bill postal for Agalpur', '2020-05-22', '2020-05-31', '2020-05-22 11:49:59', '2020-05-22 12:50:40', 'Tapaswini Mohapatra', NULL),
 (217, 143, '125', '143', '200', '200', 'COMPLETED', '276', NULL, NULL, NULL, 'FUEL EXP. FOR BANK & OFFICE WORK FOR ONE WEEK', '2020-05-22', '2020-05-29', '2020-05-22 12:18:11', '2020-05-23 11:49:30', 'RAGHU SAHOO', NULL),
 (218, 284, '92', '284', '5000', '0', 'COMPLETED', '1', NULL, NULL, NULL, 'vehicle purchase from Mahindra Showroom', '2020-05-22', '2020-05-22', '2020-05-22 12:22:41', '2020-06-01 11:02:08', 'Tapaswini Mohapatra', NULL),
 (219, 143, '125', '143', '500', '500', 'COMPLETED', '276', NULL, NULL, NULL, 'BIKE SERVICING FOR OFFICE WORK & BANK WORK (LAST BIKE SERVICING CLAIM ON DT- 27.01.2020)', '2020-05-22', '2020-05-22', '2020-05-22 12:22:59', '2020-05-23 11:48:49', 'RAGHU SAHOO', NULL),
@@ -6048,7 +6074,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (293, 157, '20', '157', '5000', '5000', 'COMPLETED', '276', NULL, NULL, NULL, 'ADV FOR TRAVELLING EXP', '2020-05-28', '2020-05-28', '2020-05-28 12:40:33', '2020-05-29 15:56:14', 'CHANDRASEKHAR BEHERA', NULL),
 (294, 157, '20', '157', '20000', '0', 'CANCELLED', NULL, NULL, '276', 'RE', 'LIAISIONING EXP', '2020-05-28', '2020-05-28', '2020-05-28 12:41:22', '2020-05-29 10:37:51', 'CHANDRA SEKHAR BEHERA', NULL),
 (295, 138, '183', '138', '19500', '19500', 'COMPLETED', '1', NULL, NULL, NULL, 'HOUSE RENT AGAINST M/O MARCH,APRIL,MAY-13500\r\nFOODING,FUEL AND ELECTRICITY BILL-6000', '2020-05-21', '2020-05-21', '2020-05-28 12:57:13', '2020-05-29 12:34:22', 'HRUSHIKESH PRADHAN', NULL),
-(296, 39, '20', '39', '5305.44', '5305.44', 'APPROVED', '1', NULL, NULL, NULL, 'ADV FOR TRAVELLING EXP FROM BBSR TO JHARSUGUDA NGSL SITE', '2020-05-23', '2020-05-25', '2020-05-28 16:14:59', '2020-05-28 16:17:21', 'DULLABA NAG', NULL),
+(296, 39, '20', '39', '5305.44', '5305.44', 'COMPLETED', '1', NULL, NULL, NULL, 'ADV FOR TRAVELLING EXP FROM BBSR TO JHARSUGUDA NGSL SITE', '2020-05-23', '2020-05-25', '2020-05-28 16:14:59', '2020-07-08 05:17:49', 'DULLABA NAG', NULL),
 (297, 163, '198', '163', '11400', '11400', 'COMPLETED', '1', NULL, NULL, NULL, 'Auto fair for materials transporting from junagarh to charbhati', '2020-05-28', '2020-05-31', '2020-05-28 18:22:45', '2020-06-01 11:26:32', 'Pradeep Majhi', NULL),
 (298, 174, '224', '174', '10650', '10650', 'COMPLETED', '1', NULL, NULL, NULL, 'local material purchase and labour payment', '2020-05-28', '2020-05-29', '2020-05-28 20:06:26', '2020-06-08 12:49:18', 'Umakanta Biswal', NULL),
 (299, 174, '216', '174', '10850', '10850', 'COMPLETED', '1', NULL, NULL, NULL, 'LOCAL MATERIAL PURCHASE', '2020-05-28', '2020-05-29', '2020-05-28 20:09:22', '2020-06-01 11:26:54', 'Umakanta Biswal', NULL),
@@ -6078,7 +6104,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (325, 29, '187', '29', '1890', '1000', 'COMPLETED', '1', NULL, NULL, NULL, 'Petrol,Foofing', '2020-05-28', '2020-06-03', '2020-05-29 19:02:00', '2020-06-01 11:22:22', 'Khirasindhu Gouda', NULL),
 (326, 100, '300', '100', '2970', '2970', 'COMPLETED', '1', NULL, NULL, NULL, 'Kesinga Store Material Returend', '2020-05-28', '2020-05-29', '2020-05-29 19:06:28', '2020-06-01 11:21:55', 'Gananath Kanhar', NULL),
 (327, 100, '156', '100', '270', '270', 'COMPLETED', '1', NULL, NULL, NULL, 'Petrol', '2020-05-29', '2020-05-29', '2020-05-29 19:08:52', '2020-06-01 11:21:30', 'Gananath Kanhar', NULL),
-(328, 10, '125', '10', '25000', '20000', 'COMPLETED', '1', NULL, NULL, NULL, 'Sir due to my mother''s medical problem(admit in hospital due to paralysis), I want salary advance Rs. 25000(Rupees Twenty five thousand) for your kind consideration and necessary orders.', '2020-05-29', '2020-05-29', '2020-05-29 20:37:51', '2020-06-05 17:09:31', 'Pravat Kumar Dutta', NULL),
+(328, 10, '125', '10', '25000', '20000', 'COMPLETED', '1', NULL, NULL, NULL, 'Sir due to my mother\'s medical problem(admit in hospital due to paralysis), I want salary advance Rs. 25000(Rupees Twenty five thousand) for your kind consideration and necessary orders.', '2020-05-29', '2020-05-29', '2020-05-29 20:37:51', '2020-06-05 17:09:31', 'Pravat Kumar Dutta', NULL),
 (329, 258, '92', '258', '15000', '10000', 'COMPLETED', '1', NULL, NULL, NULL, 'Please Sir Kindly approve my salary against the M/O May.I have medical emergency.My mother has an operation on her head.', '2020-05-30', '2020-05-30', '2020-05-30 07:35:26', '2020-05-30 17:35:00', 'Jitendra Das', NULL),
 (330, 14, '93', '14', '1200', '1200', 'COMPLETED', '1', NULL, NULL, NULL, 'fuel &repermission', '2020-05-30', '2020-05-30', '2020-05-30 09:56:24', '2020-05-30 17:10:18', 'JANMAJAY BEHERA', NULL),
 (331, 14, '303', '14', '2000', '2000', 'COMPLETED', '1', NULL, NULL, NULL, 'SANCTION OF ESTMATE PERMISSION OF SEEC KALAHANDI & DIVISION OFFICE', '2020-05-30', '2020-05-30', '2020-05-30 09:57:42', '2020-06-01 11:19:29', 'JANMAJAY BEHERA', NULL),
@@ -6124,7 +6150,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (374, 284, '92', '284', '7200', '0', 'CANCELLED', NULL, NULL, '1', 'WRONG ENTRY', '26 NOS AFFIDAVIT@200 & 1 JOINT VENTURE@2000 FOR OLIC KEONJHAR', '2020-06-01', '2020-06-01', '2020-06-01 10:45:48', '2020-06-01 11:25:12', 'TAPASWINI MOHAPATRA', '15909885484869823535ed48f0496bffOLIC KEONJHAR.pdf'),
 (375, 77, '125', '77', '6300', '6300', 'COMPLETED', '1', NULL, NULL, NULL, 'SALARY ADV. FOR APR-20 FOR HOME WORK', '2020-06-01', '2020-06-01', '2020-06-01 10:56:03', '2020-06-02 10:36:40', 'PARAMANANDA BARAL', NULL),
 (376, 284, '92', '284', '9000', '9000', 'COMPLETED', '276', NULL, NULL, NULL, '26 NOS AFFIDAVIT @200 ,1 JOINTVENTURE@2000 & TO BE PAID TO PURNA CHANDRA FOR OLIC KEONJHAR', '2020-06-01', '2020-06-01', '2020-06-01 11:28:16', '2020-06-02 10:35:57', 'TAPASWINI MOHAPATRA', '159099109619492287065ed498f807579OLIC KEONJHAR.pdf'),
-(377, 284, '92', '284', '3500', '3500', 'COMPLETED', '276', NULL, NULL, NULL, 'to be purchase materials , colours for Sandy''s Tower work (on Account of Ananta Jena)', '2020-06-01', '2020-06-01', '2020-06-01 11:38:43', '2020-06-02 10:08:01', 'Tapaswini Mohapatra', NULL),
+(377, 284, '92', '284', '3500', '3500', 'COMPLETED', '276', NULL, NULL, NULL, 'to be purchase materials , colours for Sandy\'s Tower work (on Account of Ananta Jena)', '2020-06-01', '2020-06-01', '2020-06-01 11:38:43', '2020-06-02 10:08:01', 'Tapaswini Mohapatra', NULL),
 (378, 100, '154', '100', '25000', '15000', 'COMPLETED', '1', NULL, NULL, NULL, 'Hand Over', '2020-06-01', '2020-06-01', '2020-06-01 12:01:49', '2020-06-02 10:34:40', 'Gananath Kanhar', NULL),
 (379, 287, '125', '287', '10000', '10000', 'COMPLETED', '1', NULL, NULL, NULL, 'OFFICE EXP. (MILK,TEA, TIFFIN & OTHER EXP.)', '2020-06-01', '2020-06-01', '2020-06-01 15:56:10', '2020-06-02 10:34:16', 'KALANDI RAJ', '15910071701664566305ed4d7c2ae1a2REQ-1.jpg'),
 (380, 143, '125', '143', '9700', '9700', 'COMPLETED', '1', NULL, NULL, NULL, 'SALARY ADV.FOR THE MONTH OF MAY-20  FOR HOME EXP. & MEDICINE PURCHASE FOR MAA & BIKE EMI PAID', '2020-06-01', '2020-06-01', '2020-06-01 15:57:44', '2020-06-02 10:32:52', 'RAGHU SAHOO', NULL),
@@ -6181,7 +6207,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (434, 100, '180', '100', '1600', '1600', 'COMPLETED', '1', NULL, NULL, NULL, 'Soubhagya Kesinga Store', '2020-06-05', '2020-06-05', '2020-06-05 10:45:25', '2020-06-08 12:40:43', 'Gananath Kanhar', NULL),
 (435, 57, '172', '57', '3000', '3000', 'COMPLETED', '1', NULL, NULL, NULL, 'CESU CHOUDWAR STORE,COLLECT INDUT VOUCHER(SIV)', '2020-06-05', '2020-06-05', '2020-06-05 10:49:25', '2020-06-05 15:34:42', 'SANYOSH KUMAR KAR', NULL),
 (436, 177, '92', '177', '20000', '20000', 'COMPLETED', '1', NULL, NULL, NULL, 'GUESTHOUSE RENT FOR 3 MONTH MARCH,APRIL,MAY@RS6000\r\nELECTRICITY AND WATER BILL-2000', '2020-06-05', '2020-06-05', '2020-06-05 15:54:22', '2020-06-08 12:40:10', 'SUKANT BISWAL', NULL),
-(437, 10, '125', '10', '5000', '5000', 'COMPLETED', '1', NULL, NULL, NULL, 'Sir, due to my mother''s medical treatment , I want salary advance Rs. 5000/-(Rupees Five thousand for your kind  information and necessary orders.', '2020-05-29', '2020-05-29', '2020-06-05 17:18:59', '2020-06-05 17:21:17', 'PRAVAT KUMAR DUTTA', NULL),
+(437, 10, '125', '10', '5000', '5000', 'COMPLETED', '1', NULL, NULL, NULL, 'Sir, due to my mother\'s medical treatment , I want salary advance Rs. 5000/-(Rupees Five thousand for your kind  information and necessary orders.', '2020-05-29', '2020-05-29', '2020-06-05 17:18:59', '2020-06-05 17:21:17', 'PRAVAT KUMAR DUTTA', NULL),
 (438, 254, '86', '254', '170', '170', 'COMPLETED', '1', NULL, NULL, NULL, 'Fuel for bike', '2020-06-05', '2020-06-05', '2020-06-05 17:19:17', '2020-06-08 12:37:52', 'Sudipti dhar', NULL),
 (439, 206, '125', '206', '1010', '1010', 'COMPLETED', '1', NULL, NULL, NULL, 'REPAIRING OF SUZUKI SCOOTY -OD08-J-4988', '2020-06-05', '2020-06-05', '2020-06-05 17:27:40', '2020-06-08 12:37:10', 'SAMEER ACHARYA [ VEHICLE MANAGER', NULL),
 (440, 254, '125', '254', '528', '528', 'COMPLETED', '1', NULL, NULL, NULL, 'Bike repairing-\r\nEngine oil-328\r\nAir filter-160\r\nMechanic charge-40\r\nTotal -528', '2020-06-05', '2020-06-05', '2020-06-05 17:27:47', '2020-06-08 12:36:06', 'Sudipti dhar', '15913582676536873645eda333b2b89f15913581716742413383224479250957.jpg'),
@@ -6189,7 +6215,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (442, 143, '125', '143', '200', '200', 'COMPLETED', '1', NULL, NULL, NULL, 'Fuel exp.  For bank & office work for one week', '2020-06-05', '2020-06-12', '2020-06-05 18:25:44', '2020-06-08 12:34:42', 'Raghu Sahoo', NULL),
 (443, 163, '125', '163', '1500', '1500', 'COMPLETED', '1', NULL, NULL, NULL, 'MESS VEGETABLE EXPENSES', '2020-06-05', '2020-06-10', '2020-06-05 18:47:41', '2020-06-08 12:34:11', 'PRADEEP MAJHI', NULL),
 (444, 21, '75', '21', '1350', '1350', 'COMPLETED', '1', NULL, NULL, NULL, 'fuel and fooding advance', '2020-06-06', '2020-06-10', '2020-06-05 19:15:04', '2020-06-08 12:33:34', 'KUMUDA RANA', NULL),
-(445, 174, '296', '174', '7500', '0', 'CANCELLED', '1', NULL, '1', 'CANCELLED BY MGR', 'Junagarh soubhagy  Pole concrete .cement 10bag =3500/ Sand 1trip =1000/ Chip''s  =3000/', '2020-06-05', '2020-06-05', '2020-06-05 20:01:44', '2020-06-09 10:12:58', 'Umakantabaisal baisal', NULL),
+(445, 174, '296', '174', '7500', '0', 'CANCELLED', '1', NULL, '1', 'CANCELLED BY MGR', 'Junagarh soubhagy  Pole concrete .cement 10bag =3500/ Sand 1trip =1000/ Chip\'s  =3000/', '2020-06-05', '2020-06-05', '2020-06-05 20:01:44', '2020-06-09 10:12:58', 'Umakantabaisal baisal', NULL),
 (446, 287, '125', '287', '2610', '700', 'COMPLETED', '1', NULL, NULL, NULL, 'KEYBOARD & MOUSE PURCHASE FOR KALANDI RAJ COMPUTER', '2020-06-06', '2020-06-06', '2020-06-06 10:38:39', '2020-06-08 12:29:03', 'KALANDI  RAJ', NULL),
 (447, 254, '86', '254', '10000', '10000', 'COMPLETED', '1', NULL, NULL, NULL, 'For finalize Location dispute of Raxi 1 sub station', '2020-06-07', '2020-06-07', '2020-06-06 20:30:49', '2020-06-08 12:28:31', 'Sudipti dhar', NULL),
 (448, 254, '103', '254', '250', '250', 'COMPLETED', '1', NULL, NULL, NULL, 'Fuel for bike to visit biswanathpur for R&B shifting tree cutting related work ,Narla & Raxi RWSS', '2020-06-07', '2020-06-07', '2020-06-07 17:52:57', '2020-06-08 12:27:54', 'Sudipti dhar', NULL),
@@ -6207,9 +6233,9 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (462, 100, '182', '100', '1500', '1500', 'COMPLETED', '1', NULL, NULL, NULL, 'Checklist', '2020-06-08', '2020-06-08', '2020-06-08 11:34:41', '2020-06-11 18:37:25', 'Gananath Kanhar', NULL),
 (463, 57, '302', '57', '3000', '1550', 'COMPLETED', '1', NULL, NULL, NULL, 'To OSIC, Cuttack to liasing  in all project', '2020-06-08', '2020-06-13', '2020-06-08 11:54:45', '2020-06-10 23:31:28', 'Santosh Kumar Kar', NULL),
 (464, 284, '20', '284', '1000', '1000', 'COMPLETED', '1', NULL, NULL, NULL, 'MATERIALS TRANSPORTATION CHARGES', '2020-06-05', '2020-06-05', '2020-06-08 13:47:30', '2020-06-08 14:08:04', 'TAPASWINI MOHAPATRA', NULL),
-(465, 284, '80', '284', '1600', '1000', 'COMPLETED', '1', NULL, NULL, NULL, 'PAID TO ANANTA KUMAR JENA FOR MD''S RESIDENCE EXP', '2020-06-05', '2020-06-05', '2020-06-08 14:03:08', '2020-06-08 14:07:36', 'TAPASWINI MOHAPATRA', NULL);
+(465, 284, '80', '284', '1600', '1000', 'COMPLETED', '1', NULL, NULL, NULL, 'PAID TO ANANTA KUMAR JENA FOR MD\'S RESIDENCE EXP', '2020-06-05', '2020-06-05', '2020-06-08 14:03:08', '2020-06-08 14:07:36', 'TAPASWINI MOHAPATRA', NULL);
 INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `totalamount`, `approvalamount`, `status`, `approvedby`, `remarks`, `cancelledby`, `cancelreason`, `description`, `datefrom`, `dateto`, `created_at`, `updated_at`, `reqaddby`, `supportdocument`) VALUES
-(466, 284, '80', '284', '2000', '2000', 'COMPLETED', '1', NULL, NULL, NULL, 'MD''S RESIDENCE EXP PAID TO ANANTA KUMAR JENA', '2020-06-02', '2020-06-02', '2020-06-08 15:43:40', '2020-06-08 15:45:25', 'TAPASWINI MOHAPATRA', NULL),
+(466, 284, '80', '284', '2000', '2000', 'COMPLETED', '1', NULL, NULL, NULL, 'MD\'S RESIDENCE EXP PAID TO ANANTA KUMAR JENA', '2020-06-02', '2020-06-02', '2020-06-08 15:43:40', '2020-06-08 15:45:25', 'TAPASWINI MOHAPATRA', NULL),
 (468, 174, '271', '174', '10750', '0', 'PENDING MGR', NULL, NULL, NULL, NULL, 'plinth work', '2020-06-08', '2020-06-08', '2020-06-08 19:26:30', '2020-06-08 19:26:30', 'Umakanta Biswal', NULL),
 (469, 174, '276', '174', '10650', '10650', 'COMPLETED', '1', NULL, NULL, NULL, 'plinth work', '2020-06-08', '2020-06-08', '2020-06-08 19:27:55', '2020-06-11 18:36:59', 'Umakanta Biswal', NULL),
 (470, 254, '86', '254', '1350', '1350', 'COMPLETED', '1', NULL, NULL, NULL, 'Pole shifting\r\nIntermediate pole 5 nos \r\nLine A.B switch pole 2 nos', '2020-06-08', '2020-06-08', '2020-06-08 21:27:01', '2020-06-10 23:30:28', 'Sudipti dhar', NULL),
@@ -6250,7 +6276,7 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 (506, 241, '14', '241', '20000', '17000', 'COMPLETED', '1', NULL, NULL, NULL, '11mtr joist pole for 33kv line', '2020-06-11', '2020-06-18', '2020-06-11 18:39:12', '2020-06-11 19:11:35', 'Santosh Ku. Bishoyi', NULL),
 (507, 100, '316', '100', '40000', '20000', 'COMPLETED', '1', NULL, NULL, NULL, 'Private Work', '2020-06-11', '2020-06-11', '2020-06-11 19:30:48', '2020-06-12 19:05:25', 'Gananath Kanhar', NULL),
 (508, 100, '316', '100', '20000', '10000', 'COMPLETED', '1', NULL, NULL, NULL, 'Private Work', '2020-06-11', '2020-06-11', '2020-06-11 19:46:45', '2020-06-12 19:05:04', 'Gananath Kanhar', NULL),
-(509, 284, '92', '284', '20000', '20000', 'COMPLETED', '276', NULL, NULL, NULL, 'New Lineman''s electrical licence renewal', '2020-06-11', '2020-06-11', '2020-06-11 19:56:26', '2020-06-12 19:06:27', 'Jitendra Das', NULL),
+(509, 284, '92', '284', '20000', '20000', 'COMPLETED', '276', NULL, NULL, NULL, 'New Lineman\'s electrical licence renewal', '2020-06-11', '2020-06-11', '2020-06-11 19:56:26', '2020-06-12 19:06:27', 'Jitendra Das', NULL),
 (510, 254, '182', '254', '810', '760', 'COMPLETED', '1', NULL, NULL, NULL, 'Mistry for meter fitting & connection, nut bolt, aluminium scoket, fuel', '2020-06-11', '2020-06-11', '2020-06-11 23:49:21', '2020-06-12 19:04:35', 'Sudipti dhar', NULL),
 (511, 287, '125', '287', '1910', '1910', 'COMPLETED', '1', NULL, NULL, NULL, 'BOX FILE & OTHER FILE PURCHASE', '2020-06-03', '2020-06-03', '2020-06-12 01:00:30', '2020-06-12 01:01:27', 'KALANDI RAJ', NULL),
 (512, 254, '157', '254', '100', '100', 'COMPLETED', '1', NULL, NULL, NULL, 'Fuel for bike on date 10/6/20 to visit mading to deypur R&B shifting work', '2020-06-10', '2020-06-10', '2020-06-12 02:06:20', '2020-06-12 19:04:17', 'Sudipti dhar', NULL),
@@ -6303,8 +6329,8 @@ INSERT INTO `requisitionheaders` (`id`, `employeeid`, `projectid`, `userid`, `to
 -- Table structure for table `requisitionpayments`
 --
 
-CREATE TABLE IF NOT EXISTS `requisitionpayments` (
-`id` int(11) NOT NULL,
+CREATE TABLE `requisitionpayments` (
+  `id` int(11) NOT NULL,
   `rid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `paymenttype` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6318,7 +6344,7 @@ CREATE TABLE IF NOT EXISTS `requisitionpayments` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `scheduledate` date DEFAULT NULL,
   `chequeno` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=400 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `requisitionpayments`
@@ -6720,7 +6746,8 @@ INSERT INTO `requisitionpayments` (`id`, `rid`, `amount`, `paymenttype`, `remark
 (396, '510', '760', 'CHEQUE', NULL, '8', 'PAID', 'NA', '2020-06-12', NULL, '2020-06-12 19:04:30', '2020-06-12 23:54:26', NULL, '004420'),
 (397, '508', '10000', 'CHEQUE', NULL, '8', 'PAID', 'NA', '2020-06-12', NULL, '2020-06-12 19:04:50', '2020-06-12 23:53:54', NULL, '004421'),
 (398, '507', '20000', 'CHEQUE', NULL, '8', 'PAID', 'NA', '2020-06-12', NULL, '2020-06-12 19:05:17', '2020-06-12 23:53:34', NULL, '004421'),
-(399, '509', '20000', 'CASH', NULL, NULL, 'PAID', 'NA', '2020-06-11', NULL, '2020-06-12 19:06:21', '2020-06-12 19:14:00', NULL, NULL);
+(399, '509', '20000', 'CASH', NULL, NULL, 'PAID', 'NA', '2020-06-11', NULL, '2020-06-12 19:06:21', '2020-06-12 19:14:00', NULL, NULL),
+(400, '296', '305', 'ONLINE PAYMENT', 'good', NULL, 'PENDING', NULL, NULL, NULL, '2020-07-08 05:17:22', '2020-07-08 09:11:59', '2020-07-08', NULL);
 
 -- --------------------------------------------------------
 
@@ -6728,8 +6755,8 @@ INSERT INTO `requisitionpayments` (`id`, `rid`, `amount`, `paymenttype`, `remark
 -- Table structure for table `requisitions`
 --
 
-CREATE TABLE IF NOT EXISTS `requisitions` (
-`id` int(11) NOT NULL,
+CREATE TABLE `requisitions` (
+  `id` int(11) NOT NULL,
   `expenseheadid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `particularid` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6744,7 +6771,7 @@ CREATE TABLE IF NOT EXISTS `requisitions` (
   `userid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=882 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `requisitions`
@@ -6829,7 +6856,7 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (94, '2', NULL, 'FUEL', '200', '42', '200', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '239', '2020-05-03 19:04:31', '2020-05-03 22:24:14'),
 (95, '3', NULL, NULL, '80', '42', '80', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '239', '2020-05-03 19:04:31', '2020-05-03 22:24:18'),
 (96, '36', NULL, NULL, '4300', '43', '4300', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '273', '2020-05-04 07:08:31', '2020-05-04 16:14:24'),
-(97, '48', NULL, '2 month''s rent for titilagarh gauste hause', '6600', '44', '0', 'PENDING', NULL, NULL, 'SELF', NULL, '245', '2020-05-04 08:33:14', '2020-05-04 08:33:14'),
+(97, '48', NULL, '2 month\'s rent for titilagarh gauste hause', '6600', '44', '0', 'PENDING', NULL, NULL, 'SELF', NULL, '245', '2020-05-04 08:33:14', '2020-05-04 08:33:14'),
 (98, '84', NULL, 'MESS EXP. FOR VEGETABLE PURCHASE', '1000', '45', '1000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '163', '2020-05-04 09:33:00', '2020-05-04 12:54:27'),
 (99, '36', NULL, NULL, '3290', '46', '3290', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '273', '2020-05-04 09:48:44', '2020-05-04 16:08:59'),
 (100, '141', NULL, NULL, '11470', '47', '11470', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '62', '2020-05-04 11:41:49', '2020-05-07 05:22:47'),
@@ -6864,7 +6891,7 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (132, '36', NULL, 'Keed Division and Our Office Work', '100', '67', '100', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '14', '2020-05-05 13:05:49', '2020-05-05 13:41:21'),
 (133, '16', NULL, 'Check List  issue for Utkela Air stip Division exp', '500', '68', '500', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '14', '2020-05-05 13:08:57', '2020-05-05 13:41:31'),
 (134, '11', NULL, 'Advance payment to Mr Ashok Mohanty , contractual work under Mr Sukanta ch. Swain,(Nanda Mausa) for joist pole febrication in factory.', '500', '69', '500', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '285', '2020-05-05 17:10:36', '2020-05-05 17:14:27'),
-(135, '9', NULL, 'purchase 1/2'''' x 5''''nut bolt =60 nos for spike fitting in elephant corridor site  and grinder wheel for febrication work', '1100', '69', '1100', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '285', '2020-05-05 17:10:36', '2020-05-05 17:14:54'),
+(135, '9', NULL, 'purchase 1/2\'\' x 5\'\'nut bolt =60 nos for spike fitting in elephant corridor site  and grinder wheel for febrication work', '1100', '69', '1100', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '285', '2020-05-05 17:10:36', '2020-05-05 17:14:54'),
 (136, '115', NULL, 'New Bolero Camper Registration Amount', '7900', '70', '7900', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '206', '2020-05-06 11:51:24', '2020-05-07 04:21:30'),
 (137, '115', NULL, 'New Bolero Camper Permit', '6700', '70', '6700', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '206', '2020-05-06 11:51:24', '2020-05-07 04:21:35'),
 (138, '94', NULL, 'Pole shifting 1x100', '100', '71', '100', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '254', '2020-05-06 20:13:16', '2020-05-07 04:18:14'),
@@ -6881,7 +6908,7 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (149, '5', NULL, 'Salary Advance Against April 2020', '10000', '74', '10000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '209', '2020-05-07 18:26:41', '2020-05-09 17:48:01'),
 (151, '10', NULL, 'Inespection of Belamba OLIC R/L -PC for Praharaj Sir', '5000', '76', '5000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '9', '2020-05-07 21:01:52', '2020-05-09 12:35:11'),
 (152, '84', NULL, 'Gas Refill for Bhawanipatna mess and Krishna apartment gas refill', '2600', '77', '2500', 'PARTIALLY APPROVED', NULL, NULL, 'SELF', NULL, '163', '2020-05-07 21:03:06', '2020-05-09 14:31:20'),
-(153, '128', NULL, 'AFFIDAVIT FOR 15 NOS TENDER''S', '3000', '78', '3000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '58', '2020-05-07 17:31:33', '2020-05-07 17:35:12'),
+(153, '128', NULL, 'AFFIDAVIT FOR 15 NOS TENDER\'S', '3000', '78', '3000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '58', '2020-05-07 17:31:33', '2020-05-07 17:35:12'),
 (154, '2', NULL, 'Fuel for 10 days *200', '2000', '79', '1000', 'PARTIALLY APPROVED', NULL, NULL, 'SELF', NULL, '174', '2020-05-07 19:07:15', '2020-05-09 14:31:55'),
 (155, '3', NULL, 'one time fooding-(10 days*70)', '700', '79', '500', 'PARTIALLY APPROVED', NULL, NULL, 'SELF', NULL, '174', '2020-05-07 19:07:15', '2020-05-09 14:32:14'),
 (156, '48', NULL, 'march & april month house rent at dharmagarh PHD', '4000', '80', '0', 'PENDING', NULL, NULL, 'SELF', NULL, '29', '2020-05-07 19:29:34', '2020-05-07 19:29:34'),
@@ -6951,8 +6978,8 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (223, '135', NULL, 'FUEL EXP.', '1000', '124', '1000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '31', '2020-05-13 09:51:47', '2020-05-13 18:00:50'),
 (224, '3', NULL, 'FOODING EXP. FOR 4 PERSON', '400', '124', '400', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '31', '2020-05-13 09:51:47', '2020-05-13 18:00:56'),
 (225, '135', NULL, 'Vehicle hire charges from BBSR to Brajarajnagar, NGSL', '13000', '125', '13000', 'FULLY APPROVED', NULL, '12000 approved earlier', 'SELF', NULL, '284', '2020-05-13 10:34:30', '2020-05-15 17:24:18'),
-(226, '9', NULL, 'PURCHASE IRON MATERIALS  FOR SITE.\r\n1) 4'''' LIGHT CHANNEL =500 KG\r\n2)3'''' LIGHT CHANNEL=500 KG\r\n3)3'''' MEDIUM CHANNEL=200 KG\r\n4)35X5 MM ANGLE=300 KG\r\n5)40X5 MM FLAT=300 KG\r\n6)50X5 MM ANGLE =300 KG\r\n\r\n   ', '100000', '126', '100000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '285', '2020-05-13 10:38:21', '2020-05-13 11:01:56'),
-(227, '4', NULL, 'Printer cartridge refilling 3 nos. @ Rs.350=1050, material return from site (Infocity-II to BBSR store) labour loading & unloading charges-400, MD''s mess exp (grocery item purchase)-420', '1870', '127', '1870', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-13 10:45:39', '2020-05-13 11:01:31'),
+(226, '9', NULL, 'PURCHASE IRON MATERIALS  FOR SITE.\r\n1) 4\'\' LIGHT CHANNEL =500 KG\r\n2)3\'\' LIGHT CHANNEL=500 KG\r\n3)3\'\' MEDIUM CHANNEL=200 KG\r\n4)35X5 MM ANGLE=300 KG\r\n5)40X5 MM FLAT=300 KG\r\n6)50X5 MM ANGLE =300 KG\r\n\r\n   ', '100000', '126', '100000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '285', '2020-05-13 10:38:21', '2020-05-13 11:01:56'),
+(227, '4', NULL, 'Printer cartridge refilling 3 nos. @ Rs.350=1050, material return from site (Infocity-II to BBSR store) labour loading & unloading charges-400, MD\'s mess exp (grocery item purchase)-420', '1870', '127', '1870', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-13 10:45:39', '2020-05-13 11:01:31'),
 (228, '96', NULL, 'Purchase of register A,B,C,D & E (As per labour Act.) FY 2020-21 for NGSL Site (Auth. by HR)', '2000', '128', '2000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-13 11:38:28', '2020-05-13 13:00:57'),
 (229, '106', NULL, 'Bike servicing and Tyre and tube change', '4400', '129', '4400', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '29', '2020-05-13 15:12:28', '2020-05-13 19:20:10'),
 (230, '9', NULL, 'Cement purchase for site work 3 bag', '1020', '130', '1020', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '29', '2020-05-13 15:15:25', '2020-05-13 19:19:24'),
@@ -6995,7 +7022,7 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (275, '3', NULL, 'Fooding for seven days  720', '720', '165', '720', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '174', '2020-05-16 12:33:16', '2020-05-18 08:32:58'),
 (277, '1', NULL, 'Balance payment against exp. Rs.  27670.00 adv.  Receive Rs.  24000.00 Balance amount Rs.  3670.00', '3670', '167', '0', 'CANCELLED', 'Project Name Wrongly Entry', NULL, 'SELF', NULL, '163', '2020-05-16 17:17:05', '2020-05-18 10:51:18'),
 (278, '36', NULL, 'Fuel for bike from 17/5/2020 to 21/5/2020', '500', '168', '500', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '254', '2020-05-16 18:44:56', '2020-05-18 08:30:54'),
-(279, '48', NULL, '2 month''s rent for Titilagarh gauste house. Woner name-Suraj prusty Ac no-35442215947 Ifsc code-SBIN0012092 SATE BANK OF INDIA 1 MONTH RENT-3300 TOTAL AMOUNT REQUATION-2month*2=6600 rupees', '6600', '169', '6600', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '245', '2020-05-17 09:15:07', '2020-05-23 20:57:03'),
+(279, '48', NULL, '2 month\'s rent for Titilagarh gauste house. Woner name-Suraj prusty Ac no-35442215947 Ifsc code-SBIN0012092 SATE BANK OF INDIA 1 MONTH RENT-3300 TOTAL AMOUNT REQUATION-2month*2=6600 rupees', '6600', '169', '6600', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '245', '2020-05-17 09:15:07', '2020-05-23 20:57:03'),
 (280, '3', NULL, NULL, '3000', '170', '3000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '286', '2020-05-17 15:40:37', '2020-05-18 13:37:49'),
 (281, '10', NULL, 'Sarat Linemen-1000\r\nFor shutdown R&B Badpada', '1000', '171', '500', 'PARTIALLY APPROVED', NULL, NULL, 'SELF', NULL, '100', '2020-05-17 16:56:06', '2020-05-18 08:30:26'),
 (282, '5', NULL, 'Paid to drive Lipu nanda', '1750', '172', '1750', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '286', '2020-05-17 21:56:35', '2020-05-18 13:30:52'),
@@ -7013,9 +7040,9 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (294, '3', NULL, 'Paid to Chandrasekhar behera', '570', '173', '570', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '286', '2020-05-18 07:52:42', '2020-05-18 13:28:13'),
 (295, '46', NULL, '11-3-20- ADRI -SEMELPADAR-CHAMPACHUAN-ADRI(130 KM)-2730.\r\n12-3-20-ADRI -LAINGUDA-ADRI-138 KM-1200.00\r\n14-3-20-ADRI SANADARLA-ADRI-48 KM-1795.00\r\n15-3-20-ADRI -SANADARLA-ADRI-52 KM-1880\r\n16-3-20-ADRI -', '13925', '174', '0', 'CANCELLED', 'place requisition with bank account details of Vehicle', NULL, 'SELF', NULL, '206', '2020-05-18 09:42:25', '2020-05-18 10:32:16'),
 (296, '1', NULL, NULL, '3670', '175', '3670', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '163', '2020-05-18 11:21:11', '2020-05-22 19:22:55'),
-(297, '107', NULL, '02 No''s Bathroom final fitting Rs.5000/- , extra work of bathroom Rs.500/-, Extension short piece 02 nos. Rs.140/- , 01day breaker rent fare Rs.200/-', '5840', '176', '5840', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-18 11:39:59', '2020-05-18 13:01:50'),
+(297, '107', NULL, '02 No\'s Bathroom final fitting Rs.5000/- , extra work of bathroom Rs.500/-, Extension short piece 02 nos. Rs.140/- , 01day breaker rent fare Rs.200/-', '5840', '176', '5840', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-18 11:39:59', '2020-05-18 13:01:50'),
 (298, '100', NULL, 'To be paid Krushna ch. Panigrahi(pujari) for  month of Mar 20- 2000, and purchase puja expenses-200', '2200', '176', '2200', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-18 11:39:59', '2020-05-18 13:01:55'),
-(299, '141', NULL, 'Purchased vegetables, milk items, grocery items for MD''s Mess.', '2026', '176', '2026', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-18 11:39:59', '2020-05-18 13:01:59'),
+(299, '141', NULL, 'Purchased vegetables, milk items, grocery items for MD\'s Mess.', '2026', '176', '2026', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-18 11:39:59', '2020-05-18 13:01:59'),
 (300, '84', NULL, NULL, '1000', '177', '1000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '163', '2020-05-18 11:55:28', '2020-05-22 20:41:11'),
 (301, '4', NULL, 'Work man permit submit at SE office balangir', '1600', '178', '1600', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '14', '2020-05-19 11:21:17', '2020-05-22 20:43:19'),
 (302, '21', NULL, 'Document Submission at Angul Division', '2000', '179', '2000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '209', '2020-05-19 12:15:20', '2020-05-19 12:53:43'),
@@ -7047,9 +7074,9 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (328, '16', NULL, NULL, '2500', '200', '2500', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '14', '2020-05-21 08:00:05', '2020-05-21 12:32:46'),
 (329, '26', NULL, NULL, '100', '200', '100', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '14', '2020-05-21 08:00:05', '2020-05-21 12:32:52'),
 (330, '36', NULL, NULL, '100', '200', '100', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '14', '2020-05-21 08:00:05', '2020-05-21 12:32:57'),
-(331, '4', NULL, 'Office renovation work Rs.8075/-, Medicine purchased for MD''s father RS.15410/-, office expenses Rs.10000/-', '33485', '201', '33485', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-21 10:49:15', '2020-05-21 12:32:14'),
+(331, '4', NULL, 'Office renovation work Rs.8075/-, Medicine purchased for MD\'s father RS.15410/-, office expenses Rs.10000/-', '33485', '201', '33485', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-21 10:49:15', '2020-05-21 12:32:14'),
 (332, '48', NULL, 'House rent for 3month(mar, April, may)- Rs.13500/-, Fooding/fuel/electricity bill-Rs.6000', '19500', '202', '0', 'CANCELLED', 'entr expense head wise', NULL, 'SELF', NULL, '138', '2020-05-21 11:15:58', '2020-05-28 12:39:18'),
-(333, '82', NULL, 'MD''s father Medicines to be purchase', '10000', '203', '10000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-21 11:35:33', '2020-05-21 12:29:16'),
+(333, '82', NULL, 'MD\'s father Medicines to be purchase', '10000', '203', '10000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-21 11:35:33', '2020-05-21 12:29:16'),
 (334, '135', NULL, 'tractor hire charges', '17727', '204', '17727', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '286', '2020-05-21 11:59:52', '2020-05-21 12:51:14'),
 (335, '48', NULL, '3 MONTHS HOUSE RENT', '60000', '205', '60000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '286', '2020-05-21 12:05:01', '2020-05-21 12:50:54'),
 (336, '9', NULL, 'ROD PURCHASE FROM ISWAR PRADHAN', '37465', '206', '37465', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '286', '2020-05-21 12:07:46', '2020-05-21 12:27:49'),
@@ -7258,7 +7285,7 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (553, '3', NULL, 'Fooding 70', '70', '326', '70', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '100', '2020-05-29 19:06:28', '2020-06-01 08:26:54'),
 (554, '2', NULL, 'Bhawanipatna to Kesinga \r\nCheck List Signature Utkela JE and Kesinga SDO', '200', '327', '200', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '100', '2020-05-29 19:08:52', '2020-06-01 08:26:07'),
 (555, '3', NULL, 'Fooding 70', '70', '327', '70', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '100', '2020-05-29 19:08:52', '2020-06-01 08:26:11'),
-(556, '5', NULL, 'Sir due to my mother''s medical problem(admit in hospital due to paralysis), I want salary advance Rs. 25000(Rupees Twenty five thousand) for your kind consideration and necessary orders.', '25000', '328', '20000', 'PARTIALLY APPROVED', NULL, NULL, 'SELF', NULL, '10', '2020-05-29 20:37:51', '2020-05-30 13:19:37'),
+(556, '5', NULL, 'Sir due to my mother\'s medical problem(admit in hospital due to paralysis), I want salary advance Rs. 25000(Rupees Twenty five thousand) for your kind consideration and necessary orders.', '25000', '328', '20000', 'PARTIALLY APPROVED', NULL, NULL, 'SELF', NULL, '10', '2020-05-29 20:37:51', '2020-05-30 13:19:37'),
 (557, '5', NULL, NULL, '15000', '329', '10000', 'PARTIALLY APPROVED', NULL, NULL, 'SELF', NULL, '258', '2020-05-30 07:35:26', '2020-05-30 13:19:07'),
 (558, '36', NULL, NULL, '200', '330', '200', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '14', '2020-05-30 09:56:24', '2020-05-30 11:25:35'),
 (559, '16', NULL, NULL, '1000', '330', '1000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '14', '2020-05-30 09:56:24', '2020-05-30 11:25:14'),
@@ -7273,7 +7300,7 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (568, '106', NULL, 'Adv  received 1,000/for office bike. Repairng total exp. Rs-1,170/- balance. Due. Rs-170/_', '170', '335', '170', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '190', '2020-05-30 11:00:49', '2020-05-30 11:18:14'),
 (569, '115', NULL, 'RC Cancellation for innova car', '2000', '336', '2000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-30 11:29:30', '2020-05-30 13:31:02'),
 (570, '106', NULL, 'office scooty to be repair', '2000', '336', '2000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-30 11:29:30', '2020-05-30 13:29:25'),
-(571, '146', NULL, 'Bharati Devi''s (house keeper) wages payment for the month of march- cash payment', '3000', '336', '3000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-30 11:29:30', '2020-05-30 13:29:32'),
+(571, '146', NULL, 'Bharati Devi\'s (house keeper) wages payment for the month of march- cash payment', '3000', '336', '3000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-05-30 11:29:30', '2020-05-30 13:29:32'),
 (572, '106', NULL, NULL, '2000', '337', '2000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '206', '2020-05-30 11:33:46', '2020-05-30 12:40:52'),
 (573, '10', NULL, 'Asst Enginner OLIC for arrangement of metting-3000', '3000', '338', '3000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '9', '2020-05-30 12:19:20', '2020-05-30 13:31:50'),
 (574, '2', NULL, 'Bhawanipatna to Baliguda', '1500', '338', '1500', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '9', '2020-05-30 12:19:20', '2020-05-30 13:31:57'),
@@ -7328,7 +7355,7 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (628, '128', NULL, NULL, '7200', '374', '0', 'CANCELLED', 'WRONG ENTRY', NULL, 'SELF', NULL, '284', '2020-06-01 10:45:48', '2020-06-01 11:23:42'),
 (629, '5', NULL, 'SALARY ADV. FOR APR-20 FOR HOME WORK', '6300', '375', '6300', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '77', '2020-06-01 10:56:03', '2020-06-01 20:34:57'),
 (630, '128', NULL, NULL, '9000', '376', '9000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-06-01 11:28:16', '2020-06-01 11:31:05'),
-(631, '9', 'null', 'to be purchase materials , colours for Sandy''s Tower work (on account of Ananta Jena)', '3500', '377', '3500', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-06-01 11:38:43', '2020-06-01 13:25:58'),
+(631, '9', 'null', 'to be purchase materials , colours for Sandy\'s Tower work (on account of Ananta Jena)', '3500', '377', '3500', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '284', '2020-06-01 11:38:43', '2020-06-01 13:25:58'),
 (632, '43', NULL, 'Handed over \r\nJE Power house-15000\r\nSDO Power house-10000', '25000', '378', '15000', 'PARTIALLY APPROVED', NULL, NULL, 'SELF', NULL, '100', '2020-06-01 12:01:49', '2020-06-01 20:35:24'),
 (633, '96', NULL, 'PURCHASE OFFICE STATIONARY (FILES, PAPER & OTHER)', '7000', '379', '7000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '287', '2020-06-01 15:56:10', '2020-06-01 20:34:34'),
 (634, '4', NULL, 'OFFICE EXP. (MILK,TEA, TIFFIN & OTHER EXP.)', '3000', '379', '3000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '287', '2020-06-01 15:56:10', '2020-06-01 20:34:38'),
@@ -7408,7 +7435,7 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (711, '10', NULL, NULL, '3000', '435', '3000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '57', '2020-06-05 10:49:25', '2020-06-05 12:18:46'),
 (712, '48', NULL, NULL, '18000', '436', '18000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '177', '2020-06-05 15:54:22', '2020-06-07 13:11:05'),
 (713, '29', NULL, NULL, '2000', '436', '2000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '177', '2020-06-05 15:54:22', '2020-06-07 13:11:08'),
-(714, '5', NULL, 'Sir, due to my mother''s medical treatment , I want salary advance Rs. 5000/-(Rupees Five thousand for your kind  information and necessary orders.', '5000', '437', '5000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '10', '2020-06-05 17:18:59', '2020-06-05 17:20:25'),
+(714, '5', NULL, 'Sir, due to my mother\'s medical treatment , I want salary advance Rs. 5000/-(Rupees Five thousand for your kind  information and necessary orders.', '5000', '437', '5000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '10', '2020-06-05 17:18:59', '2020-06-05 17:20:25'),
 (715, '36', NULL, 'Fuel for bike', '170', '438', '170', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '254', '2020-06-05 17:19:17', '2020-06-08 08:43:35'),
 (716, '106', NULL, 'REPAIRING OF SUZUKI SCOOTY -OD08-J-4988', '1010', '439', '1010', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '206', '2020-06-05 17:27:40', '2020-06-08 08:43:13'),
 (717, '106', NULL, 'Bike repairing-\r\nEngine oil-328\r\nAir filter-160\r\nMechanic charge-40\r\nTotal -528', '528', '440', '528', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '254', '2020-06-05 17:27:47', '2020-06-07 20:25:48'),
@@ -7418,7 +7445,7 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 (721, '84', NULL, 'MESS VEGETABLE EXPENSES', '1500', '443', '1500', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '163', '2020-06-05 18:47:41', '2020-06-07 20:24:22'),
 (722, '2', NULL, 'FUEL-1000', '1000', '444', '1000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '21', '2020-06-05 19:15:04', '2020-06-07 20:24:01'),
 (723, '3', NULL, 'FOODING FOR 5 DAYS', '350', '444', '350', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '21', '2020-06-05 19:15:04', '2020-06-07 20:24:05'),
-(724, '1', NULL, 'Junagarh soubhagy  Pole concrete .cement 10bag =3500/ Sand 1trip =1000/ Chip''s  =3000/', '7500', '445', '0', 'CANCELLED', NULL, NULL, 'SELF', NULL, '174', '2020-06-05 20:01:44', '2020-06-05 21:00:44'),
+(724, '1', NULL, 'Junagarh soubhagy  Pole concrete .cement 10bag =3500/ Sand 1trip =1000/ Chip\'s  =3000/', '7500', '445', '0', 'CANCELLED', NULL, NULL, 'SELF', NULL, '174', '2020-06-05 20:01:44', '2020-06-05 21:00:44'),
 (725, '96', NULL, 'BOX FILE PURCHASE & OTHER OFFICE FILE PURCHASE', '1910', '446', '0', 'CANCELLED', NULL, NULL, 'SELF', NULL, '287', '2020-06-06 10:38:39', '2020-06-07 20:18:30'),
 (726, '4', NULL, 'KEYBOARD & MOUSE PURCHASE FOR KALANDI RAJ COMPUTER', '700', '446', '700', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '287', '2020-06-06 10:38:39', '2020-06-07 20:18:36'),
 (727, '1', NULL, 'For finalize Location dispute of Raxi 1 sub station', '10000', '447', '10000', 'FULLY APPROVED', NULL, NULL, 'SELF', NULL, '254', '2020-06-06 20:30:49', '2020-06-07 20:18:08'),
@@ -7573,14 +7600,14 @@ INSERT INTO `requisitions` (`id`, `expenseheadid`, `particularid`, `description`
 -- Table structure for table `schemes`
 --
 
-CREATE TABLE IF NOT EXISTS `schemes` (
-`id` int(11) NOT NULL,
+CREATE TABLE `schemes` (
+  `id` int(11) NOT NULL,
   `client_id` varchar(20) DEFAULT NULL,
   `schemename` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `schemes`
@@ -7600,7 +7627,8 @@ INSERT INTO `schemes` (`id`, `client_id`, `schemename`, `created_at`, `updated_a
 (11, '11', 'BGJY-BHAWANIPATNA', '2020-05-23 19:03:38', '2020-05-23 19:03:38', NULL),
 (12, '11', 'BGJY-KESINGA', '2020-05-23 19:20:30', '2020-05-23 19:20:30', NULL),
 (13, '27', 'R/L NABARANGPUR', '2020-05-27 19:15:01', '2020-05-27 19:15:01', NULL),
-(14, '11', 'Bore Well', '2020-05-31 11:47:27', '2020-05-31 11:47:27', NULL);
+(14, '11', 'Bore Well', '2020-05-31 11:47:27', '2020-05-31 11:47:27', NULL),
+(15, '16', 'Kalahandi(PWS)', '2020-07-08 06:56:52', '2020-07-08 06:56:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -7608,8 +7636,8 @@ INSERT INTO `schemes` (`id`, `client_id`, `schemename`, `created_at`, `updated_a
 -- Table structure for table `stockentries`
 --
 
-CREATE TABLE IF NOT EXISTS `stockentries` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `stockentries` (
+  `id` int(10) UNSIGNED NOT NULL,
   `product_id` varchar(22) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `unit` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
@@ -7618,7 +7646,7 @@ CREATE TABLE IF NOT EXISTS `stockentries` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=373 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `stockentries`
@@ -8004,8 +8032,8 @@ INSERT INTO `stockentries` (`id`, `product_id`, `unit`, `date`, `unitrate`, `qua
 -- Table structure for table `suggestions`
 --
 
-CREATE TABLE IF NOT EXISTS `suggestions` (
-`id` int(11) NOT NULL,
+CREATE TABLE `suggestions` (
+  `id` int(11) NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci,
   `status` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -8018,8 +8046,8 @@ CREATE TABLE IF NOT EXISTS `suggestions` (
 -- Table structure for table `tempsalaries`
 --
 
-CREATE TABLE IF NOT EXISTS `tempsalaries` (
-`id` int(11) NOT NULL,
+CREATE TABLE `tempsalaries` (
+  `id` int(11) NOT NULL,
   `userid` varchar(500) DEFAULT NULL,
   `salarytype` varchar(500) DEFAULT NULL,
   `purpose` text,
@@ -8031,7 +8059,7 @@ CREATE TABLE IF NOT EXISTS `tempsalaries` (
   `trnid` varchar(200) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tempsalaries`
@@ -8143,8 +8171,8 @@ INSERT INTO `tempsalaries` (`id`, `userid`, `salarytype`, `purpose`, `amount`, `
 -- Table structure for table `todos`
 --
 
-CREATE TABLE IF NOT EXISTS `todos` (
-`id` int(11) NOT NULL,
+CREATE TABLE `todos` (
+  `id` int(11) NOT NULL,
   `userid` varchar(200) DEFAULT NULL,
   `description` text,
   `date` date DEFAULT NULL,
@@ -8153,7 +8181,7 @@ CREATE TABLE IF NOT EXISTS `todos` (
   `status` varchar(200) DEFAULT '1',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `todos`
@@ -8170,13 +8198,13 @@ INSERT INTO `todos` (`id`, `userid`, `description`, `date`, `time`, `datetime`, 
 -- Table structure for table `units`
 --
 
-CREATE TABLE IF NOT EXISTS `units` (
-`id` int(11) NOT NULL,
+CREATE TABLE `units` (
+  `id` int(11) NOT NULL,
   `unitname` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `userid` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `units`
@@ -8203,8 +8231,8 @@ INSERT INTO `units` (`id`, `unitname`, `userid`, `created_at`, `updated_at`) VAL
 -- Table structure for table `useraccounts`
 --
 
-CREATE TABLE IF NOT EXISTS `useraccounts` (
-`id` int(11) NOT NULL,
+CREATE TABLE `useraccounts` (
+  `id` int(11) NOT NULL,
   `user` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bankid` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `acno` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -8217,7 +8245,7 @@ CREATE TABLE IF NOT EXISTS `useraccounts` (
   `scancopy` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `useraccounts`
@@ -8241,8 +8269,8 @@ INSERT INTO `useraccounts` (`id`, `user`, `bankid`, `acno`, `accountholdername`,
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
   `employee_id` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -8256,14 +8284,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `active` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=293 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `employee_id`, `name`, `email`, `password`, `mobile`, `usertype`, `pass`, `remember_token`, `designation`, `username`, `active`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'MASTER ADMIN', 'admin@gmail.com', '$2y$10$1bOMcI3PW7TOdw1Di9V6PuHiKMIazHAb97vNg1cTPEmmewmxfBmMK', '123456', 'MASTER ADMIN', 'pabitra2288', 'FWXwy32EZY3id6zW5nIQgipAIa7D2nHhpSEnqt4SULSZow5SvnRH04x3nRvx', NULL, 'admin', 1, NULL, '2020-05-06 12:04:16'),
+(1, NULL, 'MASTER ADMIN', 'admin@gmail.com', '$2y$10$1bOMcI3PW7TOdw1Di9V6PuHiKMIazHAb97vNg1cTPEmmewmxfBmMK', '123456', 'MASTER ADMIN', 'pabitra2288', '1MQxeV5gj9f4PfNDBouiKUBdSKW6kezonvORce2AcPpAxKrm6PK22nQX00rd', NULL, 'admin', 1, NULL, '2020-05-06 12:04:16'),
 (2, NULL, 'HR', 'hr@gmail.com', '$2y$10$n77dZE7PmNuDSsqsiStBAu4buqpHdoh8pBL37ehbBjPqr41iTm7a.', '123456', 'HR', '123456', 'OQEpTJ12FoWUbuKK1sM3IplOKIWIoYYdLE21PZ6YtS8sJIlGuKMCEGTovmJB', NULL, 'hr', 1, NULL, NULL),
 (3, NULL, 'MD', 'md@gmail.com', '$2y$10$n77dZE7PmNuDSsqsiStBAu4buqpHdoh8pBL37ehbBjPqr41iTm7a.', '123456', 'MD', '123456', 'N7K9Z2VRyZo15PU6zMn3BMcdtfHKIgLv5JmotflCwI1kx6vqbrJCcDp92LPg', NULL, 'md', 1, NULL, NULL),
 (4, '1', 'MR. RAJENDRA N PADHI', 'www.padhi.rajendra@gmail.com', '$2y$10$kSzL3xk4O0WHf8WrRA24AudO1KugPnXNL1dJt17kXc31yHYyuIfwe', '9437470636', 'USER', '123456', '17nPedDHCDnFNtdf4Zj2b4GW13aT1Guq0Omtg0gLmByKqFos9FMUlOaeKjhN', NULL, '10001', 0, '2020-03-11 17:18:31', '2020-03-11 17:18:31'),
@@ -8425,7 +8453,7 @@ INSERT INTO `users` (`id`, `employee_id`, `name`, `email`, `password`, `mobile`,
 (160, '157', 'MR. GAJANAN DAS', NULL, '$2y$10$wFqKA90INNbrnc3zSjgJEe.ePEKnpbUpeRyfXkxTReWrfVj3FG5BK', NULL, 'USER', '123456', NULL, NULL, '10157', 0, '2020-03-11 17:18:45', '2020-03-11 17:18:45'),
 (161, '158', 'MR. GIRIDHAR MAJHI', NULL, '$2y$10$2EyrL5HrROMWPkizfvb9quAZpnBib.58nD6CopJE5OPTnJy9kuXaC', NULL, 'USER', '123456', NULL, NULL, '10158', 0, '2020-03-11 17:18:45', '2020-03-11 17:18:45'),
 (162, '159', 'MR. MUKESH NAG', NULL, '$2y$10$yUnXUNsNrbzEiJs3BUdjQOm2vSFPK/YLwrkbDXnrx3439BoJX17bO', NULL, 'USER', '123456', NULL, NULL, '10159', 0, '2020-03-11 17:18:45', '2020-03-11 17:18:45'),
-(163, '160', 'MR. PRADEEP MAJHI', 'pradeepmajhi123456@gmail.com', '$2y$10$6ZT4MOOmWdM9yPV3Y4hnV.YRR2rQ2.HfA11GG7gOJOHU7M9ee3p6y', '9777779275', 'USER', 'abc123', 'VAm1tYLf2d5fE0mITGvx1zFEGa828ca7gwFsuO2g5NoMy0OO6WoAAQ6NVMrr', NULL, '10160', 1, '2020-03-11 17:18:45', '2020-03-20 12:13:01'),
+(163, '160', 'MR. PRADEEP MAJHI', 'pradeepmajhi123456@gmail.com', '$2y$10$6ZT4MOOmWdM9yPV3Y4hnV.YRR2rQ2.HfA11GG7gOJOHU7M9ee3p6y', '9777779275', 'USER', 'abc123', 'fZo328orY18SGfbOLw2r4UgRJMD6zU7deiAu3idNk395swlViS83BgqdDXh0', NULL, '10160', 1, '2020-03-11 17:18:45', '2020-03-20 12:13:01'),
 (164, '161', 'MR. CHATUR BHUJ BHOI', NULL, '$2y$10$EyULmr20iU4H812pAiuXueQKHwbnZOWv3DMw4kr5zZSJUjNLno3Fu', NULL, 'USER', '123456', NULL, NULL, '10161', 0, '2020-03-11 17:18:45', '2020-03-11 17:18:45'),
 (165, '162', 'MR. AJIT KANUNGO', NULL, '$2y$10$p6MQzNMd86uTh8wBhVVPB.WXqDrdniSzQxgzM0MkzW/15W9NPhYva', NULL, 'USER', '123456', NULL, NULL, '10162', 0, '2020-03-11 17:18:45', '2020-03-11 17:18:45'),
 (166, '163', 'MR. GAUTAM SBAR', NULL, '$2y$10$/uMGftWKIcyCr47I6pUrreaiQylB7/NUeN2SZ5pLIRo8DJjcHYR4.', NULL, 'USER', '123456', NULL, NULL, '10163', 0, '2020-03-11 17:18:45', '2020-03-11 17:18:45'),
@@ -8549,7 +8577,10 @@ INSERT INTO `users` (`id`, `employee_id`, `name`, `email`, `password`, `mobile`,
 (289, '272', 'SUMANTA MAJHI', NULL, '$2y$10$aPX3.YhTw1L7v5B.XapY8uv/kkWF3khhBRlH15JTePsmh/Fof1r/W', NULL, 'USER', '123456', 'A3ZC7Z9jdd0ePleWnYtynA71MP04inqs70N36NEPoUMrAljfZ4zaax1RbLKU', NULL, '10264', 1, '2020-05-16 13:36:07', '2020-05-16 13:36:07'),
 (290, '273', 'JOGESH MAHATO', NULL, '$2y$10$fd1hpEIho7xGX.2e7FuIv.LSJP4Zz8DI1E9MAbJX0MCWIxsbfl91m', NULL, 'USER', '123456', '195vxbklnoUnxP49lBUfhnGPwvLEpyUVGYZXiYknUb8DizKJep4H0FaQbzl9', NULL, 'PEW100137', 1, '2020-05-29 12:13:59', '2020-05-29 12:13:59'),
 (291, '274', 'MR. BABULI KATA', NULL, '$2y$10$QRihb59ub.IzNgc8acBQyeUSy7uKzNBrmqpi5St3Y/yuOM4Zz0g5O', NULL, 'USER', '123456', NULL, NULL, '10265', 1, '2020-06-04 12:26:17', '2020-06-04 12:26:17'),
-(292, '275', 'RUPADHAR BEHERA', NULL, '$2y$10$ZsdaPPv5/cDxJgR0kWecqeqE2OxZkyunahCkABL.52TDSkvisNW/2', '9668675117', 'USER', '123456', NULL, NULL, '10266', 1, '2020-06-04 12:31:45', '2020-06-04 12:31:45');
+(292, '275', 'RUPADHAR BEHERA', NULL, '$2y$10$ZsdaPPv5/cDxJgR0kWecqeqE2OxZkyunahCkABL.52TDSkvisNW/2', '9668675117', 'USER', '123456', NULL, NULL, '10266', 1, '2020-06-04 12:31:45', '2020-06-04 12:31:45'),
+(294, NULL, 'MANAGER', 'manager@gmail.com', '$2y$10$2fCQGSXgCUDTIcCDvildje3u3xQzK5BbU0/eTNncUfdOuvYvYPuju', '8956562532', 'MANAGER', '123456', 'pc34lVpFvt0bZuuhCrafw2SgutBMvbWTgUiRK2Ow7cRHnVyUlaW4rehLKXHF', NULL, 'manager', 1, '2020-07-03 04:45:18', '2020-07-03 04:45:18'),
+(295, NULL, 'hari', 'hari@gmail.com', '$2y$10$aaOxdbSBUazR9kq.owd6uOnZKA9HK6inLnUfxfKg3uEvhKCHGd0T.', '8956586523', 'CASHIER', '123456', 'I4OsPAGxg9VvuScO5f5AU8Y78oOvReAhORNtitNzyZyhO4LSzsM1IbaLICYS', NULL, 'hari', 1, '2020-07-09 07:13:30', '2020-07-09 07:13:30'),
+(296, NULL, 'ram', 'ram@gmail.com', '$2y$10$3WYKz6/oXnApEkvN9NeLruHPxjre8Dr/9Uqs8vXsJS9TOOGm8XdSy', '6589586523', 'ACCOUNTS', '123456', NULL, NULL, 'ram', 1, '2020-07-09 09:21:11', '2020-07-09 09:21:11');
 
 -- --------------------------------------------------------
 
@@ -8557,8 +8588,8 @@ INSERT INTO `users` (`id`, `employee_id`, `name`, `email`, `password`, `mobile`,
 -- Table structure for table `userunderhods`
 --
 
-CREATE TABLE IF NOT EXISTS `userunderhods` (
-`id` int(11) NOT NULL,
+CREATE TABLE `userunderhods` (
+  `id` int(11) NOT NULL,
   `hodid` varchar(200) DEFAULT NULL,
   `userid` varchar(200) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -8571,8 +8602,8 @@ CREATE TABLE IF NOT EXISTS `userunderhods` (
 -- Table structure for table `vehicles`
 --
 
-CREATE TABLE IF NOT EXISTS `vehicles` (
-`id` int(11) NOT NULL,
+CREATE TABLE `vehicles` (
+  `id` int(11) NOT NULL,
   `vehicletype` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `vehiclename` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `vehicleno` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -8591,8 +8622,8 @@ CREATE TABLE IF NOT EXISTS `vehicles` (
 -- Table structure for table `vendors`
 --
 
-CREATE TABLE IF NOT EXISTS `vendors` (
-`id` int(11) NOT NULL,
+CREATE TABLE `vendors` (
+  `id` int(11) NOT NULL,
   `vendorname` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -8615,280 +8646,284 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `pancard` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gstin` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bankpassbook` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cancelcheque` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=266 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `cancelcheque` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `acctype` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `vendors`
 --
 
-INSERT INTO `vendors` (`id`, `vendorname`, `mobile`, `email`, `vendoridproof`, `photo`, `details`, `bankname`, `acno`, `tinno`, `tanno`, `panno`, `gstno`, `servicetaxno`, `branchname`, `ifsccode`, `userid`, `created_at`, `updated_at`, `aadhaarcard`, `pancard`, `gstin`, `bankpassbook`, `cancelcheque`) VALUES
-(1, 'A D SALES', NULL, NULL, NULL, NULL, '1st FLOOR, KAINSHIR ROAD, AINTHAPALI,SAMBALPUR', 'HDFC BANK', '50200034385523', NULL, NULL, 'BBRPB0953N', '21BBRPB0953N1ZL', NULL, NULL, 'HDFC0002717', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(2, 'A.S. ENTERPRISES', NULL, NULL, NULL, NULL, 'PLOT NO-191, SHOP NO-05, RASULGARH, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'ANLPP1519R', '21ANLPP1519R1ZL', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(3, 'Air-Tel Bill Payable', NULL, NULL, NULL, NULL, 'Infocity Campus,6th floor,E-13/1,Chandaka, Industrial Estate,Bhubaneswar,Odisha', NULL, NULL, NULL, NULL, 'AACB2894G', '21AACB2894G1ZZ', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-18 15:07:08', NULL, NULL, NULL, NULL, NULL),
-(4, 'Akanksha Power & Infrastructure \nPvt. Ltd.', NULL, NULL, NULL, NULL, 'F-10,SILVER PLAZA,CANADA CORNER, SHARANPUR ROAD,NASHIK', 'CENTRAL BANK OF INDIA', '3351458641', NULL, NULL, 'AAHCA3667K', '27AAHCA3667K1ZB', NULL, 'NASHIK CITY', 'CBIN0280706', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(5, 'Alisha Bhujbal', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30775827355', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0012120', NULL, '2020-03-11 17:18:12', '2020-03-18 13:41:20', NULL, NULL, NULL, NULL, NULL),
-(6, 'AMAN TECHNOLOGIES PVT LTD', NULL, NULL, NULL, NULL, 'TETERKELA,BADAGUDHIALI\nRAJGANGPUR,ODISHA,INDIA', NULL, NULL, NULL, NULL, 'AAHCA7866Q', '21AAKHP4062K2Z3', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(7, 'Annapurna Agency', NULL, NULL, NULL, NULL, 'Near Railway Booking Counter, P.O;- Bhawanipatna, Dist:- Kalahandi', 'INDIAN BANK', '6097255205', '21891801672', NULL, 'ABFPA4314F', '21ABFPA4314F1ZL', NULL, 'BHAWANIPATNA', 'IDIB000B107', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(8, 'ANNAPURNA HARDWARE STORE', NULL, NULL, NULL, NULL, 'NEAR CITY RAILWAY BOOKING COUNTER, BHAWANIPATNA', 'STATE BANK OF INDIA', '36228548929', NULL, NULL, 'ABPPA2669H', '21ABPPA2669H1ZT', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(9, 'AR Electricals', '9338131060', NULL, NULL, NULL, 'Plot No.-191,G.G.P. Road\nRasulgarh,Bhubaneswar,Odisha\nIndia,751010', 'BANK OF  INDIA ', '555330110000049', NULL, NULL, 'AEFPN4192M', '21AEFPN4192M1ZB', NULL, 'BHUBANESHWAR', 'BKID0005553', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(10, 'Arihant Poles', NULL, NULL, NULL, NULL, 'IDCo Plot No-G4,Industrial Estate\nZone B, Bijakhaman, Bolangir\nOdisha,India,767001', 'STATE BANK OF INDIA', '38054086188', NULL, NULL, 'AHBPJ2740E', '21AHBPJ2740E2Z3', NULL, 'TITLAGARH BAZAR \nBRANCH', 'SBIN0012092', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(11, 'ASHA CEMENTS', NULL, NULL, NULL, NULL, 'HILL TOWN, TH.RAMPUR ROAD, BHAWANIPATNA, KALAHANDI', 'CENTRAL BANK OF INDIA', '3659944507', NULL, NULL, 'DEYPP8348D', '21DEYPP8348D1Z0', NULL, 'BHAWANIPATNA', 'CBIN0284393', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(12, 'Ashok Bastia', NULL, NULL, NULL, NULL, 'Plot No-34,Madhusudan Nagar\nBhubaneswar,751001', 'BANK OF INDIA', '513110110001113', NULL, NULL, NULL, NULL, NULL, 'HANSPAL', 'BKID0005131', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(13, 'Balajee Enterprises', NULL, NULL, NULL, NULL, 'GANDHI CHOWK, BRAJRAJNAGAR, DIST- JHARSUGUDA', 'BANK OF INDIA', '549420110000261', NULL, NULL, 'DNVPS7325P', '21DNVPS7325P1Z1', NULL, NULL, 'BKID0005494', NULL, '2020-03-11 17:18:12', '2020-04-28 19:44:34', NULL, NULL, NULL, NULL, NULL),
-(14, 'BALAJI HARDWARE', NULL, NULL, NULL, NULL, 'SARBAHAL ROAD, JHARSUGUDA', NULL, NULL, NULL, NULL, 'AUKPA1984H', '21AUKPA1984H1ZV', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(15, 'BENGAL DISTRIBUTORS', NULL, NULL, NULL, NULL, '220 ANAND PLAZA, LAXMISAGAR CHHAK, CUTTACK ROAD, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'AEYPD4227Q', '21AEYPD4227Q1Z2', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(16, 'BHAWANI TRADERS', NULL, NULL, NULL, NULL, 'Hemgir, Dist- Sundargarh', 'STATE BANK OF INDIA', '35376031339', NULL, NULL, 'BWLPA8591C', '21BWLPA8591C1ZQ', NULL, 'BHUBANESHWAR', 'SBIN0007047', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(17, 'Bibhuti Sekhar Subudhi,Transporter', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(18, 'Bright Steel', NULL, NULL, NULL, NULL, 'Cuttack Road, Bhubaneswar', 'HDFC BANK', '50200007045479', '21481101218', NULL, 'AACCB2305E', '21AACCB2305E2ZM', NULL, 'JHARPADA ', 'HDFC0000630', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(19, 'CASMAS ENGINEERING', NULL, NULL, NULL, NULL, 'Plot No. 27/578 & 25/577 Nischinta, Tangi, Cuttack', 'BANK OF BARODA', '45210200000061', NULL, NULL, 'AAGFC7941J', '21AAGFC7941J1ZH', NULL, 'CUTTACK', 'BARB0JAGIND', NULL, '2020-03-11 17:18:12', '2020-03-17 10:16:34', NULL, NULL, NULL, NULL, NULL),
-(20, 'Chandan Enterprises', NULL, NULL, NULL, NULL, 'Kesinga Road,Paramanandapur Chowk\nBhawanipatna', 'STATE BANK OF INDIA', '37794802542', NULL, NULL, 'CDZPS6998B', '21CDZPS6998B1ZR', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(21, 'City Nut Bolt Centre', NULL, NULL, NULL, NULL, '102,Jharpada Near Over Brdge, Cuttack Road Bhubaneswar 751006', NULL, NULL, '21252600625', NULL, 'ATSPA3954C', '21ATSPA3954C1Z1', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(22, 'Cobra Lifeguard Security Services', NULL, NULL, NULL, NULL, 'Plot No-1223/2810,Bomikhal\nBhubaneswar,751010', 'INDIAN OVERSEAS BANK', '167602000000636', NULL, NULL, 'CSNPS6035E', '21CSNPS6035E1ZQ', NULL, 'RASULGARH', 'IOBA0001676', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(23, 'Cuttack Diesels', NULL, NULL, NULL, NULL, 'OMP Square, Cuttack', 'CENTRAL BANK OF INDIA', '1682840275', NULL, NULL, 'AADFC4840M', '21AADFC4840M1ZM', NULL, 'OMP SQUARE', 'CBIN0284014', NULL, '2020-03-11 17:18:12', '2020-03-17 10:17:30', NULL, NULL, NULL, NULL, NULL),
-(24, 'D C Biswal Vehicle Owner Bollero', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '10728195023', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-18 13:37:12', NULL, NULL, NULL, NULL, NULL),
-(25, 'DARK DAZZLE', NULL, NULL, NULL, NULL, '2038/11388, Kishan Nagar, Mancheswar, Bhubaneshwar', 'STATE BANK OF INDIA', '35387211604', NULL, NULL, 'BEFPD6396J', '21BEFPD6396J1ZG', NULL, NULL, 'SBIN0012021', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(26, 'E Power Center', NULL, NULL, NULL, NULL, 'Pratapnagari,NH-5,AB Complex\nBhanpur,Cuttack,Odisha,753011', 'FEDERAL BANK', '13770200009713', NULL, NULL, 'AATPD6413F', '21AATPD6413F1Z2', NULL, 'CUTTACK', 'FDRL0001377', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(27, 'Edumadicss', NULL, NULL, NULL, NULL, 'Bhubaneswar,Odisha', 'STATE BANK OF INDIA', '30443592487', NULL, NULL, 'ANGPP1981N', '21ANGPP1981N2ZN', NULL, 'BAPUJI NAGAR,BBSR', 'SBIN0006408', NULL, '2020-03-11 17:18:12', '2020-03-19 10:41:02', NULL, NULL, NULL, NULL, NULL),
-(28, 'Electrotech Enginurs', NULL, NULL, NULL, NULL, 'Plot No- 161, Saheed Nagar, Bhubaneshwar', 'HDFC BANK', '50200032427861', NULL, NULL, 'AAHFE1345B', '21AAHFE1345B1Z9', NULL, NULL, 'HDFC0000630', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(29, 'ELHARD MARKETING LIMITED', NULL, NULL, NULL, NULL, 'S-1/106 SECTOR & ZONE- A, MANCHESWAR INDUSTRIAL ESTATE, BHUBANESHWAR', 'ICICI BANK', '694905501295', NULL, NULL, 'AAACE5657Q', '21AAACE5657Q1ZC', NULL, 'PARTUGUESE CHURCH \nSTREET', 'ICIC0006949', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(30, 'EMAMI CEMENT LIMITED (C )', NULL, NULL, NULL, NULL, 'Risda,Suhela Road,Baloda Bazar, Dist-Bolada Bazar, Bhatpara', 'HDFC BANK', 'EMACEM2001000352', NULL, NULL, 'AABCE7927L', '22AABCE7927L1ZI', NULL, 'SANDOZ BRANCH\n MUMBAI', 'HDFC0000240', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(31, 'EMAMI CEMENT LIMITED (O)', NULL, NULL, NULL, NULL, 'ODISHA MANITIRA UNDER P.S- JAKHPU, BACK SIDE OF MAITHAN STEEL, JAJPUR', 'HDFC BANK', 'EMACEM2001000352', NULL, NULL, 'AABCE7927L', '21AABCE7927L1ZK', NULL, 'SANDOZ BRANCH \nMUMBAI', 'HDFC0000240', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(32, 'Ganapati Pipes & Industries (P) Ltd', NULL, NULL, NULL, NULL, 'Gahirasimila,Dhandika Basta\nBalasore,Odisha', NULL, NULL, NULL, NULL, 'AADCG5325Q', '21AADCG5325Q1Z1', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(33, 'Ganesh transport', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30908432891', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0012120', NULL, '2020-03-11 17:18:12', '2020-03-18 17:55:16', NULL, NULL, NULL, NULL, NULL),
-(34, 'Gangpur Diesels', NULL, NULL, NULL, NULL, 'Plot No-3553,NH-16,Palasuni\nRasulgarh,Bhubaneswar', NULL, NULL, NULL, NULL, 'AKNPP2549J', '21AKNPP2549J1ZX', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(35, 'Gayatri Steel ''N'' Pipes', NULL, NULL, NULL, NULL, 'AE-29(Ground Floor), V.S.S.Nagar,Bhubaneswar', 'OREINTAL BANK OF COMMERCE', '08694015004017', '21045502156', NULL, 'BDXPD7683R', '21BDXPD7683R1ZK', NULL, 'BHUBANESHWAR', 'ORBC0100869', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(36, 'GUPTA POWER INFRASTRUCTURE \nLTD', NULL, NULL, NULL, NULL, 'IDCO PLOY NO- F/P,IID CENTRE, MUKUNDA PRASAD, KHORDA', 'HDFC BANK', '01220330000073', NULL, NULL, 'AAACG9210B', '21AAACG9210B1ZG', NULL, 'BHUBANESWAR', 'HDFC0000122', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(37, 'H.K Sachdeva & Co.', NULL, NULL, NULL, NULL, 'Bhawanipatna,Kalahandi', 'STATE BANK OF INDIA', '33843437301', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-18 15:17:48', NULL, NULL, NULL, NULL, NULL),
-(38, 'HALONIX TECHNOLOGIES (P) \nLTD 21', NULL, NULL, NULL, NULL, 'B-31,NOIDA, DISTT. GAUTAM BUDH NAGAR(U.P.)', 'CORPORATION BANK', '014100401130003', NULL, NULL, 'AACCH1914R', '21AACCH1914R1ZL', NULL, 'NEW DELHI', 'CORP0000141', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(39, 'HALONIX TECHNOLOGIES PVT LTD 05', NULL, NULL, NULL, NULL, 'Plot No-05,Sector-12,II E-SIDCUL INDL\narea Ranipur,Haridwar,\nHimanchal Pradesh,249403', 'CORPORATION BANK', '014100401130003', NULL, NULL, 'AACCH1914R', '05AACCH1914R1ZF', NULL, 'NEW DELHI', 'CORP0000141', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(40, 'HALONIX TECHNOLOGIES PVT LTD 09', NULL, NULL, NULL, NULL, 'B-31 PHASE II NOIDA,DISTT- GAUTAM BUDH NAGAR, U.P', 'CORPORATION BANK', '014100401130003', NULL, NULL, 'AACCH1914R', '09AACCH1914R1Z7', NULL, 'NEW DELHI', 'CORP0000141', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(41, 'Hari Omm Tours & Travels', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30073523375', NULL, NULL, NULL, NULL, NULL, 'FOREST PARK, BBSR', 'SBIN0006606', NULL, '2020-03-11 17:18:12', '2020-03-19 10:45:45', NULL, NULL, NULL, NULL, NULL),
-(42, 'IT Care', NULL, NULL, NULL, NULL, 'Main Road,Mahaveer Pada,Near \nHotel Somnath,Bhawanipatna\nKalahandi,Odisha,766001', 'STATE BANK OF INDIA ', '35393852833', NULL, NULL, 'ALBPB9426F', '21ALBPB9426F1Z0', NULL, 'BHAWANIPATNA', 'SBIN0000039', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(43, 'Jai Mata Dee Hardware', NULL, NULL, NULL, NULL, '34, Cuttack Road, Bhubaneswar-751006', NULL, NULL, NULL, NULL, 'BAZPS9400E', '21BAZPS9400E1ZH', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(44, 'Jain Steel', '6670230204', NULL, NULL, NULL, 'At-Manikeswari Chawk, Po-Bhawanipatna, Dist-Kalahandi, ', 'STATE BANK OF INDIA', '30154792825', '21131801993', NULL, 'ABQPJ4713L', '21ABQPJ4713L1ZL', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(45, 'Jasobanta Pattanaik,Vehicle Owner', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '11083478966', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0012120', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(46, 'JBC Industries', NULL, NULL, NULL, NULL, 'S-3/9 ZONE-A, MANCHESHWAR INDUSTRIAL ESTATE, BHUBANESHWAR, KHURDA', 'BANK OF BARODA', '32500500000001', '21441100270', NULL, 'AASPP9357M', '21AASPP9357M1ZV', NULL, 'CUTTACK', 'BARB0CUTTRD', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(47, 'Jyoti Motors(BBSR) PVT. LTD.', NULL, NULL, NULL, NULL, 'A/62,Nayapalli,Near CRPF Square\r\nBhubaneswar,751003', 'STATE BANK OF INDIA', '37583338134', NULL, NULL, 'AACCJ2167N', '21AACCJ2167N1ZK', NULL, 'BHUBANESHWAR', 'SBIN0009027', NULL, '2020-03-11 17:18:12', '2020-03-18 17:59:18', NULL, NULL, NULL, NULL, NULL),
-(48, 'Jyoti Traders', NULL, NULL, NULL, NULL, 'Infront of Allahabad Bank\nBeheramal,Jharsuguda,Odisha', 'ALLAHABAD BANK', '50268721684', NULL, NULL, 'AJEPM0966E', '21AJEPM0966EIZL', NULL, NULL, 'ALLA0210480', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(49, 'Kamala traders', NULL, NULL, NULL, NULL, 'Plot No-1127/3408,Jayadurganagar\nBomikhal,Bhubaneswar,Odisha,751006', NULL, NULL, NULL, NULL, 'AEXPJ8204Q', '21AEXPJ8204Q1ZW', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(50, 'Kamdhenu Marketing Services', NULL, 'kamdhenum@yahoo.com', NULL, NULL, 'Hno-232, Gujrati Colony, Kesharpur, Buxibazar, Cuttack', 'AXIS BANK', '909020032293810', NULL, NULL, 'ACLPM0991R', '21ACLPM0991R1Z1', NULL, NULL, 'UTIB0000091', NULL, '2020-03-11 17:18:12', '2020-05-28 16:34:40', NULL, NULL, NULL, NULL, NULL),
-(51, 'Kishan Enterprises', NULL, NULL, NULL, NULL, 'C/10, Market Building, Saheed Nagar, Bhubaneshwar', 'UNION BANK OF INDIA', '380805040000065', NULL, NULL, 'AAPPB2063H', '21AAPPB2063H1Z6', NULL, NULL, 'UBIN0538086', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(52, 'Konark Constuction Engineer Ltd', NULL, NULL, NULL, NULL, 'Telengapentha, Cuttack', 'INDIAN OVERSEAS BANK', '2202000010088', '21801300183', NULL, 'AABCK3661M', '21AABCK3661M1ZL', NULL, 'CUTTACK', 'IOBA0000022', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(53, 'Konark Earthmovers Pvt. Ltd.', '9437043311', 'mail@konarkearthmovers.com', NULL, NULL, 'D2/2,Rasulgarh Industrial Estate\r\nBhubaneswar,751010', 'HDFC BANK', '25862320000042', NULL, NULL, 'AAECK8929K', '21AAECK8929K1Z9', NULL, 'BHUBANESWAR', 'HDFC0002586', NULL, '2020-03-11 17:18:12', '2020-03-17 10:24:50', NULL, NULL, NULL, NULL, NULL),
-(54, 'Krishi Auto', NULL, NULL, NULL, NULL, NULL, 'AXIS BANK', '919020045730992', NULL, NULL, NULL, NULL, NULL, NULL, 'UTIB0000812', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(55, 'Krishna Plast Pipes Pvt.Ltd', '6670230204', 'krishnaplastech@rediffmail.com', NULL, NULL, 'Industrial Estate, Railway Station Road, Bargard', 'STATE BANK OF INDIA', '30437519710', '21151700714', NULL, 'AAACK9458K', '21AAACK9458K1ZB', NULL, 'BARGARH', 'SBIN0009679', NULL, '2020-03-11 17:18:12', '2020-05-28 16:32:24', NULL, NULL, NULL, NULL, NULL),
-(56, 'KRISHNA TANKS PVT LTD', NULL, NULL, NULL, NULL, 'NEAR INDUSTRIAL ESTATE, RAILWAY STATION ROAD, BARGARH', NULL, NULL, NULL, NULL, 'AAFCK0154K', '21AAFCK0154K1ZV', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(57, 'LALU ENTERPRISES', NULL, NULL, NULL, NULL, 'Infront of Telephone Bhawan,Bhawanipatna, Kalahandi', NULL, NULL, '21421802076', NULL, 'ABGPC9575P', '21ABGPC9575P2Z7', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(58, 'Laxmi Motors', NULL, NULL, NULL, NULL, 'Kesinga Road,Bhawanipatna,Odisha\r\n766001', 'STATE BANK OF INDIA', '30162705140', NULL, NULL, 'BOTPP6758Q', '21BOTPP6758Q1ZT', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-17 10:26:29', NULL, NULL, NULL, NULL, NULL),
-(59, 'Laxmi Traders', NULL, NULL, NULL, NULL, 'Satyam cinema Road,Bhawanipatna\nOdisha', NULL, NULL, NULL, NULL, 'ABPPA2729J', '21ABPPA2729J1ZV', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(60, 'LAXMI WELDING & MILL STORES', NULL, NULL, NULL, NULL, '116, GROUND FLOOR,ANANDA PLAZA COMPLEX, PLOT NO- 137, LAXMISAGAR SQUARE, CUTTACK ROAD,BHUBANESHWAR', NULL, NULL, NULL, NULL, 'AFGPA6391F', '21AFGPA6391F1ZV', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(61, 'LIMBANI TRADERS', NULL, NULL, NULL, NULL, 'BUDHESWARI AREA, CUTTACK ROAD, BHUBANESWAR', NULL, NULL, NULL, NULL, 'ADIPP9723A', '21ADIPP9723A1ZU', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(62, 'Lingaraj Pipes Pvt Ltd', NULL, NULL, NULL, NULL, '13A CHANDAKA INDUSTRIAL ESTATE, P.O-PATIA, BHUBANESHWAER', 'HDFC BANK', '50200009877799', '21251108280', NULL, 'AAACL5219M', '21AAACL5219M1ZN', NULL, 'BHUBANESHWAR', 'HDFC0003951', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(63, 'M G PLAST ENTERPRISES', NULL, NULL, NULL, NULL, 'PITAPALLI,KUBHARBASTA, KHURDA', 'HDFC BANK', '50200022101280', '21022902761', NULL, 'GBPPS6776H', '21GBPPS6776H1ZX', NULL, 'PATRAPADA ', 'HDFC0004281', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(64, 'M/S AGRAWAL TRADERS', '9937064719', NULL, NULL, NULL, 'AT/PO- BELPAHAR, DIST- JHARSUGUDA', 'STATE BANK OF INDIA', '10707968293', NULL, NULL, 'ABLPA1109Q', '21ABLPA1109Q1ZX', NULL, NULL, 'SBIN0008445', NULL, '2020-03-11 17:18:12', '2020-03-12 15:56:33', NULL, NULL, NULL, NULL, NULL),
-(65, 'M/S Bharat Traders', NULL, NULL, NULL, NULL, 'Statue Square,Bhawanipatna', 'STATE  BANK OF INDIA', '30503993163', NULL, NULL, 'ADIPA9144Q', '21ADIPA9144Q1ZD', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-05-16 17:10:43', NULL, NULL, NULL, NULL, NULL),
-(66, 'M/s Bhawani Fly Ash Bricks', '9938818957', NULL, NULL, NULL, 'Sukhabandh, Hemgir, Dist- Sundargarh', 'UNITED BANK OF INDIA', '0774250027201', NULL, NULL, 'AGSPA3659D', '21AGSPA3659D1ZO', NULL, 'HEMGIRI', 'UTBI0HEM495', NULL, '2020-03-11 17:18:12', '2020-03-17 10:33:38', NULL, NULL, NULL, NULL, NULL),
-(67, 'M/S G.K.PANEL', NULL, NULL, NULL, NULL, 'PLOT NO.327/1486,KORADAKANTA, NEAR BYPASS BBSR-PURI ROAD, BHUBANESWAR 751006', 'BANK OF INDIA', '555330110000027', '21185500430', NULL, 'AILPN4582F', '21AILPN4582F1Z9', NULL, 'BHUBANESHWAR', 'BKID0005553', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(68, 'M/S GANAPATI ELECTRICALS', NULL, NULL, NULL, NULL, 'JAGANNATH TEMPLE ROAD, BHAWANIPATNA, KALAHANDI', 'STATE BANK OF INDIA', '35664739082', '21264801404', NULL, 'AIBPB1792M', '21AIBPB1792M1ZI', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(69, 'M/S Gangpur Sales & Services', NULL, NULL, NULL, NULL, 'Satya Vihar,Near NH-5,Puri Byepass\r\nRoad,Palasuni,Bhubaneswar,\r\nOdisha', NULL, NULL, '21835300980', NULL, 'AANFG0696D', '21AANFG0696D1ZL', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-19 11:47:21', NULL, NULL, NULL, NULL, NULL),
-(70, 'M/S GIRIJA ELECTRICALS', NULL, NULL, NULL, NULL, 'PLOT NO. 825 TANGIBANTA, PATIA, BHUBANESHWAR', 'PUNJAB NATIONAL BANK', '7648002100000343', '21285504934', NULL, 'GGHPS6804K', '21GGHPS6804K1Z3', NULL, 'BHUBANESHWAR', 'PUNB0764800', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(71, 'M/s Jai Bharat Agencies', NULL, NULL, NULL, NULL, 'Shop- G/27, Secong Floor, Bhudhram Oram Market, Near Axis Bank, Kachery Road, Rourkela', 'STATE BANK OF INDIA', '31727937152', NULL, NULL, 'AIAPA5254C', '21AIAPA5254C1Z8', NULL, 'UDITNAGAR BRANCH', 'SBIN0007474', NULL, '2020-03-11 17:18:12', '2020-03-17 10:42:04', NULL, NULL, NULL, NULL, NULL),
-(72, 'M/S JANATA ELECTRICAL AND \nMECHANICAL WORKS', '0674-2597722', NULL, NULL, NULL, '90, BAPUJI NAGAR, BHUBANESWAR', NULL, NULL, '21371110930', NULL, 'AFHPP0293C', '21AFHPP0293C1ZW', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(73, 'M/S MAHAPATRA ELECTRICALS', NULL, NULL, NULL, NULL, 'LANJIPALLO, BERHAMPUR', NULL, NULL, NULL, NULL, 'AGFPM5282K', '21AGFPM5282K1ZB', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(74, 'M/S MARUTI ALLOYS STEEL', NULL, NULL, NULL, NULL, 'PLOT NO- 599/1846, CUTTACK ROAD, BOMIKHAL, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'ACUPN7640K', '21ACUPN7640K1Z5', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(75, 'M/S PREMA CHAIN & MILL STORE', NULL, NULL, NULL, NULL, '140,CUTTACK ROAD,LAXMI SAGAR, BHUBANESHWAR', NULL, NULL, '21311116492', NULL, 'AKHPP7790D', '21AKHPP7790D1Z3', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(76, 'M/S Rajesh Trader', NULL, NULL, NULL, NULL, 'Paramanandapur,Kesinga Road\nBhawanipatna,766001', 'FEDERAL BANK', '21920200001257', NULL, NULL, 'ABRPK4607P', '21ABRPK4607P1ZA', NULL, 'BHAWANIPATNA', 'FDRL0002192', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(77, 'M/s S.K Enterprises', NULL, NULL, NULL, NULL, 'GANESH CHANDRA AVENUE, KOLKATA', 'SOUTH INDIAN BANK', '0129073000010905', NULL, NULL, 'CRUPM2510A', '19CRUPM2510A1ZW', NULL, NULL, 'SIBL0000129', NULL, '2020-03-11 17:18:12', '2020-03-17 10:44:51', NULL, NULL, NULL, NULL, NULL),
-(78, 'M/S SUSHIL & COMPANY', NULL, NULL, NULL, NULL, 'BOINDA,DIST-ANUGUL(ODISHA)', 'UCO BANK', '31520210000151', '21183504558', NULL, 'GBAPS7267A', '21GBAPS7267A1ZU', NULL, 'ANUGUL ', 'UCBA0003152', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(79, 'M/S SushreePower Steel', NULL, NULL, NULL, NULL, 'Plot No-593/892/1566,Ogalapada\nJanala,Odisha', NULL, NULL, NULL, NULL, 'AXBPP6793P', '21AXBPP6793P1ZT', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(80, 'M/S Tara Tarini Constructions', NULL, NULL, NULL, NULL, 'Fatkamal,Pastikudi,Odisha', 'BANK OF BARODA', '33670500000110', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'BARB0BHAWAN', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(81, 'M/s Wire House', NULL, NULL, NULL, NULL, 'Bapuji Nagar, Bhubaneshwar', NULL, NULL, '21221104174', NULL, 'AAAFW8759Q', '21AAAFW8759Q1ZF', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(82, 'M/s. Manoharlal Debi Prasad', NULL, NULL, NULL, NULL, 'Statue Chowk, Bhawanipatna', 'INDIAN OVERSEASE BANK', '070702000004557', '21801802158', NULL, 'AACCB2305E', '21AACCB2305E2ZM', NULL, 'BHAWANIPATNA', 'IOBA0000707', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(83, 'M/s. S.M Gases', NULL, NULL, NULL, NULL, 'At- Gaigaon, Chancher, Utkela, Kalahandi', 'BANK OF BARODA', '33670500000334', '21054801665', NULL, 'BAIPG5790E', '21BAIPG5790E1ZX', NULL, 'BHAWANIPATNA', 'BARB0BHAWAN', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(84, 'Maa Bhubaneswari Pipes & Tiles', NULL, NULL, NULL, NULL, 'Sahoo Complex,Near OrientalBank,Gandi chowk,brajrajnagar,768216', ' ORIENTAL BANK OF COMMERCE', '16924015004213', NULL, NULL, 'CXHPP8203Q', '21CXHPP8203Q1Z2', NULL, NULL, 'ORBC0101692', NULL, '2020-03-11 17:18:12', '2020-03-18 15:22:49', NULL, NULL, NULL, NULL, NULL),
-(85, 'MAA DURGA ELECTRICAL', NULL, NULL, NULL, NULL, 'Phulbani', 'UNION BANK OF INDIA', '625001010050090', NULL, NULL, 'DIQPP6285M', '21DIQPP6285M1ZG', NULL, 'BHUBANESWAR', 'UBIN0562505', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(86, 'MAA SAMLESHWARI STEEL & POWER', NULL, 'msspryp2019@gmail.com', NULL, NULL, '125, 1ST FLOOR, SAMTA SHOPPING ARCADE, SAMTA COLONY, RAIPUR', 'ICICI BANK', '134805500958', NULL, NULL, 'ABMFM2024M', '22ABMFM2024M1ZB', NULL, NULL, 'ICIC0001348', NULL, '2020-03-11 17:18:12', '2020-05-28 16:30:43', NULL, NULL, NULL, NULL, NULL),
-(87, 'Maa Sarala Route Craft', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(88, 'MAA TRADING CORPORATION', NULL, NULL, NULL, NULL, 'PLOT NO 74,PHASE-2, BHAGABAT SANDHAN,GGP COLONY, RASULGARH, BHUBANESHWAR', 'AXIS BANK', '914020001562914', '21932602191', NULL, 'AAWFM4997N', '21AAWFM4997N1Z9', NULL, 'MANCHESWAR ', 'UTIB0001973', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(89, 'MADANI NUT & BOLT CENTRE', NULL, NULL, NULL, NULL, '116, BUDHESWARI COLONY, CUTTACK ROAD,, BHUBANESWAR-6', NULL, NULL, NULL, NULL, 'AAIFM2769E', '21AAIFM2769E1ZG', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(90, 'MAHALAXMI EARTHING SOLUTIONS', NULL, NULL, NULL, NULL, 'NO-753, NANDANKANAN ROAD,, BHUBANESHWAR, KHORDHA', 'HDFC BANK', '50200037665092', NULL, NULL, 'CSJPS6574G', '21CSJPS6574G2ZD', NULL, NULL, 'HDFC0002542', NULL, '2020-03-11 17:18:12', '2020-03-17 10:49:31', NULL, NULL, NULL, NULL, NULL),
-(91, 'Mahaveer Enterprises', NULL, NULL, NULL, NULL, NULL, 'OREINTAL BANK OF COMMERCE', '19191131000293', NULL, NULL, NULL, NULL, NULL, NULL, 'ORBC0101919', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(92, 'Maysa Hydraulics', NULL, NULL, NULL, NULL, 'Kesinga Road,Near Check Gate, Bhawanipatna, Kalahandi', NULL, NULL, NULL, NULL, 'APTPG7290L', '21APTPG7290L1ZE', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(93, 'MITALI TRANSFORMER & SWITCHGEAR PVT.LTD', NULL, NULL, NULL, NULL, 'N.H-26,KESINGA ROAD, DUNGURIPADAR,THUAPADAR, BHAWANIPATNA, KALAHANDI', 'STATE BANK OF INDIA\nBANK OF BARODA\nBANK OF BARODA', '31072567475\n33670500000002\n33670200000009', '21934800211', NULL, 'AAGCM3144A', '21AAGCM3144A1Z9', NULL, 'BHAWANIPATNA', 'SBIN0000039\nBARB0BHAWAN\nBARB0BHAWAN', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(94, 'Modern Interio', NULL, NULL, NULL, NULL, 'Shop No-102,Budheswari Market\nComplex,Bhubaneswar,Odisha\n751006', 'BANK OF INDIA', '513620110000137', NULL, NULL, 'ABIFM2897E', '21ABIFM2897E1Z9', NULL, NULL, 'BKID0005136', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(95, 'Nandishwar Roadways', NULL, NULL, NULL, NULL, 'Samta Colony,Samta Shopping\r\nArcade Office No-405,4th Floor\r\nRaipur,492001', 'Axis Bank', '919020010055873', NULL, NULL, 'AAPFN2978M', '22AAPFN2978M1ZM', NULL, 'Raipur CT', 'UTIB0000726', NULL, '2020-03-11 17:18:12', '2020-04-19 20:35:29', NULL, NULL, NULL, NULL, NULL),
-(96, 'Neha Furniture', NULL, NULL, NULL, NULL, 'Bhawanipatna,Kalahandi,odisha', 'STATE BANK OF INDIA', '11083632679', NULL, NULL, 'AAUPA3589Q', '21AAUPA3589Q1Z2', NULL, 'BHAWANIPATNA', 'SBIN0000039', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(97, 'New Shree Samarath Road Line', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(98, 'NIT Rourkela Testing Services', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(99, 'NOVA TRADING', NULL, NULL, NULL, NULL, '125,CUTTACK ROAD, LAXMI SAGAR, BHUBANESHWAR', 'HDFC BANK', '50200010536882', NULL, NULL, 'ABMPA5274H', '21ABMPA5274H1ZX', NULL, 'JHARPADA', 'HDFC0000630', NULL, '2020-03-11 17:18:12', '2020-03-17 10:51:54', NULL, NULL, NULL, NULL, NULL),
-(100, 'Om Graphics', NULL, NULL, NULL, NULL, 'Plot No-1361/2813,Road No-05\nJagannath Nagar,Bhubaneswar\nOdisha,751025', NULL, NULL, NULL, NULL, 'AALPY2674F', '21AALPY2674F1ZI', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(101, 'OM TRADING CO', NULL, NULL, NULL, NULL, 'NEAR TRL SBI TARNING CENTER, GUMADERA, BELPHAR', 'AXIS BANK', '918020108735462', NULL, NULL, 'AAGFO1663F', '21AAGFO1663F1ZN', NULL, NULL, 'UTIB0003092', NULL, '2020-03-11 17:18:12', '2020-03-17 10:53:56', NULL, NULL, NULL, NULL, NULL),
-(102, 'ORISSA CABLES & CONDUCTORS', NULL, NULL, NULL, NULL, 'PLOT NO-570,MAHATAB ROAD, CUTTACK', 'TAMILNAD MERCANTILE BANK    STATE BANK OF INDIA', '172700150950076       36876465420', '21923102280', NULL, 'AAEFO7887M', '21AAEFO7887M1ZO', NULL, 'CUTTACK', 'TMBL0000172      SBIN0001663', NULL, '2020-03-11 17:18:12', '2020-03-17 11:25:26', NULL, NULL, NULL, NULL, NULL),
-(103, 'PADMA DISTRIBUTORS', NULL, NULL, NULL, NULL, 'JAYASHREE CHHAK, NIMAPARA, PURI', NULL, NULL, NULL, NULL, 'AAHFP8050A', '21AAHFP8050A1ZS', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(104, 'PADMANAV POWER ENGINEERING', NULL, NULL, NULL, NULL, 'PLOT NO- 1958/51,2ND FLOOR,, INFRONT OF CHINTAMANISWAR TEMPLE, CUTTACK-PURI ROAD, BHUBANESHWAR', 'YES BANK LTD', '009385800003858', NULL, NULL, 'ALHPK5514H', '21ALHPK5514H1ZG', NULL, 'BAPUJI NAGAR,\nBBSR', 'YESB0000093', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(105, 'Panda Fuels', NULL, NULL, NULL, NULL, 'Manikeswari high school chowk,Bhawanipatna,Odisha,766001', 'HDFC BANK', '50200004619139', NULL, NULL, 'AAOFP5823G', '21AAOFP5823G1ZA', NULL, 'BHAWANIPATNA', 'HDFC0001958', NULL, '2020-03-11 17:18:12', '2020-03-18 15:27:29', NULL, NULL, NULL, NULL, NULL),
-(106, 'Patel & Patel', NULL, NULL, NULL, NULL, NULL, 'CENTRAL BANK OF INDIA', '3701890755', NULL, NULL, NULL, NULL, NULL, NULL, 'CBIN0284629', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(107, 'Pawan Kumar Raj Kumar', NULL, NULL, NULL, NULL, 'Mani Sahu Chhack,Buxi Bazar, Cuttack-', NULL, NULL, '21761204757', NULL, 'AAKFP5837E', '21AAKFP5837E1ZC', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(108, 'PAWAN KUMAR RAJ KUMAR (CTC)', NULL, NULL, NULL, NULL, 'MANI SAHU CHHAK, BUXI BAZAR, CUTTACK', NULL, NULL, NULL, NULL, 'AAEFP4156G', '21AAEFP4156G1ZK', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(109, 'Praharaj Medicament', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30374737217', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0003341', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(110, 'Pramod Engineering Works', NULL, NULL, NULL, NULL, 'Plot No-B12,Phase-2,New\nIndustrial Estate,Jagatpur,\nCuttack,Odisha,754021', 'CANARA BANK', '3969261000060', NULL, NULL, 'APZPP2946N', '21APZPP2946N1Z2', NULL, 'JAGATPUR', 'CNRB0003969', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(111, 'PS Engineering Services', NULL, NULL, NULL, NULL, 'RZ-210,Mangolpur Khurd,Near Bank\r\nNew Delhi,110085', 'AXIS BANK', '914020028344863', NULL, NULL, 'CATPS2722Q', '07CATPS2722Q2ZR', NULL, 'NEW DELHI', 'UTIB0001105', NULL, '2020-03-11 17:18:12', '2020-03-17 10:56:27', NULL, NULL, NULL, NULL, NULL),
-(112, 'R S Trading', NULL, NULL, NULL, NULL, 'Nayabazar, Cuttack', NULL, NULL, NULL, NULL, 'BWJPP0278H', '21BWJPP0278H1ZJ', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(113, 'Rabi Traders', NULL, NULL, NULL, NULL, 'Gandhi Chowk,Bhawanipatna\nKalahandi,Odisha,766001', 'CORPORATION BANK', '198001601000011', NULL, NULL, 'ALNPA6118R', '21ALNPA6118R1ZX', NULL, 'BHAWANIPATNA', 'CORP0001980', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(114, 'Reliable Sponge Pvt. Ltd', NULL, NULL, NULL, NULL, 'DUA COMPLEX,PANPOSH ROAD, ROURKELA, SALES@RELIABLEISPAT.COM', 'STATE BANK OF INDIA', '31042062297', NULL, NULL, 'AACCR7178P', '21AACCR7178P1ZV', NULL, 'ROURKELA', 'SBIN0002111', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(115, 'Ridhi Corporate Services Ltd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(116, 'ROSHAN ENTERPRISES', NULL, NULL, NULL, NULL, 'PALACE ROAD, NEAR GULAB BHAWAN, BHAWANIPATNA', NULL, NULL, NULL, NULL, 'APRPA2957A', '21APRPA2957A1ZD', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(117, 'S.P Electricals', '9831474734', NULL, NULL, NULL, '34,EZRA Street,Kolkata,West Bengal 700001', 'KOTAK MAHENDRA BANK', '1711613510', NULL, NULL, 'AFHPP8149R', '19AFHPP8149R1ZB', NULL, 'PARK STREET,\nKOLKATA', 'KKBK0000322', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(118, 'S.S Industries', '9830166909\n9830135305', NULL, NULL, NULL, 'N.S Road,Goshala,Liluah,Howrah\nWest Bengal,711204', 'HDFC BANK', '50200012374050', NULL, NULL, 'ABVFS9779C', '19ABVFS9779C1Z4', NULL, 'KOLKATA', 'HDFC0001242', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(119, 'Sagar Store', NULL, NULL, NULL, NULL, 'Capital Market,Unit-1,BBSR,751009', 'STATE BANK OF INDIA', '10977508859', NULL, NULL, 'AQCPS2537A', '21AQCPS2537A1ZG', NULL, NULL, 'SBIN0006408', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(120, 'Sai Krupa Cement Unit', NULL, NULL, NULL, NULL, 'Tankapani Road, Near Sai Temple\nBhubaneswar,Odisha', 'STATE BANK OF INDIA', '20147776135', NULL, NULL, NULL, NULL, NULL, 'BHUBANESHWAR', 'SBIN0003817', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(121, 'Sajeda Engineering', NULL, NULL, NULL, NULL, 'NH-26,Kesinga Road\nParamanandapur,Bhawanipatna\nOdisha', NULL, NULL, NULL, NULL, 'AGSPM8595J', '21AGSPM8595J2ZL', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(122, 'SAKUNIA STORES', NULL, NULL, NULL, NULL, 'OPPS CITY POLICE STATION, JHANDA CHOWK, JHARSUGUDA', 'UNION BANK OF INDIA', '354001010280142', NULL, NULL, 'ACYPS6368K', '21ACYPS6368K1ZP', NULL, 'JHARSUGUDA', 'UBIN0535401', NULL, '2020-03-11 17:18:12', '2020-03-17 10:59:06', NULL, NULL, NULL, NULL, NULL),
-(123, 'Sanjay Tecnical Service Pvt.Ltd.', NULL, 'deepak@sanjaytechnical.in', NULL, NULL, 'UNIT 2,PLOT NO-12, HIV IDA JEEDIMETLA, HYDERABAD', 'STATE BANK OF INDIA', '10260704062', '36450242356', NULL, 'AACCS8394N', '36AACC8394N1ZJ', NULL, NULL, 'SBIN0020400', NULL, '2020-03-11 17:18:12', '2020-05-28 16:29:27', NULL, NULL, NULL, NULL, NULL),
-(124, 'Sanmita Mohanty(Swagat Travels)', NULL, NULL, NULL, NULL, 'Odisha', 'STATE BANK OF INDIA', '33331412404', NULL, NULL, 'FKTPM7907J', NULL, NULL, NULL, 'SBIN0002069', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(125, 'Shiv Shakti Collection', NULL, NULL, NULL, NULL, 'Palace Road, Bhawanipatna,Kalahandi.', 'STATE BANK OF INDIA ', '10728220776', NULL, NULL, 'ACDPG6723F', '21ACDPG6723F1Z6', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(126, 'Shivam Motors', NULL, NULL, NULL, NULL, 'Plot No-206,Laxmi Sagar Chowk\nCuttack Road,Bhubaneswar\nOdisha,751006', NULL, NULL, NULL, NULL, 'AEHPG6093A', '21AEHPG6093A1Z1', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(127, 'Shree Balaji Engicons Pvt Ltd', '8114307999', 'info@balajiengicons.com', NULL, NULL, 'Belpahar,Jharsuguda,Odisha', NULL, NULL, NULL, NULL, 'AAGCS4292P', '21AAGCS4292P1ZX', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-05-28 16:28:21', NULL, NULL, NULL, NULL, NULL),
-(128, 'Shree Krishna Roadlines', NULL, NULL, NULL, NULL, 'Hanspal,Near Puri Main Canal,\nOPP Hanuman Temple,Naharakanta\nManceswar,Bhubaneswar,752101', NULL, NULL, NULL, NULL, 'BBXPD9553J', NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(129, 'Shree Sai Enterprises', NULL, 'shreesaibbsr@gmail.com', NULL, NULL, 'Plot No-211A,SECTOR-A,, ZONE-B,MANCHESWAR INDUSTRIAL ESTATE, BHUBANESHWAR', 'ICICI BANK', '006105502304', '21945505056', NULL, 'BMOPM6751K', '21BMOPM6751K1ZO', NULL, 'BHUBANESHWAR', 'ICIC0000061', NULL, '2020-03-11 17:18:12', '2020-06-02 17:48:22', NULL, NULL, NULL, NULL, NULL),
-(130, 'Shree Suppliers', NULL, NULL, NULL, NULL, 'P.O Kesinga- 766012', NULL, NULL, NULL, NULL, 'BJAPA0818A', '21BJAPA0818A1ZH', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(131, 'SHYAM TRADERS', NULL, NULL, NULL, NULL, 'RAJPUR ROAD, GANDJI CHOWK, BRAJRAJNAGAR', 'UCO BANK', '02350210002650', NULL, NULL, 'ACYPP3979K', '21ACYPP3979K1ZP', NULL, NULL, 'UCBA0000235', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(132, 'Shyam Travels', NULL, NULL, NULL, NULL, 'Chandan Lodge, Plot No-152/A,Station Square,Bhubaneswar,Odisha', 'STATE BANK OF INDIA', '30592979358', NULL, NULL, NULL, NULL, NULL, 'JANPATH BBSR', 'SBIN0010238', NULL, '2020-03-11 17:18:12', '2020-03-18 15:30:29', NULL, NULL, NULL, NULL, NULL),
-(133, 'Sidhi Vinayak Polyplast Pvt Ltd', NULL, NULL, NULL, NULL, 'Main Road Bishalkhinda, Sason, Sambalpur', 'AXIS BANK', '916030047427528', NULL, NULL, 'AAJCS8390R', '21AAJCS8390R1ZJ', NULL, 'SAMBALPUR', 'UTIB0000306', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(134, 'Smarsh Auto Industries', NULL, NULL, NULL, NULL, 'Post Box No-29,Kesinga,Kalahandi\nOdisha,766012', NULL, NULL, NULL, NULL, 'ADBPS8459D', '21ADBPS8459D1ZL', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(135, 'SCM Plastic Engineering', NULL, NULL, NULL, NULL, 'Plot No-62/568,Kalia Gaon,Near\r\nPower Grid,Jeypore,Odisha', 'ANDRA BANK', '026013100001556', NULL, NULL, 'AARCS6708D', '21AARCS6708D1ZE', NULL, 'JEYPORE', 'ANDB0000260', NULL, '2020-03-11 17:18:12', '2020-03-19 11:32:50', NULL, NULL, NULL, NULL, NULL),
-(136, 'Sonali Industries', NULL, NULL, NULL, NULL, 'N.H-26,Kesinga Road, Dunguripadar,Thuapadar, Bhawanipatna, Kalahandi', 'STATE BANK OF INDIA', '30596185873', '21844800018', NULL, 'AAKHP4062K', '21AAKHP4062K2Z3', NULL, 'BHAWANIPATNA', 'SBIN0000039', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(137, 'Sri Balaji Fuels', NULL, NULL, NULL, NULL, 'Gandhi Chowk,Brajrajnagar,768216', 'STATE BANK OF INDIA', '38851285394', NULL, NULL, 'AIVPB6883B', '21AIVPB6883B1ZB', NULL, NULL, 'SBIN0010923', NULL, '2020-03-11 17:18:12', '2020-03-18 15:47:06', NULL, NULL, NULL, NULL, NULL),
-(138, 'SRI JAGANATHA HARDWARE \nSTORE', NULL, NULL, NULL, NULL, 'PLOT NO-614, BESIDE SATYAM TOWER, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'CXOPP1961Q', '21CXOPP1961Q1ZS', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(139, 'Sri Mahadev Industries', '9437185350', 'Srimahadevindustries2017@gmail.Com', NULL, NULL, 'Tapang, Dist- Khurda', 'SYNDICATE BANK', '80071010002903', NULL, NULL, 'ADGFS9176A', '21ADGFS9176A1Z7', NULL, 'NAYAPALI, BBSR', 'SYNB0008007', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(140, 'Sri Ram Tour & Travels(Subash Mishra)', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '33219772862', NULL, NULL, 'CFBPM6751E', NULL, NULL, 'BHAWANIPATNA', 'SBIN0000039', NULL, '2020-03-11 17:18:12', '2020-03-18 14:01:38', NULL, NULL, NULL, NULL, NULL),
-(141, 'Steel Authority of India Limited', NULL, NULL, NULL, NULL, 'Office-F10,Sector 11,Rourkela,769006', 'STATE BANK OF INDIA', '10607498934', NULL, NULL, 'AAACS7062F', '21AAACS7062F2ZP', NULL, NULL, 'SBIN0009678', NULL, '2020-03-11 17:18:12', '2020-03-18 15:50:48', NULL, NULL, NULL, NULL, NULL),
-(142, 'STEEL CO', NULL, NULL, NULL, NULL, 'NEAR ISKON TEMPLE, N.H -5, NAYAPALLY, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'AAWFS8700M', '21AAWFS8700M1ZO', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(143, 'SUBHADRA STEEL', NULL, NULL, NULL, NULL, 'GANESH BAZAR, NIMAPARA, PURI,ODISHA', NULL, NULL, NULL, NULL, 'ACXPN4711A', '21ACXPN4711A1ZX', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(144, 'Subhalaxmi Traders', NULL, NULL, NULL, NULL, 'PLOT NO- 555, BRAHMESWAR LANE,, GGP COLONY, BHUBANESHWAR', 'STATE BANK OF INDIA', '35861664167', NULL, NULL, 'BBKPB8838D', '21BBKPB8838D2ZW', NULL, NULL, 'SBIN0017944', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(145, 'Subham Distributor', NULL, NULL, NULL, NULL, '220,Cuttack road,Laxmi Sagar Chowk\r\nBhubaneswar,Odisha,751006', NULL, NULL, NULL, NULL, 'AYCPM8716D', '21AYCPM8716D1ZR', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-18 18:08:33', NULL, NULL, NULL, NULL, NULL),
-(146, 'SUBHAM ENGINEERS', NULL, NULL, NULL, NULL, 'PLOT NO- 694, SAHEED NAGAR, BHUBANESHWAR', 'KARNATAKA BANK LTD', '1082000100109901', NULL, NULL, 'ANEPP0913A', '21ANEPP0913A1ZV', NULL, 'SAHEED NAGAR\nBBSR', 'KARB0000108', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(147, 'Sudam Charan Panda\n(Panda Travels)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(148, 'Suman Enterprises', NULL, NULL, NULL, NULL, 'Sai Temple Road, Duarsani Chowk, Bhawanipatna', 'CANARA BANK', '4134285000001', NULL, NULL, 'AXVPG9407B', '21AXVPG9407B1ZM', NULL, NULL, 'CNRB0004134', NULL, '2020-03-11 17:18:12', '2020-03-17 11:06:44', NULL, NULL, NULL, NULL, NULL),
-(149, 'Super Sales Automobiles', NULL, NULL, NULL, NULL, 'Plot No-644-2148,Pajal,NH-5,Bhubaneswar,Odisha', NULL, NULL, NULL, NULL, 'AAECS8327B', '21AAECS8327B1ZS', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-19 11:39:01', NULL, NULL, NULL, NULL, NULL),
-(150, 'Surya Industries', NULL, NULL, NULL, NULL, 'Plot No-3, Street No-06,Ashok Vihar\r\nPhase-03,Gurugram,haryana', 'STATE BANK OF INDIA', '33919018310', NULL, NULL, 'BOZPS4156R', '06BOZPS4156R1ZM', NULL, 'GURGAON', 'SBIN0016019', NULL, '2020-03-11 17:18:12', '2020-03-18 17:40:04', NULL, NULL, NULL, NULL, NULL),
-(151, 'The Sealcoat Structural Works (P) \nLtd.', NULL, NULL, NULL, NULL, 'Shop No-120, Anand Plaza, Laxmi Sagar Chaak, Bhubaneshwar', NULL, NULL, NULL, NULL, 'AABCT0746N', '21AABCT0746N1ZE', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(152, 'Utkal Machinery Agencies', NULL, NULL, NULL, NULL, 'Cuttack Road, Bhubaneswar,751006', NULL, NULL, NULL, NULL, 'ADTPA0493P', '21ADTPA0493P1ZA', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(153, 'WEFE Technology Pvt.Ltd.', NULL, NULL, NULL, NULL, 'Plot No-27,1st Floor,District center\nNear ICICI Bank,Chandrasekharpur\nBBSR,751016', 'ICICI BANK', '149905000003', NULL, NULL, 'AACW8804F', '21AACW8804F1ZM', NULL, NULL, 'ICIC0001499', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL),
-(154, 'EXPERT SECURITY & ALLIED SERVICES', NULL, NULL, NULL, NULL, 'BHUBANESWAR', 'STATE BANK OF INDIA', '37662874723', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0005093', '1', '2020-03-12 15:54:30', '2020-03-17 15:52:52', NULL, NULL, NULL, NULL, NULL),
-(155, 'Gangpur sale and services', '9438382520', 'gssjharsuguda@gangpur.co.in', NULL, NULL, 'Beheramalchowk,Jharsuguda', NULL, NULL, NULL, NULL, 'AANFG0696D', '21AANFG0696D1ZL', NULL, NULL, NULL, '1', '2020-03-12 15:58:46', '2020-03-19 12:06:10', NULL, NULL, NULL, NULL, NULL),
-(156, 'Indian Chain & Mill Stores', NULL, 'indianchain.mill@gmail.com', NULL, NULL, 'Sarabahal Road,Jharsuguda', 'Oriental Bank of Commerce', '11484011000703', NULL, NULL, 'ABNPY2422L', '21ABNPY2422L1ZF', NULL, 'Jharsuguda', 'ORBC0101148', '1', '2020-03-12 15:59:59', '2020-03-17 15:50:29', NULL, NULL, NULL, NULL, NULL),
-(157, 'Sahu Hardware & Electrical', '9937335800', NULL, NULL, NULL, 'Gandhi Chowk,Brajaraj Nagar', NULL, NULL, NULL, NULL, 'BCOPS5754C', '21BCOPS5754C1ZJ', NULL, NULL, NULL, '1', '2020-03-12 16:00:52', '2020-03-17 15:48:48', NULL, NULL, NULL, NULL, NULL),
-(158, 'Premier Instruments Co', '9437313134', 'Premierinstrument@gmail.com', NULL, NULL, 'collage square,cuttack', 'STATE BANK OF INDIA          IDBI', '35559920513            217102000006514', NULL, NULL, 'ACAPN0714G', '21ACAPN0714GIZD', NULL, NULL, 'SBIN0001663          IBKL0000217', '1', '2020-03-12 16:02:06', '2020-03-17 15:47:39', NULL, NULL, NULL, NULL, NULL),
-(159, 'Harish Enterprises(19-20)', '8895365338', 'harishenterprises2014@rediffmail.com', NULL, NULL, 'SARBAHAL ROAD, JHARSUGUDA', 'IDBI', '740102000006095', NULL, NULL, 'AOKPV4488D', '21AOKPV4488D1ZP', NULL, 'Jharsuguda', 'IBKL0000217', '1', '2020-03-12 16:03:05', '2020-03-17 15:45:10', NULL, NULL, NULL, NULL, NULL),
-(160, 'AJAX', '9437043311', 'mail@konarkearthmovers.com', NULL, NULL, 'Rasulgarh,Bhubaneswar', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-03-12 16:03:41', '2020-03-12 16:03:41', NULL, NULL, NULL, NULL, NULL),
-(161, 'Bharat Industrial Corporation', '9348861636', 'Iinfo@bharatsafety.co.in', NULL, NULL, 'Bomikhal,Bhubaneswar', 'STATE BANK OF INDIA', '38218357895', NULL, NULL, 'ANJPJ2052R', '21ANJPJ2052R1ZV', NULL, NULL, 'SBIN0012021', '1', '2020-03-12 16:04:33', '2020-03-17 15:43:14', NULL, NULL, NULL, NULL, NULL),
-(162, 'Hindustan Auto Electricals', NULL, 'hindustanautoele@yahoo.com', NULL, NULL, 'Jharsuguda', NULL, NULL, NULL, NULL, 'ALFPK6853R', '21ALFPK6853R1ZL', NULL, NULL, NULL, '1', '2020-03-12 16:05:38', '2020-03-17 15:41:47', NULL, NULL, NULL, NULL, NULL),
-(163, 'Kamala Plywood(19-20)', '8599011813', 'Kamalplywood.bbsr@gmail.com', NULL, NULL, 'Nayapali,Bhubaneswar', 'INDUSIND BANK', '650014046079', NULL, NULL, 'AAUPG2139E', '21AAUPG2139E1Z1', NULL, NULL, 'INDB0000366', '1', '2020-03-12 16:06:37', '2020-03-17 15:40:45', NULL, NULL, NULL, NULL, NULL),
-(164, 'Compu World', '9040465774', 'india.compuworld@gmail.com', NULL, NULL, 'Marwaripara,Jharsuguda', NULL, NULL, NULL, NULL, 'ALXPA2752K', '21ALXPA2752K1Z1', NULL, NULL, NULL, '1', '2020-03-12 16:07:10', '2020-03-17 15:39:16', NULL, NULL, NULL, NULL, NULL),
-(165, 'Bhajanlal Kunjlal', '9437457798', 'didwania11@gmail.com', NULL, NULL, 'Agrasen Chowk,Marwaripara,Jharsuguda', 'IDBI', '740651100006583', NULL, NULL, 'AECPD7335M', '21AECPD7335M1ZP', NULL, 'Jharsuguda', 'IBKL0000740', '1', '2020-03-12 16:07:48', '2020-03-19 11:50:03', NULL, NULL, NULL, NULL, NULL),
-(166, 'R L Industrial Corporation', NULL, 'rlicorporation15@gmail.com', NULL, NULL, 'SARBAHAL ROAD, JHARSUGUDA', 'Corporation Bank', '560371000443925', NULL, NULL, 'AMYPA1057F', '21AMYPA1057F1ZD', NULL, 'Jharsuguda', 'CORP0002925', '1', '2020-03-12 16:09:11', '2020-03-17 15:36:33', NULL, NULL, NULL, NULL, NULL),
-(167, 'AM OFFICE SOLUTION', '9515112146', 'salesodisha@amoffice.in', NULL, NULL, 'Uttara Chhhak,Bhubaneswar', 'KOTAK MAHENDRA BANK', '0911821114', NULL, NULL, 'AZKPM5105F', '21AZKPM5105F1ZS', NULL, NULL, 'KKBK0007476', '1', '2020-03-12 16:09:43', '2020-03-17 15:35:00', NULL, NULL, NULL, NULL, NULL),
-(168, 'Atom Engineering Products pvt ltd', '9937934427', 'atomproducts@gmail.com', NULL, NULL, 'SARBAHAL ROAD, JHARSUGUDA', 'ICICI BANK', '46805000529', NULL, NULL, 'AAICA3862B', '21AAICA3862B1Z8', NULL, 'Jharsuguda', 'ICIC0000468', '1', '2020-03-12 16:10:29', '2020-03-17 15:33:39', NULL, NULL, NULL, NULL, NULL),
-(169, 'Mahesh Motors', NULL, NULL, NULL, NULL, 'Brajaraja Nagar,Jharsuguda', NULL, NULL, NULL, NULL, 'AASPY2229D', '21AASPY2229D1ZO', NULL, NULL, NULL, '1', '2020-03-12 16:11:15', '2020-03-17 15:31:48', NULL, NULL, NULL, NULL, NULL),
-(170, 'M.S.HYDRAULICS', '9437069388', NULL, NULL, NULL, 'Taxi Stand,Sambalpur', 'Syndicate Bank', '80601010000324', NULL, NULL, 'AHCPP5300M', '21AHCPP5300M1ZM', NULL, 'Sakhipara Branch', 'SYNB0008060', '1', '2020-03-12 16:12:01', '2020-03-17 15:30:31', NULL, NULL, NULL, NULL, NULL),
-(171, 'Krupa Timber Depot', '9861032591', NULL, NULL, NULL, 'Nayapali,Bhubaneswar', 'ALLAHABAD BANK', '50027424825', NULL, NULL, 'ANEPS1467L', '21ANEPS1467L1ZU', NULL, NULL, 'ALLA0212009', '1', '2020-03-12 16:12:29', '2020-03-17 13:32:05', NULL, NULL, NULL, NULL, NULL),
-(172, 'Industrial Consumables', '9776022211', NULL, NULL, NULL, 'Gandhi Chowck, Brajarajnagar', 'Union Bank of India', '413801010035059', NULL, NULL, 'AARHS3486D', '21AARHS3486D1ZZ', NULL, NULL, 'UBIN0541389', '1', '2020-03-12 16:13:11', '2020-03-17 13:29:50', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `vendors` (`id`, `vendorname`, `mobile`, `email`, `vendoridproof`, `photo`, `details`, `bankname`, `acno`, `tinno`, `tanno`, `panno`, `gstno`, `servicetaxno`, `branchname`, `ifsccode`, `userid`, `created_at`, `updated_at`, `aadhaarcard`, `pancard`, `gstin`, `bankpassbook`, `cancelcheque`) VALUES
-(173, 'Patel & Company', '9937050792', 'mpatel792@gmail.cOM', NULL, NULL, 'Nuapatna, Cuttack,Odisha', 'Axis Bank', '091010200013226', NULL, NULL, 'AABFP5829R', '21AABFP5829R1ZU', NULL, 'Badambadi', 'UTIB0000091', '1', '2020-04-18 17:22:24', '2020-04-18 17:24:42', NULL, NULL, NULL, NULL, NULL),
-(174, 'Aaradhya Enterprises', NULL, NULL, NULL, NULL, 'Kesinga,766012', NULL, NULL, NULL, NULL, 'AOTPJ0552P', '21AOTPJ0552P1ZM', NULL, NULL, NULL, '1', '2020-04-20 14:19:22', '2020-04-20 14:19:22', NULL, NULL, NULL, NULL, NULL),
-(175, 'Subudhi Techno Engineers Pvt. Ltd.', '06742741383', 'hr@subudhitechno.in', NULL, NULL, 'Plot No-327/2559,Omfed back Side,Chandrasekharpur,Bhubaneswar,751017', 'HDFC BANK LTD', '50200044022080', NULL, NULL, 'AAZCS8036Q', '21AAZCS8036Q1ZE', NULL, 'District Centre, PN 10 Chandrashekharpur Bhubaneswar-751016', 'HDFC0001252', '1', '2020-04-23 15:45:08', '2020-04-23 15:45:08', NULL, NULL, NULL, NULL, NULL),
-(176, 'MADAN PRADHAN', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '33684463998', NULL, NULL, NULL, NULL, NULL, 'KESAIBAHAL', 'SBIN0009352', '1', '2020-04-28 10:55:18', '2020-04-28 10:55:18', NULL, NULL, NULL, NULL, NULL),
-(177, 'PANCHANAN BEHERA', NULL, NULL, NULL, NULL, NULL, 'CANARA BANK', '3454101006115', NULL, NULL, NULL, NULL, NULL, 'NIMAPARA', 'CNRB0003454', '1', '2020-04-28 10:57:23', '2020-04-28 10:57:23', NULL, NULL, NULL, NULL, NULL),
-(178, 'LUCKY INTERNATIONAL', '9853361888', NULL, NULL, NULL, 'SATYAM CINEMA HALL ROAD,BHAWANIPATNA-766001', 'STATE BANK OF INDIA', '35997288313', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA BAZAR', 'SBIN0006725', '1', '2020-04-28 13:02:38', '2020-04-28 13:02:38', NULL, NULL, NULL, NULL, NULL),
-(179, 'HEMANTA RANA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32747047975', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0000039', '1', '2020-04-28 13:09:28', '2020-04-28 13:09:28', NULL, NULL, NULL, NULL, NULL),
-(180, 'BISWAJIT PANDA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30879249556', NULL, NULL, 'BDYPP1176L', NULL, NULL, NULL, 'SBIN0009650', '1', '2020-04-28 13:16:28', '2020-04-28 13:16:28', NULL, NULL, NULL, NULL, NULL),
-(181, 'AUROBINDA ROUT', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32059848558', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0006179', '1', '2020-04-28 13:22:58', '2020-04-28 13:22:58', NULL, NULL, NULL, NULL, NULL),
-(182, 'ABANI PRAKASH MISHRA', NULL, NULL, NULL, NULL, NULL, 'BANK OF INDIA', '556210110008073', NULL, NULL, NULL, NULL, NULL, NULL, 'BKID0005562', '1', '2020-04-28 13:23:47', '2020-04-28 13:23:47', NULL, NULL, NULL, NULL, NULL),
-(183, 'VISHWAKARMA ENTERPRISES', '9938648901', NULL, NULL, NULL, 'BUDHIPADAR,JHARSUGUDA', 'BANK OF INDIA', '557020110000537', NULL, NULL, 'AALFV8329E', '21AALFV8329E1ZR', NULL, NULL, 'BKID0005570', '1', '2020-04-28 13:59:47', '2020-04-28 14:00:48', NULL, NULL, NULL, NULL, NULL),
-(184, 'SAROJ BISWAL', '9937346244', 'biswal.saroj1969@gmail.com', NULL, NULL, 'AT-DAKHINAPANTALA,PO-NAGAR,PS-ASTARANG,DIST-PURI-752109', NULL, NULL, NULL, NULL, 'AOPPB9021B', NULL, NULL, NULL, NULL, '1', '2020-04-28 17:29:12', '2020-04-28 17:29:12', NULL, NULL, NULL, NULL, NULL),
-(185, 'Sukant Biswal', '8917588071', NULL, NULL, NULL, NULL, 'BANK OF BARODA', '30170100009860', NULL, NULL, 'COZPB6528M', NULL, NULL, 'NAYAGARH', 'BARB0NAYAGR', '1', '2020-04-30 12:31:01', '2020-04-30 12:31:01', NULL, NULL, NULL, NULL, NULL),
-(186, 'Damu Muduli', '8480225369', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '37225272433', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0005569', '1', '2020-05-02 10:52:04', '2020-05-02 10:52:04', NULL, NULL, NULL, NULL, NULL),
-(187, 'Ranjan Kumar Singh', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30969309672', NULL, NULL, 'DGTPS3753N', NULL, NULL, 'BHAWANIPATNA', 'SBIN0012120', '1', '2020-05-02 10:54:53', '2020-05-02 10:54:53', NULL, NULL, NULL, NULL, NULL),
-(188, 'Sudam Panda', '8917254362', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30428842393', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0000039', '1', '2020-05-02 10:58:51', '2020-05-02 10:58:51', NULL, NULL, NULL, NULL, NULL),
-(189, 'Surendra Naik', '8480224727', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32041888422', NULL, NULL, 'AROPN6746K', NULL, NULL, NULL, 'SBIN0005569', '1', '2020-05-02 11:01:10', '2020-05-02 11:01:10', NULL, NULL, NULL, NULL, NULL),
-(190, 'LAXMI INFOTECH', '9938276627', NULL, NULL, NULL, 'Palace Road,Bhawanipatna,766001', 'STATE BANK OF INDIA', '37361647646', NULL, NULL, 'ASRPR4418E', '21ASRPR4418E1ZQ', NULL, 'BAZAR BRANCH', 'SBIN0006725', '1', '2020-05-04 10:51:21', '2020-05-04 10:51:21', NULL, NULL, NULL, NULL, NULL),
-(191, 'OZONE LOGISTICS PVT.LTD.', NULL, NULL, NULL, NULL, NULL, 'State Bank Of India', '37333143084', NULL, NULL, NULL, NULL, NULL, 'SME Branch,Dhanbad', 'SBIN0006541', '1', '2020-05-04 20:17:43', '2020-05-04 20:23:26', NULL, NULL, NULL, NULL, NULL),
-(192, 'JAYANTI LAMAI', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '37939351824', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0005039', '1', '2020-05-05 08:12:49', '2020-05-05 08:12:49', NULL, NULL, NULL, NULL, NULL),
-(193, 'PRAVAT KUMAR BISWAL', NULL, NULL, NULL, NULL, NULL, 'AXIS BANK', '464010100009300', NULL, NULL, NULL, NULL, NULL, 'PURI', 'UTIB0000464', '1', '2020-05-05 08:16:15', '2020-05-05 08:16:15', NULL, NULL, NULL, NULL, NULL),
-(194, 'CHANDRA SEKHAR BEHERA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA               BANK OF BARODA              AXIS BANK', '35349090046                   32500100002446             916010065555993', NULL, NULL, NULL, NULL, NULL, 'ASTARANGA                   BHUBANESHWAR          BARIPADA', 'SBIN0012036        BARB0CUTTRD               UTIB0000736', '1', '2020-05-05 08:21:25', '2020-05-05 08:21:25', NULL, NULL, NULL, NULL, NULL),
-(195, 'AKASH JYOTI LENKA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA          BANK OF BARODA            UNION BANK OF INDIA', '20016530883                 33670100001183                  600202010005388', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0006725                BARB0BHAWAN                      UBIN0560022', '1', '2020-05-05 08:24:50', '2020-05-05 08:24:50', NULL, NULL, NULL, NULL, NULL),
-(196, 'BRAHMANANDA SWAIN', NULL, NULL, NULL, NULL, NULL, 'BANK OF BARODA', '33670100008576', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'BARB0BHAWAN', '1', '2020-05-05 08:26:16', '2020-05-05 08:26:16', NULL, NULL, NULL, NULL, NULL),
-(197, 'CHAKRADHAR PARIDA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '20076279326', NULL, NULL, NULL, NULL, NULL, 'BAPUJI NAGAR', 'SBIN0006408', '1', '2020-05-05 08:27:07', '2020-05-05 08:27:07', NULL, NULL, NULL, NULL, NULL),
-(198, 'DILLIP KUMAR BARAL', NULL, NULL, NULL, NULL, NULL, 'BANK OF BARODA', '52700100003086', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-05 08:28:27', '2020-05-05 08:28:27', NULL, NULL, NULL, NULL, NULL),
-(199, 'DIPAK BISWAL', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '20297914618', NULL, NULL, NULL, NULL, NULL, 'ASTARANG', 'SBIN0012036', '1', '2020-05-05 08:29:19', '2020-05-05 08:29:19', NULL, NULL, NULL, NULL, NULL),
-(200, 'GAGAN CHANDRA SWAIN', NULL, NULL, NULL, NULL, NULL, 'BANK OF BARODA', '33670100002331', NULL, NULL, NULL, NULL, NULL, NULL, 'BARB0BHAWAN', '1', '2020-05-05 08:31:03', '2020-05-05 08:31:03', NULL, NULL, NULL, NULL, NULL),
-(201, 'RUDRA PRASAD SAHOO', NULL, NULL, NULL, NULL, NULL, 'ORIENTAL BANK OF COMMERCE', '12065015004821', NULL, NULL, NULL, NULL, NULL, 'RAVI TALKIES BBSR', 'ORBC0101206', '1', '2020-05-05 08:32:20', '2020-05-05 08:32:20', NULL, NULL, NULL, NULL, NULL),
-(202, 'SANMAYA MAHAPATRA & ASSOCIATES', NULL, NULL, NULL, NULL, 'FLAT NO-203,SHANTI NIWAS,RASULGARH,BHUBANESWAR', 'HDFC BANK', '00611050036047', NULL, NULL, 'AQKPM1105C', NULL, NULL, NULL, 'HDFC0000630', '1', '2020-05-05 09:01:26', '2020-05-05 09:01:26', NULL, NULL, NULL, NULL, NULL),
-(203, 'RITAN DALEI', NULL, NULL, NULL, NULL, NULL, 'State Bank Of India', '20198698429', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0007187', '1', '2020-05-05 14:34:27', '2020-05-05 16:38:54', NULL, NULL, NULL, NULL, NULL),
-(204, 'Shakti Suppliers', NULL, 'shaktisuppliers1@gmail.com', NULL, NULL, 'Kesinga-766012', 'STATE BANK OF INDIA', '31235222926', NULL, NULL, 'AEHPJ7286G', '21AEHPJ7286G1ZH', NULL, 'KESINGA', 'SBIN0010924', '1', '2020-05-06 07:29:15', '2020-05-06 08:47:40', NULL, NULL, NULL, NULL, NULL),
-(205, 'Gayadhar Hati', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32278751736', NULL, NULL, NULL, NULL, NULL, 'JUNAGARH', 'SBIN0012119', '1', '2020-05-06 12:42:05', '2020-05-06 12:42:05', NULL, NULL, NULL, NULL, NULL),
-(206, 'Dhanurjay Naik', '7656812619', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '11666839061', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0002075', '1', '2020-05-06 17:45:36', '2020-05-06 18:21:14', NULL, NULL, NULL, NULL, NULL),
-(207, 'CHULESWAR MAJHI', NULL, NULL, NULL, NULL, NULL, 'BANK OF BARODA', '33670100010295', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'BARB0BHAWAN', '1', '2020-05-06 20:07:52', '2020-05-06 20:07:52', NULL, NULL, NULL, NULL, NULL),
-(208, 'BENUDHAR SAHU', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '33045200516', NULL, NULL, NULL, NULL, NULL, 'FARANG', 'SBIN0009682', '1', '2020-05-06 20:08:42', '2020-05-06 20:08:42', NULL, NULL, NULL, NULL, NULL),
-(209, 'MAMINA PRADHAN(GIRISH TEAM)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-07 19:21:44', '2020-05-07 19:43:26', NULL, NULL, NULL, NULL, NULL),
-(210, 'SANTOSH KUMAR PRADHAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-07 21:14:59', '2020-05-07 21:14:59', NULL, NULL, NULL, NULL, NULL),
-(211, 'JAISWAL HARDWARE', '9040352134', NULL, NULL, NULL, 'INFRONT OF CENTRAL HOSPITAL MANDALIA, BRAJRAJNAGAR,DIST-JHARSUGUDA-768216', 'STATE BANK OF INDIA', '11264878290', NULL, NULL, NULL, NULL, NULL, 'LAMTIBAHAL', 'SBIN0004702', '1', '2020-05-09 08:57:39', '2020-05-09 08:57:39', NULL, NULL, NULL, NULL, NULL),
-(212, 'MAA TARA TARINI SANITARY', '9937108600', NULL, NULL, NULL, 'NEW PURI BYEPASS ,PLOT NO- 4019,PANDRA,BHUBANESWAR,KHURDA-751025', NULL, NULL, NULL, NULL, 'AVQPB8789C', '21AVQPB8789C1ZF', NULL, NULL, NULL, '1', '2020-05-11 17:38:02', '2020-05-11 17:38:02', NULL, NULL, NULL, NULL, NULL),
-(213, 'SHREEHARI ENTERPRISES', '8917482919', 'shreehari.ent18@gmail.com', NULL, NULL, 'A-502,LTB AASHISH,CANAL ROAD,JHARPADA,BHUBANESWAR,ODISHA-751006', NULL, NULL, NULL, NULL, 'AJCPM1278M', '21AJCPM1278M1Z7', NULL, NULL, NULL, '1', '2020-05-12 17:42:14', '2020-05-12 17:42:14', NULL, NULL, NULL, NULL, NULL),
-(214, 'DHANESWAR BISWAL', '9348547761', NULL, NULL, NULL, 'MANGALPUR,PIPILI,PURI', NULL, NULL, NULL, NULL, 'BOYPB4492L', NULL, NULL, NULL, NULL, '1', '2020-05-12 18:41:08', '2020-05-16 12:11:21', NULL, NULL, NULL, NULL, NULL),
-(215, 'OSIC LTD. CUTTACK', '06712341204', 'osicltd@gmail.com', NULL, NULL, 'madhupatna OSIC tower,Cuttack-753010', 'BANK OF BARODA', '00470200000291', NULL, NULL, NULL, NULL, NULL, 'BUXI BAZAR', 'BARB0CUTTAC', '1', '2020-05-14 18:18:28', '2020-05-14 18:18:28', NULL, NULL, NULL, NULL, NULL),
-(216, 'TUNA RANA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-16 11:58:35', '2020-05-16 11:58:35', NULL, NULL, NULL, NULL, NULL),
-(217, 'CHANDAN MOTORS', NULL, 'kedarnathsahu5@gmail.com', NULL, NULL, 'PARAMANANDAPUR CHOWK,KESINGA ROAD,BHAWANIPATNA', 'STATE  BANK OF INDIA', '32811510457', NULL, NULL, '21ARTPS0485M1Z5', '21ARTPS0485M1Z5', NULL, 'BAZAR BRANCH,BHAWANIPATNA', 'SBIN0006725', '1', '2020-05-18 11:09:34', '2020-06-08 12:12:57', NULL, NULL, NULL, NULL, NULL),
-(218, 'Sukant Kumar Swain', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-18 15:28:20', '2020-05-18 15:28:20', NULL, NULL, NULL, NULL, NULL),
-(219, 'LALDASH & CO.', NULL, NULL, NULL, NULL, 'PPLOT NO-1882,2ND FLOOR,NILAKANTHA NAGAR,UNIT-8,NAYAPALLI,BHUBANESWAR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-18 17:15:58', '2020-05-18 17:15:58', NULL, NULL, NULL, NULL, NULL),
-(220, 'Anish Khan(Khan JCB)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '276', '2020-05-19 16:09:48', '2020-06-02 11:00:48', NULL, NULL, NULL, NULL, NULL),
-(221, 'Pathak Industries Pvt Ltd', '7440049247', 'hipat.sales@gmail.com', NULL, NULL, 'Phase1 New Industrial Estate, Jagatpur, Cuttack', 'ICICI BANK', '658705601681', NULL, NULL, 'AAICP2423P', '26AAAAA1115G1Z5', NULL, NULL, 'ICIC0006587', '276', '2020-05-19 16:16:37', '2020-05-19 16:16:37', NULL, NULL, NULL, NULL, NULL),
-(222, 'TUKUNA BEHERA(RD GROUP)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-21 08:25:13', '2020-05-21 08:25:13', NULL, NULL, NULL, NULL, NULL),
-(223, 'City Ply Hardware', NULL, NULL, NULL, NULL, NULL, 'Karnataka Bank', '7472000100007701', NULL, NULL, NULL, NULL, NULL, 'Sambalpur', 'KARB0000747', '276', '2020-05-21 11:42:07', '2020-05-21 11:42:07', NULL, NULL, NULL, NULL, NULL),
-(224, 'ISWAR PRADHAN', '7751069444', NULL, NULL, NULL, 'JHARSUGUDA', 'BANK OF COMMERCE', '16924011000112', NULL, NULL, 'AZVPP6922E', '21AZVPP6922E1Z5', NULL, 'GANDHI CHOWK, BRAJRAJNAGAR', 'ORBC0101692', '276', '2020-05-22 11:42:43', '2020-05-22 11:44:09', NULL, NULL, NULL, NULL, NULL),
-(225, 'OLIC LTD.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-24 21:20:55', '2020-05-24 21:20:55', NULL, NULL, NULL, NULL, NULL),
-(226, 'SUKANT MAJHI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-26 12:06:59', '2020-05-26 12:06:59', NULL, NULL, NULL, NULL, NULL),
-(227, 'AJAYA LENKA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-26 12:11:05', '2020-05-26 12:11:05', NULL, NULL, NULL, NULL, NULL),
-(228, 'ASIT KUMAR MAHANT(BAPI)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-26 14:07:31', '2020-05-26 14:07:31', NULL, NULL, NULL, NULL, NULL),
-(229, 'Swati Marble Industries Pvt. Ltd. 19-20', '9938845296', 'swatimarbles@rediffmail.com', NULL, NULL, '127,Sec-A,Mancheswar Industrial Area,Bhubaneswar-751010', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-26 14:13:51', '2020-06-01 10:31:47', NULL, NULL, NULL, NULL, NULL),
-(230, 'ANURAG SINGH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-27 11:39:11', '2020-05-27 11:39:11', NULL, NULL, NULL, NULL, NULL),
-(231, 'DIVYAJYOTI ENTERPRISES', NULL, NULL, NULL, NULL, 'SWATI COMPLEX,GANDHI CHOWK,BRAJRAJNAGAR,JHARSUGUDA,768216', 'UCO BANK', '21020510003947', NULL, NULL, NULL, NULL, NULL, 'GANDHI CHOWK', 'UCBA0002102', '1', '2020-05-27 16:13:39', '2020-05-28 17:21:15', NULL, NULL, NULL, NULL, NULL),
-(232, 'GO DIGIT GENERAL INSURANCE LTD', '9937023038', 'rajesh.mohapatra@renewbuy.com', NULL, NULL, NULL, 'ICICI BANK', 'GDGI1028255', NULL, NULL, NULL, NULL, NULL, NULL, 'ICIC0000104', '276', '2020-05-28 13:15:22', '2020-05-28 13:15:22', NULL, NULL, NULL, NULL, NULL),
-(233, 'SANJAY MUDULI', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '34968489395', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0005569', '1', '2020-05-29 11:13:31', '2020-05-29 11:13:31', NULL, NULL, NULL, NULL, NULL),
-(234, 'BIKASH KIRANA STORE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-29 13:35:15', '2020-05-29 13:35:15', NULL, NULL, NULL, NULL, NULL),
-(235, 'MB MACHINE TOOLS', '9861052891', 'btmorissa@yahoo.co.in', NULL, NULL, '2283, CUTTACK ROAD,BHUBANESWAR', 'UNION BANK OF INDIA', '751301010050009', NULL, NULL, '21ADIPD6994P1Z0', '21ADIPD6994P1Z0', NULL, 'CUTTACK ROAD', 'UBIN0575135', '1', '2020-05-29 17:32:18', '2020-05-29 17:40:13', NULL, NULL, NULL, NULL, NULL),
-(236, 'Subhranshu Sekhar Rout', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '20055346162', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA STATUE CHOWK', 'SBIN0006725', '1', '2020-06-01 10:49:46', '2020-06-01 10:49:46', NULL, NULL, NULL, NULL, NULL),
-(237, 'Ramesh Ch Sahoo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-01 11:16:54', '2020-06-01 11:16:54', NULL, NULL, NULL, NULL, NULL),
-(238, 'Truptimayee Swain', NULL, NULL, NULL, NULL, NULL, 'Indian Overseas Bank', '070701000016273', NULL, NULL, 'DTZPS5965R', NULL, NULL, 'Bhawanipatna Manikeswari chowk', 'IOBA0000707', '1', '2020-06-02 10:41:09', '2020-06-02 10:41:09', NULL, NULL, NULL, NULL, NULL),
-(239, 'IOCL,PARADIP', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-02 14:07:12', '2020-06-02 14:07:12', NULL, NULL, NULL, NULL, NULL),
-(240, 'Bharat Sanchar Nigam Ltd.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-03 10:49:15', '2020-06-03 10:49:15', NULL, NULL, NULL, NULL, NULL),
-(241, 'KANTABANJI (R&B) DIVISION', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-03 13:59:26', '2020-06-03 13:59:26', NULL, NULL, NULL, NULL, NULL),
-(242, 'JEYPORE (R&B) DIVISION', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-03 14:00:05', '2020-06-03 14:00:05', NULL, NULL, NULL, NULL, NULL),
-(243, 'Bireswar Patel', '8847863116', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30270018878', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0000039', '1', '2020-06-04 10:11:09', '2020-06-04 10:20:01', NULL, NULL, NULL, NULL, NULL),
-(244, 'Bali Mangaraj', '8114654059', NULL, NULL, NULL, NULL, 'Oriental Bank of Commerce', '16932413000791', NULL, NULL, NULL, NULL, NULL, NULL, 'ORBC0101693', '1', '2020-06-04 10:13:15', '2020-06-04 10:13:15', NULL, NULL, NULL, NULL, NULL),
-(245, 'Lalita Bagarti', '9439150739', NULL, NULL, NULL, NULL, 'Canara Bank', '4134101001963', NULL, NULL, NULL, NULL, NULL, NULL, 'CNRB0004134', '1', '2020-06-04 10:23:06', '2020-06-04 10:23:06', NULL, NULL, NULL, NULL, NULL),
-(246, 'PRACHI SARANGI', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '38947566070', NULL, NULL, NULL, NULL, NULL, 'GARAGE CHOWK,BBSR', 'SBIN0003108', '1', '2020-06-04 11:55:04', '2020-06-04 11:55:04', NULL, NULL, NULL, NULL, NULL),
-(247, 'SATYABADI CONSTRUCTION', '7873131437', NULL, NULL, NULL, 'PLOT NO-488,NAYAPALLI,BHUBANESWAR-751012', 'INDIAN BANK', 'CA 6706396780', NULL, NULL, '21DTHPS2311R1ZF', '21DTHPS2311R1ZF', NULL, 'POKHARIGAON', 'IDIB000P227', '1', '2020-06-04 12:45:00', '2020-06-04 12:45:00', NULL, NULL, NULL, NULL, '1591254900.WhatsApp Image 2020-06-04 at 12.37.26 PM.jpeg'),
-(248, 'Radhakant Budhia', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '11626223471', NULL, NULL, NULL, NULL, NULL, 'UTKELA', 'SBIN0006089', '1', '2020-06-04 17:58:21', '2020-06-04 17:58:21', NULL, NULL, NULL, NULL, NULL),
-(249, 'JAGATRAM GAHIR', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '11083594563', NULL, NULL, 'BNSPG4900R', NULL, NULL, NULL, 'SBIN0000039', '1', '2020-06-05 10:16:24', '2020-06-05 10:16:24', NULL, NULL, NULL, NULL, NULL),
-(250, 'Bapi Das(Civil Contractor)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-05 13:04:19', '2020-06-05 13:04:19', NULL, NULL, NULL, NULL, NULL),
-(251, 'SURENDRA BEHERA', '6371397265', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-05 14:19:30', '2020-06-05 14:19:30', NULL, NULL, NULL, NULL, NULL),
-(252, 'VIDHI HOME DECORS PVT LTD', '06742341878', 'VIDHIHOMEBBSR@GMAIL.COM', NULL, NULL, 'PLOT NO- 960/4036/4234					\r\nMAHAVIR BAZAR, SAMANTARAPUR					\r\nLEWIS ROAD, BHUBANESWAR-751002', 'FEDERAL BANK          AXIS BANK', '12325500003089              917020034132682', NULL, NULL, 'AAFCV8736Q', '21AAFCV8736Q1ZO', NULL, 'BAPUJI NAGAR , BHUBANESWAR                   KALPANA SQUARE , BHUBANESWAR', 'FDRL0001232               UTIB0000438', '1', '2020-06-05 15:27:13', '2020-06-05 15:27:13', NULL, NULL, NULL, NULL, NULL),
-(253, 'HIRAKUD DAM CIRCLE,BURLA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-08 11:02:23', '2020-06-08 11:02:23', NULL, NULL, NULL, NULL, NULL),
-(254, 'ARJUN SAHOO', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32695299884', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0013640', '1', '2020-06-08 11:35:51', '2020-06-08 11:35:51', NULL, NULL, NULL, NULL, NULL),
-(255, 'BIJAYA KUMAR SAHOO', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '34096154821', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0013640', '1', '2020-06-08 11:36:55', '2020-06-08 11:44:39', NULL, NULL, NULL, NULL, NULL),
-(256, 'RWED,Berhampur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-08 17:06:24', '2020-06-08 17:06:24', NULL, NULL, NULL, NULL, NULL),
-(257, 'SANTOSH KUMAR KAR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-09 10:43:52', '2020-06-09 10:43:52', NULL, NULL, NULL, NULL, NULL),
-(258, 'AJIT KUMAR BARIK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-09 11:21:44', '2020-06-09 11:21:44', NULL, NULL, NULL, NULL, NULL),
-(259, 'Trade & Industrial Syndicate', '8180299636', 'trade_cal@yahoo.com', NULL, NULL, 'OPP. MANMOHAN M.E SCHOOL,BENGALIPADA,JHARSUGUDA', 'SYNDICATE BANK', '80463070001430', NULL, NULL, 'AGTPG6684M', '21AGTPG6684M1ZR', NULL, NULL, 'SYNB0008046', '1', '2020-06-09 13:30:15', '2020-06-09 13:30:15', NULL, NULL, NULL, NULL, NULL),
-(260, 'Shyam Sundar Behera', NULL, NULL, NULL, NULL, NULL, 'INDIAN OVERSEAS BANK', '118401000011146', NULL, NULL, NULL, NULL, NULL, 'NAYAGARH', 'IOBA0001184', '1', '2020-06-09 14:03:44', '2020-06-09 14:03:44', NULL, NULL, NULL, NULL, NULL),
-(261, 'Rajat Kumar Chakna', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-11 00:51:55', '2020-06-11 00:51:55', NULL, NULL, NULL, NULL, NULL),
-(262, 'KAILASH BEHERA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '20060897736', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0007188', '1', '2020-06-11 17:54:51', '2020-06-11 17:54:51', NULL, NULL, NULL, NULL, NULL),
-(263, 'M/S RAJESH ENTERPRISES', '9437294308', 'rajeshkumar.padhi@rediffmail.com', NULL, NULL, 'NEAR DURGA MANDAP,BAHADUR BAGICHA PARA,BHAWANIPATNA-66001,KALAHANDI', 'STATE BANK OF INDIA', '33007706901', NULL, NULL, 'AHCPP8388H', NULL, NULL, 'BHAWANIPATNA', NULL, '1', '2020-06-11 18:51:49', '2020-06-11 18:51:49', NULL, NULL, NULL, NULL, NULL),
-(264, 'Susanta Kumar Rana', NULL, NULL, NULL, NULL, NULL, 'Bank Of India', '513310110002597', NULL, NULL, NULL, NULL, NULL, NULL, 'BKID0005133', '1', '2020-06-11 23:04:26', '2020-06-11 23:04:26', NULL, NULL, NULL, NULL, NULL),
-(265, 'GAGAN RAY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-13 18:15:35', '2020-06-13 18:15:35', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `vendors` (`id`, `vendorname`, `mobile`, `email`, `vendoridproof`, `photo`, `details`, `bankname`, `acno`, `tinno`, `tanno`, `panno`, `gstno`, `servicetaxno`, `branchname`, `ifsccode`, `userid`, `created_at`, `updated_at`, `aadhaarcard`, `pancard`, `gstin`, `bankpassbook`, `cancelcheque`, `acctype`) VALUES
+(1, 'A D SALES', NULL, NULL, NULL, NULL, '1st FLOOR, KAINSHIR ROAD, AINTHAPALI,SAMBALPUR', 'HDFC BANK', '50200034385523', NULL, NULL, 'BBRPB0953N', '21BBRPB0953N1ZL', NULL, NULL, 'HDFC0002717', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'A.S. ENTERPRISES', NULL, NULL, NULL, NULL, 'PLOT NO-191, SHOP NO-05, RASULGARH, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'ANLPP1519R', '21ANLPP1519R1ZL', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'Air-Tel Bill Payable', NULL, NULL, NULL, NULL, 'Infocity Campus,6th floor,E-13/1,Chandaka, Industrial Estate,Bhubaneswar,Odisha', NULL, NULL, NULL, NULL, 'AACB2894G', '21AACB2894G1ZZ', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-18 15:07:08', NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'Akanksha Power & Infrastructure \nPvt. Ltd.', NULL, NULL, NULL, NULL, 'F-10,SILVER PLAZA,CANADA CORNER, SHARANPUR ROAD,NASHIK', 'CENTRAL BANK OF INDIA', '3351458641', NULL, NULL, 'AAHCA3667K', '27AAHCA3667K1ZB', NULL, 'NASHIK CITY', 'CBIN0280706', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'Alisha Bhujbal', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30775827355', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0012120', NULL, '2020-03-11 17:18:12', '2020-03-18 13:41:20', NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'AMAN TECHNOLOGIES PVT LTD', NULL, NULL, NULL, NULL, 'TETERKELA,BADAGUDHIALI\nRAJGANGPUR,ODISHA,INDIA', NULL, NULL, NULL, NULL, 'AAHCA7866Q', '21AAKHP4062K2Z3', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 'Annapurna Agency', NULL, NULL, NULL, NULL, 'Near Railway Booking Counter, P.O;- Bhawanipatna, Dist:- Kalahandi', 'INDIAN BANK', '6097255205', '21891801672', NULL, 'ABFPA4314F', '21ABFPA4314F1ZL', NULL, 'BHAWANIPATNA', 'IDIB000B107', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(8, 'ANNAPURNA HARDWARE STORE', NULL, NULL, NULL, NULL, 'NEAR CITY RAILWAY BOOKING COUNTER, BHAWANIPATNA', 'STATE BANK OF INDIA', '36228548929', NULL, NULL, 'ABPPA2669H', '21ABPPA2669H1ZT', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 'AR Electricals', '9338131060', NULL, NULL, NULL, 'Plot No.-191,G.G.P. Road\nRasulgarh,Bhubaneswar,Odisha\nIndia,751010', 'BANK OF  INDIA ', '555330110000049', NULL, NULL, 'AEFPN4192M', '21AEFPN4192M1ZB', NULL, 'BHUBANESHWAR', 'BKID0005553', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 'Arihant Poles', NULL, NULL, NULL, NULL, 'IDCo Plot No-G4,Industrial Estate\nZone B, Bijakhaman, Bolangir\nOdisha,India,767001', 'STATE BANK OF INDIA', '38054086188', NULL, NULL, 'AHBPJ2740E', '21AHBPJ2740E2Z3', NULL, 'TITLAGARH BAZAR \nBRANCH', 'SBIN0012092', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 'ASHA CEMENTS', NULL, NULL, NULL, NULL, 'HILL TOWN, TH.RAMPUR ROAD, BHAWANIPATNA, KALAHANDI', 'CENTRAL BANK OF INDIA', '3659944507', NULL, NULL, 'DEYPP8348D', '21DEYPP8348D1Z0', NULL, 'BHAWANIPATNA', 'CBIN0284393', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 'Ashok Bastia', NULL, NULL, NULL, NULL, 'Plot No-34,Madhusudan Nagar\nBhubaneswar,751001', 'BANK OF INDIA', '513110110001113', NULL, NULL, NULL, NULL, NULL, 'HANSPAL', 'BKID0005131', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 'Balajee Enterprises', NULL, NULL, NULL, NULL, 'GANDHI CHOWK, BRAJRAJNAGAR, DIST- JHARSUGUDA', 'BANK OF INDIA', '549420110000261', NULL, NULL, 'DNVPS7325P', '21DNVPS7325P1Z1', NULL, NULL, 'BKID0005494', NULL, '2020-03-11 17:18:12', '2020-04-28 19:44:34', NULL, NULL, NULL, NULL, NULL, NULL),
+(14, 'BALAJI HARDWARE', NULL, NULL, NULL, NULL, 'SARBAHAL ROAD, JHARSUGUDA', NULL, NULL, NULL, NULL, 'AUKPA1984H', '21AUKPA1984H1ZV', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(15, 'BENGAL DISTRIBUTORS', NULL, NULL, NULL, NULL, '220 ANAND PLAZA, LAXMISAGAR CHHAK, CUTTACK ROAD, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'AEYPD4227Q', '21AEYPD4227Q1Z2', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(16, 'BHAWANI TRADERS', NULL, NULL, NULL, NULL, 'Hemgir, Dist- Sundargarh', 'STATE BANK OF INDIA', '35376031339', NULL, NULL, 'BWLPA8591C', '21BWLPA8591C1ZQ', NULL, 'BHUBANESHWAR', 'SBIN0007047', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(17, 'Bibhuti Sekhar Subudhi,Transporter', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(18, 'Bright Steel', NULL, NULL, NULL, NULL, 'Cuttack Road, Bhubaneswar', 'HDFC BANK', '50200007045479', '21481101218', NULL, 'AACCB2305E', '21AACCB2305E2ZM', NULL, 'JHARPADA ', 'HDFC0000630', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(19, 'CASMAS ENGINEERING', NULL, NULL, NULL, NULL, 'Plot No. 27/578 & 25/577 Nischinta, Tangi, Cuttack', 'BANK OF BARODA', '45210200000061', NULL, NULL, 'AAGFC7941J', '21AAGFC7941J1ZH', NULL, 'CUTTACK', 'BARB0JAGIND', NULL, '2020-03-11 17:18:12', '2020-03-17 10:16:34', NULL, NULL, NULL, NULL, NULL, NULL),
+(20, 'Chandan Enterprises', NULL, NULL, NULL, NULL, 'Kesinga Road,Paramanandapur Chowk\nBhawanipatna', 'STATE BANK OF INDIA', '37794802542', NULL, NULL, 'CDZPS6998B', '21CDZPS6998B1ZR', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(21, 'City Nut Bolt Centre', NULL, NULL, NULL, NULL, '102,Jharpada Near Over Brdge, Cuttack Road Bhubaneswar 751006', NULL, NULL, '21252600625', NULL, 'ATSPA3954C', '21ATSPA3954C1Z1', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(22, 'Cobra Lifeguard Security Services', NULL, NULL, NULL, NULL, 'Plot No-1223/2810,Bomikhal\nBhubaneswar,751010', 'INDIAN OVERSEAS BANK', '167602000000636', NULL, NULL, 'CSNPS6035E', '21CSNPS6035E1ZQ', NULL, 'RASULGARH', 'IOBA0001676', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(23, 'Cuttack Diesels', NULL, NULL, NULL, NULL, 'OMP Square, Cuttack', 'CENTRAL BANK OF INDIA', '1682840275', NULL, NULL, 'AADFC4840M', '21AADFC4840M1ZM', NULL, 'OMP SQUARE', 'CBIN0284014', NULL, '2020-03-11 17:18:12', '2020-03-17 10:17:30', NULL, NULL, NULL, NULL, NULL, NULL),
+(24, 'D C Biswal Vehicle Owner Bollero', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '10728195023', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-18 13:37:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(25, 'DARK DAZZLE', NULL, NULL, NULL, NULL, '2038/11388, Kishan Nagar, Mancheswar, Bhubaneshwar', 'STATE BANK OF INDIA', '35387211604', NULL, NULL, 'BEFPD6396J', '21BEFPD6396J1ZG', NULL, NULL, 'SBIN0012021', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(26, 'E Power Center', NULL, NULL, NULL, NULL, 'Pratapnagari,NH-5,AB Complex\nBhanpur,Cuttack,Odisha,753011', 'FEDERAL BANK', '13770200009713', NULL, NULL, 'AATPD6413F', '21AATPD6413F1Z2', NULL, 'CUTTACK', 'FDRL0001377', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(27, 'Edumadicss', NULL, NULL, NULL, NULL, 'Bhubaneswar,Odisha', 'STATE BANK OF INDIA', '30443592487', NULL, NULL, 'ANGPP1981N', '21ANGPP1981N2ZN', NULL, 'BAPUJI NAGAR,BBSR', 'SBIN0006408', NULL, '2020-03-11 17:18:12', '2020-03-19 10:41:02', NULL, NULL, NULL, NULL, NULL, NULL),
+(28, 'Electrotech Enginurs', NULL, NULL, NULL, NULL, 'Plot No- 161, Saheed Nagar, Bhubaneshwar', 'HDFC BANK', '50200032427861', NULL, NULL, 'AAHFE1345B', '21AAHFE1345B1Z9', NULL, NULL, 'HDFC0000630', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(29, 'ELHARD MARKETING LIMITED', NULL, NULL, NULL, NULL, 'S-1/106 SECTOR & ZONE- A, MANCHESWAR INDUSTRIAL ESTATE, BHUBANESHWAR', 'ICICI BANK', '694905501295', NULL, NULL, 'AAACE5657Q', '21AAACE5657Q1ZC', NULL, 'PARTUGUESE CHURCH \nSTREET', 'ICIC0006949', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(30, 'EMAMI CEMENT LIMITED (C )', NULL, NULL, NULL, NULL, 'Risda,Suhela Road,Baloda Bazar, Dist-Bolada Bazar, Bhatpara', 'HDFC BANK', 'EMACEM2001000352', NULL, NULL, 'AABCE7927L', '22AABCE7927L1ZI', NULL, 'SANDOZ BRANCH\n MUMBAI', 'HDFC0000240', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(31, 'EMAMI CEMENT LIMITED (O)', NULL, NULL, NULL, NULL, 'ODISHA MANITIRA UNDER P.S- JAKHPU, BACK SIDE OF MAITHAN STEEL, JAJPUR', 'HDFC BANK', 'EMACEM2001000352', NULL, NULL, 'AABCE7927L', '21AABCE7927L1ZK', NULL, 'SANDOZ BRANCH \nMUMBAI', 'HDFC0000240', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(32, 'Ganapati Pipes & Industries (P) Ltd', NULL, NULL, NULL, NULL, 'Gahirasimila,Dhandika Basta\nBalasore,Odisha', NULL, NULL, NULL, NULL, 'AADCG5325Q', '21AADCG5325Q1Z1', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(33, 'Ganesh transport', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30908432891', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0012120', NULL, '2020-03-11 17:18:12', '2020-03-18 17:55:16', NULL, NULL, NULL, NULL, NULL, NULL),
+(34, 'Gangpur Diesels', NULL, NULL, NULL, NULL, 'Plot No-3553,NH-16,Palasuni\nRasulgarh,Bhubaneswar', NULL, NULL, NULL, NULL, 'AKNPP2549J', '21AKNPP2549J1ZX', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(35, 'Gayatri Steel \'N\' Pipes', NULL, NULL, NULL, NULL, 'AE-29(Ground Floor), V.S.S.Nagar,Bhubaneswar', 'OREINTAL BANK OF COMMERCE', '08694015004017', '21045502156', NULL, 'BDXPD7683R', '21BDXPD7683R1ZK', NULL, 'BHUBANESHWAR', 'ORBC0100869', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(36, 'GUPTA POWER INFRASTRUCTURE \nLTD', NULL, NULL, NULL, NULL, 'IDCO PLOY NO- F/P,IID CENTRE, MUKUNDA PRASAD, KHORDA', 'HDFC BANK', '01220330000073', NULL, NULL, 'AAACG9210B', '21AAACG9210B1ZG', NULL, 'BHUBANESWAR', 'HDFC0000122', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(37, 'H.K Sachdeva & Co.', NULL, NULL, NULL, NULL, 'Bhawanipatna,Kalahandi', 'STATE BANK OF INDIA', '33843437301', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-18 15:17:48', NULL, NULL, NULL, NULL, NULL, NULL),
+(38, 'HALONIX TECHNOLOGIES (P) \nLTD 21', NULL, NULL, NULL, NULL, 'B-31,NOIDA, DISTT. GAUTAM BUDH NAGAR(U.P.)', 'CORPORATION BANK', '014100401130003', NULL, NULL, 'AACCH1914R', '21AACCH1914R1ZL', NULL, 'NEW DELHI', 'CORP0000141', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(39, 'HALONIX TECHNOLOGIES PVT LTD 05', NULL, NULL, NULL, NULL, 'Plot No-05,Sector-12,II E-SIDCUL INDL\narea Ranipur,Haridwar,\nHimanchal Pradesh,249403', 'CORPORATION BANK', '014100401130003', NULL, NULL, 'AACCH1914R', '05AACCH1914R1ZF', NULL, 'NEW DELHI', 'CORP0000141', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(40, 'HALONIX TECHNOLOGIES PVT LTD 09', NULL, NULL, NULL, NULL, 'B-31 PHASE II NOIDA,DISTT- GAUTAM BUDH NAGAR, U.P', 'CORPORATION BANK', '014100401130003', NULL, NULL, 'AACCH1914R', '09AACCH1914R1Z7', NULL, 'NEW DELHI', 'CORP0000141', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(41, 'Hari Omm Tours & Travels', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30073523375', NULL, NULL, NULL, NULL, NULL, 'FOREST PARK, BBSR', 'SBIN0006606', NULL, '2020-03-11 17:18:12', '2020-03-19 10:45:45', NULL, NULL, NULL, NULL, NULL, NULL),
+(42, 'IT Care', NULL, NULL, NULL, NULL, 'Main Road,Mahaveer Pada,Near \nHotel Somnath,Bhawanipatna\nKalahandi,Odisha,766001', 'STATE BANK OF INDIA ', '35393852833', NULL, NULL, 'ALBPB9426F', '21ALBPB9426F1Z0', NULL, 'BHAWANIPATNA', 'SBIN0000039', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(43, 'Jai Mata Dee Hardware', NULL, NULL, NULL, NULL, '34, Cuttack Road, Bhubaneswar-751006', NULL, NULL, NULL, NULL, 'BAZPS9400E', '21BAZPS9400E1ZH', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(44, 'Jain Steel', '6670230204', NULL, NULL, NULL, 'At-Manikeswari Chawk, Po-Bhawanipatna, Dist-Kalahandi, ', 'STATE BANK OF INDIA', '30154792825', '21131801993', NULL, 'ABQPJ4713L', '21ABQPJ4713L1ZL', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(45, 'Jasobanta Pattanaik,Vehicle Owner', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '11083478966', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0012120', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(46, 'JBC Industries', NULL, NULL, NULL, NULL, 'S-3/9 ZONE-A, MANCHESHWAR INDUSTRIAL ESTATE, BHUBANESHWAR, KHURDA', 'BANK OF BARODA', '32500500000001', '21441100270', NULL, 'AASPP9357M', '21AASPP9357M1ZV', NULL, 'CUTTACK', 'BARB0CUTTRD', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(47, 'Jyoti Motors(BBSR) PVT. LTD.', NULL, NULL, NULL, NULL, 'A/62,Nayapalli,Near CRPF Square\r\nBhubaneswar,751003', 'STATE BANK OF INDIA', '37583338134', NULL, NULL, 'AACCJ2167N', '21AACCJ2167N1ZK', NULL, 'BHUBANESHWAR', 'SBIN0009027', NULL, '2020-03-11 17:18:12', '2020-03-18 17:59:18', NULL, NULL, NULL, NULL, NULL, NULL),
+(48, 'Jyoti Traders', NULL, NULL, NULL, NULL, 'Infront of Allahabad Bank\nBeheramal,Jharsuguda,Odisha', 'ALLAHABAD BANK', '50268721684', NULL, NULL, 'AJEPM0966E', '21AJEPM0966EIZL', NULL, NULL, 'ALLA0210480', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(49, 'Kamala traders', NULL, NULL, NULL, NULL, 'Plot No-1127/3408,Jayadurganagar\nBomikhal,Bhubaneswar,Odisha,751006', NULL, NULL, NULL, NULL, 'AEXPJ8204Q', '21AEXPJ8204Q1ZW', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(50, 'Kamdhenu Marketing Services', NULL, 'kamdhenum@yahoo.com', NULL, NULL, 'Hno-232, Gujrati Colony, Kesharpur, Buxibazar, Cuttack', 'AXIS BANK', '909020032293810', NULL, NULL, 'ACLPM0991R', '21ACLPM0991R1Z1', NULL, NULL, 'UTIB0000091', NULL, '2020-03-11 17:18:12', '2020-05-28 16:34:40', NULL, NULL, NULL, NULL, NULL, NULL),
+(51, 'Kishan Enterprises', NULL, NULL, NULL, NULL, 'C/10, Market Building, Saheed Nagar, Bhubaneshwar', 'UNION BANK OF INDIA', '380805040000065', NULL, NULL, 'AAPPB2063H', '21AAPPB2063H1Z6', NULL, NULL, 'UBIN0538086', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(52, 'Konark Constuction Engineer Ltd', NULL, NULL, NULL, NULL, 'Telengapentha, Cuttack', 'INDIAN OVERSEAS BANK', '2202000010088', '21801300183', NULL, 'AABCK3661M', '21AABCK3661M1ZL', NULL, 'CUTTACK', 'IOBA0000022', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(53, 'Konark Earthmovers Pvt. Ltd.', '9437043311', 'mail@konarkearthmovers.com', NULL, NULL, 'D2/2,Rasulgarh Industrial Estate\r\nBhubaneswar,751010', 'HDFC BANK', '25862320000042', NULL, NULL, 'AAECK8929K', '21AAECK8929K1Z9', NULL, 'BHUBANESWAR', 'HDFC0002586', NULL, '2020-03-11 17:18:12', '2020-03-17 10:24:50', NULL, NULL, NULL, NULL, NULL, NULL),
+(54, 'Krishi Auto', NULL, NULL, NULL, NULL, NULL, 'AXIS BANK', '919020045730992', NULL, NULL, NULL, NULL, NULL, NULL, 'UTIB0000812', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(55, 'Krishna Plast Pipes Pvt.Ltd', '6670230204', 'krishnaplastech@rediffmail.com', NULL, NULL, 'Industrial Estate, Railway Station Road, Bargard', 'STATE BANK OF INDIA', '30437519710', '21151700714', NULL, 'AAACK9458K', '21AAACK9458K1ZB', NULL, 'BARGARH', 'SBIN0009679', NULL, '2020-03-11 17:18:12', '2020-05-28 16:32:24', NULL, NULL, NULL, NULL, NULL, NULL),
+(56, 'KRISHNA TANKS PVT LTD', NULL, NULL, NULL, NULL, 'NEAR INDUSTRIAL ESTATE, RAILWAY STATION ROAD, BARGARH', NULL, NULL, NULL, NULL, 'AAFCK0154K', '21AAFCK0154K1ZV', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(57, 'LALU ENTERPRISES', NULL, NULL, NULL, NULL, 'Infront of Telephone Bhawan,Bhawanipatna, Kalahandi', NULL, NULL, '21421802076', NULL, 'ABGPC9575P', '21ABGPC9575P2Z7', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(58, 'Laxmi Motors', NULL, NULL, NULL, NULL, 'Kesinga Road,Bhawanipatna,Odisha\r\n766001', 'STATE BANK OF INDIA', '30162705140', NULL, NULL, 'BOTPP6758Q', '21BOTPP6758Q1ZT', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-17 10:26:29', NULL, NULL, NULL, NULL, NULL, NULL),
+(59, 'Laxmi Traders', NULL, NULL, NULL, NULL, 'Satyam cinema Road,Bhawanipatna\nOdisha', NULL, NULL, NULL, NULL, 'ABPPA2729J', '21ABPPA2729J1ZV', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(60, 'LAXMI WELDING & MILL STORES', NULL, NULL, NULL, NULL, '116, GROUND FLOOR,ANANDA PLAZA COMPLEX, PLOT NO- 137, LAXMISAGAR SQUARE, CUTTACK ROAD,BHUBANESHWAR', NULL, NULL, NULL, NULL, 'AFGPA6391F', '21AFGPA6391F1ZV', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(61, 'LIMBANI TRADERS', NULL, NULL, NULL, NULL, 'BUDHESWARI AREA, CUTTACK ROAD, BHUBANESWAR', NULL, NULL, NULL, NULL, 'ADIPP9723A', '21ADIPP9723A1ZU', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(62, 'Lingaraj Pipes Pvt Ltd', NULL, NULL, NULL, NULL, '13A CHANDAKA INDUSTRIAL ESTATE, P.O-PATIA, BHUBANESHWAER', 'HDFC BANK', '50200009877799', '21251108280', NULL, 'AAACL5219M', '21AAACL5219M1ZN', NULL, 'BHUBANESHWAR', 'HDFC0003951', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(63, 'M G PLAST ENTERPRISES', NULL, NULL, NULL, NULL, 'PITAPALLI,KUBHARBASTA, KHURDA', 'HDFC BANK', '50200022101280', '21022902761', NULL, 'GBPPS6776H', '21GBPPS6776H1ZX', NULL, 'PATRAPADA ', 'HDFC0004281', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(64, 'M/S AGRAWAL TRADERS', '9937064719', NULL, NULL, NULL, 'AT/PO- BELPAHAR, DIST- JHARSUGUDA', 'STATE BANK OF INDIA', '10707968293', NULL, NULL, 'ABLPA1109Q', '21ABLPA1109Q1ZX', NULL, NULL, 'SBIN0008445', NULL, '2020-03-11 17:18:12', '2020-03-12 15:56:33', NULL, NULL, NULL, NULL, NULL, NULL),
+(65, 'M/S Bharat Traders', NULL, NULL, NULL, NULL, 'Statue Square,Bhawanipatna', 'STATE  BANK OF INDIA', '30503993163', NULL, NULL, 'ADIPA9144Q', '21ADIPA9144Q1ZD', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-05-16 17:10:43', NULL, NULL, NULL, NULL, NULL, NULL),
+(66, 'M/s Bhawani Fly Ash Bricks', '9938818957', NULL, NULL, NULL, 'Sukhabandh, Hemgir, Dist- Sundargarh', 'UNITED BANK OF INDIA', '0774250027201', NULL, NULL, 'AGSPA3659D', '21AGSPA3659D1ZO', NULL, 'HEMGIRI', 'UTBI0HEM495', NULL, '2020-03-11 17:18:12', '2020-03-17 10:33:38', NULL, NULL, NULL, NULL, NULL, NULL),
+(67, 'M/S G.K.PANEL', NULL, NULL, NULL, NULL, 'PLOT NO.327/1486,KORADAKANTA, NEAR BYPASS BBSR-PURI ROAD, BHUBANESWAR 751006', 'BANK OF INDIA', '555330110000027', '21185500430', NULL, 'AILPN4582F', '21AILPN4582F1Z9', NULL, 'BHUBANESHWAR', 'BKID0005553', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(68, 'M/S GANAPATI ELECTRICALS', NULL, NULL, NULL, NULL, 'JAGANNATH TEMPLE ROAD, BHAWANIPATNA, KALAHANDI', 'STATE BANK OF INDIA', '35664739082', '21264801404', NULL, 'AIBPB1792M', '21AIBPB1792M1ZI', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(69, 'M/S Gangpur Sales & Services', NULL, NULL, NULL, NULL, 'Satya Vihar,Near NH-5,Puri Byepass\r\nRoad,Palasuni,Bhubaneswar,\r\nOdisha', NULL, NULL, '21835300980', NULL, 'AANFG0696D', '21AANFG0696D1ZL', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-19 11:47:21', NULL, NULL, NULL, NULL, NULL, NULL),
+(70, 'M/S GIRIJA ELECTRICALS', NULL, NULL, NULL, NULL, 'PLOT NO. 825 TANGIBANTA, PATIA, BHUBANESHWAR', 'PUNJAB NATIONAL BANK', '7648002100000343', '21285504934', NULL, 'GGHPS6804K', '21GGHPS6804K1Z3', NULL, 'BHUBANESHWAR', 'PUNB0764800', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(71, 'M/s Jai Bharat Agencies', NULL, NULL, NULL, NULL, 'Shop- G/27, Secong Floor, Bhudhram Oram Market, Near Axis Bank, Kachery Road, Rourkela', 'STATE BANK OF INDIA', '31727937152', NULL, NULL, 'AIAPA5254C', '21AIAPA5254C1Z8', NULL, 'UDITNAGAR BRANCH', 'SBIN0007474', NULL, '2020-03-11 17:18:12', '2020-03-17 10:42:04', NULL, NULL, NULL, NULL, NULL, NULL),
+(72, 'M/S JANATA ELECTRICAL AND \nMECHANICAL WORKS', '0674-2597722', NULL, NULL, NULL, '90, BAPUJI NAGAR, BHUBANESWAR', NULL, NULL, '21371110930', NULL, 'AFHPP0293C', '21AFHPP0293C1ZW', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(73, 'M/S MAHAPATRA ELECTRICALS', NULL, NULL, NULL, NULL, 'LANJIPALLO, BERHAMPUR', NULL, NULL, NULL, NULL, 'AGFPM5282K', '21AGFPM5282K1ZB', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(74, 'M/S MARUTI ALLOYS STEEL', NULL, NULL, NULL, NULL, 'PLOT NO- 599/1846, CUTTACK ROAD, BOMIKHAL, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'ACUPN7640K', '21ACUPN7640K1Z5', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(75, 'M/S PREMA CHAIN & MILL STORE', NULL, NULL, NULL, NULL, '140,CUTTACK ROAD,LAXMI SAGAR, BHUBANESHWAR', NULL, NULL, '21311116492', NULL, 'AKHPP7790D', '21AKHPP7790D1Z3', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(76, 'M/S Rajesh Trader', NULL, NULL, NULL, NULL, 'Paramanandapur,Kesinga Road\nBhawanipatna,766001', 'FEDERAL BANK', '21920200001257', NULL, NULL, 'ABRPK4607P', '21ABRPK4607P1ZA', NULL, 'BHAWANIPATNA', 'FDRL0002192', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(77, 'M/s S.K Enterprises', NULL, NULL, NULL, NULL, 'GANESH CHANDRA AVENUE, KOLKATA', 'SOUTH INDIAN BANK', '0129073000010905', NULL, NULL, 'CRUPM2510A', '19CRUPM2510A1ZW', NULL, NULL, 'SIBL0000129', NULL, '2020-03-11 17:18:12', '2020-03-17 10:44:51', NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 'M/S SUSHIL & COMPANY', NULL, NULL, NULL, NULL, 'BOINDA,DIST-ANUGUL(ODISHA)', 'UCO BANK', '31520210000151', '21183504558', NULL, 'GBAPS7267A', '21GBAPS7267A1ZU', NULL, 'ANUGUL ', 'UCBA0003152', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(79, 'M/S SushreePower Steel', NULL, NULL, NULL, NULL, 'Plot No-593/892/1566,Ogalapada\nJanala,Odisha', NULL, NULL, NULL, NULL, 'AXBPP6793P', '21AXBPP6793P1ZT', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(80, 'M/S Tara Tarini Constructions', NULL, NULL, NULL, NULL, 'Fatkamal,Pastikudi,Odisha', 'BANK OF BARODA', '33670500000110', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'BARB0BHAWAN', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 'M/s Wire House', NULL, NULL, NULL, NULL, 'Bapuji Nagar, Bhubaneshwar', NULL, NULL, '21221104174', NULL, 'AAAFW8759Q', '21AAAFW8759Q1ZF', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(82, 'M/s. Manoharlal Debi Prasad', NULL, NULL, NULL, NULL, 'Statue Chowk, Bhawanipatna', 'INDIAN OVERSEASE BANK', '070702000004557', '21801802158', NULL, 'AACCB2305E', '21AACCB2305E2ZM', NULL, 'BHAWANIPATNA', 'IOBA0000707', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(83, 'M/s. S.M Gases', NULL, NULL, NULL, NULL, 'At- Gaigaon, Chancher, Utkela, Kalahandi', 'BANK OF BARODA', '33670500000334', '21054801665', NULL, 'BAIPG5790E', '21BAIPG5790E1ZX', NULL, 'BHAWANIPATNA', 'BARB0BHAWAN', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(84, 'Maa Bhubaneswari Pipes & Tiles', NULL, NULL, NULL, NULL, 'Sahoo Complex,Near OrientalBank,Gandi chowk,brajrajnagar,768216', ' ORIENTAL BANK OF COMMERCE', '16924015004213', NULL, NULL, 'CXHPP8203Q', '21CXHPP8203Q1Z2', NULL, NULL, 'ORBC0101692', NULL, '2020-03-11 17:18:12', '2020-03-18 15:22:49', NULL, NULL, NULL, NULL, NULL, NULL),
+(85, 'MAA DURGA ELECTRICAL', NULL, NULL, NULL, NULL, 'Phulbani', 'UNION BANK OF INDIA', '625001010050090', NULL, NULL, 'DIQPP6285M', '21DIQPP6285M1ZG', NULL, 'BHUBANESWAR', 'UBIN0562505', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(86, 'MAA SAMLESHWARI STEEL & POWER', NULL, 'msspryp2019@gmail.com', NULL, NULL, '125, 1ST FLOOR, SAMTA SHOPPING ARCADE, SAMTA COLONY, RAIPUR', 'ICICI BANK', '134805500958', NULL, NULL, 'ABMFM2024M', '22ABMFM2024M1ZB', NULL, NULL, 'ICIC0001348', NULL, '2020-03-11 17:18:12', '2020-05-28 16:30:43', NULL, NULL, NULL, NULL, NULL, NULL),
+(87, 'Maa Sarala Route Craft', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(88, 'MAA TRADING CORPORATION', NULL, NULL, NULL, NULL, 'PLOT NO 74,PHASE-2, BHAGABAT SANDHAN,GGP COLONY, RASULGARH, BHUBANESHWAR', 'AXIS BANK', '914020001562914', '21932602191', NULL, 'AAWFM4997N', '21AAWFM4997N1Z9', NULL, 'MANCHESWAR ', 'UTIB0001973', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(89, 'MADANI NUT & BOLT CENTRE', NULL, NULL, NULL, NULL, '116, BUDHESWARI COLONY, CUTTACK ROAD,, BHUBANESWAR-6', NULL, NULL, NULL, NULL, 'AAIFM2769E', '21AAIFM2769E1ZG', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 'MAHALAXMI EARTHING SOLUTIONS', NULL, NULL, NULL, NULL, 'NO-753, NANDANKANAN ROAD,, BHUBANESHWAR, KHORDHA', 'HDFC BANK', '50200037665092', NULL, NULL, 'CSJPS6574G', '21CSJPS6574G2ZD', NULL, NULL, 'HDFC0002542', NULL, '2020-03-11 17:18:12', '2020-03-17 10:49:31', NULL, NULL, NULL, NULL, NULL, NULL),
+(91, 'Mahaveer Enterprises', NULL, NULL, NULL, NULL, NULL, 'OREINTAL BANK OF COMMERCE', '19191131000293', NULL, NULL, NULL, NULL, NULL, NULL, 'ORBC0101919', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(92, 'Maysa Hydraulics', NULL, NULL, NULL, NULL, 'Kesinga Road,Near Check Gate, Bhawanipatna, Kalahandi', NULL, NULL, NULL, NULL, 'APTPG7290L', '21APTPG7290L1ZE', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(93, 'MITALI TRANSFORMER & SWITCHGEAR PVT.LTD', NULL, NULL, NULL, NULL, 'N.H-26,KESINGA ROAD, DUNGURIPADAR,THUAPADAR, BHAWANIPATNA, KALAHANDI', 'STATE BANK OF INDIA\nBANK OF BARODA\nBANK OF BARODA', '31072567475\n33670500000002\n33670200000009', '21934800211', NULL, 'AAGCM3144A', '21AAGCM3144A1Z9', NULL, 'BHAWANIPATNA', 'SBIN0000039\nBARB0BHAWAN\nBARB0BHAWAN', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(94, 'Modern Interio', NULL, NULL, NULL, NULL, 'Shop No-102,Budheswari Market\nComplex,Bhubaneswar,Odisha\n751006', 'BANK OF INDIA', '513620110000137', NULL, NULL, 'ABIFM2897E', '21ABIFM2897E1Z9', NULL, NULL, 'BKID0005136', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(95, 'Nandishwar Roadways', NULL, NULL, NULL, NULL, 'Samta Colony,Samta Shopping\r\nArcade Office No-405,4th Floor\r\nRaipur,492001', 'Axis Bank', '919020010055873', NULL, NULL, 'AAPFN2978M', '22AAPFN2978M1ZM', NULL, 'Raipur CT', 'UTIB0000726', NULL, '2020-03-11 17:18:12', '2020-04-19 20:35:29', NULL, NULL, NULL, NULL, NULL, NULL),
+(96, 'Neha Furniture', NULL, NULL, NULL, NULL, 'Bhawanipatna,Kalahandi,odisha', 'STATE BANK OF INDIA', '11083632679', NULL, NULL, 'AAUPA3589Q', '21AAUPA3589Q1Z2', NULL, 'BHAWANIPATNA', 'SBIN0000039', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(97, 'New Shree Samarath Road Line', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(98, 'NIT Rourkela Testing Services', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(99, 'NOVA TRADING', NULL, NULL, NULL, NULL, '125,CUTTACK ROAD, LAXMI SAGAR, BHUBANESHWAR', 'HDFC BANK', '50200010536882', NULL, NULL, 'ABMPA5274H', '21ABMPA5274H1ZX', NULL, 'JHARPADA', 'HDFC0000630', NULL, '2020-03-11 17:18:12', '2020-03-17 10:51:54', NULL, NULL, NULL, NULL, NULL, NULL),
+(100, 'Om Graphics', NULL, NULL, NULL, NULL, 'Plot No-1361/2813,Road No-05\nJagannath Nagar,Bhubaneswar\nOdisha,751025', NULL, NULL, NULL, NULL, 'AALPY2674F', '21AALPY2674F1ZI', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(101, 'OM TRADING CO', NULL, NULL, NULL, NULL, 'NEAR TRL SBI TARNING CENTER, GUMADERA, BELPHAR', 'AXIS BANK', '918020108735462', NULL, NULL, 'AAGFO1663F', '21AAGFO1663F1ZN', NULL, NULL, 'UTIB0003092', NULL, '2020-03-11 17:18:12', '2020-03-17 10:53:56', NULL, NULL, NULL, NULL, NULL, NULL),
+(102, 'ORISSA CABLES & CONDUCTORS', NULL, NULL, NULL, NULL, 'PLOT NO-570,MAHATAB ROAD, CUTTACK', 'TAMILNAD MERCANTILE BANK    STATE BANK OF INDIA', '172700150950076       36876465420', '21923102280', NULL, 'AAEFO7887M', '21AAEFO7887M1ZO', NULL, 'CUTTACK', 'TMBL0000172      SBIN0001663', NULL, '2020-03-11 17:18:12', '2020-03-17 11:25:26', NULL, NULL, NULL, NULL, NULL, NULL),
+(103, 'PADMA DISTRIBUTORS', NULL, NULL, NULL, NULL, 'JAYASHREE CHHAK, NIMAPARA, PURI', NULL, NULL, NULL, NULL, 'AAHFP8050A', '21AAHFP8050A1ZS', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(104, 'PADMANAV POWER ENGINEERING', NULL, NULL, NULL, NULL, 'PLOT NO- 1958/51,2ND FLOOR,, INFRONT OF CHINTAMANISWAR TEMPLE, CUTTACK-PURI ROAD, BHUBANESHWAR', 'YES BANK LTD', '009385800003858', NULL, NULL, 'ALHPK5514H', '21ALHPK5514H1ZG', NULL, 'BAPUJI NAGAR,\nBBSR', 'YESB0000093', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(105, 'Panda Fuels', NULL, NULL, NULL, NULL, 'Manikeswari high school chowk,Bhawanipatna,Odisha,766001', 'HDFC BANK', '50200004619139', NULL, NULL, 'AAOFP5823G', '21AAOFP5823G1ZA', NULL, 'BHAWANIPATNA', 'HDFC0001958', NULL, '2020-03-11 17:18:12', '2020-03-18 15:27:29', NULL, NULL, NULL, NULL, NULL, NULL),
+(106, 'Patel & Patel', NULL, NULL, NULL, NULL, NULL, 'CENTRAL BANK OF INDIA', '3701890755', NULL, NULL, NULL, NULL, NULL, NULL, 'CBIN0284629', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(107, 'Pawan Kumar Raj Kumar', NULL, NULL, NULL, NULL, 'Mani Sahu Chhack,Buxi Bazar, Cuttack-', NULL, NULL, '21761204757', NULL, 'AAKFP5837E', '21AAKFP5837E1ZC', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(108, 'PAWAN KUMAR RAJ KUMAR (CTC)', NULL, NULL, NULL, NULL, 'MANI SAHU CHHAK, BUXI BAZAR, CUTTACK', NULL, NULL, NULL, NULL, 'AAEFP4156G', '21AAEFP4156G1ZK', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(109, 'Praharaj Medicament', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30374737217', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0003341', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(110, 'Pramod Engineering Works', NULL, NULL, NULL, NULL, 'Plot No-B12,Phase-2,New\nIndustrial Estate,Jagatpur,\nCuttack,Odisha,754021', 'CANARA BANK', '3969261000060', NULL, NULL, 'APZPP2946N', '21APZPP2946N1Z2', NULL, 'JAGATPUR', 'CNRB0003969', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(111, 'PS Engineering Services', NULL, NULL, NULL, NULL, 'RZ-210,Mangolpur Khurd,Near Bank\r\nNew Delhi,110085', 'AXIS BANK', '914020028344863', NULL, NULL, 'CATPS2722Q', '07CATPS2722Q2ZR', NULL, 'NEW DELHI', 'UTIB0001105', NULL, '2020-03-11 17:18:12', '2020-03-17 10:56:27', NULL, NULL, NULL, NULL, NULL, NULL),
+(112, 'R S Trading', NULL, NULL, NULL, NULL, 'Nayabazar, Cuttack', NULL, NULL, NULL, NULL, 'BWJPP0278H', '21BWJPP0278H1ZJ', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(113, 'Rabi Traders', NULL, NULL, NULL, NULL, 'Gandhi Chowk,Bhawanipatna\nKalahandi,Odisha,766001', 'CORPORATION BANK', '198001601000011', NULL, NULL, 'ALNPA6118R', '21ALNPA6118R1ZX', NULL, 'BHAWANIPATNA', 'CORP0001980', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(114, 'Reliable Sponge Pvt. Ltd', NULL, NULL, NULL, NULL, 'DUA COMPLEX,PANPOSH ROAD, ROURKELA, SALES@RELIABLEISPAT.COM', 'STATE BANK OF INDIA', '31042062297', NULL, NULL, 'AACCR7178P', '21AACCR7178P1ZV', NULL, 'ROURKELA', 'SBIN0002111', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(115, 'Ridhi Corporate Services Ltd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(116, 'ROSHAN ENTERPRISES', NULL, NULL, NULL, NULL, 'PALACE ROAD, NEAR GULAB BHAWAN, BHAWANIPATNA', NULL, NULL, NULL, NULL, 'APRPA2957A', '21APRPA2957A1ZD', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(117, 'S.P Electricals', '9831474734', NULL, NULL, NULL, '34,EZRA Street,Kolkata,West Bengal 700001', 'KOTAK MAHENDRA BANK', '1711613510', NULL, NULL, 'AFHPP8149R', '19AFHPP8149R1ZB', NULL, 'PARK STREET,\nKOLKATA', 'KKBK0000322', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(118, 'S.S Industries', '9830166909\n9830135305', NULL, NULL, NULL, 'N.S Road,Goshala,Liluah,Howrah\nWest Bengal,711204', 'HDFC BANK', '50200012374050', NULL, NULL, 'ABVFS9779C', '19ABVFS9779C1Z4', NULL, 'KOLKATA', 'HDFC0001242', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(119, 'Sagar Store', NULL, NULL, NULL, NULL, 'Capital Market,Unit-1,BBSR,751009', 'STATE BANK OF INDIA', '10977508859', NULL, NULL, 'AQCPS2537A', '21AQCPS2537A1ZG', NULL, NULL, 'SBIN0006408', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(120, 'Sai Krupa Cement Unit', NULL, NULL, NULL, NULL, 'Tankapani Road, Near Sai Temple\nBhubaneswar,Odisha', 'STATE BANK OF INDIA', '20147776135', NULL, NULL, NULL, NULL, NULL, 'BHUBANESHWAR', 'SBIN0003817', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(121, 'Sajeda Engineering', NULL, NULL, NULL, NULL, 'NH-26,Kesinga Road\nParamanandapur,Bhawanipatna\nOdisha', NULL, NULL, NULL, NULL, 'AGSPM8595J', '21AGSPM8595J2ZL', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(122, 'SAKUNIA STORES', NULL, NULL, NULL, NULL, 'OPPS CITY POLICE STATION, JHANDA CHOWK, JHARSUGUDA', 'UNION BANK OF INDIA', '354001010280142', NULL, NULL, 'ACYPS6368K', '21ACYPS6368K1ZP', NULL, 'JHARSUGUDA', 'UBIN0535401', NULL, '2020-03-11 17:18:12', '2020-03-17 10:59:06', NULL, NULL, NULL, NULL, NULL, NULL),
+(123, 'Sanjay Tecnical Service Pvt.Ltd.', NULL, 'deepak@sanjaytechnical.in', NULL, NULL, 'UNIT 2,PLOT NO-12, HIV IDA JEEDIMETLA, HYDERABAD', 'STATE BANK OF INDIA', '10260704062', '36450242356', NULL, 'AACCS8394N', '36AACC8394N1ZJ', NULL, NULL, 'SBIN0020400', NULL, '2020-03-11 17:18:12', '2020-05-28 16:29:27', NULL, NULL, NULL, NULL, NULL, NULL),
+(124, 'Sanmita Mohanty(Swagat Travels)', NULL, NULL, NULL, NULL, 'Odisha', 'STATE BANK OF INDIA', '33331412404', NULL, NULL, 'FKTPM7907J', NULL, NULL, NULL, 'SBIN0002069', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(125, 'Shiv Shakti Collection', NULL, NULL, NULL, NULL, 'Palace Road, Bhawanipatna,Kalahandi.', 'STATE BANK OF INDIA ', '10728220776', NULL, NULL, 'ACDPG6723F', '21ACDPG6723F1Z6', NULL, 'BHAWANIPATNA', 'SBIN0006725', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(126, 'Shivam Motors', NULL, NULL, NULL, NULL, 'Plot No-206,Laxmi Sagar Chowk\nCuttack Road,Bhubaneswar\nOdisha,751006', NULL, NULL, NULL, NULL, 'AEHPG6093A', '21AEHPG6093A1Z1', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(127, 'Shree Balaji Engicons Pvt Ltd', '8114307999', 'info@balajiengicons.com', NULL, NULL, 'Belpahar,Jharsuguda,Odisha', NULL, NULL, NULL, NULL, 'AAGCS4292P', '21AAGCS4292P1ZX', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-05-28 16:28:21', NULL, NULL, NULL, NULL, NULL, NULL),
+(128, 'Shree Krishna Roadlines', NULL, NULL, NULL, NULL, 'Hanspal,Near Puri Main Canal,\nOPP Hanuman Temple,Naharakanta\nManceswar,Bhubaneswar,752101', NULL, NULL, NULL, NULL, 'BBXPD9553J', NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(129, 'Shree Sai Enterprises', NULL, 'shreesaibbsr@gmail.com', NULL, NULL, 'Plot No-211A,SECTOR-A,, ZONE-B,MANCHESWAR INDUSTRIAL ESTATE, BHUBANESHWAR', 'ICICI BANK', '006105502304', '21945505056', NULL, 'BMOPM6751K', '21BMOPM6751K1ZO', NULL, 'BHUBANESHWAR', 'ICIC0000061', NULL, '2020-03-11 17:18:12', '2020-06-02 17:48:22', NULL, NULL, NULL, NULL, NULL, NULL),
+(130, 'Shree Suppliers', NULL, NULL, NULL, NULL, 'P.O Kesinga- 766012', NULL, NULL, NULL, NULL, 'BJAPA0818A', '21BJAPA0818A1ZH', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(131, 'SHYAM TRADERS', NULL, NULL, NULL, NULL, 'RAJPUR ROAD, GANDJI CHOWK, BRAJRAJNAGAR', 'UCO BANK', '02350210002650', NULL, NULL, 'ACYPP3979K', '21ACYPP3979K1ZP', NULL, NULL, 'UCBA0000235', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(132, 'Shyam Travels', NULL, NULL, NULL, NULL, 'Chandan Lodge, Plot No-152/A,Station Square,Bhubaneswar,Odisha', 'STATE BANK OF INDIA', '30592979358', NULL, NULL, NULL, NULL, NULL, 'JANPATH BBSR', 'SBIN0010238', NULL, '2020-03-11 17:18:12', '2020-03-18 15:30:29', NULL, NULL, NULL, NULL, NULL, NULL),
+(133, 'Sidhi Vinayak Polyplast Pvt Ltd', NULL, NULL, NULL, NULL, 'Main Road Bishalkhinda, Sason, Sambalpur', 'AXIS BANK', '916030047427528', NULL, NULL, 'AAJCS8390R', '21AAJCS8390R1ZJ', NULL, 'SAMBALPUR', 'UTIB0000306', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(134, 'Smarsh Auto Industries', NULL, NULL, NULL, NULL, 'Post Box No-29,Kesinga,Kalahandi\nOdisha,766012', NULL, NULL, NULL, NULL, 'ADBPS8459D', '21ADBPS8459D1ZL', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(135, 'SCM Plastic Engineering', NULL, NULL, NULL, NULL, 'Plot No-62/568,Kalia Gaon,Near\r\nPower Grid,Jeypore,Odisha', 'ANDRA BANK', '026013100001556', NULL, NULL, 'AARCS6708D', '21AARCS6708D1ZE', NULL, 'JEYPORE', 'ANDB0000260', NULL, '2020-03-11 17:18:12', '2020-03-19 11:32:50', NULL, NULL, NULL, NULL, NULL, NULL),
+(136, 'Sonali Industries', NULL, NULL, NULL, NULL, 'N.H-26,Kesinga Road, Dunguripadar,Thuapadar, Bhawanipatna, Kalahandi', 'STATE BANK OF INDIA', '30596185873', '21844800018', NULL, 'AAKHP4062K', '21AAKHP4062K2Z3', NULL, 'BHAWANIPATNA', 'SBIN0000039', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(137, 'Sri Balaji Fuels', NULL, NULL, NULL, NULL, 'Gandhi Chowk,Brajrajnagar,768216', 'STATE BANK OF INDIA', '38851285394', NULL, NULL, 'AIVPB6883B', '21AIVPB6883B1ZB', NULL, NULL, 'SBIN0010923', NULL, '2020-03-11 17:18:12', '2020-03-18 15:47:06', NULL, NULL, NULL, NULL, NULL, NULL),
+(138, 'SRI JAGANATHA HARDWARE \nSTORE', NULL, NULL, NULL, NULL, 'PLOT NO-614, BESIDE SATYAM TOWER, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'CXOPP1961Q', '21CXOPP1961Q1ZS', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(139, 'Sri Mahadev Industries', '9437185350', 'Srimahadevindustries2017@gmail.Com', NULL, NULL, 'Tapang, Dist- Khurda', 'SYNDICATE BANK', '80071010002903', NULL, NULL, 'ADGFS9176A', '21ADGFS9176A1Z7', NULL, 'NAYAPALI, BBSR', 'SYNB0008007', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(140, 'Sri Ram Tour & Travels(Subash Mishra)', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '33219772862', NULL, NULL, 'CFBPM6751E', NULL, NULL, 'BHAWANIPATNA', 'SBIN0000039', NULL, '2020-03-11 17:18:12', '2020-03-18 14:01:38', NULL, NULL, NULL, NULL, NULL, NULL),
+(141, 'Steel Authority of India Limited', NULL, NULL, NULL, NULL, 'Office-F10,Sector 11,Rourkela,769006', 'STATE BANK OF INDIA', '10607498934', NULL, NULL, 'AAACS7062F', '21AAACS7062F2ZP', NULL, NULL, 'SBIN0009678', NULL, '2020-03-11 17:18:12', '2020-03-18 15:50:48', NULL, NULL, NULL, NULL, NULL, NULL),
+(142, 'STEEL CO', NULL, NULL, NULL, NULL, 'NEAR ISKON TEMPLE, N.H -5, NAYAPALLY, BHUBANESHWAR', NULL, NULL, NULL, NULL, 'AAWFS8700M', '21AAWFS8700M1ZO', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(143, 'SUBHADRA STEEL', NULL, NULL, NULL, NULL, 'GANESH BAZAR, NIMAPARA, PURI,ODISHA', NULL, NULL, NULL, NULL, 'ACXPN4711A', '21ACXPN4711A1ZX', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(144, 'Subhalaxmi Traders', NULL, NULL, NULL, NULL, 'PLOT NO- 555, BRAHMESWAR LANE,, GGP COLONY, BHUBANESHWAR', 'STATE BANK OF INDIA', '35861664167', NULL, NULL, 'BBKPB8838D', '21BBKPB8838D2ZW', NULL, NULL, 'SBIN0017944', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(145, 'Subham Distributor', NULL, NULL, NULL, NULL, '220,Cuttack road,Laxmi Sagar Chowk\r\nBhubaneswar,Odisha,751006', NULL, NULL, NULL, NULL, 'AYCPM8716D', '21AYCPM8716D1ZR', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-18 18:08:33', NULL, NULL, NULL, NULL, NULL, NULL),
+(146, 'SUBHAM ENGINEERS', NULL, NULL, NULL, NULL, 'PLOT NO- 694, SAHEED NAGAR, BHUBANESHWAR', 'KARNATAKA BANK LTD', '1082000100109901', NULL, NULL, 'ANEPP0913A', '21ANEPP0913A1ZV', NULL, 'SAHEED NAGAR\nBBSR', 'KARB0000108', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(147, 'Sudam Charan Panda\n(Panda Travels)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(148, 'Suman Enterprises', NULL, NULL, NULL, NULL, 'Sai Temple Road, Duarsani Chowk, Bhawanipatna', 'CANARA BANK', '4134285000001', NULL, NULL, 'AXVPG9407B', '21AXVPG9407B1ZM', NULL, NULL, 'CNRB0004134', NULL, '2020-03-11 17:18:12', '2020-03-17 11:06:44', NULL, NULL, NULL, NULL, NULL, NULL),
+(149, 'Super Sales Automobiles', NULL, NULL, NULL, NULL, 'Plot No-644-2148,Pajal,NH-5,Bhubaneswar,Odisha', NULL, NULL, NULL, NULL, 'AAECS8327B', '21AAECS8327B1ZS', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-19 11:39:01', NULL, NULL, NULL, NULL, NULL, NULL),
+(150, 'Surya Industries', NULL, NULL, NULL, NULL, 'Plot No-3, Street No-06,Ashok Vihar\r\nPhase-03,Gurugram,haryana', 'STATE BANK OF INDIA', '33919018310', NULL, NULL, 'BOZPS4156R', '06BOZPS4156R1ZM', NULL, 'GURGAON', 'SBIN0016019', NULL, '2020-03-11 17:18:12', '2020-03-18 17:40:04', NULL, NULL, NULL, NULL, NULL, NULL),
+(151, 'The Sealcoat Structural Works (P) \nLtd.', NULL, NULL, NULL, NULL, 'Shop No-120, Anand Plaza, Laxmi Sagar Chaak, Bhubaneshwar', NULL, NULL, NULL, NULL, 'AABCT0746N', '21AABCT0746N1ZE', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(152, 'Utkal Machinery Agencies', NULL, NULL, NULL, NULL, 'Cuttack Road, Bhubaneswar,751006', NULL, NULL, NULL, NULL, 'ADTPA0493P', '21ADTPA0493P1ZA', NULL, NULL, NULL, NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(153, 'WEFE Technology Pvt.Ltd.', NULL, NULL, NULL, NULL, 'Plot No-27,1st Floor,District center\nNear ICICI Bank,Chandrasekharpur\nBBSR,751016', 'ICICI BANK', '149905000003', NULL, NULL, 'AACW8804F', '21AACW8804F1ZM', NULL, NULL, 'ICIC0001499', NULL, '2020-03-11 17:18:12', '2020-03-11 17:18:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(154, 'EXPERT SECURITY & ALLIED SERVICES', NULL, NULL, NULL, NULL, 'BHUBANESWAR', 'STATE BANK OF INDIA', '37662874723', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0005093', '1', '2020-03-12 15:54:30', '2020-03-17 15:52:52', NULL, NULL, NULL, NULL, NULL, NULL),
+(155, 'Gangpur sale and services', '9438382520', 'gssjharsuguda@gangpur.co.in', NULL, NULL, 'Beheramalchowk,Jharsuguda', NULL, NULL, NULL, NULL, 'AANFG0696D', '21AANFG0696D1ZL', NULL, NULL, NULL, '1', '2020-03-12 15:58:46', '2020-03-19 12:06:10', NULL, NULL, NULL, NULL, NULL, NULL),
+(156, 'Indian Chain & Mill Stores', NULL, 'indianchain.mill@gmail.com', NULL, NULL, 'Sarabahal Road,Jharsuguda', 'Oriental Bank of Commerce', '11484011000703', NULL, NULL, 'ABNPY2422L', '21ABNPY2422L1ZF', NULL, 'Jharsuguda', 'ORBC0101148', '1', '2020-03-12 15:59:59', '2020-03-17 15:50:29', NULL, NULL, NULL, NULL, NULL, NULL),
+(157, 'Sahu Hardware & Electrical', '9937335800', NULL, NULL, NULL, 'Gandhi Chowk,Brajaraj Nagar', NULL, NULL, NULL, NULL, 'BCOPS5754C', '21BCOPS5754C1ZJ', NULL, NULL, NULL, '1', '2020-03-12 16:00:52', '2020-03-17 15:48:48', NULL, NULL, NULL, NULL, NULL, NULL),
+(158, 'Premier Instruments Co', '9437313134', 'Premierinstrument@gmail.com', NULL, NULL, 'collage square,cuttack', 'STATE BANK OF INDIA          IDBI', '35559920513            217102000006514', NULL, NULL, 'ACAPN0714G', '21ACAPN0714GIZD', NULL, NULL, 'SBIN0001663          IBKL0000217', '1', '2020-03-12 16:02:06', '2020-03-17 15:47:39', NULL, NULL, NULL, NULL, NULL, NULL),
+(159, 'Harish Enterprises(19-20)', '8895365338', 'harishenterprises2014@rediffmail.com', NULL, NULL, 'SARBAHAL ROAD, JHARSUGUDA', 'IDBI', '740102000006095', NULL, NULL, 'AOKPV4488D', '21AOKPV4488D1ZP', NULL, 'Jharsuguda', 'IBKL0000217', '1', '2020-03-12 16:03:05', '2020-03-17 15:45:10', NULL, NULL, NULL, NULL, NULL, NULL),
+(160, 'AJAX', '9437043311', 'mail@konarkearthmovers.com', NULL, NULL, 'Rasulgarh,Bhubaneswar', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-03-12 16:03:41', '2020-03-12 16:03:41', NULL, NULL, NULL, NULL, NULL, NULL),
+(161, 'Bharat Industrial Corporation', '9348861636', 'Iinfo@bharatsafety.co.in', NULL, NULL, 'Bomikhal,Bhubaneswar', 'STATE BANK OF INDIA', '38218357895', NULL, NULL, 'ANJPJ2052R', '21ANJPJ2052R1ZV', NULL, NULL, 'SBIN0012021', '1', '2020-03-12 16:04:33', '2020-03-17 15:43:14', NULL, NULL, NULL, NULL, NULL, NULL),
+(162, 'Hindustan Auto Electricals', NULL, 'hindustanautoele@yahoo.com', NULL, NULL, 'Jharsuguda', NULL, NULL, NULL, NULL, 'ALFPK6853R', '21ALFPK6853R1ZL', NULL, NULL, NULL, '1', '2020-03-12 16:05:38', '2020-03-17 15:41:47', NULL, NULL, NULL, NULL, NULL, NULL),
+(163, 'Kamala Plywood(19-20)', '8599011813', 'Kamalplywood.bbsr@gmail.com', NULL, NULL, 'Nayapali,Bhubaneswar', 'INDUSIND BANK', '650014046079', NULL, NULL, 'AAUPG2139E', '21AAUPG2139E1Z1', NULL, NULL, 'INDB0000366', '1', '2020-03-12 16:06:37', '2020-03-17 15:40:45', NULL, NULL, NULL, NULL, NULL, NULL),
+(164, 'Compu World', '9040465774', 'india.compuworld@gmail.com', NULL, NULL, 'Marwaripara,Jharsuguda', NULL, NULL, NULL, NULL, 'ALXPA2752K', '21ALXPA2752K1Z1', NULL, NULL, NULL, '1', '2020-03-12 16:07:10', '2020-03-17 15:39:16', NULL, NULL, NULL, NULL, NULL, NULL),
+(165, 'Bhajanlal Kunjlal', '9437457798', 'didwania11@gmail.com', NULL, NULL, 'Agrasen Chowk,Marwaripara,Jharsuguda', 'IDBI', '740651100006583', NULL, NULL, 'AECPD7335M', '21AECPD7335M1ZP', NULL, 'Jharsuguda', 'IBKL0000740', '1', '2020-03-12 16:07:48', '2020-03-19 11:50:03', NULL, NULL, NULL, NULL, NULL, NULL),
+(166, 'R L Industrial Corporation', NULL, 'rlicorporation15@gmail.com', NULL, NULL, 'SARBAHAL ROAD, JHARSUGUDA', 'Corporation Bank', '560371000443925', NULL, NULL, 'AMYPA1057F', '21AMYPA1057F1ZD', NULL, 'Jharsuguda', 'CORP0002925', '1', '2020-03-12 16:09:11', '2020-03-17 15:36:33', NULL, NULL, NULL, NULL, NULL, NULL),
+(167, 'AM OFFICE SOLUTION', '9515112146', 'salesodisha@amoffice.in', NULL, NULL, 'Uttara Chhhak,Bhubaneswar', 'KOTAK MAHENDRA BANK', '0911821114', NULL, NULL, 'AZKPM5105F', '21AZKPM5105F1ZS', NULL, NULL, 'KKBK0007476', '1', '2020-03-12 16:09:43', '2020-03-17 15:35:00', NULL, NULL, NULL, NULL, NULL, NULL),
+(168, 'Atom Engineering Products pvt ltd', '9937934427', 'atomproducts@gmail.com', NULL, NULL, 'SARBAHAL ROAD, JHARSUGUDA', 'ICICI BANK', '46805000529', NULL, NULL, 'AAICA3862B', '21AAICA3862B1Z8', NULL, 'Jharsuguda', 'ICIC0000468', '1', '2020-03-12 16:10:29', '2020-03-17 15:33:39', NULL, NULL, NULL, NULL, NULL, NULL),
+(169, 'Mahesh Motors', NULL, NULL, NULL, NULL, 'Brajaraja Nagar,Jharsuguda', NULL, NULL, NULL, NULL, 'AASPY2229D', '21AASPY2229D1ZO', NULL, NULL, NULL, '1', '2020-03-12 16:11:15', '2020-03-17 15:31:48', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `vendors` (`id`, `vendorname`, `mobile`, `email`, `vendoridproof`, `photo`, `details`, `bankname`, `acno`, `tinno`, `tanno`, `panno`, `gstno`, `servicetaxno`, `branchname`, `ifsccode`, `userid`, `created_at`, `updated_at`, `aadhaarcard`, `pancard`, `gstin`, `bankpassbook`, `cancelcheque`, `acctype`) VALUES
+(170, 'M.S.HYDRAULICS', '9437069388', NULL, NULL, NULL, 'Taxi Stand,Sambalpur', 'Syndicate Bank', '80601010000324', NULL, NULL, 'AHCPP5300M', '21AHCPP5300M1ZM', NULL, 'Sakhipara Branch', 'SYNB0008060', '1', '2020-03-12 16:12:01', '2020-03-17 15:30:31', NULL, NULL, NULL, NULL, NULL, NULL),
+(171, 'Krupa Timber Depot', '9861032591', NULL, NULL, NULL, 'Nayapali,Bhubaneswar', 'ALLAHABAD BANK', '50027424825', NULL, NULL, 'ANEPS1467L', '21ANEPS1467L1ZU', NULL, NULL, 'ALLA0212009', '1', '2020-03-12 16:12:29', '2020-03-17 13:32:05', NULL, NULL, NULL, NULL, NULL, NULL),
+(172, 'Industrial Consumables', '9776022211', NULL, NULL, NULL, 'Gandhi Chowck, Brajarajnagar', 'Union Bank of India', '413801010035059', NULL, NULL, 'AARHS3486D', '21AARHS3486D1ZZ', NULL, NULL, 'UBIN0541389', '1', '2020-03-12 16:13:11', '2020-03-17 13:29:50', NULL, NULL, NULL, NULL, NULL, NULL),
+(173, 'Patel & Company', '9937050792', 'mpatel792@gmail.cOM', NULL, NULL, 'Nuapatna, Cuttack,Odisha', 'Axis Bank', '091010200013226', NULL, NULL, 'AABFP5829R', '21AABFP5829R1ZU', NULL, 'Badambadi', 'UTIB0000091', '1', '2020-04-18 17:22:24', '2020-04-18 17:24:42', NULL, NULL, NULL, NULL, NULL, NULL),
+(174, 'Aaradhya Enterprises', NULL, NULL, NULL, NULL, 'Kesinga,766012', NULL, NULL, NULL, NULL, 'AOTPJ0552P', '21AOTPJ0552P1ZM', NULL, NULL, NULL, '1', '2020-04-20 14:19:22', '2020-04-20 14:19:22', NULL, NULL, NULL, NULL, NULL, NULL),
+(175, 'Subudhi Techno Engineers Pvt. Ltd.', '06742741383', 'hr@subudhitechno.in', NULL, NULL, 'Plot No-327/2559,Omfed back Side,Chandrasekharpur,Bhubaneswar,751017', 'HDFC BANK LTD', '50200044022080', NULL, NULL, 'AAZCS8036Q', '21AAZCS8036Q1ZE', NULL, 'District Centre, PN 10 Chandrashekharpur Bhubaneswar-751016', 'HDFC0001252', '1', '2020-04-23 15:45:08', '2020-04-23 15:45:08', NULL, NULL, NULL, NULL, NULL, NULL),
+(176, 'MADAN PRADHAN', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '33684463998', NULL, NULL, NULL, NULL, NULL, 'KESAIBAHAL', 'SBIN0009352', '1', '2020-04-28 10:55:18', '2020-04-28 10:55:18', NULL, NULL, NULL, NULL, NULL, NULL),
+(177, 'PANCHANAN BEHERA', NULL, NULL, NULL, NULL, NULL, 'CANARA BANK', '3454101006115', NULL, NULL, NULL, NULL, NULL, 'NIMAPARA', 'CNRB0003454', '1', '2020-04-28 10:57:23', '2020-04-28 10:57:23', NULL, NULL, NULL, NULL, NULL, NULL),
+(178, 'LUCKY INTERNATIONAL', '9853361888', NULL, NULL, NULL, 'SATYAM CINEMA HALL ROAD,BHAWANIPATNA-766001', 'STATE BANK OF INDIA', '35997288313', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA BAZAR', 'SBIN0006725', '1', '2020-04-28 13:02:38', '2020-04-28 13:02:38', NULL, NULL, NULL, NULL, NULL, NULL),
+(179, 'HEMANTA RANA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32747047975', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0000039', '1', '2020-04-28 13:09:28', '2020-04-28 13:09:28', NULL, NULL, NULL, NULL, NULL, NULL),
+(180, 'BISWAJIT PANDA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30879249556', NULL, NULL, 'BDYPP1176L', NULL, NULL, NULL, 'SBIN0009650', '1', '2020-04-28 13:16:28', '2020-04-28 13:16:28', NULL, NULL, NULL, NULL, NULL, NULL),
+(181, 'AUROBINDA ROUT', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32059848558', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0006179', '1', '2020-04-28 13:22:58', '2020-04-28 13:22:58', NULL, NULL, NULL, NULL, NULL, NULL),
+(182, 'ABANI PRAKASH MISHRA', NULL, NULL, NULL, NULL, NULL, 'BANK OF INDIA', '556210110008073', NULL, NULL, NULL, NULL, NULL, NULL, 'BKID0005562', '1', '2020-04-28 13:23:47', '2020-04-28 13:23:47', NULL, NULL, NULL, NULL, NULL, NULL),
+(183, 'VISHWAKARMA ENTERPRISES', '9938648901', NULL, NULL, NULL, 'BUDHIPADAR,JHARSUGUDA', 'BANK OF INDIA', '557020110000537', NULL, NULL, 'AALFV8329E', '21AALFV8329E1ZR', NULL, NULL, 'BKID0005570', '1', '2020-04-28 13:59:47', '2020-04-28 14:00:48', NULL, NULL, NULL, NULL, NULL, NULL),
+(184, 'SAROJ BISWAL', '9937346244', 'biswal.saroj1969@gmail.com', NULL, NULL, 'AT-DAKHINAPANTALA,PO-NAGAR,PS-ASTARANG,DIST-PURI-752109', NULL, NULL, NULL, NULL, 'AOPPB9021B', NULL, NULL, NULL, NULL, '1', '2020-04-28 17:29:12', '2020-04-28 17:29:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(185, 'Sukant Biswal', '8917588071', NULL, NULL, NULL, NULL, 'BANK OF BARODA', '30170100009860', NULL, NULL, 'COZPB6528M', NULL, NULL, 'NAYAGARH', 'BARB0NAYAGR', '1', '2020-04-30 12:31:01', '2020-04-30 12:31:01', NULL, NULL, NULL, NULL, NULL, NULL),
+(186, 'Damu Muduli', '8480225369', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '37225272433', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0005569', '1', '2020-05-02 10:52:04', '2020-05-02 10:52:04', NULL, NULL, NULL, NULL, NULL, NULL),
+(187, 'Ranjan Kumar Singh', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30969309672', NULL, NULL, 'DGTPS3753N', NULL, NULL, 'BHAWANIPATNA', 'SBIN0012120', '1', '2020-05-02 10:54:53', '2020-05-02 10:54:53', NULL, NULL, NULL, NULL, NULL, NULL),
+(188, 'Sudam Panda', '8917254362', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30428842393', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0000039', '1', '2020-05-02 10:58:51', '2020-05-02 10:58:51', NULL, NULL, NULL, NULL, NULL, NULL),
+(189, 'Surendra Naik', '8480224727', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32041888422', NULL, NULL, 'AROPN6746K', NULL, NULL, NULL, 'SBIN0005569', '1', '2020-05-02 11:01:10', '2020-05-02 11:01:10', NULL, NULL, NULL, NULL, NULL, NULL),
+(190, 'LAXMI INFOTECH', '9938276627', NULL, NULL, NULL, 'Palace Road,Bhawanipatna,766001', 'STATE BANK OF INDIA', '37361647646', NULL, NULL, 'ASRPR4418E', '21ASRPR4418E1ZQ', NULL, 'BAZAR BRANCH', 'SBIN0006725', '1', '2020-05-04 10:51:21', '2020-05-04 10:51:21', NULL, NULL, NULL, NULL, NULL, NULL),
+(191, 'OZONE LOGISTICS PVT.LTD.', NULL, NULL, NULL, NULL, NULL, 'State Bank Of India', '37333143084', NULL, NULL, NULL, NULL, NULL, 'SME Branch,Dhanbad', 'SBIN0006541', '1', '2020-05-04 20:17:43', '2020-05-04 20:23:26', NULL, NULL, NULL, NULL, NULL, NULL),
+(192, 'JAYANTI LAMAI', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '37939351824', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0005039', '1', '2020-05-05 08:12:49', '2020-05-05 08:12:49', NULL, NULL, NULL, NULL, NULL, NULL),
+(193, 'PRAVAT KUMAR BISWAL', NULL, NULL, NULL, NULL, NULL, 'AXIS BANK', '464010100009300', NULL, NULL, NULL, NULL, NULL, 'PURI', 'UTIB0000464', '1', '2020-05-05 08:16:15', '2020-05-05 08:16:15', NULL, NULL, NULL, NULL, NULL, NULL),
+(194, 'CHANDRA SEKHAR BEHERA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA               BANK OF BARODA              AXIS BANK', '35349090046                   32500100002446             916010065555993', NULL, NULL, NULL, NULL, NULL, 'ASTARANGA                   BHUBANESHWAR          BARIPADA', 'SBIN0012036        BARB0CUTTRD               UTIB0000736', '1', '2020-05-05 08:21:25', '2020-05-05 08:21:25', NULL, NULL, NULL, NULL, NULL, NULL),
+(195, 'AKASH JYOTI LENKA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA          BANK OF BARODA            UNION BANK OF INDIA', '20016530883                 33670100001183                  600202010005388', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0006725                BARB0BHAWAN                      UBIN0560022', '1', '2020-05-05 08:24:50', '2020-05-05 08:24:50', NULL, NULL, NULL, NULL, NULL, NULL),
+(196, 'BRAHMANANDA SWAIN', NULL, NULL, NULL, NULL, NULL, 'BANK OF BARODA', '33670100008576', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'BARB0BHAWAN', '1', '2020-05-05 08:26:16', '2020-05-05 08:26:16', NULL, NULL, NULL, NULL, NULL, NULL),
+(197, 'CHAKRADHAR PARIDA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '20076279326', NULL, NULL, NULL, NULL, NULL, 'BAPUJI NAGAR', 'SBIN0006408', '1', '2020-05-05 08:27:07', '2020-05-05 08:27:07', NULL, NULL, NULL, NULL, NULL, NULL),
+(198, 'DILLIP KUMAR BARAL', NULL, NULL, NULL, NULL, NULL, 'BANK OF BARODA', '52700100003086', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-05 08:28:27', '2020-05-05 08:28:27', NULL, NULL, NULL, NULL, NULL, NULL),
+(199, 'DIPAK BISWAL', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '20297914618', NULL, NULL, NULL, NULL, NULL, 'ASTARANG', 'SBIN0012036', '1', '2020-05-05 08:29:19', '2020-05-05 08:29:19', NULL, NULL, NULL, NULL, NULL, NULL),
+(200, 'GAGAN CHANDRA SWAIN', NULL, NULL, NULL, NULL, NULL, 'BANK OF BARODA', '33670100002331', NULL, NULL, NULL, NULL, NULL, NULL, 'BARB0BHAWAN', '1', '2020-05-05 08:31:03', '2020-05-05 08:31:03', NULL, NULL, NULL, NULL, NULL, NULL),
+(201, 'RUDRA PRASAD SAHOO', NULL, NULL, NULL, NULL, NULL, 'ORIENTAL BANK OF COMMERCE', '12065015004821', NULL, NULL, NULL, NULL, NULL, 'RAVI TALKIES BBSR', 'ORBC0101206', '1', '2020-05-05 08:32:20', '2020-05-05 08:32:20', NULL, NULL, NULL, NULL, NULL, NULL),
+(202, 'SANMAYA MAHAPATRA & ASSOCIATES', NULL, NULL, NULL, NULL, 'FLAT NO-203,SHANTI NIWAS,RASULGARH,BHUBANESWAR', 'HDFC BANK', '00611050036047', NULL, NULL, 'AQKPM1105C', NULL, NULL, NULL, 'HDFC0000630', '1', '2020-05-05 09:01:26', '2020-05-05 09:01:26', NULL, NULL, NULL, NULL, NULL, NULL),
+(203, 'RITAN DALEI', NULL, NULL, NULL, NULL, NULL, 'State Bank Of India', '20198698429', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0007187', '1', '2020-05-05 14:34:27', '2020-05-05 16:38:54', NULL, NULL, NULL, NULL, NULL, NULL),
+(204, 'Shakti Suppliers', NULL, 'shaktisuppliers1@gmail.com', NULL, NULL, 'Kesinga-766012', 'STATE BANK OF INDIA', '31235222926', NULL, NULL, 'AEHPJ7286G', '21AEHPJ7286G1ZH', NULL, 'KESINGA', 'SBIN0010924', '1', '2020-05-06 07:29:15', '2020-05-06 08:47:40', NULL, NULL, NULL, NULL, NULL, NULL),
+(205, 'Gayadhar Hati', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32278751736', NULL, NULL, NULL, NULL, NULL, 'JUNAGARH', 'SBIN0012119', '1', '2020-05-06 12:42:05', '2020-05-06 12:42:05', NULL, NULL, NULL, NULL, NULL, NULL),
+(206, 'Dhanurjay Naik', '7656812619', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '11666839061', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0002075', '1', '2020-05-06 17:45:36', '2020-05-06 18:21:14', NULL, NULL, NULL, NULL, NULL, NULL),
+(207, 'CHULESWAR MAJHI', NULL, NULL, NULL, NULL, NULL, 'BANK OF BARODA', '33670100010295', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'BARB0BHAWAN', '1', '2020-05-06 20:07:52', '2020-05-06 20:07:52', NULL, NULL, NULL, NULL, NULL, NULL),
+(208, 'BENUDHAR SAHU', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '33045200516', NULL, NULL, NULL, NULL, NULL, 'FARANG', 'SBIN0009682', '1', '2020-05-06 20:08:42', '2020-05-06 20:08:42', NULL, NULL, NULL, NULL, NULL, NULL),
+(209, 'MAMINA PRADHAN(GIRISH TEAM)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-07 19:21:44', '2020-05-07 19:43:26', NULL, NULL, NULL, NULL, NULL, NULL),
+(210, 'SANTOSH KUMAR PRADHAN', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-07 21:14:59', '2020-05-07 21:14:59', NULL, NULL, NULL, NULL, NULL, NULL),
+(211, 'JAISWAL HARDWARE', '9040352134', NULL, NULL, NULL, 'INFRONT OF CENTRAL HOSPITAL MANDALIA, BRAJRAJNAGAR,DIST-JHARSUGUDA-768216', 'STATE BANK OF INDIA', '11264878290', NULL, NULL, NULL, NULL, NULL, 'LAMTIBAHAL', 'SBIN0004702', '1', '2020-05-09 08:57:39', '2020-05-09 08:57:39', NULL, NULL, NULL, NULL, NULL, NULL),
+(212, 'MAA TARA TARINI SANITARY', '9937108600', NULL, NULL, NULL, 'NEW PURI BYEPASS ,PLOT NO- 4019,PANDRA,BHUBANESWAR,KHURDA-751025', NULL, NULL, NULL, NULL, 'AVQPB8789C', '21AVQPB8789C1ZF', NULL, NULL, NULL, '1', '2020-05-11 17:38:02', '2020-05-11 17:38:02', NULL, NULL, NULL, NULL, NULL, NULL),
+(213, 'SHREEHARI ENTERPRISES', '8917482919', 'shreehari.ent18@gmail.com', NULL, NULL, 'A-502,LTB AASHISH,CANAL ROAD,JHARPADA,BHUBANESWAR,ODISHA-751006', NULL, NULL, NULL, NULL, 'AJCPM1278M', '21AJCPM1278M1Z7', NULL, NULL, NULL, '1', '2020-05-12 17:42:14', '2020-05-12 17:42:14', NULL, NULL, NULL, NULL, NULL, NULL),
+(214, 'DHANESWAR BISWAL', '9348547761', NULL, NULL, NULL, 'MANGALPUR,PIPILI,PURI', NULL, NULL, NULL, NULL, 'BOYPB4492L', NULL, NULL, NULL, NULL, '1', '2020-05-12 18:41:08', '2020-05-16 12:11:21', NULL, NULL, NULL, NULL, NULL, NULL),
+(215, 'OSIC LTD. CUTTACK', '06712341204', 'osicltd@gmail.com', NULL, NULL, 'madhupatna OSIC tower,Cuttack-753010', 'BANK OF BARODA', '00470200000291', NULL, NULL, NULL, NULL, NULL, 'BUXI BAZAR', 'BARB0CUTTAC', '1', '2020-05-14 18:18:28', '2020-05-14 18:18:28', NULL, NULL, NULL, NULL, NULL, NULL),
+(216, 'TUNA RANA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-16 11:58:35', '2020-05-16 11:58:35', NULL, NULL, NULL, NULL, NULL, NULL),
+(217, 'CHANDAN MOTORS', NULL, 'kedarnathsahu5@gmail.com', NULL, NULL, 'PARAMANANDAPUR CHOWK,KESINGA ROAD,BHAWANIPATNA', 'STATE  BANK OF INDIA', '32811510457', NULL, NULL, '21ARTPS0485M1Z5', '21ARTPS0485M1Z5', NULL, 'BAZAR BRANCH,BHAWANIPATNA', 'SBIN0006725', '1', '2020-05-18 11:09:34', '2020-06-08 12:12:57', NULL, NULL, NULL, NULL, NULL, NULL),
+(218, 'Sukant Kumar Swain', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-18 15:28:20', '2020-05-18 15:28:20', NULL, NULL, NULL, NULL, NULL, NULL),
+(219, 'LALDASH & CO.', NULL, NULL, NULL, NULL, 'PPLOT NO-1882,2ND FLOOR,NILAKANTHA NAGAR,UNIT-8,NAYAPALLI,BHUBANESWAR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-18 17:15:58', '2020-05-18 17:15:58', NULL, NULL, NULL, NULL, NULL, NULL),
+(220, 'Anish Khan(Khan JCB)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '276', '2020-05-19 16:09:48', '2020-06-02 11:00:48', NULL, NULL, NULL, NULL, NULL, NULL),
+(221, 'Pathak Industries Pvt Ltd', '7440049247', 'hipat.sales@gmail.com', NULL, NULL, 'Phase1 New Industrial Estate, Jagatpur, Cuttack', 'ICICI BANK', '658705601681', NULL, NULL, 'AAICP2423P', '26AAAAA1115G1Z5', NULL, NULL, 'ICIC0006587', '276', '2020-05-19 16:16:37', '2020-05-19 16:16:37', NULL, NULL, NULL, NULL, NULL, NULL),
+(222, 'TUKUNA BEHERA(RD GROUP)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-21 08:25:13', '2020-05-21 08:25:13', NULL, NULL, NULL, NULL, NULL, NULL),
+(223, 'City Ply Hardware', NULL, NULL, NULL, NULL, NULL, 'Karnataka Bank', '7472000100007701', NULL, NULL, NULL, NULL, NULL, 'Sambalpur', 'KARB0000747', '276', '2020-05-21 11:42:07', '2020-05-21 11:42:07', NULL, NULL, NULL, NULL, NULL, NULL),
+(224, 'ISWAR PRADHAN', '7751069444', NULL, NULL, NULL, 'JHARSUGUDA', 'BANK OF COMMERCE', '16924011000112', NULL, NULL, 'AZVPP6922E', '21AZVPP6922E1Z5', NULL, 'GANDHI CHOWK, BRAJRAJNAGAR', 'ORBC0101692', '276', '2020-05-22 11:42:43', '2020-05-22 11:44:09', NULL, NULL, NULL, NULL, NULL, NULL),
+(225, 'OLIC LTD.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-24 21:20:55', '2020-05-24 21:20:55', NULL, NULL, NULL, NULL, NULL, NULL),
+(226, 'SUKANT MAJHI', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-26 12:06:59', '2020-05-26 12:06:59', NULL, NULL, NULL, NULL, NULL, NULL),
+(227, 'AJAYA LENKA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-26 12:11:05', '2020-05-26 12:11:05', NULL, NULL, NULL, NULL, NULL, NULL),
+(228, 'ASIT KUMAR MAHANT(BAPI)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-26 14:07:31', '2020-05-26 14:07:31', NULL, NULL, NULL, NULL, NULL, NULL),
+(229, 'Swati Marble Industries Pvt. Ltd. 19-20', '9938845296', 'swatimarbles@rediffmail.com', NULL, NULL, '127,Sec-A,Mancheswar Industrial Area,Bhubaneswar-751010', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-26 14:13:51', '2020-06-01 10:31:47', NULL, NULL, NULL, NULL, NULL, NULL),
+(230, 'ANURAG SINGH', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-27 11:39:11', '2020-05-27 11:39:11', NULL, NULL, NULL, NULL, NULL, NULL),
+(231, 'DIVYAJYOTI ENTERPRISES', NULL, NULL, NULL, NULL, 'SWATI COMPLEX,GANDHI CHOWK,BRAJRAJNAGAR,JHARSUGUDA,768216', 'UCO BANK', '21020510003947', NULL, NULL, NULL, NULL, NULL, 'GANDHI CHOWK', 'UCBA0002102', '1', '2020-05-27 16:13:39', '2020-05-28 17:21:15', NULL, NULL, NULL, NULL, NULL, NULL),
+(232, 'GO DIGIT GENERAL INSURANCE LTD', '9937023038', 'rajesh.mohapatra@renewbuy.com', NULL, NULL, NULL, 'ICICI BANK', 'GDGI1028255', NULL, NULL, NULL, NULL, NULL, NULL, 'ICIC0000104', '276', '2020-05-28 13:15:22', '2020-05-28 13:15:22', NULL, NULL, NULL, NULL, NULL, NULL),
+(233, 'SANJAY MUDULI', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '34968489395', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0005569', '1', '2020-05-29 11:13:31', '2020-05-29 11:13:31', NULL, NULL, NULL, NULL, NULL, NULL),
+(234, 'BIKASH KIRANA STORE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-05-29 13:35:15', '2020-05-29 13:35:15', NULL, NULL, NULL, NULL, NULL, NULL),
+(235, 'MB MACHINE TOOLS', '9861052891', 'btmorissa@yahoo.co.in', NULL, NULL, '2283, CUTTACK ROAD,BHUBANESWAR', 'UNION BANK OF INDIA', '751301010050009', NULL, NULL, '21ADIPD6994P1Z0', '21ADIPD6994P1Z0', NULL, 'CUTTACK ROAD', 'UBIN0575135', '1', '2020-05-29 17:32:18', '2020-05-29 17:40:13', NULL, NULL, NULL, NULL, NULL, NULL),
+(236, 'Subhranshu Sekhar Rout', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '20055346162', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA STATUE CHOWK', 'SBIN0006725', '1', '2020-06-01 10:49:46', '2020-06-01 10:49:46', NULL, NULL, NULL, NULL, NULL, NULL),
+(237, 'Ramesh Ch Sahoo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-01 11:16:54', '2020-06-01 11:16:54', NULL, NULL, NULL, NULL, NULL, NULL),
+(238, 'Truptimayee Swain', NULL, NULL, NULL, NULL, NULL, 'Indian Overseas Bank', '070701000016273', NULL, NULL, 'DTZPS5965R', NULL, NULL, 'Bhawanipatna Manikeswari chowk', 'IOBA0000707', '1', '2020-06-02 10:41:09', '2020-06-02 10:41:09', NULL, NULL, NULL, NULL, NULL, NULL),
+(239, 'IOCL,PARADIP', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-02 14:07:12', '2020-06-02 14:07:12', NULL, NULL, NULL, NULL, NULL, NULL),
+(240, 'Bharat Sanchar Nigam Ltd.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-03 10:49:15', '2020-06-03 10:49:15', NULL, NULL, NULL, NULL, NULL, NULL),
+(241, 'KANTABANJI (R&B) DIVISION', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-03 13:59:26', '2020-06-03 13:59:26', NULL, NULL, NULL, NULL, NULL, NULL),
+(242, 'JEYPORE (R&B) DIVISION', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-03 14:00:05', '2020-06-03 14:00:05', NULL, NULL, NULL, NULL, NULL, NULL),
+(243, 'Bireswar Patel', '8847863116', NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '30270018878', NULL, NULL, NULL, NULL, NULL, 'BHAWANIPATNA', 'SBIN0000039', '1', '2020-06-04 10:11:09', '2020-06-04 10:20:01', NULL, NULL, NULL, NULL, NULL, NULL),
+(244, 'Bali Mangaraj', '8114654059', NULL, NULL, NULL, NULL, 'Oriental Bank of Commerce', '16932413000791', NULL, NULL, NULL, NULL, NULL, NULL, 'ORBC0101693', '1', '2020-06-04 10:13:15', '2020-06-04 10:13:15', NULL, NULL, NULL, NULL, NULL, NULL),
+(245, 'Lalita Bagarti', '9439150739', NULL, NULL, NULL, NULL, 'Canara Bank', '4134101001963', NULL, NULL, NULL, NULL, NULL, NULL, 'CNRB0004134', '1', '2020-06-04 10:23:06', '2020-06-04 10:23:06', NULL, NULL, NULL, NULL, NULL, NULL),
+(246, 'PRACHI SARANGI', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '38947566070', NULL, NULL, NULL, NULL, NULL, 'GARAGE CHOWK,BBSR', 'SBIN0003108', '1', '2020-06-04 11:55:04', '2020-06-04 11:55:04', NULL, NULL, NULL, NULL, NULL, NULL),
+(247, 'SATYABADI CONSTRUCTION', '7873131437', NULL, NULL, NULL, 'PLOT NO-488,NAYAPALLI,BHUBANESWAR-751012', 'INDIAN BANK', 'CA 6706396780', NULL, NULL, '21DTHPS2311R1ZF', '21DTHPS2311R1ZF', NULL, 'POKHARIGAON', 'IDIB000P227', '1', '2020-06-04 12:45:00', '2020-06-04 12:45:00', NULL, NULL, NULL, NULL, '1591254900.WhatsApp Image 2020-06-04 at 12.37.26 PM.jpeg', NULL),
+(248, 'Radhakant Budhia', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '11626223471', NULL, NULL, NULL, NULL, NULL, 'UTKELA', 'SBIN0006089', '1', '2020-06-04 17:58:21', '2020-06-04 17:58:21', NULL, NULL, NULL, NULL, NULL, NULL),
+(249, 'JAGATRAM GAHIR', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '11083594563', NULL, NULL, 'BNSPG4900R', NULL, NULL, NULL, 'SBIN0000039', '1', '2020-06-05 10:16:24', '2020-06-05 10:16:24', NULL, NULL, NULL, NULL, NULL, NULL),
+(250, 'Bapi Das(Civil Contractor)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-05 13:04:19', '2020-06-05 13:04:19', NULL, NULL, NULL, NULL, NULL, NULL),
+(251, 'SURENDRA BEHERA', '6371397265', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-05 14:19:30', '2020-06-05 14:19:30', NULL, NULL, NULL, NULL, NULL, NULL),
+(252, 'VIDHI HOME DECORS PVT LTD', '06742341878', 'VIDHIHOMEBBSR@GMAIL.COM', NULL, NULL, 'PLOT NO- 960/4036/4234					\r\nMAHAVIR BAZAR, SAMANTARAPUR					\r\nLEWIS ROAD, BHUBANESWAR-751002', 'FEDERAL BANK          AXIS BANK', '12325500003089              917020034132682', NULL, NULL, 'AAFCV8736Q', '21AAFCV8736Q1ZO', NULL, 'BAPUJI NAGAR , BHUBANESWAR                   KALPANA SQUARE , BHUBANESWAR', 'FDRL0001232               UTIB0000438', '1', '2020-06-05 15:27:13', '2020-06-05 15:27:13', NULL, NULL, NULL, NULL, NULL, NULL),
+(253, 'HIRAKUD DAM CIRCLE,BURLA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-08 11:02:23', '2020-06-08 11:02:23', NULL, NULL, NULL, NULL, NULL, NULL),
+(254, 'ARJUN SAHOO', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '32695299884', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0013640', '1', '2020-06-08 11:35:51', '2020-06-08 11:35:51', NULL, NULL, NULL, NULL, NULL, NULL),
+(255, 'BIJAYA KUMAR SAHOO', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '34096154821', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0013640', '1', '2020-06-08 11:36:55', '2020-06-08 11:44:39', NULL, NULL, NULL, NULL, NULL, NULL),
+(256, 'RWED,Berhampur', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-08 17:06:24', '2020-06-08 17:06:24', NULL, NULL, NULL, NULL, NULL, NULL),
+(257, 'SANTOSH KUMAR KAR', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-09 10:43:52', '2020-06-09 10:43:52', NULL, NULL, NULL, NULL, NULL, NULL),
+(258, 'AJIT KUMAR BARIK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-09 11:21:44', '2020-06-09 11:21:44', NULL, NULL, NULL, NULL, NULL, NULL),
+(259, 'Trade & Industrial Syndicate', '8180299636', 'trade_cal@yahoo.com', NULL, NULL, 'OPP. MANMOHAN M.E SCHOOL,BENGALIPADA,JHARSUGUDA', 'SYNDICATE BANK', '80463070001430', NULL, NULL, 'AGTPG6684M', '21AGTPG6684M1ZR', NULL, NULL, 'SYNB0008046', '1', '2020-06-09 13:30:15', '2020-06-09 13:30:15', NULL, NULL, NULL, NULL, NULL, NULL),
+(260, 'Shyam Sundar Behera', NULL, NULL, NULL, NULL, NULL, 'INDIAN OVERSEAS BANK', '118401000011146', NULL, NULL, NULL, NULL, NULL, 'NAYAGARH', 'IOBA0001184', '1', '2020-06-09 14:03:44', '2020-06-09 14:03:44', NULL, NULL, NULL, NULL, NULL, NULL),
+(261, 'Rajat Kumar Chakna', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-11 00:51:55', '2020-06-11 00:51:55', NULL, NULL, NULL, NULL, NULL, NULL),
+(262, 'KAILASH BEHERA', NULL, NULL, NULL, NULL, NULL, 'STATE BANK OF INDIA', '20060897736', NULL, NULL, NULL, NULL, NULL, NULL, 'SBIN0007188', '1', '2020-06-11 17:54:51', '2020-06-11 17:54:51', NULL, NULL, NULL, NULL, NULL, NULL),
+(263, 'M/S RAJESH ENTERPRISES', '9437294308', 'rajeshkumar.padhi@rediffmail.com', NULL, NULL, 'NEAR DURGA MANDAP,BAHADUR BAGICHA PARA,BHAWANIPATNA-66001,KALAHANDI', 'STATE BANK OF INDIA', '33007706901', NULL, NULL, 'AHCPP8388H', NULL, NULL, 'BHAWANIPATNA', NULL, '1', '2020-06-11 18:51:49', '2020-06-11 18:51:49', NULL, NULL, NULL, NULL, NULL, NULL),
+(264, 'Susanta Kumar Rana', NULL, NULL, NULL, NULL, NULL, 'Bank Of India', '513310110002597', NULL, NULL, NULL, NULL, NULL, NULL, 'BKID0005133', '1', '2020-06-11 23:04:26', '2020-06-11 23:04:26', NULL, NULL, NULL, NULL, NULL, NULL),
+(265, 'GAGAN RAY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-13 18:15:35', '2020-06-13 18:15:35', NULL, NULL, NULL, NULL, NULL, NULL),
+(266, 'demo1', '9856562532', 'demo@gmail.com', NULL, NULL, 'bbsr', NULL, NULL, '111', '121', NULL, '230', '100', NULL, NULL, '1', '2020-06-29 06:54:13', '2020-06-29 06:54:31', NULL, NULL, NULL, NULL, NULL, NULL),
+(267, 'SUBHAM', '8956856523', 'subham@gmail.com', NULL, NULL, 'bbsr', 'asdasd', 'asdsad', 'fas', 'sadsa', 'dasdasd', 'asdasdas', 'asdasdsad', 'asdsa', 'asdasdsa', '1', '2020-07-03 06:26:44', '2020-07-03 06:54:40', NULL, NULL, NULL, NULL, NULL, 'SA'),
+(268, 'demo', '8956856523', 'sa@gmail.com', NULL, NULL, 'asdsa', 'AXIS BANK', 'asdasd', 'asdasd', 'asd', 'asdasd', 'asdasd', 'asdasd', 'asds', 'asdsad', '1', '2020-07-06 10:46:48', '2020-07-06 10:47:03', NULL, NULL, NULL, NULL, NULL, 'CA');
 
 -- --------------------------------------------------------
 
@@ -8896,8 +8931,8 @@ INSERT INTO `vendors` (`id`, `vendorname`, `mobile`, `email`, `vendoridproof`, `
 -- Table structure for table `vouchers`
 --
 
-CREATE TABLE IF NOT EXISTS `vouchers` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `vouchers` (
+  `id` int(10) UNSIGNED NOT NULL,
   `payeename` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bankid` int(11) DEFAULT NULL,
   `acno` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -8924,7 +8959,7 @@ CREATE TABLE IF NOT EXISTS `vouchers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `chequedetails` text COLLATE utf8mb4_unicode_ci,
   `cancelledby` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `vouchers`
@@ -9007,10 +9042,10 @@ INSERT INTO `vouchers` (`id`, `payeename`, `bankid`, `acno`, `ifsccode`, `projec
 (81, 'CHHABILAL PRINTER', NULL, NULL, NULL, '20', '96', NULL, NULL, '100', '0', '0', '100', 'CHEQUE', NULL, 'PHOTO PRINT AND PAID BY CASH BY PRAVIN KUMAR NAYAK', '1589887803.WhatsApp Image 2020-05-19 at 3.14.33 PM.jpeg', 'PAID', '1', '1', NULL, NULL, 'CHQ NO-004397 UTR NO-BARBT20147489935 A/C OF PRAVIN  KU NAIK', '2020-05-19 17:00:03', '2020-05-26 19:25:23', NULL, NULL),
 (82, 'Sanjay Muduli', 2, '34968489395', 'SBIN0005509', '134', '105', NULL, NULL, '13925', '0', '0', '13925', NULL, NULL, 'DAILY WAGES FROM 11.03.20 TO 19.03.20-7DAYSx1200=8400\r\nDIESEL-65LTRx85=5525\r\nVEHICLE NO-OR 18 C 6703', '1590029057.WhatsApp Image 2020-05-20 at 1.28.30 PM.jpeg', 'CANCELLED', '1', '1', NULL, NULL, NULL, '2020-05-21 08:14:17', '2020-05-21 17:45:02', NULL, NULL),
 (83, 'Ramesh Chandra Sahoo', 11, '3524101005244', 'CNRB0003524', '125', '132', NULL, NULL, '4000', '0', '0', '4000', NULL, NULL, 'Material transportation charges From BBSR to Bhawanipatna', '1590046199.IMG_20200521_124823.jpg', 'CANCELLED', '276', '1', NULL, NULL, NULL, '2020-05-21 12:59:59', '2020-05-21 17:44:25', NULL, 1),
-(84, 'Srinath Sahoo', NULL, NULL, NULL, '92', '4', NULL, NULL, '1000', '0', '0', '1000', NULL, NULL, 'Fitting charges of 02 no''s door on office building', '1590046715.IMG_20200521_130110~01.jpg', 'CANCELLED', '276', '1', NULL, NULL, NULL, '2020-05-21 13:08:35', '2020-05-21 17:42:26', NULL, NULL),
+(84, 'Srinath Sahoo', NULL, NULL, NULL, '92', '4', NULL, NULL, '1000', '0', '0', '1000', NULL, NULL, 'Fitting charges of 02 no\'s door on office building', '1590046715.IMG_20200521_130110~01.jpg', 'CANCELLED', '276', '1', NULL, NULL, NULL, '2020-05-21 13:08:35', '2020-05-21 17:42:26', NULL, NULL),
 (85, 'PRASANTA SWAIN', 6, '4019002100003639', 'PUNB0401900', '20', '48', NULL, NULL, '60000', '0', '0', '60000', 'CHEQUE', NULL, 'HOUSE RENT FOR GANDHI CHAK ROOM FOR 03 MONTH S@ 20000/- (FEB-APRIL)', '1590128779.WhatsApp Image 2020-05-22 at 11.55.52 AM.jpeg', 'PAID', '276', '1', NULL, NULL, 'chq no-004396  utr noBARBS20142424369', '2020-05-22 11:56:19', '2020-05-23 10:17:19', NULL, NULL),
 (86, 'SANTOSH KUMAR SINGH', 2, '20220377160', 'SBIN0013618', '20', '135', NULL, NULL, '17727', '0', '0', '17727', 'CHEQUE', NULL, 'TRACTOR RENT FOR MONTH OF MARCH FOR 20 DAYS @ 903', '1590128961.New Doc 2020-05-10 18.54.26.pdf', 'PAID', '276', '1', NULL, NULL, 'CHQ NO-004392  UTR NO-BARBS20142424343', '2020-05-22 11:59:21', '2020-05-23 10:18:42', NULL, NULL),
-(87, 'Krishna Optical Bhawanipatna', 2, '11083549076', 'SBIN0000039', '125', '147', NULL, NULL, '5500', '0', '0', '5500', 'ONLINE PAYMENT', NULL, 'MD''s Father''s personal exp.', NULL, 'PAID', '1', '1', '014517510990', '2', 'ONLINE PAYMENT  A/C OF  SUDHANSHU PATTNAIK', '2020-05-23 12:39:43', '2020-05-25 10:25:48', NULL, NULL),
+(87, 'Krishna Optical Bhawanipatna', 2, '11083549076', 'SBIN0000039', '125', '147', NULL, NULL, '5500', '0', '0', '5500', 'ONLINE PAYMENT', NULL, 'MD\'s Father\'s personal exp.', NULL, 'PAID', '1', '1', '014517510990', '2', 'ONLINE PAYMENT  A/C OF  SUDHANSHU PATTNAIK', '2020-05-23 12:39:43', '2020-05-25 10:25:48', NULL, NULL),
 (88, 'PAABITRA ELECTRICAL WORKSHOP', 2, '30949604728', 'SBIN0010930', '177', '128', NULL, NULL, '368160', '0', '0', '368160', 'CHEQUE', NULL, 'Paper cost for OLIC', '1590338112.DOC-20200524-WA0023', 'PAID', '276', '1', NULL, NULL, NULL, '2020-05-24 22:05:12', '2020-05-25 10:07:43', NULL, NULL),
 (89, 'SANKAR ROUT', NULL, NULL, NULL, '92', '132', NULL, NULL, '8100', '0', '0', '8100', 'CASH', NULL, 'VIHICLE NO-OD 01A 8520\r\nBALESORE TO BBSR OFFICE\r\n600X1300=7800\r\nGATE-300', '1590474877.voucher 1.jpg', 'PAID', '1', '1', NULL, NULL, 'cash paid by md sir', '2020-05-26 12:04:37', '2020-05-26 12:30:46', NULL, NULL),
 (90, 'ASIT KUMAR MAHANTA(BAPI)', NULL, NULL, NULL, '20', '2', NULL, NULL, '850', '0', '0', '850', 'CASH', NULL, 'FREIGHT FROM KAKATPUR TO BBSR', '1590482114.voucher.jpg', 'PAID', '1', '1', NULL, NULL, NULL, '2020-05-26 14:05:14', '2020-05-27 13:52:11', NULL, NULL),
@@ -9029,7 +9064,7 @@ INSERT INTO `vouchers` (`id`, `payeename`, `bankid`, `acno`, `ifsccode`, `projec
 (103, 'SP SAMANTRA', NULL, NULL, NULL, '92', '128', NULL, NULL, '700', '0', '0', '700', 'CASH', NULL, 'RWED BBSR POSTAL NSC RELEASED EXP', '1590566558.WhatsApp Image 2020-05-27 at 1.32.09 PM.jpeg', 'PAID', '1', '1', NULL, NULL, NULL, '2020-05-27 13:32:38', '2020-05-27 13:49:08', NULL, NULL),
 (104, 'DULLAV NAG', NULL, NULL, NULL, '92', '47', NULL, NULL, '900', '0', '0', '900', 'CASH', NULL, 'PURCHASE FRUITS', '1590566650.WhatsApp Image 2020-05-27 at 1.33.50 PM.jpeg', 'PAID', '1', '1', NULL, NULL, NULL, '2020-05-27 13:34:10', '2020-05-27 13:48:44', NULL, NULL),
 (105, 'ANKIT SHAH', NULL, NULL, NULL, '92', '4', NULL, NULL, '1000', '0', '0', '1000', 'CASH', NULL, 'MILK & TEA PURCHASE', '1590566752.WhatsApp Image 2020-05-27 at 1.35.30 PM.jpeg', 'PAID', '1', '1', NULL, NULL, NULL, '2020-05-27 13:35:52', '2020-05-27 13:48:28', NULL, NULL),
-(106, 'ANANTA KUMAR JENA', NULL, NULL, NULL, '92', '141', NULL, NULL, '1000', '0', '0', '1000', 'CASH', NULL, 'AD FOR MD''S RESIDENCE MESS EXP', '1590566866.WhatsApp Image 2020-05-27 at 1.37.28 PM.jpeg', 'PAID', '1', '1', NULL, NULL, NULL, '2020-05-27 13:37:46', '2020-05-27 13:48:10', NULL, NULL),
+(106, 'ANANTA KUMAR JENA', NULL, NULL, NULL, '92', '141', NULL, NULL, '1000', '0', '0', '1000', 'CASH', NULL, 'AD FOR MD\'S RESIDENCE MESS EXP', '1590566866.WhatsApp Image 2020-05-27 at 1.37.28 PM.jpeg', 'PAID', '1', '1', NULL, NULL, NULL, '2020-05-27 13:37:46', '2020-05-27 13:48:10', NULL, NULL),
 (107, 'AXIS BANK GOLD LOAN', NULL, NULL, NULL, '92', '14', NULL, NULL, '50000', '0', '0', '50000', 'CHEQUE', NULL, 'GOLD LOAN AGT. PRINCIPAL AMOUNT', '1590567173.WhatsApp Image 2020-05-27 at 1.42.31 PM.jpeg', 'PAID', '1', '1', NULL, NULL, 'CHEQUE NO-257302', '2020-05-27 13:42:53', '2020-05-27 13:47:42', NULL, NULL),
 (108, 'DUSTER LOAN', 1, '33670600000568', NULL, '92', '14', NULL, NULL, '41000', '0', '0', '41000', 'ONLINE PAYMENT', NULL, 'CAR LOAN', '1590571295.WhatsApp Image 2020-05-27 at 2.10.54 PM.jpeg', 'PAID', '1', '1', '014714007226', '2', NULL, '2020-05-27 14:51:35', '2020-05-27 14:52:36', NULL, NULL),
 (109, 'ANKIT SHAH', NULL, NULL, NULL, '92', '36', NULL, NULL, '1040', '0', '0', '1040', 'CASH', NULL, 'FROM DATE12.05.20 TO 25.05.20 TOAL 520 KM @RS 2', '1590646683.WhatsApp Image 2020-05-28 at 11.45.48 AM.jpeg', 'PAID', '276', '276', NULL, NULL, NULL, '2020-05-28 11:48:03', '2020-05-28 11:49:06', NULL, NULL),
@@ -9055,7 +9090,7 @@ INSERT INTO `vouchers` (`id`, `payeename`, `bankid`, `acno`, `ifsccode`, `projec
 (129, 'ESIC', NULL, NULL, NULL, '92', '33', NULL, NULL, '4854', '0', '0', '4854', 'ONLINE PAYMENT', NULL, 'ESIC COMMISSION CHRGES AGAINST THE M/O MAY', '1591251539.ESIC.pdf', 'PAID', '1', '276', 'CHD7355798', '7', NULL, '2020-06-04 11:48:59', '2020-06-10 22:07:08', NULL, NULL),
 (130, 'S.P SAMTARAY', NULL, NULL, NULL, '92', '2', NULL, NULL, '1490', '0', '0', '1490', 'CASH', NULL, 'TRAVELLING EXP  & BILL LIASONING EXP ,CESU KHURDA', '1591341770.1490.jpeg', 'PAID', '1', '1', NULL, NULL, NULL, '2020-06-05 12:52:50', '2020-06-05 12:53:33', NULL, NULL),
 (131, 'AMIT SARANGI', 1, '42730100007060', 'BARB0KUNJAB', '74', '139', NULL, NULL, '10000', '0', '0', '10000', 'ONLINE PAYMENT', NULL, 'FOR SOFTWARE DEVELOPMENT', NULL, 'PAID', '1', '1', '015417636316', '2', NULL, '2020-06-05 14:14:16', '2020-06-05 14:15:13', NULL, NULL),
-(132, 'MANAS RANJAN KHUNTIA', 12, '242401501933', 'ICIC0002424', '81', '47', NULL, NULL, '40000', '0', '0', '40000', 'ONLINE PAYMENT', NULL, 'PAID FOR LINKU SIR''S MARRIAGE', NULL, 'PAID', '1', '1', '015417350275', '2', NULL, '2020-06-05 14:16:58', '2020-06-05 14:18:00', NULL, NULL),
+(132, 'MANAS RANJAN KHUNTIA', 12, '242401501933', 'ICIC0002424', '81', '47', NULL, NULL, '40000', '0', '0', '40000', 'ONLINE PAYMENT', NULL, 'PAID FOR LINKU SIR\'S MARRIAGE', NULL, 'PAID', '1', '1', '015417350275', '2', NULL, '2020-06-05 14:16:58', '2020-06-05 14:18:00', NULL, NULL),
 (133, 'KRUSHNA CHANDRA PANIGRAHI', NULL, NULL, NULL, '92', '100', NULL, NULL, '2000', '0', '0', '2000', 'CASH', NULL, 'PUJA EXP. AGAIST THE M/O MAY-2020', '1591603799.KRUSHNA CH PANIGRAHI.jpeg', 'PAID', '1', '1', NULL, NULL, NULL, '2020-06-08 13:39:59', '2020-06-08 13:40:45', NULL, NULL),
 (134, 'POSTAL EMD CANCELLATION', NULL, NULL, NULL, '177', '128', NULL, NULL, '2000', '0', '0', '2000', 'CASH', NULL, 'POSTAL EMD CANCELLATION CHARGES', NULL, 'PAID', '1', '1', NULL, NULL, NULL, '2020-06-08 14:14:16', '2020-06-08 14:14:58', NULL, NULL),
 (135, 'GPO', NULL, NULL, NULL, '92', '10', NULL, NULL, '1000', '0', '0', '1000', 'CASH', NULL, 'LIASONING EXP AT GPO', '1591606049.1000.jpeg', 'PAID', '1', '1', NULL, NULL, NULL, '2020-06-08 14:17:29', '2020-06-08 14:18:09', NULL, NULL),
@@ -9069,9 +9104,9 @@ INSERT INTO `vouchers` (`id`, `payeename`, `bankid`, `acno`, `ifsccode`, `projec
 (143, 'PEWPL,BHUBANESWAR', NULL, NULL, NULL, '92', '4', NULL, NULL, '2350', '0', '0', '2350', 'CASH', NULL, 'MOBILE REPAIR', '1591682807.S.K DASH.pdf', 'PAID', '1', '276', NULL, NULL, NULL, '2020-06-09 11:36:47', '2020-06-12 01:29:44', NULL, NULL),
 (144, 'PEWPL BBSR', NULL, NULL, NULL, '92', '4', NULL, NULL, '2055', '0', '0', '2055', 'CASH', NULL, 'OFFICE EXP', '1591766144.PEWPLBBSR.pdf', 'PAID', '1', '276', NULL, NULL, NULL, '2020-06-10 17:45:44', '2020-06-12 01:29:30', NULL, NULL),
 (145, 'CIPET', NULL, NULL, NULL, '322', '129', NULL, NULL, '12000', '0', '0', '12000', NULL, NULL, 'POST DELIVERY INSPECTION OF 160MM & 200 MM CLASS-I(2.5 KGF/CM SQUARE) UPVC PIPES AS PER IS 4985-2000 WITH ISI CERTIFICATION MARK(SOCKETED PIPE)', '1591769067.CIPET TESTING.pdf', 'APPROVED', '1', '1', NULL, NULL, NULL, '2020-06-10 18:34:27', '2020-06-10 18:50:32', NULL, NULL),
-(146, 'PEWPL BBSR', NULL, NULL, NULL, '80', '47', NULL, NULL, '814', '0', '0', '814', 'CASH', NULL, 'MD SIR''S MEDICINE-234\r\nLAUNDRY-180\r\nLIGHT REPAIR-200\r\nFUEL-200', '1591771059.OFFICE.pdf', 'PAID', '1', '1', NULL, NULL, NULL, '2020-06-10 19:07:39', '2020-06-12 01:29:17', NULL, NULL),
+(146, 'PEWPL BBSR', NULL, NULL, NULL, '80', '47', NULL, NULL, '814', '0', '0', '814', 'CASH', NULL, 'MD SIR\'S MEDICINE-234\r\nLAUNDRY-180\r\nLIGHT REPAIR-200\r\nFUEL-200', '1591771059.OFFICE.pdf', 'PAID', '1', '1', NULL, NULL, NULL, '2020-06-10 19:07:39', '2020-06-12 01:29:17', NULL, NULL),
 (147, 'Akash Jyoti Lenka', NULL, NULL, NULL, '92', '147', NULL, NULL, '50000', '0', '0', '50000', 'ONLINE PAYMENT', NULL, 'personal exp', '1591792617.50000.jpeg', 'PAID', '1', '1', '016215660318', '2', NULL, '2020-06-11 01:06:57', '2020-06-11 01:12:07', NULL, NULL),
-(148, 'SK ABDAT', 2, '33418056412', 'SBIN0003313', '92', '4', NULL, NULL, '10000', '0', '0', '10000', 'ONLINE PAYMENT', NULL, 'PAID FOR MD''S HOUSE MAINTAINNANCE', '1591792814.10000.jpeg', 'PAID', '1', '1', '016207502916', '2', NULL, '2020-06-11 01:10:14', '2020-06-11 01:11:24', NULL, NULL),
+(148, 'SK ABDAT', 2, '33418056412', 'SBIN0003313', '92', '4', NULL, NULL, '10000', '0', '0', '10000', 'ONLINE PAYMENT', NULL, 'PAID FOR MD\'S HOUSE MAINTAINNANCE', '1591792814.10000.jpeg', 'PAID', '1', '1', '016207502916', '2', NULL, '2020-06-11 01:10:14', '2020-06-11 01:11:24', NULL, NULL),
 (149, 'SURYAKANT MOHAPATRA', NULL, NULL, NULL, '92', '106', NULL, NULL, '100', '0', '0', '100', 'CASH', NULL, 'PAID FOR BOLLERO TYRE PUNCTER', NULL, 'PAID', '1', '1', NULL, NULL, NULL, '2020-06-12 19:12:48', '2020-06-12 19:13:26', NULL, NULL),
 (150, 'RAMESH PALEI', 2, '33167705439', 'SBIN0012036', '92', '34', NULL, NULL, '7125', '0', '0', '7125', 'CHEQUE', NULL, 'FABRICATION ATTAINDANCE FOR RESIDENT DUTY', '1591945370.LABOUR PAYMENT.jpeg', 'PAID', '1', '276', NULL, NULL, 'chq no-02158 ubi  current a/c  bhpt', '2020-06-12 19:32:50', '2020-06-12 23:48:22', NULL, NULL),
 (151, 'Debendra Kumar Sahu (As per Mr. Sanmay Mohapatra)', NULL, NULL, NULL, '92', '153', NULL, NULL, '20000', '0', '0', '20000', NULL, NULL, 'SRO NOTING ( BANK OF BARODA), As per Mr. Sanmaya Sir. (Misc. Court Exp, Bill can not be availed)', NULL, 'PENDING MGR', '1', NULL, NULL, NULL, NULL, '2020-06-12 21:11:42', '2020-06-12 21:11:42', NULL, NULL);
@@ -9079,11 +9114,33 @@ INSERT INTO `vouchers` (`id`, `payeename`, `bankid`, `acno`, `ifsccode`, `projec
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `voucher_report`
+-- (See below for the actual view)
+--
+CREATE TABLE `voucher_report` (
+`id` int(11)
+,`vendorid` varchar(200)
+,`billdate` varchar(200)
+,`billno` varchar(200)
+,`projectid` int(11)
+,`status` varchar(200)
+,`created_at` timestamp
+,`paymenttype` varchar(200)
+,`transactionid` varchar(100)
+,`bankid` varchar(200)
+,`dateofpayment` date
+,`credit` varchar(100)
+,`debit` varchar(100)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `wallets`
 --
 
-CREATE TABLE IF NOT EXISTS `wallets` (
-`id` int(11) NOT NULL,
+CREATE TABLE `wallets` (
+  `id` int(11) NOT NULL,
   `employeeid` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `credit` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `debit` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -9091,7 +9148,7 @@ CREATE TABLE IF NOT EXISTS `wallets` (
   `addedby` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `wallets`
@@ -9129,7 +9186,16 @@ INSERT INTO `wallets` (`id`, `employeeid`, `credit`, `debit`, `rid`, `addedby`, 
 --
 DROP TABLE IF EXISTS `chatjoins`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `chatjoins` AS select `c`.`seen` AS `seen`,`c`.`id` AS `id`,`c`.`sender` AS `sender`,`c`.`reciver` AS `reciver`,`c`.`message` AS `message`,`c`.`attachment` AS `attachment`,`c`.`convertationid` AS `convertationid`,`c`.`attachmentrealname` AS `attachmentrealname`,`c`.`created_at` AS `created_at`,`c`.`updated_at` AS `updated_at`,`a`.`name` AS `sendername`,`b`.`name` AS `recivername` from ((`users` `a` join `users` `b`) join `chats` `c`) where ((`a`.`id` = `c`.`sender`) and (`b`.`id` = `c`.`reciver`));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `chatjoins`  AS  select `c`.`seen` AS `seen`,`c`.`id` AS `id`,`c`.`sender` AS `sender`,`c`.`reciver` AS `reciver`,`c`.`message` AS `message`,`c`.`attachment` AS `attachment`,`c`.`convertationid` AS `convertationid`,`c`.`attachmentrealname` AS `attachmentrealname`,`c`.`created_at` AS `created_at`,`c`.`updated_at` AS `updated_at`,`a`.`name` AS `sendername`,`b`.`name` AS `recivername` from ((`users` `a` join `users` `b`) join `chats` `c`) where ((`a`.`id` = `c`.`sender`) and (`b`.`id` = `c`.`reciver`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `voucher_report`
+--
+DROP TABLE IF EXISTS `voucher_report`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `voucher_report`  AS  select `pmsdebitvouchers`.`id` AS `id`,`pmsdebitvouchers`.`vendorid` AS `vendorid`,`pmsdebitvouchers`.`billdate` AS `billdate`,`pmsdebitvouchers`.`billno` AS `billno`,`pmsdebitvouchers`.`projectid` AS `projectid`,`pmsdebitvouchers`.`status` AS `status`,`pmsdebitvouchers`.`created_at` AS `created_at`,`pmsdebitvoucherpayments`.`paymenttype` AS `paymenttype`,`pmsdebitvoucherpayments`.`transactionid` AS `transactionid`,`pmsdebitvoucherpayments`.`bankid` AS `bankid`,`pmsdebitvoucherpayments`.`dateofpayment` AS `dateofpayment`,if((`pmsdebitvouchers`.`voucher_type` = 'INVOICE'),`pmsdebitvouchers`.`finalamount`,0) AS `credit`,if((`pmsdebitvouchers`.`voucher_type` = 'PAYMENT'),`pmsdebitvouchers`.`finalamount`,0) AS `debit` from (`pmsdebitvouchers` left join `pmsdebitvoucherpayments` on((`pmsdebitvouchers`.`id` = `pmsdebitvoucherpayments`.`voucher_id`))) ;
 
 --
 -- Indexes for dumped tables
@@ -9139,385 +9205,389 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indexes for table `activities`
 --
 ALTER TABLE `activities`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `assignusers`
 --
 ALTER TABLE `assignusers`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `attendances`
 --
 ALTER TABLE `attendances`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `bankledgers`
 --
 ALTER TABLE `bankledgers`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `banks`
 --
 ALTER TABLE `banks`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `chats`
 --
 ALTER TABLE `chats`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `clients`
 --
 ALTER TABLE `clients`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `companysetups`
 --
 ALTER TABLE `companysetups`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `complaintlogs`
 --
 ALTER TABLE `complaintlogs`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `complaints`
 --
 ALTER TABLE `complaints`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `debitvoucherheaders`
 --
 ALTER TABLE `debitvoucherheaders`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `debitvoucherpayments`
 --
 ALTER TABLE `debitvoucherpayments`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `debitvouchers`
 --
 ALTER TABLE `debitvouchers`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `deductiondefinations`
 --
 ALTER TABLE `deductiondefinations`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `departments`
 --
 ALTER TABLE `departments`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `designations`
 --
 ALTER TABLE `designations`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `districts`
 --
 ALTER TABLE `districts`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `divisions`
 --
 ALTER TABLE `divisions`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `documents`
 --
 ALTER TABLE `documents`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employeebankaccountsdetails`
 --
 ALTER TABLE `employeebankaccountsdetails`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employeecompanydetails`
 --
 ALTER TABLE `employeecompanydetails`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employeedetails`
 --
 ALTER TABLE `employeedetails`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employeedocuments`
 --
 ALTER TABLE `employeedocuments`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employeeotherdocuments`
 --
 ALTER TABLE `employeeotherdocuments`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `expenseentries`
 --
 ALTER TABLE `expenseentries`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `expenseheads`
 --
 ALTER TABLE `expenseheads`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `hsncodes`
 --
 ALTER TABLE `hsncodes`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `labours`
 --
 ALTER TABLE `labours`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `notices`
 --
 ALTER TABLE `notices`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `oauth_access_tokens`
 --
 ALTER TABLE `oauth_access_tokens`
- ADD PRIMARY KEY (`id`), ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
 
 --
 -- Indexes for table `oauth_auth_codes`
 --
 ALTER TABLE `oauth_auth_codes`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `oauth_clients`
 --
 ALTER TABLE `oauth_clients`
- ADD PRIMARY KEY (`id`), ADD KEY `oauth_clients_user_id_index` (`user_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_clients_user_id_index` (`user_id`);
 
 --
 -- Indexes for table `oauth_personal_access_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
- ADD PRIMARY KEY (`id`), ADD KEY `oauth_personal_access_clients_client_id_index` (`client_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_personal_access_clients_client_id_index` (`client_id`);
 
 --
 -- Indexes for table `oauth_refresh_tokens`
 --
 ALTER TABLE `oauth_refresh_tokens`
- ADD PRIMARY KEY (`id`), ADD KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`);
 
 --
 -- Indexes for table `openingbalances`
 --
 ALTER TABLE `openingbalances`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `particulars`
 --
 ALTER TABLE `particulars`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
- ADD KEY `password_resets_email_index` (`email`);
+  ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- Indexes for table `payments`
 --
 ALTER TABLE `payments`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pmsdebitvoucherpayments`
 --
 ALTER TABLE `pmsdebitvoucherpayments`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pmsdebitvouchers`
 --
 ALTER TABLE `pmsdebitvouchers`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `productcatagories`
 --
 ALTER TABLE `productcatagories`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `projectactivities`
 --
 ALTER TABLE `projectactivities`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `projectotherdocuments`
 --
 ALTER TABLE `projectotherdocuments`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `projectreports`
 --
 ALTER TABLE `projectreports`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `requisitionheaders`
 --
 ALTER TABLE `requisitionheaders`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `requisitionpayments`
 --
 ALTER TABLE `requisitionpayments`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `requisitions`
 --
 ALTER TABLE `requisitions`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `schemes`
 --
 ALTER TABLE `schemes`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `stockentries`
 --
 ALTER TABLE `stockentries`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `suggestions`
 --
 ALTER TABLE `suggestions`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tempsalaries`
 --
 ALTER TABLE `tempsalaries`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `todos`
 --
 ALTER TABLE `todos`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `units`
 --
 ALTER TABLE `units`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `useraccounts`
 --
 ALTER TABLE `useraccounts`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `userunderhods`
 --
 ALTER TABLE `userunderhods`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `vehicles`
 --
 ALTER TABLE `vehicles`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `vendors`
 --
 ALTER TABLE `vendors`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `vouchers`
 --
 ALTER TABLE `vouchers`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `wallets`
 --
 ALTER TABLE `wallets`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -9527,302 +9597,363 @@ ALTER TABLE `wallets`
 -- AUTO_INCREMENT for table `activities`
 --
 ALTER TABLE `activities`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `assignusers`
 --
 ALTER TABLE `assignusers`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `bankledgers`
 --
 ALTER TABLE `bankledgers`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
 --
 -- AUTO_INCREMENT for table `banks`
 --
 ALTER TABLE `banks`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `chats`
 --
 ALTER TABLE `chats`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
 --
 -- AUTO_INCREMENT for table `companysetups`
 --
 ALTER TABLE `companysetups`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `complaintlogs`
 --
 ALTER TABLE `complaintlogs`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `debitvoucherheaders`
 --
 ALTER TABLE `debitvoucherheaders`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=309;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=309;
+
 --
 -- AUTO_INCREMENT for table `debitvoucherpayments`
 --
 ALTER TABLE `debitvoucherpayments`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=254;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
+
 --
 -- AUTO_INCREMENT for table `debitvouchers`
 --
 ALTER TABLE `debitvouchers`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=741;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=741;
+
 --
 -- AUTO_INCREMENT for table `deductiondefinations`
 --
 ALTER TABLE `deductiondefinations`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `designations`
 --
 ALTER TABLE `designations`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `districts`
 --
 ALTER TABLE `districts`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
 --
 -- AUTO_INCREMENT for table `divisions`
 --
 ALTER TABLE `divisions`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
 --
 -- AUTO_INCREMENT for table `documents`
 --
 ALTER TABLE `documents`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `employeebankaccountsdetails`
 --
 ALTER TABLE `employeebankaccountsdetails`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=276;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
+
 --
 -- AUTO_INCREMENT for table `employeecompanydetails`
 --
 ALTER TABLE `employeecompanydetails`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=276;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
+
 --
 -- AUTO_INCREMENT for table `employeedetails`
 --
 ALTER TABLE `employeedetails`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=276;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
+
 --
 -- AUTO_INCREMENT for table `employeedocuments`
 --
 ALTER TABLE `employeedocuments`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=276;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
+
 --
 -- AUTO_INCREMENT for table `employeeotherdocuments`
 --
 ALTER TABLE `employeeotherdocuments`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `expenseentries`
 --
 ALTER TABLE `expenseentries`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=485;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=486;
+
 --
 -- AUTO_INCREMENT for table `expenseheads`
 --
 ALTER TABLE `expenseheads`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=154;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
+
 --
 -- AUTO_INCREMENT for table `hsncodes`
 --
 ALTER TABLE `hsncodes`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `labours`
 --
 ALTER TABLE `labours`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `notices`
 --
 ALTER TABLE `notices`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `oauth_clients`
 --
 ALTER TABLE `oauth_clients`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `oauth_personal_access_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `openingbalances`
 --
 ALTER TABLE `openingbalances`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `particulars`
 --
 ALTER TABLE `particulars`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=632;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=632;
+
 --
 -- AUTO_INCREMENT for table `pmsdebitvoucherpayments`
 --
 ALTER TABLE `pmsdebitvoucherpayments`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `pmsdebitvouchers`
 --
 ALTER TABLE `pmsdebitvouchers`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `productcatagories`
 --
 ALTER TABLE `productcatagories`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=171;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
+
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=368;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=368;
+
 --
 -- AUTO_INCREMENT for table `projectactivities`
 --
 ALTER TABLE `projectactivities`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `projectotherdocuments`
 --
 ALTER TABLE `projectotherdocuments`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `projectreports`
 --
 ALTER TABLE `projectreports`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=323;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=323;
+
 --
 -- AUTO_INCREMENT for table `requisitionheaders`
 --
 ALTER TABLE `requisitionheaders`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=558;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=558;
+
 --
 -- AUTO_INCREMENT for table `requisitionpayments`
 --
 ALTER TABLE `requisitionpayments`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=400;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=401;
+
 --
 -- AUTO_INCREMENT for table `requisitions`
 --
 ALTER TABLE `requisitions`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=882;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=882;
+
 --
 -- AUTO_INCREMENT for table `schemes`
 --
 ALTER TABLE `schemes`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `stockentries`
 --
 ALTER TABLE `stockentries`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=373;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=373;
+
 --
 -- AUTO_INCREMENT for table `suggestions`
 --
 ALTER TABLE `suggestions`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tempsalaries`
 --
 ALTER TABLE `tempsalaries`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+
 --
 -- AUTO_INCREMENT for table `todos`
 --
 ALTER TABLE `todos`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `useraccounts`
 --
 ALTER TABLE `useraccounts`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=293;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
+
 --
 -- AUTO_INCREMENT for table `userunderhods`
 --
 ALTER TABLE `userunderhods`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=266;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=269;
+
 --
 -- AUTO_INCREMENT for table `vouchers`
 --
 ALTER TABLE `vouchers`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=152;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+
 --
 -- AUTO_INCREMENT for table `wallets`
 --
 ALTER TABLE `wallets`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
