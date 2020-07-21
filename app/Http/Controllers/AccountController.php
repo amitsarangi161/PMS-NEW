@@ -60,6 +60,21 @@ class AccountController extends Controller
 {  
 
 
+public function updatepaymentmethod(Request $request,$id){
+
+  $requisitionpayment=requisitionpayment::find($id);
+  $requisitionpayment->paymenttype=$request->paymenttype;
+  $requisitionpayment->save();
+  return redirect('/prb/requisitiononlinepending');
+}
+
+public function updaterequipaymentmethod(Request $request){
+  $requisitionpayment=requisitionpayment::find($request->uid);
+  $requisitionpayment->paymenttype=$request->paymenttype;
+  $requisitionpayment->save();
+  return back();
+}
+
   public function exportvcpayment($acno){
 
 $debitvoucherpayments=pmsdebitvoucherpayment::select('pmsdebitvoucherpayments.*','banks.bankname','vendors.vendorname','useraccounts.acno','useraccounts.branchname','vendors.ifsccode','vendors.acno','vendors.acctype','vendors.bankname as vendorbank')

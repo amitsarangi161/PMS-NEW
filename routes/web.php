@@ -783,4 +783,9 @@ Route::post('/vendorpayment/{vid}','AccountController@vendorpayment');
 
 Route::post('/updatepaymentmethod/{id}','AccountController@updatepaymentmethod');
 
+Route::post('/updaterequipaymentmethod/','AccountController@updaterequipaymentmethod');
+
+
+
+
 });

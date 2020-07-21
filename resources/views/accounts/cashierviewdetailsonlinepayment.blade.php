@@ -53,7 +53,7 @@
 		<td><strong>PAYMENT METHOD</strong></td>
 
 		<td>{{ $requisitionpayments->paymenttype}}
-      <button class="label label-primary" onclick="updatepaymentmethod('{{$requisitionpayments->paymenttype}}','{{$requisitionpayments->bankid}}');"> <i class="fa fa-pencil"></i> Edit</button>
+      <button class="label label-primary" onclick="updatepaymentmethod('{{$requisitionpayments->paymenttype}}');"> <i class="fa fa-pencil"></i> Edit</button>
     </td>
 	</tr>
 
@@ -354,10 +354,10 @@
   {
     $("#myModal2").modal('show');
   }
-  function updatepaymentmethod(paymenttype,bankid){
+  function updatepaymentmethod(paymenttype){
 
     $('#paymenttype option[value="'+paymenttype+'"]').attr("selected", "selected");
-    $('#reqbank option[value="'+bankid+'"]').attr("selected", "selected");
+    //$('#reqbank option[value="'+bankid+'"]').attr("selected", "selected");
     $("#updatepaymentmethod").modal('show');
   }
 </script>
