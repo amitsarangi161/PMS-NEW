@@ -15,6 +15,19 @@
 	{{csrf_field()}}
 
 	<table class="table table-responsive table-hover table-bordered table-striped">
+    <tr>
+        <td colspan="2"><strong>Vendor Type</strong></td>
+        <td colspan="2">
+        <select class="form-control" name="vtypeid" required="">
+
+          <option value="">Select a Vendor Type</option>
+          @foreach($vendortypes as $vendortype)
+                   <option value="{{$vendortype->id}}" {{ ( $vendor->vtypeid == $vendortype->id) ? 'selected' : '' }}>{{$vendortype->vendortype}}</option>
+          @endforeach
+          
+        </select>
+      </td>
+      </tr>
       <tr>
      <td colspan="2"><strong>ENTER PARTY NAME<span style="color: red"> *</span></strong></td>
      <td colspan="2"><input type="text" autocomplete="off" value="{{$vendor->vendorname}}" name="vendorname" placeholder="Enter Vendor Name" class="form-control"  required></td>

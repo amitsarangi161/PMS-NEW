@@ -250,7 +250,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-
+            <li class="{{ Request::is('vendor/vendortype') ? 'active' : '' }}"><a href="/vendor/vendortype"><i class="fa fa-circle-o text-aqua"></i>VENDOR TYPE</a></li>
             <li class="{{ Request::is('vendor/vendors') ? 'active' : '' }}"><a href="/vendor/vendors"><i class="fa fa-circle-o text-aqua"></i>VENDORS</a></li>
 
             <li class="{{ Request::is('vendor/managevendors') ? 'active' : '' }}"><a href="/vendor/managevendors"><i class="fa fa-circle-o text-aqua"></i>MANAGE ALL VENDORS</a></li>

@@ -785,6 +785,10 @@ Route::post('/updatepaymentmethod/{id}','AccountController@updatepaymentmethod')
 
 Route::post('/updaterequipaymentmethod/','AccountController@updaterequipaymentmethod');
 
+Route::get('/vendor/vendortype','AccountController@vendortype');
+Route::post('/savevendortype','AccountController@savevendortype');
+Route::post('/updatvendortype','AccountController@updatvendortype');
+
 
 
 

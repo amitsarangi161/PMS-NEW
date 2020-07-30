@@ -36,6 +36,7 @@
        <thead class="bg-navy">
        	   <tr>
        	   	<th>Sl. No</th>
+            <th>VENDOR TYPE</th>
             <th>PARTY NAME</th>
        	   	<th>MOBILE</th>
             <th>EMAIL</th>
@@ -56,6 +57,7 @@
        	@foreach($vendors as $key=>$vendor)
            <tr>
            	<td>{{++$key}}</td>
+            <td>{{$vendor->vendortype}}</td>
            	<td>{{$vendor->vendorname}}</td>
            	<td>{{$vendor->mobile}}</td>
            	<td>{{$vendor->email}}</td>

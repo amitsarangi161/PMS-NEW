@@ -1,11 +1,34 @@
 @extends('layouts.account')
 @section('content')
 
+<table class="table">
+  <form action="/vendor/vendorwisepayment" method="get">
+  <tr>
+
+    <td><strong>Vendor Type</strong></td>
+    <td>
+      <select name="vendortype" required="" class="form-control">
+        <option value="ALL">ALL</option>
+        @foreach($vendortypes as $vendortype)
+        
+        <option value="{{$vendortype->id}}" {{(Request::get('vendortype')==$vendortype->id)?'selected':''}}>{{$vendortype->vendortype}}</option>
+        @endforeach
+      </select>
+    </td>
+    <td><button type="submit" class="btn btn-success">Filter</button></td>
+    @if(Request::has('vendortype'))
+        <td><a href="/vendor/vendorwisepayment" class="btn btn-danger">Clear</a></td>
+    @endif
+
+  </tr>
+  </form>
+</table>
 <div class="table-responsive">
 <table class="table table-responsive table-hover table-bordered table-striped sortfalsedatatable">
 	<thead>
 		<tr class="bg-navy">
 			<th><strong>SL.No</strong></th>
+			<th><strong>VENDOR TYPE</strong></th>
 			<th><strong>VENDOR NAME</strong></th>
 			<th><strong>DETAILS</strong></th>
 			<th><strong>MOBILE</strong></th>
@@ -25,6 +48,7 @@
 		@foreach($custarr as $key=>$arr)
 		<tr>
 			<td>{{++$key}}</td>
+			<td>{{$arr['vendor']->vendortype}}</td>
 			<td>{{$arr['vendor']->vendorname}}</td>
 			<td>{{$arr['vendor']->details}}</td>
 			<td>{{$arr['vendor']->mobile}}</td>
@@ -37,6 +61,7 @@
 	</tbody>
 	<tfoot>
 		<tr bgcolor="#97FFD7">
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>

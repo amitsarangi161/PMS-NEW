@@ -53,11 +53,39 @@ use App\Bankledger;
 use App\Pmsdebitvoucher;
 use App\Pmsdebitvoucherpayment;
 use App\pmspayment;
+use App\vendortype;
 
 
 
 class AccountController extends Controller
 {  
+ public function updatvendortype(Request $request)
+    {
+      $vendor=vendortype::find($request->eid);
+       $vendor->vendortype=$request->vendortype;
+       $vendor->save();
+       Session::flash('msg','Vendor Type Updated Successfully');
+
+       return back();
+    }
+ public function savevendortype(Request $request)
+    {
+       $vendor=new vendortype();
+
+             $this->validate($request,[
+            'vendortype'=>'required|string|max:255|unique:vendortypes',
+
+       ]);
+       $vendor->vendortype=$request->vendortype;
+       $vendor->save();
+       Session::flash('msg','Vendor Type Added Successfully');
+       return back();
+    }
+public function vendortype()
+    {
+      $vendortypes=vendortype::all();
+      return view('accounts.vendortype',compact('vendortypes'));
+    }
 
 
 public function updatepaymentmethod(Request $request,$id){
@@ -368,24 +396,39 @@ public function viewdetaillvendor($id){
           ->get();
   return view('accounts.account_report',compact('trns','vendor'));
 }
-public function vendorwisepayment(){
+public function vendorwisepayment(Request $request){
 
-  $vendors=vendor::all();
+  $vendors=vendor::select('vendors.*','vendortypes.vendortype')
+          ->leftJoin('vendortypes','vendors.vtypeid','=','vendortypes.id')->get();
+
+  $vendortypes=vendortype::all();
   $custarr=array();
   foreach ($vendors as $key => $vendor) {
     $trns = DB::table('voucher_report')
+            ->select('voucher_report.*','vendors.vtypeid')
+            ->leftJoin('vendors','voucher_report.vendorid','=','vendors.id')
+            
           ->where('vendorid',$vendor->id)
-          ->where('status','COMPLETED')
-          ->get();
+          ->where('status','COMPLETED');
+    if ($request->has('vendortype')&& $request->get('vendortype')!='') {
+      
+       $trns=$trns->where('vendors.vtypeid',$request->get('vendortype'));
+      
+    }
+
+          $trns=$trns->get();
     $sumcr=$trns->sum('credit');
     $sumdr=$trns->sum('debit');
     $balance=$sumcr-$sumdr;
+    if($balance != 0){
     $custarr[]=array('vendor'=>$vendor,'credit'=>$sumcr,'debit'=>$sumdr,'balance'=>$balance);
+    }
+    
      
   }
   //return $custarr;
 
-  return view('accounts.vendorwisepayment',compact('custarr'));
+  return view('accounts.vendorwisepayment',compact('custarr','vendortypes'));
 }
 public function viewdrpendingmgr(){
        
@@ -5775,6 +5818,7 @@ public function changependingstatusmgr(Request $request,$id)
        $vendor->acno=$request->acno;
        $vendor->branchname=$request->branchname;
        $vendor->ifsccode=$request->ifsccode;
+       $vendor->vtypeid=$request->vtypeid;
      
      
      
@@ -5825,9 +5869,10 @@ public function changependingstatusmgr(Request $request,$id)
    public function editvendor($id)
    {
       $vendor=vendor::find($id);
+      $vendortypes=vendortype::all();
       $banks=bank::all();
      // return $vendor;
-      return view('accounts.editvendor',compact('vendor','banks'));
+      return view('accounts.editvendor',compact('vendor','banks','vendortypes'));
    }
   public function savevendor(Request $request)
   {
@@ -5847,6 +5892,7 @@ public function changependingstatusmgr(Request $request,$id)
      $vendor->acno=$request->acno;
      $vendor->branchname=$request->branchname;
      $vendor->ifsccode=$request->ifsccode;
+     $vendor->vtypeid=$request->vtypeid;
      $vendor->userid=Auth::id();
      
      
@@ -5896,7 +5942,8 @@ public function changependingstatusmgr(Request $request,$id)
    {  
       $vendors=vendor::all();
       $banks=bank::all();
-      return view('accounts.vendors',compact('vendors','banks'));
+      $vendortypes=vendortype::all();
+      return view('accounts.vendors',compact('vendors','banks','vendortypes'));
    }
    public function importvendor(Request $request){
     $this->validate($request, [
@@ -6069,8 +6116,9 @@ public function changependingstatusmgr(Request $request,$id)
     public function managevendors()
     {
 
-         $vendors=vendor::select('vendors.*','users.name')
+         $vendors=vendor::select('vendors.*','users.name','vendortypes.vendortype')
          ->leftJoin('users','vendors.userid','=','users.id')
+         ->leftJoin('vendortypes','vendors.vtypeid','=','vendortypes.id')
          ->get();
          //return $vendors;
          return view('accounts.managevendors',compact('vendors'));
