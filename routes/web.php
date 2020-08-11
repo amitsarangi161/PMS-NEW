@@ -789,7 +789,8 @@ Route::get('/vendor/vendortype','AccountController@vendortype');
 Route::post('/savevendortype','AccountController@savevendortype');
 Route::post('/updatvendortype','AccountController@updatvendortype');
 
-
+Route::get('/editvoucher/{id}','AccountController@editvoucher');
+Route::post('/updatevoucher/{id}','AccountController@updatevoucher');
 
 
 });

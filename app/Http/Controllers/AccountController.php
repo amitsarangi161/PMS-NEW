@@ -59,6 +59,51 @@ use App\vendortype;
 
 class AccountController extends Controller
 {  
+ 
+ public function updatevoucher(Request $request,$id){
+  $voucher=voucher::find($id);
+  $voucher->payeename=$request->payeename;
+  $voucher->bankid=$request->bankid;
+  $voucher->acno=$request->acno;
+  $voucher->ifsccode=$request->ifsccode;
+  $voucher->chequedetails=$request->chequedetails;
+  $voucher->projectid=$request->projectid;
+  $voucher->expenseheadid=$request->expenseheadid;
+  $voucher->particularid=$request->particularid;
+
+  $voucher->amount=$request->amount;
+  $voucher->tds=$request->tds;
+  $voucher->tdsamt=$request->tdsamt;
+  $voucher->amounttopay=$request->amounttopay;
+  $voucher->description=$request->description;
+  $voucher->author=Auth::id();
+   $rarefile = $request->file('uploadedfile'); 
+
+       if($rarefile!=''){
+        $raupload = public_path() .'/img/vouchers/';
+        $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$rarefilename);
+        $voucher->uploadedfile = $rarefilename;
+         }
+
+  $voucher->save();
+   Session::flash('msg','Voucher Updated Successfully');
+   return back();
+
+ }
+ public function editvoucher($id){
+  $voucher=voucher::find($id);
+  //return $voucher;
+  $expenseheads=expensehead::all();
+            $projects=project::select('projects.*','schemes.schemename')
+                ->leftJoin('schemes','projects.scheme_id','=','schemes.id')
+                ->orderBy('projectname')
+                ->get();
+            //return $projects;   
+            $banks=bank::all();
+  return view('accounts.editvoucher',compact('voucher','expenseheads','projects','banks'));
+
+ }
  public function updatvendortype(Request $request)
     {
       $vendor=vendortype::find($request->eid);

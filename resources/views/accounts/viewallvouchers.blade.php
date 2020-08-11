@@ -40,6 +40,7 @@
       <th>ADDED BY</th>
 			<th>CREATED AT</th>
       <th>VIEW</th>
+      <th>EDIT</th>
       <th>CANCEL</th>
 		
 
@@ -83,6 +84,7 @@
         <td>{{$voucher->author}}</td>
         <td>{{$voucher->created_at}}</td>
         <td><a href="/viewvoucher/{{$voucher->id}}" class="btn btn-primary">VIEW</a></td>
+        <td><a href="/editvoucher/{{$voucher->id}}" class="btn btn-primary">EDIT</a></td>
         <td>
           <form action="/cancelthisvoucher/{{$voucher->id}}" method="post">
             {{csrf_field()}}
