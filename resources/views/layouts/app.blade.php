@@ -238,6 +238,7 @@
             <li class="{{ Request::is('dm/userassigntohod') ? 'active' : '' }}"><a href="/dm/userassigntohod"><i class="fa fa-circle-o text-aqua"></i>USER ASSIGN TO HOD</a></li>
 
             <li class="{{ Request::is('dm/viewallassignedusertohod') ? 'active' : '' }}"><a href="/dm/viewallassignedusertohod"><i class="fa fa-circle-o text-aqua"></i>VIEW ASSIGNED USERS TO HOD</a></li>
+            <li class="{{ Request::is('dm/smssetting') ? 'active' : '' }}"><a href="/dm/smssetting"><i class="fa fa-circle-o text-aqua"></i>SMS SETTTING</a></li>
              
           </ul>
         </li>

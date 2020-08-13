@@ -792,5 +792,7 @@ Route::post('/updatvendortype','AccountController@updatvendortype');
 Route::get('/editvoucher/{id}','AccountController@editvoucher');
 Route::post('/updatevoucher/{id}','AccountController@updatevoucher');
 
+Route::get('/dm/smssetting','HomeController@smssetting');
+Route::post('/savesmssetting','HomeController@savesmssetting');
 
 });

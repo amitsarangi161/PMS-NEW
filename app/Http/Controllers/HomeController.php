@@ -66,11 +66,48 @@ use App\voucher;
 use App\projectotherdocument;
 use App\Bankledger;
 use App\Openingbalance;
+use App\Smssetting;
 use DataTables;
 use Excel;
 //use Barryvdh\DomPDF\Facade as PDF;
 class HomeController extends Controller
 {
+
+public function savesmssetting(Request $request){
+       $count=Smssetting::count(); 
+       if($count>0){
+      $smssetting=Smssetting::find($request->id);
+       $smssetting->username=$request->username;
+       $smssetting->password=$request->password;
+       $smssetting->vouchermessage=$request->vouchermessage;
+       $smssetting->requisitionmessage=$request->requisitionmessage;
+       $smssetting->debitvoucher=$request->debitvoucher;
+       $smssetting->status=$request->status;
+       $smssetting->save();
+       Session::flash('msg','Updated Successfully');
+       return back();
+     }else{
+      $smssetting=new Smssetting();
+       $smssetting->username=$request->username;
+       $smssetting->password=$request->password;
+       $smssetting->vouchermessage=$request->vouchermessage;
+       $smssetting->requisitionmessage=$request->requisitionmessage;
+       $smssetting->debitvoucher=$request->debitvoucher;
+       $smssetting->status=$request->status;
+       $smssetting->save();
+       Session::flash('msg','Save Successfully');
+       return back();
+     }
+
+
+}
+public function smssetting()
+   {
+      $smssettings=Smssetting::first();
+      //return $smssettings;
+      return view('smssetting',compact('smssettings'));
+   }
+
 public function ajaxremoveassignuser(Request $request){
   $assignuser=assignuser::find($request->id);
   $assignuser->delete();
