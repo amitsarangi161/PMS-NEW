@@ -82,6 +82,7 @@ public function savesmssetting(Request $request){
        $smssetting->vouchermessage=$request->vouchermessage;
        $smssetting->requisitionmessage=$request->requisitionmessage;
        $smssetting->debitvoucher=$request->debitvoucher;
+       $smssetting->mobile=$request->mobile;
        $smssetting->status=$request->status;
        $smssetting->save();
        Session::flash('msg','Updated Successfully');
@@ -93,6 +94,7 @@ public function savesmssetting(Request $request){
        $smssetting->vouchermessage=$request->vouchermessage;
        $smssetting->requisitionmessage=$request->requisitionmessage;
        $smssetting->debitvoucher=$request->debitvoucher;
+       $smssetting->mobile=$request->mobile;
        $smssetting->status=$request->status;
        $smssetting->save();
        Session::flash('msg','Save Successfully');

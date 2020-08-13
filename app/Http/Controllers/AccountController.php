@@ -362,6 +362,7 @@ public function drcashierpayvoucher(Request $request,$id)
       $voucher=pmsdebitvoucher::find($voucher);
       $voucher->status="COMPLETED";
       $voucher->save();
+     app('App\Http\Controllers\SendSmsController')->sendSms('Helllo Paku','917008460411');
           return redirect('/drpay/drpendingpayment');
 
       }

@@ -10,6 +10,7 @@ $vouchermessage=$smssettings->vouchermessage;
 $requisitionmessage=$smssettings->requisitionmessage;
 $debitvoucher=$smssettings->debitvoucher;
 $status=$smssettings->status;
+$mobile=$smssettings->mobile;
 $value="Update";
 }
 else{
@@ -20,6 +21,7 @@ $vouchermessage='';
 $requisitionmessage='';
 $debitvoucher='';
 $status='';
+$mobile='';
 $value="Save";
 }
 
@@ -80,6 +82,14 @@ $value="Save";
 		<input type="radio" value="1" name="status" {{($status=='1')? 'checked':''}}><strong>ON</strong>
 		<input type="radio" value="0" name="status" {{($status=='0')? 'checked':''}}><strong>OFF</strong>
 	
+	</td>
+	
+</tr>
+<tr>
+
+	<td><strong>Mobile Number *</strong></td>
+	<td>
+		<input type="text" name="mobile" value="{{$mobile}}" class="form-control" placeholder="Example :918776543500,918958865852 " >
 	</td>
 	
 </tr>
