@@ -372,8 +372,8 @@
         ->count();
       @endphp
 
-        @if(Auth::user()->usertype !='CASHIER')
-        <li class="{{ Request::is('vouchers*') ? 'active' : '' }} treeview">
+        
+        <!-- <li class="{{ Request::is('vouchers*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-rupee"></i> <span>DEBIT VOUCHER</span>
             <span class="pull-right-container">
@@ -436,7 +436,8 @@
 
           </ul>
         </li>
-        @endif
+         -->
+
 
         @php    
         $countpending=\App\Pmsdebitvoucher::where('status','PENDING')->count();
@@ -571,7 +572,7 @@
                                                        ->count();
            @endphp
 
-          <li class="{{ Request::is('dvpay*') ? 'active' : '' }} treeview">
+         <!--  <li class="{{ Request::is('dvpay*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-book"></i> <span>DEBIT VOUCHER PAYMENT</span>
             <span class="pull-right-container">
@@ -596,7 +597,7 @@
            
 
           </ul>
-        </li>
+        </li> -->
 @endif
         @php
           $mgrpendingreqcount=\App\requisitionheader::where('status','PENDING MGR')
