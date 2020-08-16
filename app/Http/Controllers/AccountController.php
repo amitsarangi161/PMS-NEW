@@ -358,12 +358,20 @@ public function drcashierpayvoucher(Request $request,$id)
           $debitvoucherpayment->paymentstatus="PAID";
           $debitvoucherpayment->paidby=Auth::id();
           $debitvoucherpayment->save();
-      $voucher=$debitvoucherpayment->voucher_id;
-      $voucher=pmsdebitvoucher::find($voucher);
+      $voucher_id=$debitvoucherpayment->voucher_id;
+      $voucher=pmsdebitvoucher::find($voucher_id);
       $voucher->status="COMPLETED";
       $voucher->save();
-     app('App\Http\Controllers\SendSmsController')->sendSms('Helllo Paku','917008460411');
-          return redirect('/drpay/drpendingpayment');
+
+      $vid=$voucher->vendorid;
+      $vendor=vendor::find($vid);
+
+      $message="Dear ".$vendor->vendorname.",Amount RS-".$debitvoucherpayment->amount." have been credited on your  A/c  against ".$voucher->reftype." on Date ".$debitvoucherpayment->dateofpayment." through ".$debitvoucherpayment->paymenttype." from (PABITRA GROUPS).".$request->root();
+
+      //return $message;
+     app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
+
+      return redirect('/drpay/drpendingpayment');
 
       }
 
@@ -466,7 +474,7 @@ public function vendorwisepayment(Request $request){
     $sumcr=$trns->sum('credit');
     $sumdr=$trns->sum('debit');
     $balance=$sumcr-$sumdr;
-    if($balance != 0){
+    if($balance != 0 && $sumcr!=0 && $sumdr!=0){
     $custarr[]=array('vendor'=>$vendor,'credit'=>$sumcr,'debit'=>$sumdr,'balance'=>$balance);
     }
     
@@ -2726,6 +2734,7 @@ public function no_to_words($no)
                        ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
                        ->where('requisitionpayments.paymentstatus','PAID')
                       ->where('requisitionheaders.projectid',$request->projectid)
+                      ->where('requisitionheaders.id',$request->reqid)
                       ->where('requisitionheaders.employeeid',Auth::id())
                       ->where('requisitions.expenseheadid',$expensehead->id)
                       ->groupBy('requisitions.id')
@@ -2734,6 +2743,7 @@ public function no_to_words($no)
         
         $entries=expenseentry::where('employeeid',Auth::id())
                 ->where('projectid',$request->projectid)
+                ->where('requistion_id',$request->reqid)
                 ->where('expenseheadid',$expensehead->id)
                 ->get();
           $totalamtentry=$entries->sum('approvalamount');
@@ -3351,6 +3361,9 @@ public function no_to_words($no)
         $requisitionpayment->transactionid=$request->transactionid;
         $requisitionpayment->dateofpayment=$request->dateofpayment;
         $requisitionpayment->save();
+
+
+
 
         return back();
     }
@@ -4394,14 +4407,15 @@ public function approvedebitvoucheradmin(Request $request,$id)
         $requisitionpayment->paymentstatus="PAID";
         $requisitionpayment->save();
 
-          $payment=new payment();
-       $payment->amount=$requisitionpayment->amount;
-       $payment->type='DR';
-       $payment->userid=Auth::id();
-       $payment->purpose='REQUISITION PAYMENTS';
-       $payment->paythrough='CASH';
-       $payment->save();
+        $rid=$requisitionpayment->rid;
+        $requisitionheader=requisitionheader::find($rid);
+        $empid=$requisitionheader->employeeid;
+        $user=User::find($empid);
 
+        $message="Hi ".$user->name." , Amount Rs- ".$requisitionpayment->amount." have been credited on your  A/c  against your requisition id no- #".$rid." on Date- ".$requisitionpayment->dateofpayment." through ".$requisitionpayment->paymenttype." paid". $request->root();
+
+        return $message;
+         app('App\Http\Controllers\SendSmsController')->sendSms($message,$user->mobile);
        return back();
        }
       public function requisitioncashrequest(Request $request)
@@ -4427,16 +4441,27 @@ public function approvedebitvoucheradmin(Request $request,$id)
         $requisitionpayment->dateofpayment=$request->dateofpayment;
         $requisitionpayment->save();
 
+        $rid=$requisitionpayment->rid;
+        $requisitionheader=requisitionheader::find($rid);
+        $empid=$requisitionheader->employeeid;
+        $user=User::find($empid);
+
+        $message="Hi ".$user->name." , Amount Rs- ".$requisitionpayment->amount." have been credited on your  A/c  against your requisition id no- #".$rid." on Date- ".$requisitionpayment->dateofpayment." through ".$requisitionpayment->paymenttype." paid". $request->root();
 
 
-       $payment=new payment();
+         app('App\Http\Controllers\SendSmsController')->sendSms($message,$user->mobile);
+
+
+
+
+     /*  $payment=new payment();
        $payment->amount=$requisitionpayment->amount;
        $payment->type='DR';
        $payment->userid=Auth::id();
        $payment->purpose='REQUISITION PAYMENTS';
        $payment->bank=$requisitionpayment->bankid;
        $payment->paythrough='ONLINE';
-       $payment->save();
+       $payment->save();*/
 
 
 

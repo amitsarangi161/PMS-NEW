@@ -9,6 +9,7 @@ class SendSmsController extends Controller
 {
     public function sendSms($message,$mobile){
     $smssetting=Smssetting::first();
+    if($smssetting->status==1){
     $url = "https://message.datagramindia.com/api/api_http.php";
     $recipients = array($smssetting->mobile,$mobile);
     $param = array('username' => $smssetting->username,
@@ -20,7 +21,7 @@ class SendSmsController extends Controller
                    'datetime' => date("Y-m-d h:i:s"),
                    'to' => implode(';', $recipients),
                     );
-    //return $param;
+    try{
     $post = http_build_query($param, '', '&');
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -29,9 +30,19 @@ class SendSmsController extends Controller
     if(curl_errno($ch)) {         $result = "cURL ERROR: " . curl_errno($ch) . " " . curl_error($ch);     } else {         $returnCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);         switch($returnCode) {             case 200 :                 break;             default :                 $result = "HTTP ERROR: " . $returnCode;         }     }
     curl_close($ch);
     return $result;
-
+    }
+   catch (\Exception $ex) {
+      return 1;
+    } 
 
     }
+     else{
+    return 1;
+  }
+  }
+
+
+ 
 
 
 }
