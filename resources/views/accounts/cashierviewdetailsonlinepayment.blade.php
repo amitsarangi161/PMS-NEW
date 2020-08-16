@@ -191,6 +191,9 @@
       		<tr>
       			<td colspan="2" style="text-align: right;"><button type="submit" class="btn btn-success" onclick="return confirm('Are You confirm to proceed?')">PAID</button></td>
       		</tr>
+          <tr>
+            <td><input type="checkbox" name="check" value="1" checked="">&nbsp;<span style="color: red;font-weight: bold;font-size:16px;">Do you Want to send Notification(SMS)</span></td>
+          </tr>
       	</table>
            </form>
       </div>

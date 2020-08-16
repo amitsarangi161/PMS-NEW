@@ -54,6 +54,7 @@ use App\Pmsdebitvoucher;
 use App\Pmsdebitvoucherpayment;
 use App\pmspayment;
 use App\vendortype;
+use App\Smssetting;
 
 
 
@@ -367,9 +368,11 @@ public function drcashierpayvoucher(Request $request,$id)
       $vendor=vendor::find($vid);
 
       $message="Dear ".$vendor->vendorname.",Amount RS-".$debitvoucherpayment->amount." have been credited on your  A/c  against ".$voucher->reftype." on Date ".$debitvoucherpayment->dateofpayment." through ".$debitvoucherpayment->paymenttype." from (PABITRA GROUPS).".$request->root();
-
+      if($debitvoucherpayment->check=='1'){
+        app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
+          }
       //return $message;
-     app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
+     //app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
 
       return redirect('/drpay/drpendingpayment');
 
@@ -4413,9 +4416,11 @@ public function approvedebitvoucheradmin(Request $request,$id)
         $user=User::find($empid);
 
         $message="Hi ".$user->name." , Amount Rs- ".$requisitionpayment->amount." have been credited on your  A/c  against your requisition id no- #".$rid." on Date- ".$requisitionpayment->dateofpayment." through ".$requisitionpayment->paymenttype." paid". $request->root();
-
-        return $message;
-         app('App\Http\Controllers\SendSmsController')->sendSms($message,$user->mobile);
+        if($debitvoucherpayment->check=='1'){
+        app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
+          }
+        //return $message;
+         //app('App\Http\Controllers\SendSmsController')->sendSms($message,$user->mobile);
        return back();
        }
       public function requisitioncashrequest(Request $request)
@@ -4447,9 +4452,12 @@ public function approvedebitvoucheradmin(Request $request,$id)
         $user=User::find($empid);
 
         $message="Hi ".$user->name." , Amount Rs- ".$requisitionpayment->amount." have been credited on your  A/c  against your requisition id no- #".$rid." on Date- ".$requisitionpayment->dateofpayment." through ".$requisitionpayment->paymenttype." paid". $request->root();
+         if($debitvoucherpayment->check=='1'){
+        app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
+          }
 
 
-         app('App\Http\Controllers\SendSmsController')->sendSms($message,$user->mobile);
+         //app('App\Http\Controllers\SendSmsController')->sendSms($message,$user->mobile);
 
 
 
