@@ -368,7 +368,7 @@ public function drcashierpayvoucher(Request $request,$id)
       $vendor=vendor::find($vid);
 
       $message="Dear ".$vendor->vendorname.",Amount RS-".$debitvoucherpayment->amount." have been credited on your  A/c  against ".$voucher->reftype." on Date ".$debitvoucherpayment->dateofpayment." through ".$debitvoucherpayment->paymenttype." from (PABITRA GROUPS).".$request->root();
-      if($debitvoucherpayment->check=='1'){
+      if($request->check=='1'){
         app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
           }
       //return $message;
@@ -4416,7 +4416,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
         $user=User::find($empid);
 
         $message="Hi ".$user->name." , Amount Rs- ".$requisitionpayment->amount." have been credited on your  A/c  against your requisition id no- #".$rid." on Date- ".$requisitionpayment->dateofpayment." through ".$requisitionpayment->paymenttype." paid". $request->root();
-        if($debitvoucherpayment->check=='1'){
+        if($request->check=='1'){
         app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
           }
         //return $message;
@@ -4452,7 +4452,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
         $user=User::find($empid);
 
         $message="Hi ".$user->name." , Amount Rs- ".$requisitionpayment->amount." have been credited on your  A/c  against your requisition id no- #".$rid." on Date- ".$requisitionpayment->dateofpayment." through ".$requisitionpayment->paymenttype." paid". $request->root();
-         if($debitvoucherpayment->check=='1'){
+         if($request->check=='1'){
         app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
           }
 
