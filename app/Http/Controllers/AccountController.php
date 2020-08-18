@@ -4417,7 +4417,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
         $message="Hi ".$user->name." , Amount Rs- ".$requisitionpayment->amount." have been credited on your  A/c  against your requisition id no- #".$rid." on Date- ".$requisitionpayment->dateofpayment." through ".$requisitionpayment->paymenttype." paid". $request->root();
         if($request->check=='1'){
-        app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
+        app('App\Http\Controllers\SendSmsController')->sendSms($message,$user->mobile);
           }
         //return $message;
          //app('App\Http\Controllers\SendSmsController')->sendSms($message,$user->mobile);
@@ -4453,7 +4453,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
         $message="Hi ".$user->name." , Amount Rs- ".$requisitionpayment->amount." have been credited on your  A/c  against your requisition id no- #".$rid." on Date- ".$requisitionpayment->dateofpayment." through ".$requisitionpayment->paymenttype." paid". $request->root();
          if($request->check=='1'){
-        app('App\Http\Controllers\SendSmsController')->sendSms($message,$vendor->mobile);
+        app('App\Http\Controllers\SendSmsController')->sendSms($message,$user->mobile);
           }
 
 
