@@ -1,6 +1,7 @@
 @extends('layouts.account')
 
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 @if(Session::has('msg'))
 <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
 @endif
@@ -28,7 +29,7 @@
 		</tr>
 		<tr>
 			<td width="20%"><strong>BILL DATE :</strong></td>
-			<td width="30%">{{$pmsdebitvoucher->billdate}}</td>
+			<td width="30%">{{$provider::changedateformat($pmsdebitvoucher->billdate)}}</td>
 			<td width="20%"><strong>BILL NO :</strong></td>
 			<td width="30%">{{$pmsdebitvoucher->billno}}</td>
 		</tr>

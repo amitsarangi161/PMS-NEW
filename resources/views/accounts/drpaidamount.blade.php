@@ -1,6 +1,7 @@
 @extends('layouts.account')
 
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 <style type="text/css">
     .b {
     white-space: nowrap; 
@@ -50,7 +51,7 @@
         <td>{{$debitvoucherpayment->checknumber}}</td>
      		<td>{{$debitvoucherpayment->bankname}}/{{$debitvoucherpayment->acno}}/{{$debitvoucherpayment->branchname}}</td>
      		<td>{{$debitvoucherpayment->paymentstatus}}</td>
-     		<td>{{$debitvoucherpayment->dateofpayment}}</td>
+     		<td>{{$provider::changedateformat($debitvoucherpayment->dateofpayment)}}</td>
                <td>{{$debitvoucherpayment->paidbyname}}</td>
      		<td><a href="/drpay/drpaidpayment/view/{{$debitvoucherpayment->id}}" class="btn btn-primary">VIEW</a></td>
             <!-- <td>

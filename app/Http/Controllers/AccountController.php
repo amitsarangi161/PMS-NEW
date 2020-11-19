@@ -55,11 +55,25 @@ use App\Pmsdebitvoucherpayment;
 use App\pmspayment;
 use App\vendortype;
 use App\Smssetting;
+use DateTime;
 
 
 
 class AccountController extends Controller
 {  
+
+ public static function changedateformat($date)
+   {
+    $originalDate = $date;
+    $newDate = date("d-m-Y", strtotime($originalDate));
+    return $newDate;
+   }
+  public static function changedatetimeformat($datetime)
+   {
+    $originalDate = $datetime;
+    $newDate = date("d-m-Y H:i:s", strtotime($originalDate));
+    return $newDate;
+   }
  
  public function updatevoucher(Request $request,$id){
   $voucher=voucher::find($id);
@@ -765,8 +779,8 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
           $voucher->status="APPROVED";
           $voucher->approvedby=Auth::id();
           $voucher->save();
-
-          return back();
+          Session::flash('msg','Approved Successfully');
+          return redirect('/acc-vouchers/pendingvouchers');
 
       }  
        public function approvevouchermgr(Request $request,$id)
@@ -5751,21 +5765,24 @@ public function changependingstatusmgr(Request $request,$id)
                        ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
                       ->groupBy('expenseentries.id');
 
-
-         $sumamt=$this->moneyFormatIndia($expenseentries->sum('amount'));
-              $sumapproveamt=$this->moneyFormatIndia($expenseentries->sum('approvalamount'));
-          return DataTables::of($expenseentries)
-               ->filter(function ($expenseentries) use ($request) {
                 if ($request->has('name') && $request->get('name')!='') 
                 {
-                    $expenseentries->where('employeeid', $request->get('name'));
+                    $expenseentries=$expenseentries->where('employeeid', $request->get('name'));
                 }
                 if ($request->has('expensehead') && $request->get('expensehead')!='') 
                 {
-                    $expenseentries->where('expenseentries.expenseheadid', $request->get('expensehead'));
+                    $expenseentries=$expenseentries->where('expenseentries.expenseheadid', $request->get('expensehead'));
                 }
 
-            })
+
+
+      $sumamt=$this->moneyFormatIndia($expenseentries->sum('amount'));
+      $sumapproveamt=$this->moneyFormatIndia($expenseentries->sum('approvalamount'));
+
+      
+
+          return DataTables::of($expenseentries)
+         
 
                 ->addColumn('idbtn', function($expenseentries){
                          return '<a href="/viewexpenseentrydetails/'.$expenseentries->id.'" class="btn btn-info">'.$expenseentries->id.'</a>';

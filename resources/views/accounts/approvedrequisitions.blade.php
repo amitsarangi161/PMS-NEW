@@ -73,9 +73,9 @@
 			  @else
                 <td><span class="label label-primary">{{$requisition->status}}</span></td>
 			  @endif
-			<td>{{$requisition->created_at}}</td>
+			<td>{{$provider::changedatetimeformat($requisition->created_at)}}</td>
 			     @if($requisition->datefrom!='')
-			  <td>({{$requisition->datefrom}})||({{$requisition->dateto}})</td>
+			  <td>({{$provider::changedateformat($requisition->datefrom)}})||({{$provider::changedateformat($requisition->dateto)}})</td>
 			  @else
 			    <td></td>
 			  @endif

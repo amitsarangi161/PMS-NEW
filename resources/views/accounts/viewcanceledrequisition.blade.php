@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 	 <tr class="bg-blue">
@@ -116,7 +117,7 @@ $balancep=$cost-$payment;
 		  <tr>
 			
 			<td><strong>CREATED_AT</strong></td>
-			<td>{{$requisitionheader->created_at}}</td>
+			<td>{{$provider::changedatetimeformat($requisitionheader->created_at)}}</td>
 			<td><strong>DESCRIPTION</strong></td>
 			<td>{{$requisitionheader->description}}</td>
 		  </tr>

@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 
 <style type="text/css">
     .b {
@@ -48,8 +49,8 @@
               <td>{{$requisitionpayment->transactionid}}</td>
            	  <td>{{$requisitionpayment->remarks}}</td>
               <td>{{$requisitionpayment->paymentstatus}}</td>
-           	  <td>{{$requisitionpayment->dateofpayment}}</td>
-           	  <td>{{$requisitionpayment->created_at}}</td>
+           	  <td>{{$provider::changedateformat($requisitionpayment->dateofpayment)}}</td>
+           	  <td>{{$provider::changedatetimeformat($requisitionpayment->created_at)}}</td>
            	  
            </tr>
 

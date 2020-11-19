@@ -1,6 +1,7 @@
 @extends('layouts.account')
 
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 <table class="table">
   <tr class="bg-blue">
     <td class="text-center">VIEW VOUCHER DETAILS</td>
@@ -82,7 +83,7 @@
   </tr>
   <tr>
     <td><strong>CREATED_AT</strong></td>
-    <td>{{$voucher->created_at}}</td>
+    <td>{{$provider::changedatetimeformat($voucher->created_at)}}</td>
     <td><strong>APPROVED BY</strong></td>
     <td>{{$voucher->approvedbyname}}</td>
   </tr>

@@ -13,6 +13,13 @@
 
 @endif
 
+<style type="text/css">
+  h1{font-size: 16px !important;}
+  .content{
+    padding:5px !important;
+  }
+</style>
+
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

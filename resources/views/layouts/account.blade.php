@@ -12,6 +12,14 @@
     location.replace('/400');
 </script>
 @endif
+<style type="text/css">
+  .text-center{
+    font-size: 16px !important;
+  }
+  .content{
+    padding:5px !important;
+  }
+</style>
 
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -1079,7 +1087,7 @@ if (event.persisted) {
         "scrollY": 500,
         "scrollX": true,
         "order": [[ 0, "desc" ]],
-        "iDisplayLength": 10,
+        "iDisplayLength": 5,
         buttons: [
             {
                 extend: 'pdfHtml5',

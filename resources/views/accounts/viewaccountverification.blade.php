@@ -1,6 +1,7 @@
 @extends('layouts.account')
 @section('content')
 @inject('provider', 'App\Http\Controllers\AccountController')
+@inject('tend', 'App\Http\Controllers\AccountController')
 
 <style type="text/css">
     .b {
@@ -80,7 +81,7 @@
           	</td>
             <td>{{$createdebitvoucher->expenseheadname}}</td>
             <td>{{$createdebitvoucher->voucher_type}}</td>
-            <td>{{$createdebitvoucher->billdate}}</td>
+            <td>{{$provider::changedateformat($createdebitvoucher->billdate)}}</td>
           	<td>{{$createdebitvoucher->billno}}</td>
           	<td>{{$provider::moneyFormatIndia($createdebitvoucher->tprice)}}</td>
           	<td>{{$provider::moneyFormatIndia($createdebitvoucher->discount)}}</td>

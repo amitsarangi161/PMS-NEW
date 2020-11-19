@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 @php
 $paid=$paidamounts->sum('amount');
 
@@ -118,15 +119,15 @@ $balancep=$cost-$payment;
 		  </tr>
 		<tr>
 	        <td><strong>DATE FROM</strong></td>
-	        <td><strong class="bg-navy">{{$requisitionheader->datefrom}}</strong></td>
+	        <td><strong class="bg-navy">{{$provider::changedateformat($requisitionheader->datefrom)}}</strong></td>
 	        <td><strong>DATE TO</strong></td>
-	        <td><strong class="bg-navy">{{$requisitionheader->dateto}}</strong></td>
+	        <td><strong class="bg-navy">{{$provider::changedateformat($requisitionheader->dateto)}}</strong></td>
 	    </tr>
 
 		<tr>
 			
 			<td><strong>CREATED_AT</strong></td>
-			<td>{{$requisitionheader->created_at}}</td>
+			<td>{{$provider::changedatetimeformat($requisitionheader->created_at)}}</td>
 			<td><strong>DESCRIPTION</strong></td>
 			<td>{{$requisitionheader->description}}</td>
 		</tr>

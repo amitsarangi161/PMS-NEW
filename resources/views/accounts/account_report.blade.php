@@ -1,6 +1,7 @@
 @extends('layouts.account')
 
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 @if ($errors->any())
      @foreach ($errors->all() as $error)
          <p class="alert alert-danger text-center">{{ $error }}</p>
@@ -70,7 +71,7 @@
         @foreach($trns as $key=>$trn)
 		<tr>
             <td width="20%"><a href="/viewdrvoucher/{{$trn->id}}" target="_blank" class="btn btn-info">{{$trn->id}}</a></td>
-			<td width="20%">{{$trn->created_at}}</td>
+			<td width="20%">{{$provider::changedatetimeformat($trn->created_at)}}</td>
             <td style="text-align: right" width="30%">{{$trn->credit}}</td>
             <td style="text-align: right" width="30%">{{$trn->debit}}</td>
         </tr>

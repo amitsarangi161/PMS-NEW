@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 
 <style type="text/css">
     .b {
@@ -68,7 +69,7 @@
            	  <td>{{$requisitionpayment->paymenttype}}</td>
            	  <td>{{$requisitionpayment->remarks}}</td>
            	  <td>{{$requisitionpayment->paymentstatus}}</td>
-           	  <td>{{$requisitionpayment->created_at}}</td>
+           	  <td>{{$provider::changedatetimeformat($requisitionpayment->created_at)}}</td>
                @if($requisitionpayment->scheduledate!='')
               <td>{{$requisitionpayment->scheduledate}}</td>
               @else

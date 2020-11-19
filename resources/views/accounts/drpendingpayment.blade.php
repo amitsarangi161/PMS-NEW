@@ -1,6 +1,7 @@
 @extends('layouts.account')
 
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 
 <table class="table">
 	<tr class="bg-blue">
@@ -60,7 +61,7 @@
      		<td>{{$debitvoucherpayment->remarks}}</td>
      		<td>{{$debitvoucherpayment->bankname}}/{{$debitvoucherpayment->acno}}/{{$debitvoucherpayment->branchname}}</td>
      		<td>{{$debitvoucherpayment->paymentstatus}}</td>
-     		<td>{{$debitvoucherpayment->created_at}}</td>
+     		<td>{{$provider::changedatetimeformat($debitvoucherpayment->created_at)}}</td>
                 @if($debitvoucherpayment->scheduledate!='')
               <td>{{$debitvoucherpayment->scheduledate}}</td>
               @else

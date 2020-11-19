@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 
 @if(Session::has('msg'))
    <p class="alert alert-warning text-center">{{ Session::get('msg') }}</p>
@@ -50,7 +51,7 @@
 			<tr>
 			  <td>{{$expensehead->id}}</td> 
 			  <td>{{$expensehead->expenseheadname}}</td> 
-			  <td>{{$expensehead->created_at}}</td>
+			  <td>{{$provider::changedatetimeformat($expensehead->created_at)}}</td>
 			  <td><button type="button" class="btn btn-primary" onclick="openexpensehead('{{$expensehead->id}}','{{$expensehead->expenseheadname}}');">EDIT</button></td>
 			 <!--  <td>
 			  	<form action="/deleteexpensehead/{{$expensehead->id}}" method="post">

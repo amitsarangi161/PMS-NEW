@@ -1,6 +1,10 @@
 @extends('layouts.account')
 
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
+@if(Session::has('msg'))
+   <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
+ @endif
 <table class="table">
   <tr class="bg-blue">
     <td class="text-center">VIEW VOUCHER DETAILS</td>
@@ -78,7 +82,7 @@
   </tr>
   <tr>
     <td><strong>CREATED_AT</strong></td>
-    <td>{{$voucher->created_at}}</td>
+    <td>{{$provider::changedatetimeformat($voucher->created_at)}}</td>
     <td><strong>APPROVED BY</strong></td>
     <td>{{$voucher->approvedbyname}}</td>
   </tr>
@@ -92,6 +96,12 @@
      </td>
      <td><strong>CHEQUE DETAILS<strong></td>
      <td><strong>{{$voucher->chequedetails}}</strong></td>
+  </tr>
+    <tr>
+    <td></td>
+     <td></td>
+     <td><a href="/approvevoucher/{{$voucher->id}}" onclick="return confirm('Do You want to Approve this Voucher?')" class="btn btn-success">APPROVE</a></td>
+     <td></td>
   </tr>
 </table>
 

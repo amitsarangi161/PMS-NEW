@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 
 <style type="text/css">
 
@@ -82,7 +83,7 @@
       <td>N/A</td>
         @endif
         <td>{{$voucher->author}}</td>
-        <td>{{$voucher->created_at}}</td>
+        <td>{{$provider::changedatetimeformat($voucher->created_at)}}</td>
         <td><a href="/viewvoucher/{{$voucher->id}}" class="btn btn-primary">VIEW</a></td>
         <td><a href="/editvoucher/{{$voucher->id}}" class="btn btn-primary">EDIT</a></td>
         <td>

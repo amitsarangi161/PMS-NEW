@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr class="bg-blue">
 		<td class="text-center">ADD LEDGER</td>
@@ -94,7 +95,7 @@
 			<td>{{$ledger->acno}}</td>
 			<td>{{$ledger->cr}}</td>
 			<td>{{$ledger->dr}}</td>
-			<td>{{$ledger->date}}</td>
+			<td>{{$provider::changedateformat($ledger->date)}}</td>
 			@if($ledger->image != "")
 			<td>
 				<a href="{{asset('img/ledger/'.$ledger->image)}}" target="_blank">

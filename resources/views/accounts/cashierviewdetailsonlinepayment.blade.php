@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 <style type="text/css">
 	.modal {
   text-align: center;
@@ -76,7 +77,7 @@
 		<td><strong>TRANSACTION ID</strong></td>
 		<td>{{$requisitionpayments->transactionid}}</td>
     <td><strong>DATE OF PAYMENT</strong></td>
-    <td><strong>{{$requisitionpayments->dateofpayment}}</strong></td>
+    <td><strong>{{$provider::changedateformat($requisitionpayments->dateofpayment)}}</strong></td>
 	</tr>
   <tr>
     <td><strong>BANK NAME</strong></td>

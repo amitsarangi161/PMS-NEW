@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 @if(Session::has('msg'))
    <p class="alert alert-warning text-center">{{ Session::get('msg') }}</p>
 @endif
@@ -36,7 +37,7 @@
           <tr>
           	<td>{{$unit->id}}</td>
           	<td>{{$unit->unitname}}</td>
-          	<td>{{$unit->created_at}}</td>
+          	<td>{{$provider::changedatetimeformat($unit->created_at)}}</td>
           	<td><button type="button" class="btn btn-primary" onclick="openeditmodal('{{$unit->id}}','{{$unit->unitname}}')">EDIT</button></td>
           	<!-- <td>
           		<form action="/deleteunit/{{$unit->id}}" method="post">

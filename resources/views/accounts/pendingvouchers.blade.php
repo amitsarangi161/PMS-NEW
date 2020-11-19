@@ -1,6 +1,8 @@
 @extends('layouts.account')
 @section('content')
-
+@if(Session::has('msg'))
+   <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
+ @endif
 <style type="text/css">
 
 

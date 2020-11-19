@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr class="bg-blue">
 		<td class="text-center">OPENING BALANCE</td>
@@ -68,7 +69,7 @@
 			<tr>
 			<td>{{$key+1}}</td>
 			<td>{{$openingbalance->bankname}}/{{$openingbalance->acno}}/{{$openingbalance->accountholdername}}/{{$openingbalance->ifsccode}}</td>
-			<td>{{$openingbalance->date}}</td>
+			<td>{{$provider::changedateformat($openingbalance->date)}}</td>
 			<td>{{$openingbalance->amount}}</td>
 			</tr>
 			@endforeach	

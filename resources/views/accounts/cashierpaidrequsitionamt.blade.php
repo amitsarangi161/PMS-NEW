@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 
 <style type="text/css">
     .b {
@@ -89,7 +90,7 @@
               <td>{{$requisitionpayment->chequeno}}</td>
            	  <td>{{$requisitionpayment->remarks}}</td>
            	  <td>{{$requisitionpayment->paymentstatus}}</td>
-           	  <td>{{$requisitionpayment->dateofpayment}}</td>
+           	  <td>{{$provider::changedateformat($requisitionpayment->dateofpayment)}}</td>
            	  <!-- <td><button type="button" class="btn btn-primary" onclick="payonline('{{$requisitionpayment->id}}');">PAID</button></td> -->
               <td><a href="/cashierviewdetailsonlinepayment/{{$requisitionpayment->id}}" class="btn btn-primary">VIEW</a></td>
            </tr>

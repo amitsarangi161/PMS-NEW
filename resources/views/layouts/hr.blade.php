@@ -12,6 +12,12 @@
 
 
 @endif
+<style type="text/css">
+  h1{font-size: 16px !important;}
+  .content{
+    padding:5px !important;
+  }
+</style>
 
 
     <meta charset="utf-8">
@@ -493,7 +499,7 @@ $(".datepicker").datepicker({
 $('.datatablescrollexport').DataTable({
         dom: 'Bfrtip',
         //"order": [[ 0, "desc" ]],
-        "iDisplayLength": 25,
+        "iDisplayLength": 5,
         "scrollY": 450,
         "scrollX": true,
         buttons: [

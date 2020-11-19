@@ -1,5 +1,6 @@
 @extends('layouts.account')
 @section('content')
+@inject('provider', 'App\Http\Controllers\AccountController')
 
   	@php
             $expenseentriespaginations=\App\expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname')
@@ -194,7 +195,7 @@
 	   	<td><strong>HOD REMARKS:-</strong></td>
 	   	<td><strong>{{$expenseentry->hodremarks}}</strong></td>
 	   	<td><strong>created_at</strong></td>
-	   	<td><strong>{{$expenseentry->created_at}}</strong></td>
+	   	<td><strong>{{$provider::changedatetimeformat($expenseentry->created_at)}}</strong></td>
 	   </tr>
 	 
 	   	<td colspan="4" style="text-align: center;">
