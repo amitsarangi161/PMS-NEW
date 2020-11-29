@@ -45,6 +45,17 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Employee Type</label>
+
+                  <div class="col-sm-9">
+                    <select class="form-control" name="emptype" required="" onchange="slecttype(this.value);">
+                        <option value=''>--Select a type--</option>
+                        <option value='Employee'>Employee</option>
+                        <option value='Labour'>Labour</option>
+                      </select>
+                  </div>
+               </div>
+                <div class="form-group">
                   <label for="inputEmail3" class=" col-sm-3">Employee Code</label>
 
                   <div class="col-sm-9">
@@ -322,6 +333,61 @@
             </div>
           </div>
       </div>
+            <div class="col-md-6" id="labourdiv" style="display: none">
+          <!-- Horizontal Form -->
+          <div class="box box-info  box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Labour WAGES</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <div class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Wages Code*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="wagescode"class="form-control" placeholder="Enter Employee wages" required="" id="wagescode">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Wages per Hour*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="wagesperhour"class="form-control" placeholder="Enter  wages per Hour" required="" id="wagesperhour">
+                  </div>
+               </div> 
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Employee Group*</label>
+
+                  <div class="col-sm-9">
+                      <select class="form-control select2" id="groupid"  name="groupid" required="" style="width: 100%;">
+                        <option value="">SELECT A GROUP</option>
+                           @foreach($groups as $key => $group)
+                           <option value="{{$group->id}}">{{$group->groupname}}</option>
+                           @endforeach
+                      </select>
+                  </div>
+               </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">No. of Hours/day*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="noofhour"class="form-control" placeholder="Number of hours per day" required="" value="8" id="noofhour">
+                  </div>
+               </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Wages*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="wages"class="form-control" placeholder="Enter Employee wages" required="" id="wages">
+                  </div>
+               </div>           
+             
+              </div>
+            </div>
+          </div>
+      </div>
       <div class="col-md-12">
           <!-- Horizontal Form -->
           <div class="box box-info  box-solid">
@@ -526,6 +592,19 @@
         reader.readAsDataURL(input.files[0]);
     }
   }
+  function slecttype(selected){
+    if(selected == 'Labour'){
+      $("#labourdiv").show();
+      $("#noofhour").prop('required',true);
+      $("#wages").prop('required',true);
+      $("#groupid").prop('required',true);
+    }else{
+      $("#labourdiv").hide();
+      $("#noofhour").prop('required',false);
+      $("#wages").prop('required',false);
+      $("#groupid").prop('required',false);
+  }
+    }
 </script>
 
 @endsection

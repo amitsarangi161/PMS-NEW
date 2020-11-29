@@ -433,6 +433,7 @@ public function ajaxgetdept(Request $request){
  return response()->json(compact('departments','designations'));
 }
 public function saveemployeedetails(Request $request){
+  //return $request->all();
 $request->validate([
 
     'empcodeno' => 'required|unique:employeedetails|max:20',
@@ -459,6 +460,12 @@ $request->validate([
         $employee->permanentaddress=$request->permanentaddress;
         $employee->fathername=$request->fathername;
         $employee->maritalstatus=$request->maritalstatus;
+        $employee->emptype=$request->emptype;
+        $employee->wagescode=$request->wagescode;
+        $employee->wagesperhour=$request->wagesperhour;
+        $employee->groupid=$request->groupid;
+        $employee->noofhour=$request->noofhour;
+        $employee->wages=$request->wages;
         //return $employee;
         $employee->save();
 
@@ -769,7 +776,8 @@ public function employeestatus(Request $request){
 public function registeremployee(){
   $departments=department::all();
   $designations=designation::all();
-  return view('hr.registeremployee',compact('departments','designations'));
+  $groups=Addgroup::all();
+  return view('hr.registeremployee',compact('departments','designations','groups'));
 }
 public function importemployee(Request $request)
 {
