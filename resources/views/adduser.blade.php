@@ -59,6 +59,8 @@
                   <option value="CASHIER">CASHIER</option>
                   <option value="INVENTORY">INVENTORY</option>
                   <option value="MANAGER">MANAGER</option>
+                  <option value="TENDER">TENDER</option>
+                  <option value="LABOUR">LABOUR</option>
               </select>
             </td>
           </tr>        

@@ -9,8 +9,8 @@
 
 
 
-<form action="/fillformtendercommitee/{{$tender->id}}" method="post">
-	{{csrf_field()}}
+<!-- <form action="/fillformtendercommitee/{{$tender->id}}" method="post">
+	{{csrf_field()}} -->
 <table class="table table-responsive table-hover table-bordered table-striped">
 <tr>
 	<td><strong>Name Of the Work *</strong></td>
@@ -21,6 +21,22 @@
 	</td>
 </tr>
 <tr>
+<tr>
+	<td><strong>Location</strong></td>
+	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location" value="{{$tender->location}}"></td>
+	<td><strong>Evaluation Process</strong></td>
+	<td>
+		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>
+		<input type="radio" value="QCBS" name="evaluationprocess" {{($tender->evaluationprocess=='QCBS')? 'checked':''}}><strong>QCBS</strong>
+	
+	@if($tender->evaluationprocess=='QCBS')	
+	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="{{$tender->evaluationtechnical}}" style="width:15%">
+	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="{{$tender->evaluationfinancial}}" style="width:15%">
+    @endif
+	
+	</td>
+	
+</tr>
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
 	<td><textarea name="tenderrefno" class="form-control" placeholder="Enter Tender Reference No" disabled="">{{$tender->tenderrefno}}</textarea></td>
 	<td><strong>NO OF COVERS *</strong></td>
@@ -193,6 +209,12 @@
 		<textarea name="registrationamountpayableto" disabled="" class="form-control">{{$tender->registrationamountpayableto}}</textarea>
 	</td>
 	</tr>
+	<tr>
+		<td>TENDER WEBSITE LINK</td>
+		<td><a href="{{$tender->tender_website}}" target="_blank">{{$tender->tender_website}}</a></td>
+		<td>TENDER SITE LINK</td>
+		<td><a href="{{$tender->tender_site_ref}}" target="_blank">{{$tender->tender_site_ref}}</a></td>
+	</tr>
 	
 </table>
 <h1 style="text-align: center;font-weight: bold;">TENDER FILES</h1>
@@ -252,7 +274,7 @@
 	</tbody>
 </table>
 
-<table class="table">
+<!-- <table class="table">
 	<tr class="bg-blue">
 		<td class="text-center">SITE APPRECIATION</td>
 		
@@ -480,7 +502,7 @@
 
 
 </table>
-</form>
+</form> -->
 <table class="table">
 	<tr class="bg-navy">
 		<td class="text-center"><strong>ASSIGN TO USER FOR VERIFY</strong></td>

@@ -24,10 +24,145 @@ use App\employeebankaccountsdetail;
 use App\employeedocument;
 use App\employeeotherdocument;
 use App\attendance;
+use App\Addgroup;
+use App\Dailyattendancegroup;
+use App\Dailyattendanceimage;
 use Excel;
 class HrController extends Controller
 {
   //-------------PMS HR ------------//
+  public function viewattendancegroup(Request $request,$id){
+      $editdailyattendancegroup=Dailyattendancegroup::find($id);
+     $dailyattendanceimages=Dailyattendanceimage::where('attendance_id',$id)->get();
+     //return $dailyattendanceimages;
+    $groups=Addgroup::all();
+    return view('hr.viewattendancegroup',compact('groups','editdailyattendancegroup','dailyattendanceimages'));
+  }
+  public function updateattendancephoto(Request $request)
+       {
+        $attendancegroup=Dailyattendanceimage::find($request->uid);
+        $rarefile = $request->file('photo');    
+        if($rarefile!=''){
+        $raupload = public_path() .'/image/dailyattendancegroup/';
+        $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$rarefilename);
+        $attendancegroup->photo = $rarefilename;
+        }
+        $attendancegroup->save();
+        Session::flash('msg','Photo Updated Successfully');
+        return back();
+       }
+  public function updateattendancereportgrp(Request $request,$id){
+    $attendancegroup=Dailyattendancegroup::find($id);
+    $attendancegroup->groupid=$request->groupid;
+    $attendancegroup->entrytime=$request->entrytime;
+    $attendancegroup->workassignment=$request->workassignment;
+    $attendancegroup->departuretime=$request->departuretime;
+    $attendancegroup->noofworkerspresent=$request->noofworkerspresent;
+    $attendancegroup->wages=$request->wages;
+    $attendancegroup->ot=$request->ot;
+    $attendancegroup->remarks=$request->remarks;
+    $attendancegroup->itemdescription=$request->itemdescription;
+    $attendancegroup->unit=$request->unit;
+    $attendancegroup->quantity=$request->quantity;
+    $attendancegroup->amount=$request->amount;
+    $attendancegroup->save();
+    Session::flash('msg','Document Update Successfully');
+    return back();
+
+  }
+  public function editdailyattendancegroup($id){
+     $editdailyattendancegroup=Dailyattendancegroup::find($id);
+     $dailyattendanceimages=Dailyattendanceimage::where('attendance_id',$id)->get();
+     //return $dailyattendanceimages;
+    $groups=Addgroup::all();
+    //return $groups;
+    return view('hr.editdailyattendancegroup',compact('groups','editdailyattendancegroup','dailyattendanceimages'));
+  }
+  public function viewallattendance(Request $request){
+
+    $allattendancegroups=Dailyattendancegroup::select('dailyattendancegroups.*','addgroups.groupname')
+    ->leftjoin('addgroups','dailyattendancegroups.groupid','=','addgroups.id');
+      if($request->has('group')){
+         $allattendancegroups=$allattendancegroups->where('groupid',$request->group);
+      }
+    $allattendancegroups=$allattendancegroups->get();
+    //return $allattendancegroups;
+    $addgroups=Addgroup::all();
+    //return $addgroups;
+    //return $addgroups;
+    return view('hr.viewallattendancegroup',compact('allattendancegroups','addgroups'));
+  }
+ public function saveattendancereportgrp(Request $request){
+ //return $request->all();
+$attendancegroup=new Dailyattendancegroup();
+$attendancegroup->groupid=$request->groupid;
+$attendancegroup->entrytime=$request->entrytime;
+$attendancegroup->workassignment=$request->workassignment;
+$attendancegroup->departuretime=$request->departuretime;
+$attendancegroup->noofworkerspresent=$request->noofworkerspresent;
+$attendancegroup->wages=$request->wages;
+$attendancegroup->ot=$request->ot;
+$attendancegroup->remarks=$request->remarks;
+$attendancegroup->itemdescription=$request->itemdescription;
+$attendancegroup->unit=$request->unit;
+$attendancegroup->quantity=$request->quantity;
+$attendancegroup->amount=$request->amount;
+// $rarefile = $request->file('photo');
+//         if($rarefile!='')
+//         {
+//         $u=time().uniqid(rand());
+//         $raupload ="image/dailyattendancegroup";
+//         $uplogoimg=$u.$rarefile->getClientOriginalName();
+//         $success=$rarefile->move($raupload,$uplogoimg);
+//         $attendancegroup->photo = $uplogoimg;
+//         }
+$attendancegroup->save();
+Session::flash('message','Document Uploaded Successfully');
+$attendanceid=$attendancegroup->id;
+
+    $galleryimage=$request['photo'];
+    if($galleryimage)
+    {
+        foreach($galleryimage as $gi){
+        $attendanceimage = new Dailyattendanceimage();
+        if($gi!=''){
+          $raupload1 ="image/dailyattendancegroup";
+        $rarefilename1=time().'.'.$gi->getClientOriginalName();
+        $success1=$gi->move($raupload1,$rarefilename1);
+        $attendanceimage->photo  = $rarefilename1;
+        } 
+    $attendanceimage->attendance_id  =$attendanceid;
+    $attendanceimage->save();
+    Session::flash('msg','Save successfully');
+       
+    }
+    }
+return redirect('/attendance/viewallattendance');
+}
+  public function adddailyattendance(){
+    $groups=Addgroup::all();
+    return view('hr.dailyattendance',compact('groups'));
+  }
+  public function updategroup(Request $request)
+   {
+       $updategroup=Addgroup::find($request->did);
+       $updategroup->groupname=$request->groupname;
+       $updategroup->save();
+       Session::flash('msg','Group Updated Successfully');
+       return back();
+   }
+  public function saveaddgroup(Request $request){
+      $addgroup=new Addgroup();
+       $addgroup->groupname=$request->groupname;
+       $addgroup->save();
+       Session::flash('msg','Group Saved Successfully');
+       return back();
+  }
+public function addgroup(){
+  $addgroups=Addgroup::all();
+  return view('hr.addgroup',compact('addgroups'));
+}
 public function deleteempotherdoc(Request $request,$id){
  employeeotherdocument::find($id)->delete();
 

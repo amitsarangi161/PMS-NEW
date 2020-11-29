@@ -27,41 +27,80 @@
 <tr>
 
 	<td><strong>Name Of the Work *</strong></td>
-	<td><textarea name="nameofthework" class="form-control" placeholder="Enter Name of The Work" required="">{{$tender->nameofthework}}</textarea></td>
+	<td><textarea name="nameofthework" class="form-control" required="" placeholder="Enter Name of The Work" >{{$tender->nameofthework}}</textarea></td>
 	<td><strong>Client Name *</strong></td>
 	<td>
-		<input type="text" name="clientname" value="{{$tender->clientname}}" class="form-control" placeholder="Enter Name of the Work" required="">
+		<input type="text" name="clientname" value="{{$tender->clientname}}" class="form-control" placeholder="Enter Name of the Work" >
 	</td>
 </tr>
 <tr>
+	<td><strong>Location</strong></td>
+	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location" value="{{$tender->location}}"></td>
+	<td><strong>Evaluation Process</strong></td>
+	<td>
+		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>
+		<input type="radio" value="QCBS" name="evaluationprocess" {{($tender->evaluationprocess=='QCBS')? 'checked':''}}><strong>QCBS</strong>
+
+	@php
+	if($tender->evaluationprocess =='LCS')
+	   $val='none';
+	   else
+	   $val='block';
+	@endphp
+	<div id="evaluationscore" style="display: {{$val}}">
+	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="{{$tender->evaluationtechnical}}" style="width:15%">
+	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="{{$tender->evaluationfinancial}}" style="width:15%">
+	</div>
+	
+	
+	</td>
+	
+</tr>
+<!-- <tr id="evaluationscore" style="display: none;background-color: gray;">
+	<td><strong>TECHNICAL</strong></td>
+	<td><input type="number" name="evaluationtechnical" id="evaluationtechnical" class="form-control"></td>
+	<td><strong>FINANCIAL</strong></td>
+	<td><input type="number" name="evaluationfinancial" id="evaluationfinancial" class="form-control"></td>
+	
+</tr> -->
+<tr>
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
 	<td>
-           <input type="text" name="tenderrefno" id="tenderrefno" class="form-control" value="{{$tender->tenderrefno}}" placeholder="Enter Tender Reference No" required="" onkeyup="searchtenderno(this.value)">
+           <input type="text" name="tenderrefno" id="tenderrefno" class="form-control" value="{{$tender->tenderrefno}}" placeholder="Enter Tender Reference No"  onkeyup="searchtenderno(this.value)">
         <div id="searchlist" style="background-color: #d9d9d9">
         	
         </div>
 	</td>
 	<td><strong>NO OF COVERS *</strong></td>
 	<td>
-		<input type="number" name="noofcovers" value="{{$tender->noofcovers}}" class="form-control" placeholder="Enter No of Covers" required="">
+		<input type="number" name="noofcovers" value="{{$tender->noofcovers}}" class="form-control" placeholder="Enter No of Covers" >
 	</td>
 </tr>
 <tr>
 	<td><strong>Work Value *</strong></td>
-	<td><input type="text" name="workvalue" value="{{$tender->workvalue}}" class="form-control" placeholder="Enter Work Value" required="" autocomplete="off"></td>
+	<td><input type="text" name="workvalue" id="workvalue" value="{{$tender->workvalue}}" class="form-control convert3" placeholder="Enter Work Value"  autocomplete="off"></td>
+    <td><strong>Work Value in Word</strong></td>
+	<td>
+       <textarea class="form-control" readonly="" name="workvalueinword" id="workvalueinword">{{$tender->workvalueinword}}</textarea>
+	</td>
+	
+</tr>
+<tr>
 
 
 	<td><strong>NIT PUBLICATION DATE *</strong></td>
-	<td><input type="text" name="nitpublicationdate" value="{{$tender->nitpublicationdate}}" class="form-control datepicker readonly" required="" autocomplete="off"></td>
+	<td><input type="text" name="nitpublicationdate" value="{{$tender->nitpublicationdate}}" class="form-control datepicker readonly"  autocomplete="off"></td>
+	<td></td>
+	<td></td>
 	
 </tr>
 <tr>
 	<td><strong>SOURCE *</strong></td>
-	<td><input type="text" name="source" value="{{$tender->source}}" class="form-control" placeholder="Enter Source Name" required=""></td>
+	<td><input type="text" name="source" value="{{$tender->source}}" class="form-control" placeholder="Enter Source Name" ></td>
 
 	<td><strong>TENDER PRIORITY *</strong></td>
 	<td>
-		<select class="form-control select2" name="tenderpriority" required="">
+		<select class="form-control select2" name="tenderpriority" >
 			<option value="HIGH" {{ ( $tender->tenderpriority == 'HIGH') ? 'selected' : '' }}>HIGH</option>
 			<option value="MEDIUM" {{ ( $tender->tenderpriority == 'MEDIUM') ? 'selected' : '' }}>MEDIUM</option>
 			<option value="LOW" {{ ( $tender->tenderpriority == 'LOW') ? 'selected' : '' }}>LOW</option>
@@ -73,7 +112,7 @@
 <tr>
 	<td><strong>Type Of Work *</strong></td>
 	<td>
-		<select class="form-control select2" name="typeofwork" required="">
+		<select class="form-control select2" name="typeofwork" >
 			<option value="">--Select a Work Type--</option>
 			<option value="DPR" {{ ( $tender->typeofwork == 'DPR') ? 'selected' : '' }}>DPR</option>
 			<option value="SURVEY" {{ ( $tender->typeofwork == 'SURVEY') ? 'selected' : '' }}>SURVEY</option>
@@ -88,7 +127,7 @@
 		</select>
 	</td>
 	<td><strong>LAST DATE OF SUBMISSION *</strong></td>
-	<td><input type="text" class="form-control datepicker readonly" name="lastdateofsubmisssion" id="lastdateofsubmisssion" value="{{$tender->lastdateofsubmisssion}}" required="" autocomplete="off"></td>
+	<td><input type="text" class="form-control datepicker readonly" name="lastdateofsubmisssion" id="lastdateofsubmisssion" value="{{$tender->lastdateofsubmisssion}}"  autocomplete="off"></td>
 	
 </tr>
 <tr>
@@ -100,7 +139,7 @@
 </tr>
 <tr>
 	<td><strong>RFP AVAILABLE DATE *</strong></td>
-	<td><input type="text" class="form-control datepicker readonly" name="rfpavailabledate" value="{{$tender->rfpavailabledate}}" required="" autocomplete="off"></td>
+	<td><input type="text" class="form-control datepicker readonly" name="rfpavailabledate" value="{{$tender->rfpavailabledate}}"  autocomplete="off"></td>
 	<td><strong>RFP DOCUMENT *</strong></td>
 
 	<td>
@@ -114,7 +153,7 @@
 	<td><strong>REF PAGE NO OF RFP DOCUMENT *</strong></td>
 	<td>
 	
-		<textarea name="refpageofrfp" class="form-control" placeholder="Enter Reference Page No of RFP Document" required="">{{$tender->refpageofrfp}}</textarea>
+		<textarea name="refpageofrfp" class="form-control" placeholder="Enter Reference Page No of RFP Document" >{{$tender->refpageofrfp}}</textarea>
         
 	</td>
 	<td><strong>CORRIGENDUM FILE *</strong></td>
@@ -163,7 +202,7 @@
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr>
 		<td><strong>EMD AMOUNT</strong></td> 
-		<td><input type="text" name="emdamount" id="emdamount" class="form-control convert" placeholder="Enter Emd Amount" autocomplete="off" value="{{$tender->emdamount}}" required=""></td>
+		<td><input type="text" name="emdamount" id="emdamount" class="form-control convert" placeholder="Enter Emd Amount" autocomplete="off" value="{{$tender->emdamount}}" ></td>
 		<td><strong>Amount in Word</strong></td>
 		<td>
 			<textarea class="form-control" id="amountinword" name="amountinword" readonly="">{{$tender->amountinword}}</textarea>
@@ -172,7 +211,7 @@
 	<tr>
 		<td><strong>EMD in the form of *</strong></td>
 		<td>
-			<select class="form-control select2" name="emdinformof" required="">
+			<select class="form-control select2" name="emdinformof" >
 				<option value="">--Choose a Type--</option>
 				<option value="DD" {{ ( $tender->emdinformof == 'DD') ? 'selected' : '' }}>DD</option>
 				<option value="BG" {{ ( $tender->emdinformof == 'BG') ? 'selected' : '' }}>BG</option>
@@ -204,7 +243,7 @@
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr>
 		<td><strong>TENDER AMOUNT</strong></td> 
-		<td><input type="text" name="tenderamount" value="{{$tender->tenderamount}}" id="tenderamount" autocomplete="off" class="form-control convert1" placeholder="Enter Tender Amount"  required=""></td>
+		<td><input type="text" name="tenderamount" value="{{$tender->tenderamount}}" id="tenderamount" autocomplete="off" class="form-control convert1" placeholder="Enter Tender Amount"  ></td>
 		<td><strong>Amount in Word</strong></td>
 		<td>
 			<textarea class="form-control" id="tenderamountinword" name="tenderamountinword" readonly="">{{$tender->tenderamountinword}}</textarea>
@@ -213,7 +252,7 @@
 	<tr>
 		<td><strong>TENDER COST in the form of *</strong></td>
 		<td>
-			<select class="form-control select2" name="tendercostinformof" required="">
+			<select class="form-control select2" name="tendercostinformof" >
 				<option value="">--Choose a Type--</option>
 				<option value="DD" {{ ( $tender->tendercostinformof == 'DD') ? 'selected' : '' }}>DD</option>
 				<option value="BG" {{ ( $tender->tendercostinformof == 'BG') ? 'selected' : '' }}>BG</option>
@@ -356,6 +395,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+	$('input[type=radio][name=evaluationprocess]').change(function() {
+       if (this.value=='QCBS') {
+       	    $("#evaluationscore").show();
+
+       }
+       else{
+       	   $("#evaluationscore").hide();
+       }
+    });
+    $('input:radio[name="gender"]').filter('[value="Male"]').attr('checked', true);
 
 	 $( ".convert2" ).on("change paste keyup", function() {
  var money1=RsPaise(Math.round(document.getElementById('registrationamount').value*100)/100);
@@ -407,6 +456,12 @@ document.getElementById('amountinword').value=money;
  $( ".convert1" ).on("change paste keyup", function() {
  var money1=RsPaise(Math.round(document.getElementById('tenderamount').value*100)/100);
 document.getElementById('tenderamountinword').value=money1;
+
+	
+ });
+   $( ".convert3" ).on("change paste keyup", function() {
+ var money1=RsPaise(Math.round(document.getElementById('workvalue').value*100)/100);
+document.getElementById('workvalueinword').value=money1;
 
 	
  });

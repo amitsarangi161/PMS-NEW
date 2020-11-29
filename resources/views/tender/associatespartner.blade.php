@@ -16,7 +16,7 @@
          <td><strong>ASSOCIATE PARTNER NAME</strong><span style="color: red"> *</span></td>
          <td><input type="text" name="associatepartnername" class="form-control" placeholder="Enter Associate Partner Name Name" required=""></td>
          	<td><strong>OFFICE ADDRESS</strong><span style="color: red"> *</span></td>
-        	<td><textarea name="officeaddress" class="form-control" placeholder="Enter Office address" required=""></textarea></td>
+        	<td><textarea name="officeaddress" class="form-control" placeholder="Enter Office address" ></textarea></td>
         </tr>
         <tr>
         	<td><strong>CONTACT NO</strong><span style="color: red"> *</span></td>
@@ -44,19 +44,23 @@
     
         <tr>
         	<td><strong>CITY</strong><span style="color: red"> *</span></td>
-         <td><input type="text" name="city" class="form-control" placeholder="Enter city Here" required=""></td>
+         <td><input type="text" name="city" class="form-control" placeholder="Enter city Here" ></td>
          <td><strong>DISTICT</strong><span style="color: red"> *</span></td>
-         <td><input type="text" name="dist" class="form-control" placeholder="Enter Distict Here" required=""></td>
+         <td><input type="text" name="dist" class="form-control" placeholder="Enter Distict Here" ></td>
         </tr>
         <tr>
         	<td><strong>STATE</strong><span style="color: red"> *</span></td>
-         <td><input type="text" name="state" class="form-control" placeholder="Enter state Here" required=""></td>
+         <td><input type="text" name="state" class="form-control" placeholder="Enter state Here" ></td>
          <td><strong>COUNTRY</strong><span style="color: red"> *</span></td>
-         <td><input type="text" name="country" class="form-control" placeholder="Enter Country Here" required=""></td>
+         <td><input type="text" name="country" class="form-control" placeholder="Enter Country Here" ></td>
         </tr>
         <tr>
         	<td><strong>ADDITIONAL INFO</strong></td>
         	<td><textarea name="additionalinfo" class="form-control" placeholder="Enter Addional Info"></textarea></td>
+            <td><strong>AVG TURN OVER(IN CR)</strong></td>
+            <td>
+                <input type="text" name="avgturnover" class="form-control" placeholder="Enter Avg TURNOVER(EX: 30.40)">
+            </td>
         </tr>
 
                 <tr>
@@ -159,17 +163,49 @@
   </div>
 </div>
 
+<div class="modal fade in" id="importmodal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <form method="post" enctype="multipart/form-data" action="/importassociatepartners">
+      <div class="modal-header bg-navy">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color: #fff;">×</span>
+      </button>
+        <h4 class="modal-title text-center">Upload Project Excel</h4>
+      </div>
+      <div class="modal-body">
+        
+              
+                {{ csrf_field() }}
+                <div class="form-group">
+                <label>Select File for Upload Project</label>
+                    <input type="file" name="select_file" />
+                    <span class="text-muted">.xls, .xslx</span>
+                </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success btn-flat">Upload</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+
 @if($associatepartners)
 <div class="box">
 <div class="box-body">
+    <button class="btn btn-success" type="button" onclick="openimport();">Import</button>
     <div style="overflow-x:auto;">
-<table class="table table-responsive table-hover table-bordered table-striped datatable" width="100%">
+<table class="table table-responsive table-hover table-bordered table-striped datatablescroll">
     <thead>
         <tr class="bg-navy" style="font-size: 10px;">
             <th>ID</th>
             <th>ASSOCIATE PARTNER NAME</th>
             <th>OFFICE ADDRESS</th>
             <th>CONTACT NO</th>
+            <th>EMAIL</th>
+            <th>AVG TURNOVER</th>
             <th>ALTERNATIVE CONTACT NO</th>
             <th>OFFICE CONTACT NO</th>
             <th>GSTN</th>
@@ -177,6 +213,7 @@
             <th>CITY</th>
             <th>STATE</th>
             <th>COUNTRY</th>
+            <th>Add By</th>
             <th>EDIT</th>
             <!-- <th>DELETE</th> -->
         </tr>
@@ -184,10 +221,12 @@
     <tbody>
         @foreach($associatepartners as $associatepartner)
         <tr style="font-size: 12px;">
-            <td>{{$associatepartner->id}}</td>
+            <td><button type="button" onclick="openeditmodal('{{$associatepartner->id}}','{{$associatepartner->associatepartnername}}','{{$associatepartner->officeaddress}}','{{$associatepartner->contact1}}','{{$associatepartner->contact2}}','{{$associatepartner->officecontact}}','{{$associatepartner->email}}','{{$associatepartner->gstn}}','{{$associatepartner->panno}}','{{$associatepartner->city}}','{{$associatepartner->dist}}','{{$associatepartner->state}}','{{$associatepartner->country}}','{{$associatepartner->additionalinfo}}');" class="btn btn-primary">{{$associatepartner->id}}</button></td>
             <td>{{$associatepartner->associatepartnername}}</td>
             <td>{{$associatepartner->officeaddress}}</td>
             <td>{{$associatepartner->contact1}}</td>
+            <td>{{$associatepartner->email}}</td>
+            <td>{{$associatepartner->avgturnover}}</td>
             <td>{{$associatepartner->contact2}}</td>
             <td>{{$associatepartner->officecontact}}</td>
             <td>{{$associatepartner->gstn}}</td>
@@ -195,6 +234,7 @@
             <td>{{$associatepartner->city}}</td>
             <td>{{$associatepartner->state}}</td>
             <td>{{$associatepartner->country}}</td>
+            <td>{{$associatepartner->name}}</td>
             <td><button type="button" onclick="openeditmodal('{{$associatepartner->id}}','{{$associatepartner->associatepartnername}}','{{$associatepartner->officeaddress}}','{{$associatepartner->contact1}}','{{$associatepartner->contact2}}','{{$associatepartner->officecontact}}','{{$associatepartner->email}}','{{$associatepartner->gstn}}','{{$associatepartner->panno}}','{{$associatepartner->city}}','{{$associatepartner->dist}}','{{$associatepartner->state}}','{{$associatepartner->country}}','{{$associatepartner->additionalinfo}}');" class="btn btn-primary">EDIT</button></td>
 
             <!-- <td>
@@ -216,6 +256,10 @@
 </div>
 @endif
 <script type="text/javascript">
+    function openimport()
+    {
+        $("#importmodal").modal('show');
+    }
     function openeditmodal(id,associatepartnername,officeaddress,contact1,contact2,officecontact,email,gstn,panno,city,dist,state,country,additionalinfo){
 
         $("#apid").val(id);

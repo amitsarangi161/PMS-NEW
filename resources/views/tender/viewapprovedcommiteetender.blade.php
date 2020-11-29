@@ -1,6 +1,22 @@
 @extends('layouts.tender')
 @section('content')
+<style type="text/css">
+.rbox{
+padding: 4px;
+width: 25%;
+text-align: center;
+}
+.wrkbg{
+	background-color: #FBAB7E;
+background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
+}
+.extremist{
+background-color: #FBAB7E;
+background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
+
+}
+</style>
 <table class="table">
 	<tr class="bg-navy">
 		<td class="text-center">VIEW TENDER APPROVED BY COMMITEE</td>
@@ -16,6 +32,22 @@
 	<td>
 		<input type="text" name="clientname" class="form-control" placeholder="Enter Name of the Work" value="{{$tender->clientname}}" disabled="">
 	</td>
+</tr>
+<tr>
+	<td><strong>Location</strong></td>
+	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location" value="{{$tender->location}}"></td>
+	<td><strong>Evaluation Process</strong></td>
+	<td>
+		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>
+		<input type="radio" value="QCBS" name="evaluationprocess" {{($tender->evaluationprocess=='QCBS')? 'checked':''}}><strong>QCBS</strong>
+	
+	@if($tender->evaluationprocess=='QCBS')	
+	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="{{$tender->evaluationtechnical}}" style="width:15%">
+	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="{{$tender->evaluationfinancial}}" style="width:15%">
+    @endif
+	
+	</td>
+	
 </tr>
 <tr>
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
@@ -243,8 +275,34 @@
 		
 	</tbody>
 </table>
+<table class="table">
+	<tr>
+		<td><button type="button" onclick="revokestatus('{{$tender->id}}');" class="btn btn-warning btn-lg">REVOKE</button></td>
+	</tr>
+	
+</table>
 
-
+<table class="table">
+	<tr>
+		<td><strong>Select a User</strong></td>
+		<td>
+			<select class="form-control select2" id="selecteduser" onchange="fetchcomment();">
+				<option value="">Select User</option>
+				<option value="COMMITTEE">COMMITTEE</option>
+				@foreach($users as $user)
+				  <option value="{{$user->userid}}">{{$user->name}}</option>
+				@endforeach
+			</select>
+		</td>
+	</tr>
+</table>
+<div id="committeecommenttable" style="display: none;">
+	<table class="table">
+	<tr class="bg-red">
+		<td class="text-center">COMMITTEE COMMENTS</td>
+		
+	</tr>
+</table>
 <table class="table">
 	<tr class="bg-blue">
 		<td class="text-center">SITE APPRECIATION</td>
@@ -476,14 +534,556 @@
 		</td>
 		
 		</tr>
-
-
-
-
+</table>
+</div>
+<div id="commenttable" style="display: none;">
+	<table class="table">
+	<tr class="bg-red">
+		<td class="text-center" id="commentby"></td>
+		
+	</tr>
 </table>
 
+<!--santosh-->
+<table class="table">
+	<tr class="bg-blue">
+		<td class="text-center">SITE APPRECIATION</td>
+		
+	</tr>
+</table>
+<table class="table table-responsive table-hover table-bordered table-striped">
+	<tr>
+		<td><strong>SITE VISIT REQUIRED? (Y OR N)</strong></td>
+		<td id="sitevisitrequired1"></td>
+		<td><strong>If Yes who will Visit?</strong></td>
+		<td>
+			<textarea class="form-control" id="sitevisitdescription1" name="sitevisitdescription" readonly></textarea>
+		</td>
+	</tr>
+	<tr id="notworkable">
+		<td><strong>WORKABLE SITE? (Y OR N)</strong></td>
+		<td id="workablesite1">
+			
+		</td>
+	
+		<td><strong>Any Safety Concern ?</strong></td>
+		<td>
+			<label  id="safetyconcern1" name="safetyconcern1"></label>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>Third party Approval Required? (Y OR N)</strong></td>
+		<td id="thirdpartyapproval1">
+			
+		</td>
+	
+		<td><strong>If Yes write Details</strong></td>
+		<td>
+			<textarea readonly class="form-control" id="thirdpartyapprovaldetails1" name="thirdpartyapprovaldetails">{{$tender->thirdpartyapprovaldetails}}</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>Payment System?</strong></td>
+		<td id="paymentsystem1">
 
+		</td>
+	
+		<td><strong>write in Details</strong></td>
+		<td>
+			<textarea readonly class="form-control" id="paymentsystemdetails1" name="paymentsystemdetails">{{$tender->paymentsystemdetails}}</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>PROJECT DURATION IN(MONTH,DAYS,YEAR)</strong></td>
+		<td>
+			<span id="durationtype" class="badge bg-green"></span>
 
+		</td>
+		<td><strong>Duration (IN Number Eg:120)</strong></td>
+		<td>
+			<input type="text" readonly class="form-control"  id="duration">
+		</td>
+	</tr>
+	<tr>
+		<td><strong>IF DURATION IS SUFFICIENT ?</strong></td>
+		<td>
+			<span id="durationsufficient"></span>
+		</td>
+		<td><strong>IF NO DESCRIBE</strong></td>
+		<td>
+			<textarea readonly class="form-control" id="durationsufficientdescription"></textarea>
+		</td>
+	</tr>
+
+</table>
+<table class="table">
+	<tr class="bg-blue">
+		<td class="text-center">OUT SOURCING</td>
+		
+	</tr>
+</table>
+<table class="table">
+	<tr>
+		<td><strong>IN HOUSE CAPACITY? (Y OR N)</strong></td>
+		<td id="inhousecapacity1">
+			
+		</td>
+	
+	</tr>
+	<tr>
+		<td><strong>INVOLVEMENT REQUIREMENT OF ANY THIRD PARTY?</strong></td>
+		<td id="thirdpartyinvolvement1">
+
+		</td>
+	</tr>
+		<tr id="extremist">
+		<td><strong>IS THE AREA AFFECTED BY ANY EXTREMIST ORGANIZATION?</strong></td>
+		<td id="areaaffectedbyextremist1">
+			
+		</td>
+	</tr>
+	<tr>
+		<td><strong>CAN THE KEY PERSON BE MANAGED?</strong></td>
+		<td id="keypositionbemanaged1">
+			
+		</td>
+	</tr>
+	<tr>
+		<td><strong>PROJECT DURATION ASSIGNED IS SUFFICIENT?</strong></td>
+		<td id="projectdurationsufficient1">
+
+		</td>
+	</tr>
+	<tr>
+		<td><strong>LOCAL OFFICE TO BE SET UP?</strong></td>
+		<td id="localofficesetup1">
+			
+		</td>
+	</tr>
+	<tr class="wrkbg">
+		<td><strong>RECOMENDED FOR</strong></td>
+		<td>
+			<span id="recomended"></span>
+		</td>
+	</tr>
+	<tr class="wrkbg">
+		<td><strong>SELECT ASSOCIATE PARTNER</strong></td>
+		<td>
+			<span id="associatepartner"></span>
+      </td>
+	</tr>
+	<tr>
+	<td><strong>WILL WE PARTICIPATE IN THIS TENDER ?</strong></td>
+	<td id="participation">
+		
+	</td>
+</tr>
+</table>
+
+<table class="table table-responsive table-hover table-bordered table-striped">
+	<tr>
+		<td><strong>PAYMENT SCHEDULE IS CLEAR?</strong></td>
+		<td id="paymentscheduleclear1">
+						
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea readonly name="paymentscheduleambiguty" id="paymentscheduleambiguty1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>IS THERE ANY PENALITY CLAUSE?</strong></td>
+		<td id="penalityclause1">
+			
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea readonly name="penalityclauseambiguty" id="penalityclauseambiguty1" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->penalityclauseambiguty}}</textarea>
+		</td>
+		
+	</tr>
+	<tr>
+		<td><strong>DO WE HAVE EXPERTISE IN NATURE OF WORK?</strong></td>
+		<td id="wehaveexpertise1">
+						
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea readonly name="wehaveexpertisedescription" id="wehaveexpertisedescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+		
+	</tr>
+	<tr>
+		<td><strong>ANY CONTRACTUAL AMBIGUTY?</strong></td>
+		<td id="contractualambiguty1">
+			
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea readonly name="contractualambigutydescription" id="contractualambigutydescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+		
+	</tr>
+
+	<tr>
+		<td><strong>ANY EXTENSIVE FIELD INVESTICATION REQUIRED?</strong></td>
+		<td id="extensivefieldinvestigation1">
+						
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea readonly name="extensivefieldinvestigationdescription" id="extensivefieldinvestigationdescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+		
+	</tr>
+		<tr>
+		<td><strong>MEETING THE REQUIRED EXPERIENSE OF FIRM?</strong></td>
+		<td id="requiredexperienceoffirm1">
+			
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea readonly name="requiredexperienceoffirmdescription" id="requiredexperienceoffirmdescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+		
+		</tr>
+
+			<tr>
+		<td><strong>RECORD ANY OTHER REQUIREMENT?</strong></td>
+		<td colspan="3">
+			<textarea readonly name="anyotherrequirement" id="anyotherrequirement1" class="form-control" placeholder="Describe"></textarea>
+		</td>
+		
+		</tr>
+
+			<tr>
+		<td><strong>RATE TO BE QUOTED?</strong></td>
+		<td colspan="3" id="ratetobequoted1">
+			
+		</td>
+		
+		</tr>
+</table>
+</div>
+
+<input type="hidden" id="tenderid" value="{{$tender->id}}">
+<div id="revokeModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">CHANGE STATUS</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/revokestatuscommitteeapproved" method="POST">
+          {{csrf_field()}}
+         <table class="table">
+          <input type="hidden" name="tid" id="tid" required="">
+          <tr>
+          <td><strong>Select a Status</strong></td>
+          <td>
+         <select class="form-control" name="status" required="">
+              <option value="">Select a Status</option>
+                              <option value="ASSIGNED TO USER">ASSIGNED TO USER</option>
+                              <option value="ELLIGIBLE">TO COMMITTEE</option>
+                              
+                            
+            </select>
+          </td>
+          </tr>
+          <tr>
+            <td><strong>REMARKS</strong></td>
+            <td>
+              <textarea name="remarks" class="form-control" required=""></textarea>
+            </td>
+          </tr>
+          <td>
+            <button type="submit" class="btn btn-success" onclick="confirm('Do You want to change this ?')">CHANGE</button>
+          </td>
+          
+        </table>
+        </form>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script type="text/javascript">
+		function revokestatus(id)
+  {
+       $("#tid").val(id);
+       $('#revokeModal').modal('show');
+  }
+		$('input[type=radio][name=recomended]').change(function() {
+    if (this.value == 'ASSOCIATION' || this.value=='JV') {
+        $("#selected").attr( "disabled",false);
+    }
+    else{
+        $("#selected").attr( "disabled",true);
+    }
+});
+	function fetchcomment(argument) {
+		var selecteduser=$("#selecteduser").val();
+		var tenderid=$("#tenderid").val();
+		if (selecteduser=='') {
+			 $("#commenttable").hide();
+              $("#committeecommenttable").hide();
+		}
+		else if(selecteduser=='COMMITTEE') {
+              $("#commenttable").hide();
+              $("#committeecommenttable").show();
+
+		}
+		else
+		{
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+
+           $.ajax({
+               type:'POST',
+              
+               url:'{{url("/ajaxfetchtendercomment")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     user:selecteduser,
+                     tenderid:tenderid
+                     },
+
+               success:function(data) { 
+               	     if(data.comment)
+               	     {
+               	     	if(data.comment.participation == 'YES'){
+               	     		
+               	     		$("#participation").html('<span class="badge bg-green" >'+data.comment.participation+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#participation").html('<span class="badge bg-red" >'+data.comment.participation+'</span>');
+               	     	}
+               	     	if(data.comment.sitevisitrequired == 'YES'){
+               	     		
+               	     		$("#sitevisitrequired1").html('<span class="badge bg-green" >'+data.comment.sitevisitrequired+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#sitevisitrequired1").html('<span class="badge bg-red" >'+data.comment.sitevisitrequired+'</span>');
+               	     	}
+
+               	     	if(data.comment.workablesite == 'YES'){
+               	     		
+               	     		$("#workablesite1").html('<span class="badge bg-green" >'+data.comment.workablesite+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#workablesite1").html('<span class="badge bg-red" >'+data.comment.workablesite+'</span>');
+               	     		$("#notworkable").addClass("wrkbg");
+               	     	}
+
+               	     	if(data.comment.thirdpartyapproval == 'YES'){
+               	     		
+               	     		$("#thirdpartyapproval1").html('<span class="badge bg-green" >'+data.comment.thirdpartyapproval+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#thirdpartyapproval1").html('<span class="badge bg-red" >'+data.comment.thirdpartyapproval+'</span>');
+               	     	}
+
+               	     	if(data.comment.paymentsystem == 'MONTHLY'){
+               	     		
+               	     		$("#paymentsystem1").html('<span class="badge bg-green" >'+data.comment.paymentsystem+'</span>');
+               	     	}
+               	     	else if(data.comment.paymentsystem == "STAGE"){
+               	     		$("#paymentsystem1").html('<span class="badge bg-green" >'+data.comment.paymentsystem+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#paymentsystem1").html('<span class="badge bg-green" >'+data.comment.paymentsystem+'</span>');
+               	     	}
+
+               	     	if(data.comment.inhousecapacity == 'YES'){
+               	     		
+               	     		$("#inhousecapacity1").html('<span class="badge bg-green" >'+data.comment.inhousecapacity+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#inhousecapacity1").html('<span class="badge bg-red" >'+data.comment.inhousecapacity+'</span>');
+               	     	}
+
+               	     	if(data.comment.thirdpartyinvolvement == 'YES'){
+               	     		
+               	     		$("#thirdpartyinvolvement1").html('<span class="badge bg-green" >'+data.comment.thirdpartyinvolvement+'</span>');
+               	     	}
+               	     	else if(data.comment.thirdpartyinvolvement == "NO"){
+               	     		$("#thirdpartyinvolvement1").html('<span class="badge bg-red" >'+data.comment.thirdpartyinvolvement+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#thirdpartyinvolvement1").html('<span class="badge bg-yellow" >'+data.comment.thirdpartyinvolvement+'</span>');
+               	     	}
+
+               	     	if(data.comment.areaaffectedbyextremist == 'YES'){
+               	     		
+               	     		$("#areaaffectedbyextremist1").html('<span class="badge bg-green" >'+data.comment.areaaffectedbyextremist+'</span>');
+               	     		$("#extremist").addClass("extremist");
+               	     	}
+               	     	else if(data.comment.areaaffectedbyextremist == "NO"){
+               	     		$("#areaaffectedbyextremist1").html('<span class="badge bg-red" >'+data.comment.areaaffectedbyextremist+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#thirdpartyinvolvement1").html('<span class="badge bg-yellow" >'+data.comment.thirdpartyinvolvement+'</span>');
+               	     	}
+
+               	     	if(data.comment.keypositionbemanaged == 'YES'){
+               	     		
+               	     		$("#keypositionbemanaged1").html('<span class="badge bg-green" >'+data.comment.keypositionbemanaged+'</span>');
+               	     	}
+               	     	else if(data.comment.keypositionbemanaged == "NO"){
+               	     		$("#keypositionbemanaged1").html('<span class="badge bg-red" >'+data.comment.keypositionbemanaged+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#keypositionbemanaged1").html('<span class="badge bg-yellow" >'+data.comment.keypositionbemanaged+'</span>');
+               	     	}
+
+               	     	if(data.comment.projectdurationsufficient == 'YES'){
+               	     		
+               	     		$("#projectdurationsufficient1").html('<span class="badge bg-green" >'+data.comment.projectdurationsufficient+'</span>');
+               	     	}
+               	     	else if(data.comment.projectdurationsufficient == "NO"){
+               	     		$("#projectdurationsufficient1").html('<span class="badge bg-red" >'+data.comment.projectdurationsufficient+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#projectdurationsufficient1").html('<span class="badge bg-yellow" >'+data.comment.projectdurationsufficient+'</span>');
+               	     	}
+
+               	     	if(data.comment.localofficesetup == 'YES'){
+               	     		
+               	     		$("#localofficesetup1").html('<span class="badge bg-green" >'+data.comment.localofficesetup+'</span>');
+               	     	}
+               	     	else if(data.comment.localofficesetup == "NO"){
+               	     		$("#localofficesetup1").html('<span class="badge bg-red" >'+data.comment.localofficesetup+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#localofficesetup1").html('<span class="badge bg-yellow" >'+data.comment.localofficesetup+'</span>');
+               	     	}
+               	     	
+               	     	$("#recomended").html('<span class="badge bg-green" >'+data.comment.recomended+'</span>');
+               	     	
+               	     	$("#associatepartner").html('<span class="badge bg-green" >'+data.comment.associatepartnername+'</span>');
+               	     	
+
+               	     	if(data.comment.paymentscheduleclear == 'YES'){
+               	     		
+               	     		$("#paymentscheduleclear1").html('<span class="badge bg-green" >'+data.comment.paymentscheduleclear+'</span>');
+               	     	}
+               	     	else if(data.comment.paymentscheduleclear == "NO"){
+               	     		$("#paymentscheduleclear1").html('<span class="badge bg-red" >'+data.comment.paymentscheduleclear+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#paymentscheduleclear1").html('<span class="badge bg-yellow" >'+data.comment.paymentscheduleclear+'</span>');
+               	     	}
+
+               	     	if(data.comment.penalityclause == 'YES'){
+               	     		
+               	     		$("#penalityclause1").html('<span class="badge bg-green" >'+data.comment.penalityclause+'</span>');
+               	     	}
+               	     	else if(data.comment.penalityclause == "NO"){
+               	     		$("#penalityclause1").html('<span class="badge bg-red" >'+data.comment.penalityclause+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#penalityclause1").html('<span class="badge bg-yellow" >'+data.comment.penalityclause+'</span>');
+               	     	}
+
+               	     	if(data.comment.wehaveexpertise == 'YES'){
+               	     		
+               	     		$("#wehaveexpertise1").html('<span class="badge bg-green" >'+data.comment.wehaveexpertise+'</span>');
+               	     	}
+               	     	else if(data.comment.wehaveexpertise == "NO"){
+               	     		$("#wehaveexpertise1").html('<span class="badge bg-red" >'+data.comment.wehaveexpertise+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#wehaveexpertise1").html('<span class="badge bg-yellow" >'+data.comment.wehaveexpertise+'</span>');
+               	     	}
+
+               	     	if(data.comment.contractualambiguty == 'YES'){
+               	     		
+               	     		$("#contractualambiguty1").html('<span class="badge bg-green" >'+data.comment.contractualambiguty+'</span>');
+               	     	}
+               	     	else if(data.comment.contractualambiguty == "NO"){
+               	     		$("#contractualambiguty1").html('<span class="badge bg-red" >'+data.comment.contractualambiguty+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#contractualambiguty1").html('<span class="badge bg-yellow" >'+data.comment.contractualambiguty+'</span>');
+               	     	}
+
+               	     	if(data.comment.extensivefieldinvestigation == 'YES'){
+               	     		
+               	     		$("#extensivefieldinvestigation1").html('<span class="badge bg-green" >'+data.comment.extensivefieldinvestigation+'</span>');
+               	     	}
+               	     	else if(data.comment.extensivefieldinvestigation == "NO"){
+               	     		$("#extensivefieldinvestigation1").html('<span class="badge bg-red" >'+data.comment.extensivefieldinvestigation+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#extensivefieldinvestigation1").html('<span class="badge bg-yellow" >'+data.comment.extensivefieldinvestigation+'</span>');
+               	     	}
+
+               	     	if(data.comment.requiredexperienceoffirm == 'YES'){
+               	     		
+               	     		$("#requiredexperienceoffirm1").html('<span class="badge bg-green" >'+data.comment.requiredexperienceoffirm+'</span>');
+               	     	}
+               	     	else if(data.comment.requiredexperienceoffirm == "NO"){
+               	     		$("#requiredexperienceoffirm1").html('<span class="badge bg-red" >'+data.comment.requiredexperienceoffirm+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#requiredexperienceoffirm1").html('<span class="badge bg-yellow" >'+data.comment.requiredexperienceoffirm+'</span>');
+               	     	}
+               	     	if(data.comment.durationsufficient == 'YES'){
+               	     		
+               	     		$("#durationsufficient").html('<span class="badge bg-green" >'+data.comment.durationsufficient+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#durationsufficient").html('<span class="badge bg-red" >'+data.comment.durationsufficient+'</span>');
+               	     	}
+
+               	     	$("#sitevisitdescription1").val(data.comment.sitevisitdescription);
+               	     	$("#safetyconcern1").val(data.comment.safetyconcern);
+               	     	$("#thirdpartyapprovaldetails1").val(data.comment.thirdpartyapprovaldetails);
+               	     	$("#paymentsystemdetails1").val(data.comment.paymentsystemdetails);
+               	     	$("#durationsufficientdescription").val(data.comment.durationsufficientdescription);
+               	     	$("#paymentscheduleambiguty1").val(data.comment.paymentscheduleambiguty);
+               	     	$("#penalityclauseambiguty1").val(data.comment.penalityclauseambiguty);
+               	     	$("#wehaveexpertisedescription1").val(data.comment.wehaveexpertisedescription);
+               	     	$("#contractualambigutydescription1").val(data.comment.contractualambigutydescription);
+               	     	$("#extensivefieldinvestigationdescription1").val(data.comment.extensivefieldinvestigationdescription);
+               	     	$("#requiredexperienceoffirmdescription1").val(data.comment.requiredexperienceoffirmdescription);
+               	     	$("#anyotherrequirement1").val(data.comment.anyotherrequirement);
+
+               	     	$("#ratetobequoted1").html(data.comment.ratetobequoted);
+               	     	$("#ratetobequoted1").html('<h4 class="small-box bg-blue rbox">'+data.comment.ratetobequoted+'</h4>');
+
+               	     	$("#commenttable").show();
+               	     	$("#committeecommenttable").hide();
+
+               	     	$("#commentby").text('COMMENT OF '+data.user.name);
+               	     	$("#durationtype").text(data.comment.durationtype);
+               	     	$("#duration").val(data.comment.duration);
+
+               	     }
+               	     else
+               	     {
+               	     	$("#commenttable").hide();
+               	     	
+               	     }
+                     
+               }
+               
+             });
+
+       }
+	}
+</script>
 
 
 

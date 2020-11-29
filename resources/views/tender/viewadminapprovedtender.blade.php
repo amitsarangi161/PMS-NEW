@@ -26,13 +26,30 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 <tr>
-	<td><strong>Name Of the Work *</strong></td>
-	<td><textarea name="nameofthework" class="form-control" placeholder="Enter Name of The Work" disabled="">{{$tender->nameofthework}}</textarea></td>
-	<td><strong>Client Name *</strong></td>
-	<td>
+	<td width="20%"><strong>Name Of the Work *</strong></td>
+	<td width="30%"><textarea name="nameofthework" class="form-control" placeholder="Enter Name of The Work" disabled="">{{$tender->nameofthework}}</textarea></td>
+	<td width="20%"><strong>Client Name *</strong></td>
+	<td width="30%">
 		<input type="text" name="clientname" class="form-control" placeholder="Enter Name of the Work" value="{{$tender->clientname}}" disabled="">
 	</td>
 </tr>
+<tr>
+	<td><strong>Location</strong></td>
+	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location" value="{{$tender->location}}"></td>
+	<td><strong>Evaluation Process</strong></td>
+	<td>
+		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>
+		<input type="radio" value="QCBS" name="evaluationprocess" {{($tender->evaluationprocess=='QCBS')? 'checked':''}}><strong>QCBS</strong>
+	
+	@if($tender->evaluationprocess=='QCBS')	
+	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="{{$tender->evaluationtechnical}}" style="width:15%">
+	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="{{$tender->evaluationfinancial}}" style="width:15%">
+    @endif
+	
+	</td>
+	
+</tr>
+
 <tr>
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
 	<td><textarea name="tenderrefno" class="form-control" placeholder="Enter Tender Reference No" disabled="">{{$tender->tenderrefno}}</textarea></td>
@@ -106,15 +123,63 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 <tr>
 	<td><strong>PRE-BID MEETING START DATE*</strong></td>
 	<td><input type="text" name="prebidmeetingdate" class="form-control" value="{{$tender->prebidmeetingdate}}" disabled=""></td>
-	<td><strong>RECOMENDED FOR</strong></td>
-		<td>
-			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
+	<td></td>
+    <td>
 	</td>
 	
 	
 </tr>
+<tr>
+	<form action="/changerecomendtender/{{$tender->id}}" method="post">
+		{{csrf_field()}}
+	<td><strong>RECOMENDED FOR</strong></td>
+	
+	<td>
+			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
+
+			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
+
+			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
+
+
+
+           
+
+	</td>
+	<td><strong>SELECT A ASSOCIATE PARTNER</strong></td>
+
+	<td>
+		   @if(Auth::user()->usertype=='MASTER ADMIN')
+		      @php
+		        if($tender->recomended=='ASSOCIATION' ||$tender->recomended=='JV')
+		         $val="";
+		         else
+		         $val="disabled";
+		      @endphp
+            <select id="selected" class="form-control select2" name="associatepartner"  {{$val}} required="">
+            	<option value="">Select a Partner</option>
+            	@foreach($associatepartners as $associatepartner)
+            	<option value="{{$associatepartner->id}}" {{($tender->associatepartner==$associatepartner->id)? 'selected':''}}>{{$associatepartner->associatepartnername}}</option>
+            	@endforeach
+            </select>
+            @else
+             <td></td>
+            @endif
+			@if(Auth::user()->usertype=='MASTER ADMIN')
+			<button type="submit" class="btn btn-success">Change</button>
+			@endif
+	</td>
+</form>
+</tr>
+<tr>
+	<td><strong>Reason For Approval</strong></td>
+	<td><textarea name="notes" class="form-control" placeholder="Reason For Approval">{{$tender->notes}}</textarea></td>
+	<td></td>
+	<td>
+		
+	</td>
+</tr>
+
 	
 </table>
 
@@ -560,7 +625,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			<textarea readonly class="form-control" id="thirdpartyapprovaldetails1" name="thirdpartyapprovaldetails">{{$tender->thirdpartyapprovaldetails}}</textarea>
 		</td>
 	</tr>
-		<tr>
+	<tr>
 		<td><strong>Payment System?</strong></td>
 		<td id="paymentsystem1">
 
@@ -569,6 +634,27 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		<td><strong>write in Details</strong></td>
 		<td>
 			<textarea readonly class="form-control" id="paymentsystemdetails1" name="paymentsystemdetails">{{$tender->paymentsystemdetails}}</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>PROJECT DURATION IN(MONTH,DAYS,YEAR)</strong></td>
+		<td>
+			<span id="durationtype" class="badge bg-green"></span>
+
+		</td>
+		<td><strong>Duration (IN Number Eg:120)</strong></td>
+		<td>
+			<input type="text" readonly class="form-control"  id="duration">
+		</td>
+	</tr>
+	<tr>
+		<td><strong>IF DURATION IS SUFFICIENT ?</strong></td>
+		<td>
+			<span id="durationsufficient"></span>
+		</td>
+		<td><strong>IF NO DESCRIBE</strong></td>
+		<td>
+			<textarea readonly class="form-control" id="durationsufficientdescription"></textarea>
 		</td>
 	</tr>
 
@@ -617,6 +703,25 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			
 		</td>
 	</tr>
+	<tr class="wrkbg">
+		<td><strong>RECOMENDED FOR</strong></td>
+		<td>
+			<span id="recomended"></span>
+		</td>
+	</tr>
+	<tr class="wrkbg">
+		<td><strong>SELECT ASSOCIATE PARTNER</strong></td>
+		<td>
+			<span id="associatepartner"></span>
+      </td>
+	</tr>
+	<tr>
+	<td><strong>WILL WE PARTICIPATE IN THIS TENDER ?</strong></td>
+	<td id="participation">
+		
+	</td>
+</tr>
+
 </table>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
@@ -703,6 +808,19 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		
 		</tr>
 </table>
+
+<table class="table">
+	<thead>
+		<tr class="bg-green">
+		<td>USERNAME</td>
+		<td>REMARKS</td>
+		<td>CREATED_AT</td>
+	    </tr>
+	</thead>
+	<tbody id="userremark">
+		
+	</tbody>
+</table>
 </div>
 
 <input type="hidden" id="tenderid" value="{{$tender->id}}">
@@ -710,6 +828,15 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
 
 <script>
+
+	$('input[type=radio][name=recomended]').change(function() {
+    if (this.value == 'ASSOCIATION' || this.value=='JV') {
+        $("#selected").attr( "disabled",false);
+    }
+    else{
+        $("#selected").attr( "disabled",true);
+    }
+});
 	function fetchcomment(argument) {
 		var selecteduser=$("#selecteduser").val();
 		var tenderid=$("#tenderid").val();
@@ -744,7 +871,13 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                success:function(data) { 
                	     if(data.comment)
                	     {
-               	     	
+               	     	if(data.comment.participation == 'YES'){
+               	     		
+               	     		$("#participation").html('<span class="badge bg-green" >'+data.comment.participation+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#participation").html('<span class="badge bg-red" >'+data.comment.participation+'</span>');
+               	     	}
                	     	if(data.comment.sitevisitrequired == 'YES'){
                	     		
                	     		$("#sitevisitrequired1").html('<span class="badge bg-green" >'+data.comment.sitevisitrequired+'</span>');
@@ -759,9 +892,8 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	}
                	     	else{
                	     		$("#workablesite1").html('<span class="badge bg-red" >'+data.comment.workablesite+'</span>');
-               	     	$("#notworkable").addClass("wrkbg");
+               	     		$("#notworkable").addClass("wrkbg");
                	     	}
-
 
                	     	if(data.comment.thirdpartyapproval == 'YES'){
                	     		
@@ -845,6 +977,11 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	else{
                	     		$("#localofficesetup1").html('<span class="badge bg-yellow" >'+data.comment.localofficesetup+'</span>');
                	     	}
+               	     	
+               	     	$("#recomended").html('<span class="badge bg-green" >'+data.comment.recomended+'</span>');
+               	     	
+               	     	$("#associatepartner").html('<span class="badge bg-green" >'+data.comment.associatepartnername+'</span>');
+               	     	
 
                	     	if(data.comment.paymentscheduleclear == 'YES'){
                	     		
@@ -911,11 +1048,19 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	else{
                	     		$("#requiredexperienceoffirm1").html('<span class="badge bg-yellow" >'+data.comment.requiredexperienceoffirm+'</span>');
                	     	}
+               	     	if(data.comment.durationsufficient == 'YES'){
+               	     		
+               	     		$("#durationsufficient").html('<span class="badge bg-green" >'+data.comment.durationsufficient+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#durationsufficient").html('<span class="badge bg-red" >'+data.comment.durationsufficient+'</span>');
+               	     	}
 
                	     	$("#sitevisitdescription1").val(data.comment.sitevisitdescription);
-               	     	$("#safetyconcern1").html(data.comment.safetyconcern);
+               	     	$("#safetyconcern1").val(data.comment.safetyconcern);
                	     	$("#thirdpartyapprovaldetails1").val(data.comment.thirdpartyapprovaldetails);
                	     	$("#paymentsystemdetails1").val(data.comment.paymentsystemdetails);
+               	     	$("#durationsufficientdescription").val(data.comment.durationsufficientdescription);
                	     	$("#paymentscheduleambiguty1").val(data.comment.paymentscheduleambiguty);
                	     	$("#penalityclauseambiguty1").val(data.comment.penalityclauseambiguty);
                	     	$("#wehaveexpertisedescription1").val(data.comment.wehaveexpertisedescription);
@@ -931,6 +1076,14 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	$("#committeecommenttable").hide();
 
                	     	$("#commentby").text('COMMENT OF '+data.user.name);
+               	     	$("#durationtype").text(data.comment.durationtype);
+               	     	$("#duration").val(data.comment.duration);
+
+               	     	  $("#userremark").empty();
+               	     	$.each(data.remarks,function (key,value) {
+               	     		var x='<tr><td>'+value.name+'</td><td>'+value.remarks+'</td><td>'+value.created_at+'</td><td><tr>';
+               	     		$("#userremark").append(x);
+               	     	})
 
                	     }
                	     else

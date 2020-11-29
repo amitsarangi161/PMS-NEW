@@ -35,6 +35,22 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	</td>
 </tr>
 <tr>
+	<td><strong>Location</strong></td>
+	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location" value="{{$tender->location}}"></td>
+	<td><strong>Evaluation Process</strong></td>
+	<td>
+		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>
+		<input type="radio" value="QCBS" name="evaluationprocess" {{($tender->evaluationprocess=='QCBS')? 'checked':''}}><strong>QCBS</strong>
+	
+	@if($tender->evaluationprocess=='QCBS')	
+	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="{{$tender->evaluationtechnical}}" style="width:15%">
+	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="{{$tender->evaluationfinancial}}" style="width:15%">
+    @endif
+	
+	</td>
+	
+</tr>
+<tr>
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
 	<td><textarea name="tenderrefno" class="form-control" placeholder="Enter Tender Reference No" disabled="">{{$tender->tenderrefno}}</textarea></td>
 	<td><strong>NO OF COVERS *</strong></td>
@@ -265,6 +281,29 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		@endforeach
 		
 	</tbody>
+</table>
+<h4 class="text-center"><strong>COMMITTEE REMARKS</strong></h4>
+<table class="table">
+	<thead>
+		<tr class="bg-green">
+			<td>SL_NO</td>
+			<td>NAME</td>
+			<td>REMARKS</td>
+			<td>CREATED_AT</td>
+		</tr>
+	</thead>
+	@foreach($remarks as $key=>$remark)
+	
+	<tr>
+	<td>{{++$key}}</td>		
+	<td>{{$remark->name}}</td>		
+	<td>{{$remark->remarks}}</td>		
+	<td>{{$remark->created_at}}</td>	
+	
+	</tr>
+    @endforeach
+
+	
 </table>
 <table class="table">
 	<tr>
@@ -523,6 +562,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 <table class="table">
 	<tr>
 		<td><button type="button" onclick="openapprovemodal('{{$tender->id}}');" class="btn btn-success btn-lg">APPROVE</button></td>
+		<td><button type="button" onclick="revokestatus('{{$tender->id}}');" class="btn btn-warning btn-lg">REVOKE</button></td>
 		<td><button type="button" onclick="openrejectmodal('{{$tender->id}}')" class="btn btn-danger btn-lg">REJECT</button></td>
 	</tr>
 	
@@ -574,7 +614,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			<textarea readonly class="form-control" id="thirdpartyapprovaldetails1" name="thirdpartyapprovaldetails">{{$tender->thirdpartyapprovaldetails}}</textarea>
 		</td>
 	</tr>
-		<tr>
+	<tr>
 		<td><strong>Payment System?</strong></td>
 		<td id="paymentsystem1">
 
@@ -583,6 +623,27 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		<td><strong>write in Details</strong></td>
 		<td>
 			<textarea readonly class="form-control" id="paymentsystemdetails1" name="paymentsystemdetails">{{$tender->paymentsystemdetails}}</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>PROJECT DURATION IN(MONTH,DAYS,YEAR)</strong></td>
+		<td>
+			<span id="durationtype" class="badge bg-green"></span>
+
+		</td>
+		<td><strong>Duration (IN Number Eg:120)</strong></td>
+		<td>
+			<input type="text" readonly class="form-control"  id="duration">
+		</td>
+	</tr>
+	<tr>
+		<td><strong>IF DURATION IS SUFFICIENT ?</strong></td>
+		<td>
+			<span id="durationsufficient"></span>
+		</td>
+		<td><strong>IF NO DESCRIBE</strong></td>
+		<td>
+			<textarea readonly class="form-control" id="durationsufficientdescription"></textarea>
 		</td>
 	</tr>
 
@@ -631,6 +692,25 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			
 		</td>
 	</tr>
+	<tr class="wrkbg">
+		<td><strong>RECOMENDED FOR</strong></td>
+		<td>
+			<span id="recomended"></span>
+		</td>
+	</tr>
+	<tr class="wrkbg">
+		<td><strong>SELECT ASSOCIATE PARTNER</strong></td>
+		<td>
+			<span id="associatepartner"></span>
+      </td>
+	</tr>
+	<tr>
+	<td><strong>WILL WE PARTICIPATE IN THIS TENDER ?</strong></td>
+	<td id="participation">
+		
+	</td>
+</tr>
+
 </table>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
@@ -717,6 +797,18 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		
 		</tr>
 </table>
+<table class="table">
+	<thead>
+		<tr class="bg-green">
+		<td>USERNAME</td>
+		<td>REMARKS</td>
+		<td>CREATED_AT</td>
+	    </tr>
+	</thead>
+	<tbody id="userremark">
+		
+	</tbody>
+</table>
 </div>
 <div id="approvemodal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -733,6 +825,17 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
           <table class="table">
           	<input type="hidden" name="taid" id="taid">
+          	<tr>
+          		<td><strong>Assign To Office</strong></td>
+          		<td>
+          			<select class="form-control" name="assignedoffice" required="">
+          				<option value="">Select a Office</option>
+          				@foreach($offices as $office)
+                         <option value="{{$office->id}}">{{$office->name}}</option>
+          				@endforeach
+          			</select>
+          		</td>
+          	</tr>
           	<tr>
           		<td><strong>NOTES</strong></td>
           		<td><textarea name="notes" class="form-control"></textarea></td>
@@ -788,7 +891,62 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
   </div>
 </div>
+@if(Auth::user()->usertype=='MASTER ADMIN')
+<div id="revokeModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">CHANGE STATUS</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/revokestatusadmin" method="POST">
+          {{csrf_field()}}
+        <table class="table">
+          <input type="hidden" name="tid" id="tid" required="">
+          <tr>
+          <td><strong>Select a Status</strong></td>
+          <td>
+         <select class="form-control" name="status" required="">
+              <option value="">Select a Status</option>
+                              <option value="ASSIGNED TO USER">ASSIGNED TO USER</option>
+                              <option value="ELLIGIBLE">TO COMMITTEE</option>
+                              
+                            
+            </select>
+          </td>
+          </tr>
+          <tr>
+            <td><strong>REMARKS</strong></td>
+            <td>
+              <textarea name="remarks" class="form-control" required=""></textarea>
+            </td>
+          </tr>
+          <td>
+            <button type="submit" class="btn btn-success" onclick="confirm('Do You want to change this ?')">CHANGE</button>
+          </td>
+          
+        </table>
+        </form>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+@endif
 <script type="text/javascript">
+	function revokestatus(id)
+  {
+       $("#tid").val(id);
+       $('#revokeModal').modal('show');
+  }
+  
 	function openapprovemodal(id)
 	{
        $("#taid").val(id);
@@ -835,7 +993,13 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                success:function(data) { 
                	     if(data.comment)
                	     {
-               	     	
+               	     	if(data.comment.participation == 'YES'){
+               	     		
+               	     		$("#participation").html('<span class="badge bg-green" >'+data.comment.participation+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#participation").html('<span class="badge bg-red" >'+data.comment.participation+'</span>');
+               	     	}
                	     	if(data.comment.sitevisitrequired == 'YES'){
                	     		
                	     		$("#sitevisitrequired1").html('<span class="badge bg-green" >'+data.comment.sitevisitrequired+'</span>');
@@ -935,6 +1099,11 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	else{
                	     		$("#localofficesetup1").html('<span class="badge bg-yellow" >'+data.comment.localofficesetup+'</span>');
                	     	}
+               	     	
+               	     	$("#recomended").html('<span class="badge bg-green" >'+data.comment.recomended+'</span>');
+               	     	
+               	     	$("#associatepartner").html('<span class="badge bg-green" >'+data.comment.associatepartnername+'</span>');
+               	     	
 
                	     	if(data.comment.paymentscheduleclear == 'YES'){
                	     		
@@ -1001,11 +1170,19 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	else{
                	     		$("#requiredexperienceoffirm1").html('<span class="badge bg-yellow" >'+data.comment.requiredexperienceoffirm+'</span>');
                	     	}
+               	     	if(data.comment.durationsufficient == 'YES'){
+               	     		
+               	     		$("#durationsufficient").html('<span class="badge bg-green" >'+data.comment.durationsufficient+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#durationsufficient").html('<span class="badge bg-red" >'+data.comment.durationsufficient+'</span>');
+               	     	}
 
                	     	$("#sitevisitdescription1").val(data.comment.sitevisitdescription);
                	     	$("#safetyconcern1").val(data.comment.safetyconcern);
                	     	$("#thirdpartyapprovaldetails1").val(data.comment.thirdpartyapprovaldetails);
                	     	$("#paymentsystemdetails1").val(data.comment.paymentsystemdetails);
+               	     	$("#durationsufficientdescription").val(data.comment.durationsufficientdescription);
                	     	$("#paymentscheduleambiguty1").val(data.comment.paymentscheduleambiguty);
                	     	$("#penalityclauseambiguty1").val(data.comment.penalityclauseambiguty);
                	     	$("#wehaveexpertisedescription1").val(data.comment.wehaveexpertisedescription);
@@ -1021,6 +1198,14 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	$("#committeecommenttable").hide();
 
                	     	$("#commentby").text('COMMENT OF '+data.user.name);
+               	     	$("#durationtype").text(data.comment.durationtype);
+               	     	$("#duration").val(data.comment.duration);
+
+                        $("#userremark").empty();
+               	     	$.each(data.remarks,function (key,value) {
+               	     		var x='<tr><td>'+value.name+'</td><td>'+value.remarks+'</td><td>'+value.created_at+'</td><td><tr>';
+               	     		$("#userremark").append(x);
+               	     	})
 
                	     }
                	     else

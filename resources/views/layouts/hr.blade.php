@@ -12,6 +12,12 @@
 
 
 @endif
+<style type="text/css">
+  h1{font-size: 16px !important;}
+  .content{
+    padding:5px !important;
+  }
+</style>
 
 
     <meta charset="utf-8">
@@ -210,7 +216,25 @@
             </span>
           </a>
           </li>
- 
+        <li class="{{ Request::is('attendance*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>DAILY ATTENDANCE GROUPS</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+           <ul class="treeview-menu">
+            
+            <li class="{{ Request::is('attendance/addgroup') ? 'active' : '' }}"><a href="/attendance/addgroup"><i class="fa fa-circle-o text-aqua"></i>ADD GROUPS</a></li>
+             
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('attendance/adddailyattendance') ? 'active' : '' }}"><a href="/attendance/adddailyattendance"><i class="fa fa-circle-o text-aqua"></i>DAILY ATTENANCE GROUPS</a></li>
+          </ul>
+           <ul class="treeview-menu">
+             <li class="{{ Request::is('attendance/viewallattendance') ? 'active' : '' }}"><a href="/attendance/viewallattendance"><i class="fa fa-circle-o text-aqua"></i>VIEW ATTENANCE GROUPS</a></li>
+          </ul>
+        </li>
        <li class="{{ Request::is('hrmain*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>EMPLOYEE MANAGEMENT</span>
@@ -294,12 +318,13 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         @if(Auth::user()->usertype=='MASTER ADMIN')
-         <div class="btn-group btn-group-justified amit-btn">
+          <div class="btn-group btn-group-justified amit-btn">
             <a href="/" class="btn bg-maroon btn-lg">MAIN</a>
             <a href="/mdhome" class="btn bg-olive btn-lg">MD</a>
             <a href="/adminhr" class="btn bg-purple btn-lg">HR</a>
             <a href="/adminaccounts" class="btn bg-red btn-lg">ACCOUNTS</a>
             <a href="/admininventory" class="btn btn-success btn-lg">INVENTORY</a>
+            <a href="/admintender" class="btn btn-info btn-lg">TENDER</a>
           </div> 
         @endif
               
@@ -493,7 +518,7 @@ $(".datepicker").datepicker({
 $('.datatablescrollexport').DataTable({
         dom: 'Bfrtip',
         //"order": [[ 0, "desc" ]],
-        "iDisplayLength": 25,
+        "iDisplayLength": 5,
         "scrollY": 450,
         "scrollX": true,
         buttons: [
@@ -578,7 +603,7 @@ var jqf = $.noConflict();
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0V
     </div>
-    <strong>Copyright &copy; 2020-2021<a href="http://www.subudhitechno.com">Subudhi Techno Engineers Pvt. Ltd.</a> </strong> All rights
+    <strong>Copyright &copy; 2020-2021 <a href="http://www.pabitragroups.com">PABITRA GROUPS Pvt. Ltd.</a> </strong> All rights
     reserved.
   </footer>
 

@@ -12,6 +12,12 @@
 
 
 @endif
+<style type="text/css">
+  h1{font-size: 16px !important;}
+  .content{
+    padding:5px !important;
+  }
+</style>
 
 
     <meta charset="utf-8">
@@ -256,13 +262,14 @@
 
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        @if(Auth::user()->usertype=='MASTER ADMIN')
-         <div class="btn-group btn-group-justified amit-btn">
+         @if(Auth::user()->usertype=='MASTER ADMIN')
+          <div class="btn-group btn-group-justified amit-btn">
             <a href="/" class="btn bg-maroon btn-lg">MAIN</a>
             <a href="/mdhome" class="btn bg-olive btn-lg">MD</a>
             <a href="/adminhr" class="btn bg-purple btn-lg">HR</a>
             <a href="/adminaccounts" class="btn bg-red btn-lg">ACCOUNTS</a>
             <a href="/admininventory" class="btn btn-success btn-lg">INVENTORY</a>
+            <a href="/admintender" class="btn btn-info btn-lg">TENDER</a>
           </div> 
         @endif
               
@@ -542,7 +549,7 @@ var jqf = $.noConflict();
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0V
     </div>
-    <strong>Copyright &copy; 2020-2021<a href="http://www.subudhitechno.com">Subudhi Techno Engineers Pvt. Ltd.</a> </strong> All rights
+    <strong>Copyright &copy; 2020-2021 <a href="http://www.pabitragroups.com">PABITRA GROUPS Pvt. Ltd.</a> </strong> All rights
     reserved.
   </footer>
 

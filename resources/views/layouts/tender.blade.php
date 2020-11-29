@@ -2,7 +2,11 @@
 <html lang="{{ app()->getLocale() }}">
 <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-
+ @if(Auth::user()->usertype=='USER')
+<script type="text/javascript">
+    location.replace('/400');
+</script>
+@endif
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -199,7 +203,7 @@
 
 
 
-
+  
       <ul class="sidebar-menu">
         <li class="header"><strong class="text-center">TENDER NAVIGATION</strong></li>
       
@@ -226,12 +230,47 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            @php
+          $ctlcount=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))->count();
+          $alltenders=DB::table('tenders')->count();
+           $adminapprovedtenders=DB::table('tenders')
+                ->where('status','ADMIN APPROVED')
+                ->count();
+
+
+            @endphp
 
             <li class="{{ Request::is('tm/createtender') ? 'active' : '' }}"><a href="/tm/createtender"><i class="fa fa-circle-o text-aqua"></i>CREATE TENDER</a></li>
 
-            <li class="{{ Request::is('tm/tenderlist') ? 'active' : '' }}"><a href="/tm/tenderlist"><i class="fa fa-circle-o text-aqua"></i>CURRENT TENDER LIST</a></li>
-             <li class="{{ Request::is('tm/viewalltenders') ? 'active' : '' }}"><a href="/tm/viewalltenders"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL TENDERS</a></li>
-             <li class="{{ Request::is('tm/adminapprovedtenders') ? 'active' : '' }}"><a href="/tm/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS</a></li>
+            <!-- <li class="{{ Request::is('tm/temptenders') ? 'active' : '' }}"><a href="/tm/temptenders"><i class="fa fa-circle-o text-aqua"></i>TEMP TENDERS</a></li> -->
+
+             <li class="{{ Request::is('tm/tenderlist') ? 'active' : '' }}"><a href="/tm/tenderlist"><i class="fa fa-circle-o text-aqua"></i>CURRENT TENDER LIST
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$ctlcount}}</span>
+              </span>
+              </a>
+              </li>
+
+
+             <li class="{{ Request::is('tm/viewalltenders') ? 'active' : '' }}"><a href="/tm/viewalltenders"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL TENDERS
+              <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$alltenders}}</span>
+              </span>
+             </a></li>
+
+             <li class="{{ Request::is('tm/assignedtendersoffice') ? 'active' : '' }}"><a href="/tm/assignedtendersoffice"><i class="fa fa-circle-o text-aqua"></i>ASSIGNED TENDERS TO APPLY</a></li>
+
+             <li class="{{ Request::is('tm/adminapprovedtenders') ? 'active' : '' }}"><a href="/tm/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS
+               <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$adminapprovedtenders}}</span>
+              </span>
+
+             </a></li>
+
+
 
 
      <li class="{{ Request::is('tm/associatepartner') ? 'active' : '' }}"><a href="/tm/associatepartner"><i class="fa fa-circle-o text-aqua"></i>ASSOCIATE PARTNER</a></li>
@@ -241,61 +280,287 @@
         </li>
         @endif
 
-      @if(Auth::user()->usertype=='TENDER COMMITTEE'|| Auth::user()->usertype=='MASTER ADMIN')
-      <li class="{{ Request::is('tendercom*') ? 'active' : '' }} treeview">
+        @php
+        $temptenders=\App\temptender::where('isactive',1)->count();
+        $nottemptenders=\App\temptender::where('isactive',0)->count();
+        @endphp
+      <li class="{{ Request::is('temptender*') ? 'active' : '' }} treeview">
           <a href="#">
-            <i class="fa fa-folder"></i> <span>TENDER COMMITTEE</span>
+            <i class="fa fa-folder"></i> <span>TEMP TENDER</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-info pull-right">{{$temptenders}}</span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('temptender/temptenders') ? 'active' : '' }}"><a href="/temptender/temptenders"><i class="fa fa-circle-o text-aqua"></i>TEMP TENDERS
+             <span class="pull-right-container">
+              <span class="label label-success pull-right">{{$temptenders}}</span>
+                  
+              </span>
+
+            </a></li>
+            <li class="{{ Request::is('temptender/notellgible') ? 'active' : '' }}"><a href="/temptender/notellgible"><i class="fa fa-circle-o text-aqua"></i>NOT ELLIGIBLE
+             <span class="pull-right-container">
+              <span class="label label-success pull-right">{{$nottemptenders}}</span>
+                  
+              </span>
+
+            </a></li>
+            
+          </ul>
+        </li>
+
+      @if(Auth::user()->usertype=='TENDER COMMITTEE')
+
+    <li class="{{ Request::is('tm*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>VIEW ALL TENDERS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ Request::is('tendercom/tenderlistforcommitee') ? 'active' : '' }}"><a href="/tendercom/tenderlistforcommitee"><i class="fa fa-circle-o text-aqua"></i>PENDING FOR COMMITTEE</a></li>
+            @php
+          $ctlcount=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))->count();
+          $alltenders=DB::table('tenders')->count();
+           $adminapprovedtenders=DB::table('tenders')
+                ->where('status','ADMIN APPROVED')
+                ->count();
 
-            <li class="{{ Request::is('tendercom/pendingtenderapproval') ? 'active' : '' }}"><a href="/tendercom/pendingtenderapproval"><i class="fa fa-circle-o text-aqua"></i>PENDING COMMITTEE APPROVAL</a></li>
-            <li class="{{ Request::is('tendercom/approvedcommiteetender') ? 'active' : '' }}"><a href="/tendercom/approvedcommiteetender"><i class="fa fa-circle-o text-aqua"></i>APPROVED TENDERS COMMITTEE</a></li>
+
+            @endphp
+
+          
+
+             <li class="{{ Request::is('tm/tenderlist') ? 'active' : '' }}"><a href="/tm/tenderlist"><i class="fa fa-circle-o text-aqua"></i>CURRENT TENDER LIST
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$ctlcount}}</span>
+              </span>
+              </a>
+              </li>
+
+
+             <li class="{{ Request::is('tm/viewalltenders') ? 'active' : '' }}"><a href="/tm/viewalltenders"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL TENDERS
+              <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$alltenders}}</span>
+              </span>
+             </a></li>
+
+          
+     
+  
+          </ul>
+        </li>
+
+      @endif
+      @if(Auth::user()->usertype=='TENDER COMMITTEE'|| Auth::user()->usertype=='MASTER ADMIN')
+
+
+
+
+      @php
+        $pendingcomitee=DB::table('tenders')
+          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+          ->where(function ($query) {
+                  $query->where('status','ELLIGIBLE')
+                ->orWhere('status','ELLIGIBLE,INTERESTED');
+           })   
+          ->count();
+        $pendingcomitteeapproval=DB::table('tenders')->where('status','PENDING COMMITEE APPROVAL')
+                  ->select('tenders.*','users.name')
+                  ->leftJoin('users','tenders.author','=','users.id')
+                  ->count();
+        $comitteeapproved=DB::table('tenders')->where('status','COMMITEE APPROVED')
+                  ->select('tenders.*','users.name')
+                  ->leftJoin('users','tenders.author','=','users.id')
+                   ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+                  ->count();
+       
+      @endphp
+            <li class="{{ Request::is('tendercom*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>TENDER COMMITTEE</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-warning pull-right">{{$pendingcomitee+$pendingcomitteeapproval}}</span>
+              </span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('tendercom/tenderlistforcommitee') ? 'active' : '' }}"><a href="/tendercom/tenderlistforcommitee"><i class="fa fa-circle-o text-aqua"></i>PENDING FOR COMMITTEE
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$pendingcomitee}}</span>
+              </span>
+
+            </a></li>
+
+            <li class="{{ Request::is('tendercom/pendingtenderapproval') ? 'active' : '' }}"><a href="/tendercom/pendingtenderapproval"><i class="fa fa-circle-o text-aqua"></i>PENDING COMMITTEE APPROVAL
+              <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$pendingcomitteeapproval}}</span>
+              </span>
+            </a></li>
+            <li class="{{ Request::is('tendercom/approvedcommiteetender') ? 'active' : '' }}"><a href="/tendercom/approvedcommiteetender"><i class="fa fa-circle-o text-aqua"></i>APPROVED TENDERS COMMITTEE
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$comitteeapproved}}</span>
+              </span>
+
+            </a></li>
 
           </ul>
         </li>
+  
         @endif
       @if(Auth::user()->usertype=='MASTER ADMIN')
+       @php
+         $pendingadminapproval=DB::table('tenders')
+                 ->where('status','COMMITEE APPROVED')
+                 ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+                 ->count();
+           $adminapproved=DB::table('tenders')
+                ->where('status','ADMIN APPROVED')
+                ->count();
+          
+       @endphp
       <li class="{{ Request::is('ata*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>ADMIN APPROVAL</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-info pull-right">{{$pendingadminapproval}}</span>
+              </span>
             </span>
           </a>
           <ul class="treeview-menu">
 
-            <li class="{{ Request::is('ata/admintenderapproval') ? 'active' : '' }}"><a href="/ata/admintenderapproval"><i class="fa fa-circle-o text-aqua"></i>PENDING ADMIN APPROVAL</a></li>
-             <li class="{{ Request::is('ata/adminapprovedtenders') ? 'active' : '' }}"><a href="/ata/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS</a></li>
+            <li class="{{ Request::is('ata/admintenderapproval') ? 'active' : '' }}"><a href="/ata/admintenderapproval"><i class="fa fa-circle-o text-aqua"></i>PENDING ADMIN APPROVAL
+            <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$pendingadminapproval}}</span>
+              </span>
+
+            </a></li>
+             <li class="{{ Request::is('ata/adminapprovedtenders') ? 'active' : '' }}"><a href="/ata/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS
+               <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$adminapproved}}</span>
+              </span>
+             </a></li>
 
           </ul>
         </li>
 
        @endif
-
+         @php
+        $appliedtenders=DB::table('tenders')
+          ->where('status','APPLIED')
+          ->count();
+        $notapplied=DB::table('tenders')
+              ->where('status','NOT APPLIED')
+              ->count();
+         $committeerejected=DB::table('tenders')
+              ->where('status','COMMITTEE REJECTED')
+              ->count();
+             $userassigned=DB::table('tenders')
+               ->where('status','ASSIGNED TO USER')
+               ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+               ->count();
+         @endphp
         <li class="{{ Request::is('applied*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>APPLIED TENDER</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-primary pull-right">{{$appliedtenders}}</span>
+              </span>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ Request::is('applied/appliedtenders') ? 'active' : '' }}"><a href="/applied/appliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPLIED TENDERS</a></li>
+            <li class="{{ Request::is('applied/appliedtenders') ? 'active' : '' }}"><a href="/applied/appliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPLIED TENDERS
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$appliedtenders}}</span>
+              </span>
+
+            </a></li>
           </ul>
         </li>
-         <li class="{{ Request::is('notapplied*') ? 'active' : '' }} treeview">
-          <a href="#" style="font-size: 11px;">
-            <i class="fa fa-folder"></i> <span>APPROVED BUT NOT APPLIED TENDER</span>
+            <li class="{{ Request::is('userassigned*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>USER ASSIGNED</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-warning pull-right">{{$userassigned}}</span>
+              </span>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ Request::is('notapplied/approvedbutnotappliedtenders') ? 'active' : '' }}"><a style="font-size: 11px;;" href="/notapplied/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPROVED BUT NOT APPLIED TENDERS</a></li>
+            <li class="{{ Request::is('userassigned/pendinguserassigned') ? 'active' : '' }}"><a href="/userassigned/pendinguserassigned"><i class="fa fa-circle-o text-aqua"></i>PENDING USER ASSIGNED
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$userassigned}}</span>
+              </span>
+
+            </a></li>
+
+     
+
+          </ul>
+        </li>
+      <li class="{{ Request::is('comrejected*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>COMMITTEE REJECTED</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-danger pull-right">{{$committeerejected}}
+              </span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('comrejected/comitteerejectedtenders') ? 'active' : '' }}"><a href="/comrejected/comitteerejectedtenders"><i class="fa fa-circle-o text-aqua"></i>REJECTED TENDERS
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$committeerejected}}
+                  </span>
+              </span>
+
+            </a></li>
+          </ul>
+        </li>
+
+         <li class="{{ Request::is('notapplied*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>APPROVED BUT 
+            <br>
+            NOT APPLIED TENDER</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+               <span class="label label-danger pull-right">{{$notapplied}}</span>
+              </span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('notapplied/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/notapplied/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>NOT APPLIED TENDERS
+              <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$notapplied}}</span>
+              </span>
+
+            </a></li>
+          </ul>
+        </li>
+           <li class="{{ Request::is('alltenderpdu*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>TENDER RESULT</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('alltenderpdu/alltendersdocupload') ? 'active' : '' }}"><a href="/alltenderpdu/alltendersdocupload"><i class="fa fa-circle-o text-aqua"></i>TENDER DOC UPLOAD
+             <span class="pull-right-container">
+                  
+              </span>
+
+            </a></li>
           </ul>
         </li>
 
@@ -309,20 +574,20 @@
 
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        @if(Auth::user()->usertype=='MASTER ADMIN')
+       @if(Auth::user()->usertype=='MASTER ADMIN')
           <div class="btn-group btn-group-justified amit-btn">
             <a href="/" class="btn bg-maroon btn-lg">MAIN</a>
             <a href="/mdhome" class="btn bg-olive btn-lg">MD</a>
             <a href="/adminhr" class="btn bg-purple btn-lg">HR</a>
             <a href="/adminaccounts" class="btn bg-red btn-lg">ACCOUNTS</a>
-            <a href="#" class="btn btn-success btn-lg">INVENTORY</a>
+            <a href="/admininventory" class="btn btn-success btn-lg">INVENTORY</a>
+            <a href="/admintender" class="btn btn-info btn-lg">TENDER</a>
           </div> 
-          </div>   
         @endif
               
         <section class="content-header">      
             <h1 style="text-align: center;">
-               STATUS GEAR 1.0V TENDER
+               PMS-MONITORS 1.0V TENDER
             </h1>
             <ol class="breadcrumb">
 
@@ -615,14 +880,47 @@ var jqf = $.noConflict();
      "scrollX": true,
      "iDisplayLength": 25
   });
+  $('.datatablescrollexport').DataTable({
+        dom: 'Bfrtip',
+        "order": [[ 0, "desc" ]],
+        "iDisplayLength": 25,
+        "scrollY": 450,
+        "scrollX": true,
+
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                footer:true,
+                pageSize: 'A4',
+                title: 'Report',          
+            },
+            {
+                extend: 'excelHtml5',
+                footer:true,
+                title: 'Report'
+            },
+            {
+                extend: 'print',
+                footer:true,
+                title: 'Report'
+            },
+
+       ],
+            });
 </script>
 
 
+
+
+
+  
   <footer class="main-footer no-print">
+
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0V
     </div>
-    <strong>Copyright &copy; 2020-2021<a href="http://www.subudhitechno.com">Subudhi Techno Engineers Pvt. Ltd.</a> </strong> All rights
+    <strong>Copyright &copy; 2020-2021 <a href="http://www.pabitragroups.com">PABITRA GROUPS Pvt. Ltd.</a> </strong> All rights
     reserved.
   </footer>
 

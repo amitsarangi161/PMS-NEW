@@ -2285,6 +2285,7 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
                 {
                   $expenseentry=new expenseentry();
                   $expenseentry->employeeid=Auth::id();
+                  $expenseentry->requistion_id=$request->requistion_id;
                   $expenseentry->projectid=$request->projectid;
                   $expenseentry->expenseheadid=$request->expenseheadid;
                   $expenseentry->particularid=$request->particularid;
@@ -2310,6 +2311,7 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
                     $success=$rarefile->move($raupload,$rarefilename);
                     $expenseentry->uploadedfile = $rarefilename;
                      }
+                     //return $expenseentry;
                  $expenseentry->save();
                }
 

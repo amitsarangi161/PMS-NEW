@@ -7,14 +7,19 @@ use App\Smssetting;
 
 class SendSmsController extends Controller
 {
+    public function sendtextsms(){
+     
+     return $this->sendSms('hello','7008460411');
+    }
     public function sendSms($message,$mobile){
     $smssetting=Smssetting::first();
+    //dd($smssetting->status);
     if($smssetting->status==1){
     $url = "https://message.datagramindia.com/api/api_http.php";
     $recipients = array($smssetting->mobile,$mobile);
     $param = array('username' => $smssetting->username,
                    'password' => $smssetting->password,
-                   'senderid' => 'PABITR',
+                   'senderid' => 'PBTGRP',
                    'text' => $message,
                    'route' => 'Informative',
                    'type' => 'text',
@@ -29,6 +34,7 @@ class SendSmsController extends Controller
     $result = curl_exec($ch);
     if(curl_errno($ch)) {         $result = "cURL ERROR: " . curl_errno($ch) . " " . curl_error($ch);     } else {         $returnCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);         switch($returnCode) {             case 200 :                 break;             default :                 $result = "HTTP ERROR: " . $returnCode;         }     }
     curl_close($ch);
+    //dd($result);
     return $result;
     }
    catch (\Exception $ex) {
