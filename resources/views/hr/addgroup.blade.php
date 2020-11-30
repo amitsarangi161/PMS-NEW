@@ -1,4 +1,4 @@
-@extends('layouts.hr')
+@extends('layouts.labour')
 
 @section('content')
 @if(Session::has('msg'))

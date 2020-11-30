@@ -3052,17 +3052,13 @@ public function no_to_words($no)
 
            $rq=requisitionheader::find($id);
            $empid=$rq->employeeid;
-           $requisition=requisitionheader::select('requisitions.*','requisitionheaders.employeeid','requisitionpayments.amount as paidamt','vendors.id as vendorid','vendors.vendorname','vendors.mobile','vendors.details','vendors.bankname','vendors.acno','vendors.branchname','vendors.ifsccode','vendors.photo','vendors.vendoridproof')
+           $requisition=requisitionheader::select('requisitionheaders.employeeid','requisitionpayments.amount as paidamt')
                       ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
-                      ->leftJoin('projects','requisitionpayments.rid','=','requisitionheaders.id')
-                       ->leftJoin('requisitions','requisitions.requisitionheaderid','=','requisitionheaders.id')
-                       ->leftJoin('vendors','requisitions.vendorid','=','vendors.id')
                        ->where('requisitionpayments.paymentstatus','PAID')
                        ->where('requisitionpayments.paymenttype','!=','WALLET')
                       ->where('requisitionheaders.employeeid',$empid)
                       ->groupBy('requisitionpayments.id')
                       ->get();
-        
           $totalamt=$requisition->sum('paidamt');
         
         $entries=expenseentry::where('employeeid',$empid)

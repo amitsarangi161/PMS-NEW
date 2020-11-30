@@ -335,6 +335,10 @@ public function companydetails(){
       elseif(Auth::user()->usertype=='INVENTORY')
       {
            return view('inventory.home');
+      }
+      elseif(Auth::user()->usertype=='LABOUR')
+      {
+           return view('labour.home');
       }    
 
     $noofprojects=project::count();

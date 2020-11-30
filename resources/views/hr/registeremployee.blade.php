@@ -350,13 +350,7 @@
                     <input type="text" name="wagescode"class="form-control" placeholder="Enter Employee wages" required="" id="wagescode">
                   </div>
                </div>
-               <div class="form-group">
-                  <label for="inputEmail3" class=" col-sm-3">Wages per Hour*</label>
-
-                  <div class="col-sm-9">
-                    <input type="text" name="wagesperhour"class="form-control" placeholder="Enter  wages per Hour" required="" id="wagesperhour">
-                  </div>
-               </div> 
+             
                 <div class="form-group">
                   <label for="inputEmail3" class=" col-sm-3">Employee Group*</label>
 
@@ -373,16 +367,23 @@
                   <label for="inputEmail3" class=" col-sm-3">No. of Hours/day*</label>
 
                   <div class="col-sm-9">
-                    <input type="text" name="noofhour"class="form-control" placeholder="Number of hours per day" required="" value="8" id="noofhour">
+                    <input type="text" name="noofhour"class="form-control calc" placeholder="Number of hours per day" required="" autocomplete="off" value="8" id="noofhour">
                   </div>
                </div>
                 <div class="form-group">
                   <label for="inputEmail3" class=" col-sm-3">Wages*</label>
 
                   <div class="col-sm-9">
-                    <input type="text" name="wages"class="form-control" placeholder="Enter Employee wages" required="" id="wages">
+                    <input type="text" name="wages"class="form-control calc" placeholder="Enter Employee wages" required="" id="wages" autocomplete="off">
                   </div>
-               </div>           
+               </div>  
+                  <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Wages per Hour*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="wagesperhour"class="form-control" placeholder="Enter  wages per Hour" required="" id="wagesperhour">
+                  </div>
+               </div>         
              
               </div>
             </div>
@@ -598,13 +599,37 @@
       $("#noofhour").prop('required',true);
       $("#wages").prop('required',true);
       $("#groupid").prop('required',true);
+      $("#wagesperhour").prop('required',true);
     }else{
       $("#labourdiv").hide();
       $("#noofhour").prop('required',false);
       $("#wages").prop('required',false);
       $("#groupid").prop('required',false);
+      $("#wagesperhour").prop('required',false);
+
   }
     }
+    $(".calc").on('change input', function(){
+     var h= $("#noofhour").val();
+     var w= $("#wages").val();
+     if(h){
+       hr=h;
+     }
+     else{
+      hr=0;
+     }
+     if(w){
+      wg=w;
+     }
+     else{
+      wg=0;
+     }
+     var hours=parseFloat(hr);
+     var wages=parseFloat(wg);
+     var perHour=parseFloat(wages/hours).toFixed(2);
+     $("#wagesperhour").val(perHour);
+     
+});
 </script>
 
 @endsection

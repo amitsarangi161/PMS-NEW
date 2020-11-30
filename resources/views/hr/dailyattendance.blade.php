@@ -1,4 +1,4 @@
-@extends('layouts.hr')
+@extends('layouts.labour')
 
 @section('content')
 @if(Session::has('msg'))
@@ -25,6 +25,17 @@
                @foreach($groups as $key => $group)
                <option value="{{$group->id}}">{{$group->groupname}}</option>
                @endforeach
+          </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>SELECT LABOUR*</label>
+          <select class="form-control select2" id="labour"  name="labour[]" required="" style="width: 100%;" multiple>
+            <option value="A">SELECT A LABOUR</option>
+            <option value="A">SELECT A LABOUR</option>
+
+
           </select>
       </div>
     </div>
