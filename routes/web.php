@@ -16,6 +16,8 @@ Route::get('/testimage','HomeController@testimage');
 Route::post('/registerrequest','HomeController@registerrequest');
 Route::post('/account/kit','AjaxController@accountkitverify');
 Route::post('/ajaxsavesuggestion','AjaxController@savesuggestion');
+Route::post('/ajaxfetchlabourfromgrp','AjaxController@ajaxfetchlabourfromgrp');
+Route::post('/ajaxfetchlabour','AjaxController@ajaxfetchlabour');
 
 Route::post('/ajaxsearchtenderno','AjaxController@ajaxsearchtenderno');
 Route::get('/sendtestsms','SendSmsController@sendtextsms');

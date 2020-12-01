@@ -24,10 +24,62 @@ use App\engagedlabour;
 use App\dailyvehicle;
 use App\suggestion;
 use App\tender;
+use App\employeedetail;
 class AjaxController extends Controller
 { 
+  public function ajaxfetchlabour(Request $request){
+
+    $labours=employeedetail::where('groupid',$request->groupid)->get();
+    return response()->json($labours);
 
 
+  }
+  public function ajaxfetchlabourfromgrp(Request $request){
+    $entrytime=Carbon::parse($request->entrytime);
+    $departuretime=Carbon::parse($request->departuretime);
+    $labour=$request->labour;
+    $groupid=$request->groupid;
+    $numberofhour=$request->nof;
+    $employeedetails=employeedetail::whereIn('id',$labour)->get();
+    $difference=$numberofhour*60;
+    //$difference=$entrytime->diffInMinutes($departuretime,false);
+    $customarray=array();
+    foreach ($employeedetails as $key => $employeedetail) {
+      $noofhour=$employeedetail->noofhour;
+      $minutes=$noofhour*60;
+      $wages=$employeedetail->wages;
+      $wagesperminute=$wages/$minutes;
+      $totamt=$difference*$wagesperminute;
+      if($difference > $minutes)
+      {
+        $otminutes=$difference-$minutes;
+        $othours = intdiv($otminutes, 60).':'. ($otminutes % 60);
+        $otamount= $otminutes*$wagesperminute;
+      }
+      else{
+        $otminutes=0;
+        $othours = 0;
+        $otamount= 0;
+      }
+      $arr=array(
+        'id'=>$employeedetail->id,
+        'employeename'=>$employeedetail->employeename,
+        'totamt'=>number_format((float)$totamt, 2, '.', ''),
+        'otamount'=>number_format((float)$otamount, 2, '.', ''),
+        'othours'=>$othours,
+        'wages'=>$wages,
+        'otminutes'=>$otminutes,
+        'totnoofhour'=>intdiv($difference, 60).':'. ($difference % 60),
+        'totnoofminutes'=>$difference,
+        'entrytime'=>$request->entrytime,
+        'departuretime'=>$request->departuretime
+
+    );
+      $customarray[]=$arr;
+   }
+    return $customarray;
+
+  }
   public function ajaxexpchangedate(Request $request)
   {
         $expense=expenseentry::find($request->id);

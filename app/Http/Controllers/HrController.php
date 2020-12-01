@@ -26,6 +26,7 @@ use App\employeeotherdocument;
 use App\attendance;
 use App\Addgroup;
 use App\Dailyattendancegroup;
+use App\Dailyattendancegroupdetail;
 use App\Dailyattendanceimage;
 use Excel;
 class HrController extends Controller
@@ -101,8 +102,10 @@ $attendancegroup->entrytime=$request->entrytime;
 $attendancegroup->workassignment=$request->workassignment;
 $attendancegroup->departuretime=$request->departuretime;
 $attendancegroup->noofworkerspresent=$request->noofworkerspresent;
-$attendancegroup->wages=$request->wages;
-$attendancegroup->ot=$request->ot;
+$attendancegroup->twages=$request->twages;
+$attendancegroup->tot=$request->tot;
+$attendancegroup->tamt=$request->tamt;
+$attendancegroup->nof=$request->nof;
 $attendancegroup->remarks=$request->remarks;
 $attendancegroup->itemdescription=$request->itemdescription;
 $attendancegroup->unit=$request->unit;
@@ -134,6 +137,17 @@ $attendanceid=$attendancegroup->id;
         } 
     $attendanceimage->attendance_id  =$attendanceid;
     $attendanceimage->save();
+    $count=count($request->dailyattendanceid);
+    for ($i=0; $i < $count ; $i++) { 
+          
+           $attendancedetail=new Dailyattendancegroupdetail();
+           $attendancedetail->attendanceid=$request->dailyattendanceid[$i];
+           $attendancedetail->employee_id=$request->employee_id[$i];
+           $attendancedetail->totnoofhour=$request->totnoofhour[$i];
+           $attendancedetail->othours=$request->othours[$i];
+           $attendancedetail->wages=$request->wages[$i];
+           $attendancedetail->save();
+        }
     Session::flash('msg','Save successfully');
        
     }
@@ -593,6 +607,7 @@ $request->validate([
 public function editemployeedetails($id){
 /*      $departments=department::all();*/
       //$designations=designation::all();
+      $groups=Addgroup::all();
       $editemployeedetail=employeedetail::find($id);
       $editcompanydetail=employeecompanydetail::find($id);
       $editemployeebankaccount=employeebankaccountsdetail::find($id);
@@ -600,7 +615,7 @@ public function editemployeedetails($id){
       $employeeotherdocuments=employeeotherdocument::where('employee_id',$id)
                           ->get();
        //return $employeeotherdocuments;
-        return view('hr.editemployeedetails',compact('editemployeedetail','editcompanydetail','editemployeebankaccount','editemployeedocument','employeeotherdocuments'));
+        return view('hr.editemployeedetails',compact('editemployeedetail','editcompanydetail','editemployeebankaccount','editemployeedocument','employeeotherdocuments','groups'));
     }
 public function saveempotherdoc(Request $request,$id){
   //return $request->all();
@@ -640,6 +655,12 @@ public function updateemployeedetails(Request $request,$id)
         $updateemployee->permanentaddress=$request->permanentaddress;
         $updateemployee->fathername=$request->fathername;
         $updateemployee->maritalstatus=$request->maritalstatus;
+        $updateemployee->emptype=$request->emptype;
+        $updateemployee->wagescode=$request->wagescode;
+        $updateemployee->groupid=$request->groupid;
+        $updateemployee->noofhour=$request->noofhour;
+        $updateemployee->wages=$request->wages;
+        $updateemployee->wagesperhour=$request->wagesperhour;
         $updateemployee->save();
 
         $eid=$updateemployee->id;
