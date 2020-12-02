@@ -32,6 +32,14 @@ use Excel;
 class HrController extends Controller
 {
   //-------------PMS HR ------------//
+  public function updategroupdetail(Request $request)
+   {
+       $groupdetails=Dailyattendancegroupdetail::find($request->did);
+       $groupdetails->totnoofhour=$request->totnoofhour;
+       $groupdetails->save();
+       Session::flash('msg','Group Updated Successfully');
+       return back();
+   }
   public function viewattendancegroup(Request $request,$id){
       $editdailyattendancegroup=Dailyattendancegroup::find($id);
      $dailyattendanceimages=Dailyattendanceimage::where('attendance_id',$id)->get();
@@ -137,15 +145,17 @@ $attendanceid=$attendancegroup->id;
         } 
     $attendanceimage->attendance_id  =$attendanceid;
     $attendanceimage->save();
-    $count=count($request->dailyattendanceid);
+    $count=count($request->id);
     for ($i=0; $i < $count ; $i++) { 
           
            $attendancedetail=new Dailyattendancegroupdetail();
-           $attendancedetail->attendanceid=$request->dailyattendanceid[$i];
-           $attendancedetail->employee_id=$request->employee_id[$i];
+           $attendancedetail->dailyattendanceid=$attendanceid;
+           $attendancedetail->employee_id=$request->id[$i];
            $attendancedetail->totnoofhour=$request->totnoofhour[$i];
            $attendancedetail->othours=$request->othours[$i];
            $attendancedetail->wages=$request->wages[$i];
+           $attendancedetail->otamount=$request->otamount[$i];
+           $attendancedetail->totamt=$request->totamt[$i];
            $attendancedetail->save();
         }
     Session::flash('msg','Save successfully');

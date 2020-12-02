@@ -88,25 +88,7 @@
           </tr>
           @endforeach
         </tbody>
-          <tfoot>
-           <tr bgcolor="#97FFD7">
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td>Total</td>
-               <td><strong>{{$allattendancegroups->sum('wages')}}</strong></td>
-               <td><strong>{{$allattendancegroups->sum('wages')}}</strong></td>
-               <td></td>
-               <td></td>
-               <td><strong>{{$allattendancegroups->sum('unit')}}KG</strong></td>
-               <td><strong>{{$allattendancegroups->sum('quantity')}}</strong></td>
-               <td><strong>{{$allattendancegroups->sum('amount')}}</strong></td>
-               <td></td>
-               <td></td>
-           </tr>
-     </tfoot>
+      
       </table>
   </div>
 

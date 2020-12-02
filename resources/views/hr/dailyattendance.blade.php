@@ -187,6 +187,65 @@
 </div>
 
 </form>
+
+  <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">EDIT GROUP DETAILS</h4>
+      </div>
+      <div class="modal-body">
+
+
+            <table class="table table-responsive table-hover table-bordered table-striped">
+    <tr>
+     <td><strong>EMPLOYEE ID<span style="color: red"> *</span></strong></td>
+     <td><input type="text" readonly="" autocomplete="off" name="modeid" id="modeid" placeholder="Enter Group Name" class="form-control" required></td>
+   
+    
+   </tr>
+   <tr>
+     <td><strong>EMPLOYEE NAME<span style="color: red"> *</span></strong></td>
+     <td><input type="text" readonly="" autocomplete="off" name="employeename" id="modemployeename" placeholder="Enter Group Name" class="form-control" required></td>
+   
+    
+   </tr>
+   <tr>
+     <td><strong>TOTAL NUMBER OF HOURS<span style="color: red"> *</span></strong></td>
+     <td><input type="text" autocomplete="off" name="totnoofhour" id="modtotnoofhour" placeholder="Enter Group Name" class="form-control" required></td> 
+   </tr>
+   <tr>
+     <td><strong>OT HOURS<span style="color: red"> *</span></strong></td>
+     <td><input type="text" readonly="" autocomplete="off" name="othours" id="modothours" placeholder="Enter Group Name" class="form-control" required></td> 
+   </tr>
+   <tr>
+     <td><strong>WAGES<span style="color: red"> *</span></strong></td>
+     <td><input type="text"  readonly="" autocomplete="off" name="wages" id="modwages" placeholder="Enter Group Name" class="form-control" required></td> 
+   </tr>
+   <tr>
+     <td><strong>OT AMOUNT<span style="color: red"> *</span></strong></td>
+     <td><input type="text" readonly="" autocomplete="off" name="otamount" id="modotamount" placeholder="Enter Group Name" class="form-control" required></td> 
+   </tr>
+    <tr>
+     <td><strong>TOTAL AMOUNT<span style="color: red"> *</span></strong></td>
+     <td><input type="text" readonly="" autocomplete="off" name="totamt" id="modtotamt" placeholder="Enter Group Name" class="form-control" required></td> 
+   </tr>
+   <tr>
+    <td colspan="2" style="text-align: right;"><button type="submit" onclick="update();" class="btn btn-success">Update</button></td>
+   </tr>
+</table>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 <script>
@@ -225,6 +284,7 @@ function readURL1(input) {
                      },
 
                success:function(data) { 
+                 $('#labour').empty();
                 $.each(data, function (i, item) {
   
      $('#labour')
@@ -284,6 +344,7 @@ function readURL1(input) {
                         '<td>'+'<input type="hidden" class="countwages" name="wages[]" value="'+value.wages+'">'+value.wages+'</td>'+
                         '<td>'+'<input type="hidden" class="countotamt" name="otamount[]" value="'+value.otamount+'">'+value.otamount+'</td>'+
                         '<td>'+'<input type="hidden" class="counttotamt" name="totamt[]" value="'+value.totamt+'">'+value.totamt+'</td>'+
+                        '<td>'+'<button type="button" onclick="edit('+value.id+',\''+ value.employeename + '\',\''+value.totnoofhour+'\',\''+value.othours+'\',\''+value.wages+'\',\''+value.otamount+'\',\''+value.totamt+'\')">EDIT</button>'+'</td>'+
                         '</tr>';
                 
                 });
@@ -329,6 +390,20 @@ function sumofrow()
   $('#noofworkerid').val(totallabour);
 
 
+
+}
+function edit(id,employeename,totnoofhour,othours,wages,otamount,totamt){
+          $("#modeid").val(id);
+          $("#modemployeename").val(employeename);
+          $("#modtotnoofhour").val(totnoofhour);
+          $("#modothours").val(othours);
+          $("#modwages").val(wages);
+          $("#modotamount").val(otamount);
+          $("#modtotamt").val(totamt);
+          $("#myModal").modal('show');
+}
+function update(){
+  
 
 }
 </script>

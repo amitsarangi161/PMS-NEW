@@ -188,7 +188,7 @@ label {font-size: 12px;}
                           <button class="btn"><i class="fa fa-download"></i> Download</button>
                          </a>
                   @else
-                  {{N/A}}
+                  N/A
                   @endif
                 </div>
                 <div class="col-md-6">

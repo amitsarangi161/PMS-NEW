@@ -50,17 +50,17 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label  class=" col-sm-3">WAGES</label>
+                  <label  class=" col-sm-3">TOTAL WAGES</label>
                   <div class="col-sm-9">
-                    <input type="email" name="email"class="form-control" id="inputEmail3" value="{{$editdailyattendancegroup->wages}}" placeholder="Wages">
+                    <input type="email" name="email"class="form-control" id="inputEmail3" value="{{$editdailyattendancegroup->twages}}" placeholder="Wages">
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label  class=" col-sm-3">OT</label>
+                  <label  class=" col-sm-3">TOTAL OT</label>
 
                   <div class="col-sm-9">
-                    <input type="text" name="phone"class="form-control" id="inputEmail3" value="{{$editdailyattendancegroup->ot}}" placeholder="Ot">
+                    <input type="text" name="phone"class="form-control" id="inputEmail3" value="{{$editdailyattendancegroup->tot}}" placeholder="Ot">
                   </div>
                 </div>
                 <div class="form-group">

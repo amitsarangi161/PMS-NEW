@@ -56,7 +56,7 @@ else{
                   <label for="inputEmail3" class=" col-sm-3">Employee Type</label>
 
                   <div class="col-sm-9">
-                    <select class="form-control" name="emptype" required="" onchange="slecttype(this.value);">
+                    <select class="form-control" name="emptype" required="" onchange="slecttype(this.value);" id="emptype">
                         <option value=''>--Select a type--</option>
                         <option value="Employee" {{ ( $editemployeedetail->emptype == "Employee") ? 'selected' : '' }}>Employee</option>
                         <option value="Labour" {{ ( $editemployeedetail->emptype == "Labour") ? 'selected' : '' }}>Labour</option>
@@ -576,6 +576,8 @@ else{
         </form>
 </div>
 <script>
+  var selectedLabour=$("#emptype").val();
+  slecttype(selectedLabour);
 
   function readURL1(input) {
         

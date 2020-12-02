@@ -809,6 +809,7 @@ Route::get('/attendance/editdailyattendancegroup/{id}','HrController@editdailyat
 Route::post('/updateattendancereportgrp/{id}','HrController@updateattendancereportgrp');
 Route::post('/updateattendancephoto','HrController@updateattendancephoto');
 Route::get('/attendance/viewattendancegroup/{id}','HrController@viewattendancegroup');
+Route::post('/updategroupdetail','HrController@updategroupdetail');
 
 
 //-------------PMS TENDER ROUTE------------//
