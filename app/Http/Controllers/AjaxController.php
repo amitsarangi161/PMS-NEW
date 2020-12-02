@@ -40,8 +40,16 @@ class AjaxController extends Controller
     $labour=$request->labour;
     $groupid=$request->groupid;
     $numberofhour=$request->nof;
+    $not=$request->nofot;
     $employeedetails=employeedetail::whereIn('id',$labour)->get();
     $difference=$numberofhour*60;
+    $otmin=$not*60;
+    if ($numberofhour==8) {
+      $day=1;
+    }
+    else{
+      $day=0.5;
+    }
     //$difference=$entrytime->diffInMinutes($departuretime,false);
     $customarray=array();
     foreach ($employeedetails as $key => $employeedetail) {
@@ -50,10 +58,10 @@ class AjaxController extends Controller
       $wages=$employeedetail->wages;
       $wagesperminute=$wages/$minutes;
       $totamt=$difference*$wagesperminute;
-      if($difference > $minutes)
+      if($otmin>0)
       {
-        $otminutes=$difference-$minutes;
-        $othours = intdiv($otminutes, 60).':'. ($otminutes % 60);
+        $otminutes=$otmin;
+        $othours = $not;
         $otamount= $otminutes*$wagesperminute;
       }
       else{
@@ -67,8 +75,9 @@ class AjaxController extends Controller
         'totamt'=>number_format((float)$totamt, 2, '.', ''),
         'otamount'=>number_format((float)$otamount, 2, '.', ''),
         'othours'=>$othours,
-        'wages'=>$wages,
+        'wages'=>number_format((float)$wages, 2, '.', ''),
         'otminutes'=>$otminutes,
+        'day'=>$day,
         'totnoofhour'=>intdiv($difference, 60).':'. ($difference % 60),
         'totnoofminutes'=>$difference,
         'entrytime'=>$request->entrytime,
