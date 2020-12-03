@@ -811,6 +811,12 @@ Route::post('/updateattendancephoto','HrController@updateattendancephoto');
 Route::get('/attendance/viewattendancegroup/{id}','HrController@viewattendancegroup');
 Route::post('/updategroupdetail','HrController@updategroupdetail');
 
+Route::get('/rcp/addvisitor','HomeController@addvisitor');
+Route::post('/savevisitor','HomeController@savevisitor');
+Route::get('/rcp/viewallvisitors','HomeController@viewallvisitors');
+Route::get('/rcp/viewreception/{id}','HomeController@viewreception');
+Route::get('/rcp/editreception/{id}','HomeController@editreception');
+Route::post('/updatereception/{id}','HomeController@updatereception');
 
 //-------------PMS TENDER ROUTE------------//
 

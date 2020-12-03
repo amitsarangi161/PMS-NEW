@@ -67,12 +67,74 @@ use App\projectotherdocument;
 use App\Bankledger;
 use App\Openingbalance;
 use App\Smssetting;
+use App\Receptiondetail;
 use DataTables;
 use Excel;
+
 //use Barryvdh\DomPDF\Facade as PDF;
 class HomeController extends Controller
 {
+  public function viewreception($id){
+    $reception=Receptiondetail::find($id);
+    //return $reception;
+    return view('viewreception',compact('reception'));
+  }
+  public function updatereception(Request $request,$id){
+    $reception=Receptiondetail::find($id);
+    $reception->visitorname=$request->visitorname;
+    $reception->address=$request->address;
+    $reception->mobile=$request->mobile;
+    $reception->purpose=$request->purpose;
+    $reception->entrytime=$request->entrytime;
+    $reception->exittime=$request->exittime;
+    $reception->whomtomeet=$request->whomtomeet;
+    $reception->remarks=$request->remarks;
+    $rarefile = $request->file('photo');    
+      if($rarefile!=''){
+      $raupload = public_path() .'/img/reception/';
+      $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+      $success=$rarefile->move($raupload,$rarefilename);
+    $reception->photo = $rarefilename;
+      }
+    $reception->save();
+  Session::flash('message','Visitors Updated Successfully');
+  return redirect('/rcp/viewallvisitors');
 
+  }
+   public function editreception($id){
+     $editreception=Receptiondetail::find($id);
+    return view('editreception',compact('editreception'));
+  }
+public function viewallvisitors(){
+  $receptiondetails=Receptiondetail::all();
+  return view('viewallvisitors',compact('receptiondetails'));
+}
+public function addvisitor(){
+  return view('reception');
+}
+public function savevisitor(Request $request){
+
+  //return $request->all();
+  $reception=new Receptiondetail();
+  $reception->visitorname=$request->visitorname;
+  $reception->address=$request->address;
+  $reception->mobile=$request->mobile;
+  $reception->purpose=$request->purpose;
+  $reception->entrytime=$request->entrytime;
+  $reception->exittime=$request->exittime;
+  $reception->whomtomeet=$request->whomtomeet;
+  $reception->remarks=$request->remarks;
+  $rarefile = $request->file('photo');    
+    if($rarefile!=''){
+    $raupload = public_path() .'/img/reception/';
+    $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+    $success=$rarefile->move($raupload,$rarefilename);
+  $reception->photo = $rarefilename;
+    }
+  $reception->save();
+  Session::flash('message','Company Details Updated Successfully');
+  return back();
+}
 public function savesmssetting(Request $request){
        $count=Smssetting::count(); 
        if($count>0){
@@ -256,7 +318,7 @@ if($count>0){
   $company->phone=$request->phone;
   $company->mobile=$request->mobile;
   $company->fax=$request->fax;
-  $company->websitelink=$request->website;
+  $company->entrytime=$request->website;
   $company->email=$request->email;
   $company->gst=$request->gst;
   $company->pan=$request->pan;

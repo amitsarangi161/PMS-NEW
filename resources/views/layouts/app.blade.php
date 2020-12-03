@@ -242,6 +242,7 @@
              
           </ul>
         </li>
+        
         <li class="{{ Request::is('projects*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-th"></i> <span>PROJECT MAIN</span>
@@ -261,6 +262,27 @@
 
         </li>
         @endif
+        @php
+        $rcpt=\App\Userrole::where('rolename','RECEPTION')->pluck('userid')->toArray();
+        @endphp
+        @if(Auth::user()->usertype=='MASTER ADMIN' || in_array(Auth::id(), $rcpt))
+        <li class="{{ Request::is('rcp*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>RECEPTION</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            <li class="{{ Request::is('rcp/addvisitor') ? 'active' : '' }}"><a href="/rcp/addvisitor"><i class="fa fa-circle-o text-aqua"></i>ADD VISITORS</a></li>
+
+            <li class="{{ Request::is('rcp/viewallvisitors') ? 'active' : '' }}"><a href="/rcp/viewallvisitors"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL VISITORS</a></li>
+             
+          </ul>
+        </li>
+        @endif
+
         @if(Auth::user()->usertype=='USER' || Auth::user()->usertype=='ADMIN')
         <li class="{{ Request::is('userprojects*') ? 'active' : '' }} treeview">
           <a href="#">

@@ -43,9 +43,13 @@ class HrController extends Controller
   public function viewattendancegroup(Request $request,$id){
       $editdailyattendancegroup=Dailyattendancegroup::find($id);
      $dailyattendanceimages=Dailyattendanceimage::where('attendance_id',$id)->get();
-     //return $dailyattendanceimages;
+     $dailyattendancegroupdetails=Dailyattendancegroupdetail::select('dailyattendancegroupdetails.*','employeedetails.employeename')
+                 ->where('dailyattendanceid',$id)
+                ->leftJoin('employeedetails','dailyattendancegroupdetails.employee_id','=','employeedetails.id')
+                                 ->get();
+    //return $dailyattendancegroupdetails;
     $groups=Addgroup::all();
-    return view('hr.viewattendancegroup',compact('groups','editdailyattendancegroup','dailyattendanceimages'));
+    return view('hr.viewattendancegroup',compact('groups','editdailyattendancegroup','dailyattendanceimages','dailyattendancegroupdetails'));
   }
   public function updateattendancephoto(Request $request)
        {
@@ -151,7 +155,7 @@ $attendanceid=$attendancegroup->id;
            $attendancedetail=new Dailyattendancegroupdetail();
            $attendancedetail->dailyattendanceid=$attendanceid;
            $attendancedetail->employee_id=$request->id[$i];
-           $attendancedetail->totnoofhour=$request->totnoofhour[$i];
+           $attendancedetail->totnoofday=$request->totnoofday[$i];
            $attendancedetail->othours=$request->othours[$i];
            $attendancedetail->wages=$request->wages[$i];
            $attendancedetail->otamount=$request->otamount[$i];
