@@ -534,15 +534,20 @@ Route::post('/changedrvoucherstatus/{id}','AccountController@changedrvoucherstat
 Route::get('/attendance/mapview','HrController@mapview');
 Route::get('/attendance/mapview/{date}','HrController@allemployeemapview');
 Route::get('/hrmain/employeelist','HrController@employeelist');
+Route::get('/hrmain/labouremployeelist','HrController@labouremployeelist');
 Route::get('/hrmain/department','HrController@department');
 Route::post('/adddepartment','HrController@adddepartment');
 Route::post('/importemployee','HrController@importemployee');
 Route::get('/hrmain/registeremployee','HrController@registeremployee');
+Route::get('/hrmain/labourregisteremployee','HrController@labourregisteremployee');
 Route::post('/employeestatus','HrController@employeestatus');
 Route::post('/saveemployeedetails','HrController@saveemployeedetails');
+Route::post('/laboursaveemployeedetails','HrController@laboursaveemployeedetails');
 
 Route::get('/hrmain/editemployeedetails/{id}','HrController@editemployeedetails');
+Route::get('/hrmain/laboureditemployeedetails/{id}','HrController@laboureditemployeedetails');
 Route::post('/updateemployeedetails/{id}','HrController@updateemployeedetails');
+Route::post('/labourupdateemployeedetails/{id}','HrController@labourupdateemployeedetails');
 Route::post('/saveempotherdoc/{id}','HrController@saveempotherdoc');
 Route::post('/ajaxgetdept','HrController@ajaxgetdept');
 Route::post('/updatedepartment','HrController@updatedepartment');
@@ -749,6 +754,7 @@ Route::get('/mdmain/currentemployeelist','MdController@currentemployeelist');
 //-------------PMS INVENTORY ROUTE------------//
 
 Route::get('/admininventory','InventoryController@admininventory');
+Route::get('/admininlabour','HrController@admininlabour');
 
 Route::get('/inventorymain/productcatagory','InventoryController@productcatagory');
 Route::post('/savecatagory','InventoryController@savecatagory');
@@ -799,22 +805,30 @@ Route::get('/dm/smssetting','HomeController@smssetting');
 Route::post('/savesmssetting','HomeController@savesmssetting');
 
 Route::get('/attendance/addgroup','HrController@addgroup');
+Route::get('/attendance/labouraddgroup','HrController@labouraddgroup');
 Route::post('/saveaddgroup','HrController@saveaddgroup');
 Route::post('/updategroup/','HrController@updategroup');
 
 Route::get('/attendance/adddailyattendance','HrController@adddailyattendance');
+Route::get('/attendance/labouradddailyattendance','HrController@labouradddailyattendance');
 Route::post('/saveattendancereportgrp','HrController@saveattendancereportgrp');
+Route::post('/laboursaveattendancereportgrp','HrController@laboursaveattendancereportgrp');
 Route::get('/attendance/viewallattendance','HrController@viewallattendance');
+Route::get('/attendance/labourviewallattendance','HrController@labourviewallattendance');
 Route::get('/attendance/editdailyattendancegroup/{id}','HrController@editdailyattendancegroup');
+Route::get('/attendance/laboureditdailyattendancegroup/{id}','HrController@laboureditdailyattendancegroup');
 Route::post('/updateattendancereportgrp/{id}','HrController@updateattendancereportgrp');
+Route::post('/labourupdateattendancereportgrp/{id}','HrController@labourupdateattendancereportgrp');
 Route::post('/updateattendancephoto','HrController@updateattendancephoto');
 Route::get('/attendance/viewattendancegroup/{id}','HrController@viewattendancegroup');
+Route::get('/attendance/labourviewattendancegroup/{id}','HrController@labourviewattendancegroup');
 Route::post('/updategroupdetail','HrController@updategroupdetail');
-
+Route::post('/labourupdategroupdetail','HrController@labourupdategroupdetail');
+Route::post('/updateattendance/','HrController@updateattendance');
 Route::get('/rcp/addvisitor','HomeController@addvisitor');
 Route::post('/savevisitor','HomeController@savevisitor');
 Route::get('/rcp/viewallvisitors','HomeController@viewallvisitors');
-Route::get('/rcp/viewreception/{id}','HomeController@viewreception');
+Route::get('/rcp/viewreception/{id}','HomeController@vi/attendance/adddailyattendanceewreception');
 Route::get('/rcp/editreception/{id}','HomeController@editreception');
 Route::post('/updatereception/{id}','HomeController@updatereception');
 

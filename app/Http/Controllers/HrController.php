@@ -32,6 +32,22 @@ use Excel;
 class HrController extends Controller
 {
   //-------------PMS HR ------------//
+  public function updateattendance(Request $request){
+       $attendance=Dailyattendancegroup::find($request->uid);
+       $attendance->itemdescription=$request->itemdescription;
+       $attendance->unit=$request->unit;
+       $attendance->quantity=$request->quantity;
+       $attendance->amount=$request->amount;
+       $attendance->workassignment=$request->workassignment;
+       $attendance->remarks=$request->remarks;
+       $attendance->save();
+       Session::flash('msg','Attendance Updated Successfully');
+       return back();
+  }
+  public function admininlabour()
+  {
+     return view('labour.home');
+  }
   public function updategroupdetail(Request $request)
    {
        $groupdetails=Dailyattendancegroupdetail::find($request->did);
@@ -42,7 +58,9 @@ class HrController extends Controller
    }
   public function viewattendancegroup(Request $request,$id){
       $editdailyattendancegroup=Dailyattendancegroup::find($id);
+      //return $editdailyattendancegroup;
      $dailyattendanceimages=Dailyattendanceimage::where('attendance_id',$id)->get();
+     //return $dailyattendanceimages;
      $dailyattendancegroupdetails=Dailyattendancegroupdetail::select('dailyattendancegroupdetails.*','employeedetails.employeename')
                  ->where('dailyattendanceid',$id)
                 ->leftJoin('employeedetails','dailyattendancegroupdetails.employee_id','=','employeedetails.id')
@@ -50,6 +68,17 @@ class HrController extends Controller
     //return $dailyattendancegroupdetails;
     $groups=Addgroup::all();
     return view('hr.viewattendancegroup',compact('groups','editdailyattendancegroup','dailyattendanceimages','dailyattendancegroupdetails'));
+  }
+  public function labourviewattendancegroup(Request $request,$id){
+      $editdailyattendancegroup=Dailyattendancegroup::find($id);
+     $dailyattendanceimages=Dailyattendanceimage::where('attendance_id',$id)->get();
+     $dailyattendancegroupdetails=Dailyattendancegroupdetail::select('dailyattendancegroupdetails.*','employeedetails.employeename')
+                 ->where('dailyattendanceid',$id)
+                ->leftJoin('employeedetails','dailyattendancegroupdetails.employee_id','=','employeedetails.id')
+                                 ->get();
+    //return $dailyattendancegroupdetails;
+    $groups=Addgroup::all();
+    return view('labour.viewattendancegroup',compact('groups','editdailyattendancegroup','dailyattendanceimages','dailyattendancegroupdetails'));
   }
   public function updateattendancephoto(Request $request)
        {
@@ -105,6 +134,20 @@ class HrController extends Controller
     //return $addgroups;
     //return $addgroups;
     return view('hr.viewallattendancegroup',compact('allattendancegroups','addgroups'));
+  }
+  public function labourviewallattendance(Request $request){
+
+    $allattendancegroups=Dailyattendancegroup::select('dailyattendancegroups.*','addgroups.groupname')
+    ->leftjoin('addgroups','dailyattendancegroups.groupid','=','addgroups.id');
+      if($request->has('group')){
+         $allattendancegroups=$allattendancegroups->where('groupid',$request->group);
+      }
+    $allattendancegroups=$allattendancegroups->get();
+    //return $allattendancegroups;
+    $addgroups=Addgroup::all();
+    //return $addgroups;
+    //return $addgroups;
+    return view('labour.viewallattendancegroup',compact('allattendancegroups','addgroups'));
   }
  public function saveattendancereportgrp(Request $request){
  //return $request->all();
@@ -172,6 +215,72 @@ return redirect('/attendance/viewallattendance');
     $groups=Addgroup::all();
     return view('hr.dailyattendance',compact('groups'));
   }
+  public function labouradddailyattendance(){
+    $groups=Addgroup::all();
+    return view('labour.dailyattendance',compact('groups'));
+  }
+   public function laboursaveattendancereportgrp(Request $request){
+ //return $request->all();
+$attendancegroup=new Dailyattendancegroup();
+$attendancegroup->groupid=$request->groupid;
+$attendancegroup->entrytime=$request->entrytime;
+$attendancegroup->workassignment=$request->workassignment;
+$attendancegroup->departuretime=$request->departuretime;
+$attendancegroup->noofworkerspresent=$request->noofworkerspresent;
+$attendancegroup->twages=$request->twages;
+$attendancegroup->tot=$request->tot;
+$attendancegroup->tamt=$request->tamt;
+$attendancegroup->nof=$request->nof;
+$attendancegroup->remarks=$request->remarks;
+$attendancegroup->itemdescription=$request->itemdescription;
+$attendancegroup->unit=$request->unit;
+$attendancegroup->quantity=$request->quantity;
+$attendancegroup->amount=$request->amount;
+// $rarefile = $request->file('photo');
+//         if($rarefile!='')
+//         {
+//         $u=time().uniqid(rand());
+//         $raupload ="image/dailyattendancegroup";
+//         $uplogoimg=$u.$rarefile->getClientOriginalName();
+//         $success=$rarefile->move($raupload,$uplogoimg);
+//         $attendancegroup->photo = $uplogoimg;
+//         }
+$attendancegroup->save();
+Session::flash('message','Document Uploaded Successfully');
+$attendanceid=$attendancegroup->id;
+
+    $galleryimage=$request['photo'];
+    if($galleryimage)
+    {
+        foreach($galleryimage as $gi){
+        $attendanceimage = new Dailyattendanceimage();
+        if($gi!=''){
+          $raupload1 ="image/dailyattendancegroup";
+        $rarefilename1=time().'.'.$gi->getClientOriginalName();
+        $success1=$gi->move($raupload1,$rarefilename1);
+        $attendanceimage->photo  = $rarefilename1;
+        } 
+    $attendanceimage->attendance_id  =$attendanceid;
+    $attendanceimage->save();
+    $count=count($request->id);
+    for ($i=0; $i < $count ; $i++) { 
+          
+           $attendancedetail=new Dailyattendancegroupdetail();
+           $attendancedetail->dailyattendanceid=$attendanceid;
+           $attendancedetail->employee_id=$request->id[$i];
+           $attendancedetail->totnoofday=$request->totnoofday[$i];
+           $attendancedetail->othours=$request->othours[$i];
+           $attendancedetail->wages=$request->wages[$i];
+           $attendancedetail->otamount=$request->otamount[$i];
+           $attendancedetail->totamt=$request->totamt[$i];
+           $attendancedetail->save();
+        }
+    Session::flash('msg','Save successfully');
+       
+    }
+    }
+return redirect('/attendance/labourviewallattendance');
+}
   public function updategroup(Request $request)
    {
        $updategroup=Addgroup::find($request->did);
@@ -190,6 +299,10 @@ return redirect('/attendance/viewallattendance');
 public function addgroup(){
   $addgroups=Addgroup::all();
   return view('hr.addgroup',compact('addgroups'));
+}
+public function labouraddgroup(){
+  $addgroups=Addgroup::all();
+  return view('labour.addgroup',compact('addgroups'));
 }
 public function deleteempotherdoc(Request $request,$id){
  employeeotherdocument::find($id)->delete();
@@ -464,7 +577,7 @@ public function saveemployeedetails(Request $request){
   //return $request->all();
 $request->validate([
 
-    'empcodeno' => 'required|unique:employeedetails|max:20',
+    //'empcodeno' => 'required|unique:employeedetails|max:20',
 ]);
       $check=employeedetail::where('empcodeno',$request->empcodeno)
             ->count();
@@ -618,6 +731,164 @@ $request->validate([
    Session::flash('message','Employee save successfully');
       return redirect('/hrmain/employeelist');       
 }
+public function laboursaveemployeedetails(Request $request){
+  //return $request->all();
+$request->validate([
+
+    //'empcodeno' => 'required|unique:employeedetails|max:20',
+]);
+      $check=employeedetail::where('empcodeno',$request->empcodeno)
+            ->count();
+
+  if($check == 0)
+  {
+
+        $employee=new employeedetail();
+        $employee->employeename=$request->employeename;
+        $employee->empcodeno=$request->empcodeno;
+        $employee->qualification=$request->qualification;
+        $employee->experencecomp=$request->experencecomp;
+        $employee->dob=$request->dob;
+        $employee->email=$request->email;
+        $employee->gender=$request->gender;
+        $employee->phone=$request->phone;
+        $employee->adharno=$request->adharno;
+        $employee->bloodgroup=$request->bloodgroup;
+        $employee->alternativephonenumber=$request->alternativephonenumber;
+        $employee->presentaddress=$request->presentaddress;
+        $employee->permanentaddress=$request->permanentaddress;
+        $employee->fathername=$request->fathername;
+        $employee->maritalstatus=$request->maritalstatus;
+        $employee->emptype=$request->emptype;
+        $employee->wagescode=$request->wagescode;
+        $employee->wagesperhour=$request->wagesperhour;
+        $employee->groupid=$request->groupid;
+        $employee->noofhour=$request->noofhour;
+        $employee->wages=$request->wages;
+        //return $employee;
+        $employee->save();
+
+        $eid=$employee->id;
+   
+        $employeecompany=new employeecompanydetail();
+        $employeecompany->employee_id=$eid;
+        $employeecompany->department=$request->department;
+        $employeecompany->designation=$request->designation;
+        $employeecompany->dateofjoining=$request->dateofjoining;
+        $employeecompany->dateofconfirmation=$request->dateofconfirmation;
+        $employeecompany->joinsalary=$request->joinsalary;
+        $employeecompany->totalyrexprnc=$request->totalyrexprnc;
+        $employeecompany->ofcemail=$request->ofcemail;
+        $employeecompany->cugmob=$request->cugmob;
+        $employeecompany->skillsets=$request->skillsets;
+        $employeecompany->location=$request->location;
+        $employeecompany->reportingto=$request->reportingto;
+        $employeecompany->save();
+
+        $employeebankaccount=new employeebankaccountsdetail();
+        $employeebankaccount->employee_id=$eid;
+        $employeebankaccount->accountholdername=$request->accountholdername;
+        $employeebankaccount->accountnumber=$request->accountnumber;
+        $employeebankaccount->bankname=$request->bankname;
+        $employeebankaccount->ifsc=$request->ifsc;
+        $employeebankaccount->pan=$request->pan;
+        $employeebankaccount->branch=$request->branch;
+        $employeebankaccount->pfaccount=$request->pfaccount;
+        $employeebankaccount->save();
+
+        $employeedocument=new employeedocument();
+        $employeedocument->employee_id=$eid;
+        $rarefile = $request->file('resume');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/resume";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->resume = $uplogoimg;
+        }
+        $rarefile = $request->file('offerletter');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/offerletter";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->offerletter = $uplogoimg;
+        }
+        $rarefile = $request->file('joiningletter');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/joiningletter";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->joiningletter = $uplogoimg;
+        }
+        $rarefile = $request->file('agreementpaper');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/agreementpaper";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->agreementpaper = $uplogoimg;
+        }
+        $rarefile = $request->file('idproof');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/idproof";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->idproof = $uplogoimg;
+        }
+        $rarefile = $request->file('aadhaarcard');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/aadhaarcard";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->aadhaarcard = $uplogoimg;
+        }
+        $rarefile = $request->file('pancard');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/pancard";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->pancard = $uplogoimg;
+        }
+        $rarefile = $request->file('photo');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/photo";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->photo = $uplogoimg;
+        }
+
+
+        $employeedocument->save();
+
+         $user=new User();
+          $user->employee_id=$eid;
+          $user->name=$employee->employeename;
+          $user->username=$employee->empcodeno;
+          $user->email=$employee->email;
+          $user->password=bcrypt(123456);
+          $user->pass=123456;
+          $user->mobile=$employee->phone;
+          $user->usertype='USER';
+          $user->save();
+
+  }
+   Session::flash('message','Employee save successfully');
+      return redirect('/hrmain/labouremployeelist');       
+}
 public function editemployeedetails($id){
 /*      $departments=department::all();*/
       //$designations=designation::all();
@@ -630,6 +901,19 @@ public function editemployeedetails($id){
                           ->get();
        //return $employeeotherdocuments;
         return view('hr.editemployeedetails',compact('editemployeedetail','editcompanydetail','editemployeebankaccount','editemployeedocument','employeeotherdocuments','groups'));
+    }
+    public function laboureditemployeedetails($id){
+/*      $departments=department::all();*/
+      //$designations=designation::all();
+      $groups=Addgroup::all();
+      $editemployeedetail=employeedetail::find($id);
+      $editcompanydetail=employeecompanydetail::find($id);
+      $editemployeebankaccount=employeebankaccountsdetail::find($id);
+      $editemployeedocument=employeedocument::find($id);
+      $employeeotherdocuments=employeeotherdocument::where('employee_id',$id)
+                          ->get();
+       //return $employeeotherdocuments;
+        return view('labour.editemployeedetails',compact('editemployeedetail','editcompanydetail','editemployeebankaccount','editemployeedocument','employeeotherdocuments','groups'));
     }
 public function saveempotherdoc(Request $request,$id){
   //return $request->all();
@@ -792,6 +1076,149 @@ public function updateemployeedetails(Request $request,$id)
         Session::flash('message','Updated Employee successfully');
         return redirect('hrmain/employeelist');
       }
+      public function labourupdateemployeedetails(Request $request,$id)
+    {
+     //return $request->all();
+        $updateemployee=employeedetail::find($id);
+        $updateemployee->employeename=$request->employeename;
+        $updateemployee->empcodeno=$request->empcodeno;
+        $updateemployee->employeename=$request->employeename;
+        $updateemployee->qualification=$request->qualification;
+        $updateemployee->experencecomp=$request->experencecomp;
+        $updateemployee->dob=$request->dob;
+        $updateemployee->email=$request->email;
+        $updateemployee->gender=$request->gender;
+        $updateemployee->phone=$request->phone;
+        $updateemployee->adharno=$request->adharno;
+        $updateemployee->bloodgroup=$request->bloodgroup;
+        $updateemployee->alternativephonenumber=$request->alternativephonenumber;
+        $updateemployee->presentaddress=$request->presentaddress;
+        $updateemployee->permanentaddress=$request->permanentaddress;
+        $updateemployee->fathername=$request->fathername;
+        $updateemployee->maritalstatus=$request->maritalstatus;
+        $updateemployee->emptype=$request->emptype;
+        $updateemployee->wagescode=$request->wagescode;
+        $updateemployee->groupid=$request->groupid;
+        $updateemployee->noofhour=$request->noofhour;
+        $updateemployee->wages=$request->wages;
+        $updateemployee->wagesperhour=$request->wagesperhour;
+        $updateemployee->save();
+
+        $eid=$updateemployee->id;
+
+        $employeecompany=employeecompanydetail::where('employee_id',$eid)->first();
+        $employeecompany->employee_id=$eid;
+        $employeecompany->department=$request->department;
+        $employeecompany->designation=$request->designation;
+        $employeecompany->dateofjoining=$request->dateofjoining;
+        $employeecompany->dateofconfirmation=$request->dateofconfirmation;
+        $employeecompany->joinsalary=$request->joinsalary;
+        $employeecompany->totalyrexprnc=$request->totalyrexprnc;
+        $employeecompany->ofcemail=$request->ofcemail;
+        $employeecompany->cugmob=$request->cugmob;
+        $employeecompany->skillsets=$request->skillsets;
+        $employeecompany->location=$request->location;
+        $employeecompany->reportingto=$request->reportingto;
+        $employeecompany->save();
+
+        $employeebankaccount=employeebankaccountsdetail::where('employee_id',$eid)->first();
+        $employeebankaccount->employee_id=$eid;
+        $employeebankaccount->accountholdername=$request->accountholdername;
+        $employeebankaccount->accountnumber=$request->accountnumber;
+        $employeebankaccount->bankname=$request->bankname;
+        $employeebankaccount->ifsc=$request->ifsc;
+        $employeebankaccount->pan=$request->pan;
+        $employeebankaccount->branch=$request->branch;
+        $employeebankaccount->pfaccount=$request->pfaccount;
+        $employeebankaccount->save();
+
+        $employeedocument=employeedocument::where('employee_id',$eid)->first();
+        $employeedocument->employee_id=$eid;
+        $rarefile = $request->file('resume');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/resume";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->resume = $uplogoimg;
+        }
+        $rarefile = $request->file('offerletter');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/offerletter";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->offerletter = $uplogoimg;
+        }
+        $rarefile = $request->file('joiningletter');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/joiningletter";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->joiningletter = $uplogoimg;
+        }
+        $rarefile = $request->file('agreementpaper');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/agreementpaper";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->agreementpaper = $uplogoimg;
+        }
+        $rarefile = $request->file('idproof');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/idproof";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->idproof = $uplogoimg;
+        }
+        $rarefile = $request->file('resignation');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/resignation";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->resignation = $uplogoimg;
+        }
+        $rarefile = $request->file('aadhaarcard');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/aadhaarcard";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->aadhaarcard = $uplogoimg;
+        }
+        $rarefile = $request->file('pancard');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/pancard";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->pancard = $uplogoimg;
+        }
+        $rarefile = $request->file('photo');
+        if($rarefile!='')
+        {
+        $u=time().uniqid(rand());
+        $raupload ="image/photo";
+        $uplogoimg=$u.$rarefile->getClientOriginalName();
+        $success=$rarefile->move($raupload,$uplogoimg);
+        $employeedocument->photo = $uplogoimg;
+        }
+        $employeedocument->save();
+        Session::flash('message','Updated Employee successfully');
+        return redirect('hrmain/labouremployeelist');
+      }
 
 public function employeestatus(Request $request){
   //return $request->all();
@@ -813,6 +1240,12 @@ public function registeremployee(){
   $designations=designation::all();
   $groups=Addgroup::all();
   return view('hr.registeremployee',compact('departments','designations','groups'));
+}
+public function labourregisteremployee(){
+  $departments=department::all();
+  $designations=designation::all();
+  $groups=Addgroup::all();
+  return view('labour.registeremployee',compact('departments','designations','groups'));
 }
 public function importemployee(Request $request)
 {
@@ -926,6 +1359,19 @@ public function employeelist(Request $request){
   //return $employeedetails;
 
   return view('hr.employeelist',compact('employeedetails'));
+}
+public function labouremployeelist(Request $request){
+  $employeedetails=employeedetail::select('employeedetails.*','employeedocuments.*','employeebankaccountsdetails.*','employeecompanydetails.*')
+              ->leftJoin('employeedocuments','employeedetails.id','=','employeedocuments.employee_id')
+              ->leftJoin('employeebankaccountsdetails','employeedetails.id','=','employeebankaccountsdetails.employee_id')
+              ->leftJoin('employeecompanydetails','employeedetails.id','=','employeecompanydetails.employee_id');
+              if($request->has('status')){
+                $employeedetails=$employeedetails->where('status',$request->status);
+              }
+              $employeedetails=$employeedetails->get();
+  //return $employeedetails;
+
+  return view('labour.employeelist',compact('employeedetails'));
 }
 public function department(){
   $all=array();

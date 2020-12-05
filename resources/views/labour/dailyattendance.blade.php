@@ -18,7 +18,7 @@
 </table>
 
 
-<form action="/saveattendancereportgrp" method="post" enctype="multipart/form-data">
+<form action="/laboursaveattendancereportgrp" method="post" enctype="multipart/form-data">
 	{{csrf_field()}}
 <div class="col-sm-12">
   <div class="row">
@@ -131,7 +131,7 @@
     </div>
   </div>
 
-    <div class="row">
+    <!-- <div class="row">
     <div class="col-md-6">
       <div class="form-group">
         <label>ITEM DESCRIPTION*</label>
@@ -174,7 +174,7 @@
       </div>
     </div>
     
-  </div>
+  </div> -->
 
   <div class="row">
     <div class="col-md-6">

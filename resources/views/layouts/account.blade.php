@@ -334,7 +334,7 @@
             </a></li>
             @endif
 
-            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='CASHIER')
+            @if(Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='CASHIER'||Auth::user()->usertype =='MANAGER')
              <li class="{{ Request::is('acc-vouchers/approvedvouchers') ? 'active' : '' }}"><a href="/acc-vouchers/approvedvouchers"><i class="fa fa-circle-o text-red"></i>APPROVED VOUCHERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$approvedvouchers}}</span>
@@ -501,7 +501,7 @@
             </a></li>
             @endif
 
-           @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN')
+           @if(Auth::user()->usertype =='ACCOUNTS'||Auth::user()->usertype =='MASTER ADMIN'||Auth::user()->usertype =='MANAGER')
             <li class="{{ Request::is('drvouchers/verifieddr') ? 'active' : '' }}"><a href="/drvouchers/verifieddr"><i class="fa fa-circle-o text-red"></i>APPROVED DR VOUCHER
             <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$countapproved}}</span>

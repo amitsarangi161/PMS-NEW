@@ -204,17 +204,28 @@
 
 
       <ul class="sidebar-menu">
-        <li class="header"><strong class="text-center">INVENTORY NAVIGATION</strong></li>
+        <li class="header"><strong class="text-center">LABOUR NAVIGATION</strong></li>
       
     
  @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='LABOUR')
         <li class="{{ Request::is('admininventory') ? 'active' : '' }} treeview">
-        <a href="/admininventory">
+        <a href="/admininlabour">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           <span class="pull-right-container">
             
           </span>
         </a>
+        </li>
+        <li class="{{ Request::is('hrmain*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>EMPLOYEE MANAGEMENT</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('hrmain/labouremployeelist') ? 'active' : '' }}"><a href="/hrmain/labouremployeelist"><i class="fa fa-circle-o text-aqua"></i>Employee Database</a></li>
+          </ul>
         </li>
           <li class="{{ Request::is('attendance*') ? 'active' : '' }} treeview">
           <a href="#">
@@ -225,14 +236,14 @@
           </a>
            <ul class="treeview-menu">
             
-            <li class="{{ Request::is('attendance/addgroup') ? 'active' : '' }}"><a href="/attendance/addgroup"><i class="fa fa-circle-o text-aqua"></i>ADD GROUPS</a></li>
+            <li class="{{ Request::is('attendance/labouraddgroup') ? 'active' : '' }}"><a href="/attendance/labouraddgroup"><i class="fa fa-circle-o text-aqua"></i>ADD GROUPS</a></li>
              
           </ul>
           <ul class="treeview-menu">
-             <li class="{{ Request::is('attendance/adddailyattendance') ? 'active' : '' }}"><a href="/attendance/adddailyattendance"><i class="fa fa-circle-o text-aqua"></i>DAILY ATTENANCE GROUPS</a></li>
+             <li class="{{ Request::is('attendance/labouradddailyattendance') ? 'active' : '' }}"><a href="/attendance/labouradddailyattendance"><i class="fa fa-circle-o text-aqua"></i>DAILY ATTENANCE GROUPS</a></li>
           </ul>
            <ul class="treeview-menu">
-             <li class="{{ Request::is('attendance/viewallattendance') ? 'active' : '' }}"><a href="/attendance/viewallattendance"><i class="fa fa-circle-o text-aqua"></i>VIEW ATTENANCE GROUPS</a></li>
+             <li class="{{ Request::is('attendance/labourviewallattendance') ? 'active' : '' }}"><a href="/attendance/labourviewallattendance"><i class="fa fa-circle-o text-aqua"></i>VIEW ATTENANCE GROUPS</a></li>
           </ul>
         </li>
        <li class="{{ Request::is('usermsg*') ? 'active' : '' }} treeview">

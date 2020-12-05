@@ -26,13 +26,13 @@
                 <div class="form-group">
                   <label  class=" col-sm-3">ENTRY TIME</label>
                   <div class="col-sm-9">
-                    <input type="time" name="empcodeno"class="form-control" id="inputEmail3" placeholder="Entry Time" value="{{$editdailyattendancegroup->entrytime}}">
+                    <input type="text" name="empcodeno"class="form-control datetimepicker1" id="inputEmail3" placeholder="Entry Time" value="{{$editdailyattendancegroup->entrytime}}">
                   </div>
                 </div>
                 <div class="form-group">
                   <label  class=" col-sm-3">DEPARTURE TIME</label>
                   <div class="col-sm-9">
-                    <input type="time" name="qualification"class="form-control" id="inputEmail3" value="{{$editdailyattendancegroup->departuretime}}" placeholder="Departure Time">
+                    <input type="text" name="qualification"class="form-control datetimepicker1" id="inputEmail3" value="{{$editdailyattendancegroup->departuretime}}" placeholder="Departure Time">
                   </div>
                 </div>
                  <div class="form-group">
