@@ -1471,7 +1471,7 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
                       ->where('requisitionheaders.employeeid',$empid)
                       ->groupBy('requisitionpayments.id')
                       ->get();
-        
+         //return $requisition;
           $totalamt=$requisition->sum('paidamt');
         
         $entries=expenseentry::where('employeeid',$empid)
@@ -3059,6 +3059,7 @@ public function no_to_words($no)
                       ->where('requisitionheaders.employeeid',$empid)
                       ->groupBy('requisitionpayments.id')
                       ->get();
+          //return $requisition;
           $totalamt=$requisition->sum('paidamt');
         
         $entries=expenseentry::where('employeeid',$empid)

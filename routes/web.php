@@ -311,6 +311,8 @@ Route::get('/viewpendingrequisition/{id}','AccountController@viewpendingrequisit
 Route::get('/viewcanceledrequisition/{id}','AccountController@viewcanceledrequisition');
 Route::get('/viewcompletedrequisition/{id}','AccountController@viewcompletedrequisition');
 Route::post('/cashierupdatepaydrvoucher/{id}','AccountController@cashierupdatepaydrvoucher');
+Route::get('/allexpensesvoucherwise/{id}','AccountController@allexpensesvoucherwise');
+
 
 Route::post('/cashierpaydrvoucher/{id}','AccountController@cashierpaydrvoucher');
 Route::get('/dvpay/pendingdrpayment/view/{id}','AccountController@viewpendingdr');

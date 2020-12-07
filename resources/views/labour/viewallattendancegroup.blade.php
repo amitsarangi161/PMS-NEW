@@ -71,7 +71,7 @@
         <tbody>
           @foreach($allattendancegroups as $key=>$allattendancegroup)
           <tr>
-            <td><a href="/attendance/viewattendancegroup/{{$allattendancegroup->id}}"><button class="btn btn-info btn-sm btn-flat">{{$allattendancegroup->id}}</button></a></td>
+            <td><a href="/attendance/labourviewattendancegroup/{{$allattendancegroup->id}}"><button class="btn btn-info btn-sm btn-flat">{{$allattendancegroup->id}}</button></a></td>
             <td>{{$allattendancegroup->groupname}}</td>
             <td>{{$allattendancegroup->entrytime}}</td>
             <td>{{$allattendancegroup->departuretime}}</td>
@@ -87,7 +87,7 @@
             <td>{{$provider::changedatetimeformat($allattendancegroup->created_at)}}</td>
             <!-- <td><a href="/attendance/editdailyattendancegroup/{{$allattendancegroup->id}}" onclick="return confirm('are you sure to edit dailyattendance ??')" ><button class="btn btn-primary btn-flat">Edit</button></a></td> -->
             <td><button class="btn btn-primary btn-flat" onclick="edit('{{$allattendancegroup->id}}','{{$allattendancegroup->itemdescription}}','{{$allattendancegroup->unit}}','{{$allattendancegroup->quantity}}','{{$allattendancegroup->amount}}','{{$allattendancegroup->workassignment}}','{{$allattendancegroup->remarks}}');">Edit</button></td>
-            <td><a href="/attendance/viewattendancegroup/{{$allattendancegroup->id}}"><button class="btn btn-info btn-flat">View</button></a></td>
+            <td><a href="/attendance/labourviewattendancegroup/{{$allattendancegroup->id}}"><button class="btn btn-info btn-flat">View</button></a></td>
           </tr>
           @endforeach
         </tbody>

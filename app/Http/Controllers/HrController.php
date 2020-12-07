@@ -190,8 +190,12 @@ $attendanceid=$attendancegroup->id;
         $success1=$gi->move($raupload1,$rarefilename1);
         $attendanceimage->photo  = $rarefilename1;
         } 
-    $attendanceimage->attendance_id  =$attendanceid;
-    $attendanceimage->save();
+      $attendanceimage->attendance_id  =$attendanceid;
+      $attendanceimage->save();
+       
+    }
+
+    }
     $count=count($request->id);
     for ($i=0; $i < $count ; $i++) { 
           
@@ -204,11 +208,10 @@ $attendanceid=$attendancegroup->id;
            $attendancedetail->otamount=$request->otamount[$i];
            $attendancedetail->totamt=$request->totamt[$i];
            $attendancedetail->save();
+           Session::flash('msg','Save successfully');
         }
-    Session::flash('msg','Save successfully');
-       
-    }
-    }
+    
+
 return redirect('/attendance/viewallattendance');
 }
   public function adddailyattendance(){
@@ -260,8 +263,12 @@ $attendanceid=$attendancegroup->id;
         $success1=$gi->move($raupload1,$rarefilename1);
         $attendanceimage->photo  = $rarefilename1;
         } 
-    $attendanceimage->attendance_id  =$attendanceid;
-    $attendanceimage->save();
+      $attendanceimage->attendance_id  =$attendanceid;
+      $attendanceimage->save();
+       
+    }
+
+    }
     $count=count($request->id);
     for ($i=0; $i < $count ; $i++) { 
           
@@ -274,11 +281,10 @@ $attendanceid=$attendancegroup->id;
            $attendancedetail->otamount=$request->otamount[$i];
            $attendancedetail->totamt=$request->totamt[$i];
            $attendancedetail->save();
+           Session::flash('msg','Save successfully');
         }
-    Session::flash('msg','Save successfully');
-       
-    }
-    }
+    
+
 return redirect('/attendance/labourviewallattendance');
 }
   public function updategroup(Request $request)
