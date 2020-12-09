@@ -132,8 +132,12 @@ public function savevisitor(Request $request){
   $reception->photo = $rarefilename;
     }
   $reception->save();
-  Session::flash('message','Company Details Updated Successfully');
-  return back();
+  $message="Mr/Mrs -". $reception->visitorname ." has Visited Our Office to meet ".$reception->whomtomeet." For ".$reception->purpose." from (PABITRA GROUPS).".$request->root();
+      if($request->check=='1'){
+        app('App\Http\Controllers\SendSmsController')->sendSms($message,'RECEPTION');
+          }
+  Session::flash('message','Reception Details Updated Successfully');
+  return redirect('/rcp/viewallvisitors');
 }
 public function savesmssetting(Request $request){
        $count=Smssetting::count(); 
@@ -145,6 +149,7 @@ public function savesmssetting(Request $request){
        $smssetting->requisitionmessage=$request->requisitionmessage;
        $smssetting->debitvoucher=$request->debitvoucher;
        $smssetting->mobile=$request->mobile;
+       $smssetting->receptioncontact=$request->receptioncontact;
        $smssetting->status=$request->status;
        $smssetting->save();
        Session::flash('msg','Updated Successfully');
@@ -157,6 +162,7 @@ public function savesmssetting(Request $request){
        $smssetting->requisitionmessage=$request->requisitionmessage;
        $smssetting->debitvoucher=$request->debitvoucher;
        $smssetting->mobile=$request->mobile;
+       $smssetting->receptioncontact=$request->receptioncontact;
        $smssetting->status=$request->status;
        $smssetting->save();
        Session::flash('msg','Save Successfully');

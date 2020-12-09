@@ -1355,6 +1355,7 @@ public function importemployee(Request $request)
 }
 public function employeelist(Request $request){
   $employeedetails=employeedetail::select('employeedetails.*','employeedocuments.*','employeebankaccountsdetails.*','employeecompanydetails.*')
+              ->where('employeedetails.emptype','Employee')
               ->leftJoin('employeedocuments','employeedetails.id','=','employeedocuments.employee_id')
               ->leftJoin('employeebankaccountsdetails','employeedetails.id','=','employeebankaccountsdetails.employee_id')
               ->leftJoin('employeecompanydetails','employeedetails.id','=','employeecompanydetails.employee_id');
@@ -1362,7 +1363,7 @@ public function employeelist(Request $request){
                 $employeedetails=$employeedetails->where('status',$request->status);
               }
               $employeedetails=$employeedetails->get();
-  //return $employeedetails;
+    //return $employeedetails;
 
   return view('hr.employeelist',compact('employeedetails'));
 }
@@ -1374,7 +1375,7 @@ public function labouremployeelist(Request $request){
               if($request->has('status')){
                 $employeedetails=$employeedetails->where('status',$request->status);
               }
-              $employeedetails=$employeedetails->get();
+              $employeedetails=$employeedetails->where('emptype','=','Labour')->get();
   //return $employeedetails;
 
   return view('labour.employeelist',compact('employeedetails'));

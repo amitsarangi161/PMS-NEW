@@ -57,6 +57,7 @@
             <td>NUMBER OF WORKERS</td>
             <td>WAGES</td>
             <td>OT</td>
+            <td>TOTAL AMOUNT</td>
             <td>REMARKS</td>
             <td>ITEM DESCRIPTION</td>
             <td>UNIT</td>
@@ -79,6 +80,7 @@
             <td>{{$allattendancegroup->noofworkerspresent}}</td>
             <td>{{$allattendancegroup->twages}}</td>
             <td>{{$allattendancegroup->tot}}</td>
+            <td>{{$allattendancegroup->tamt}}</td>
             <td>{{$allattendancegroup->remarks}}</td>
             <td>{{$allattendancegroup->itemdescription}}</td>
             <td>{{$allattendancegroup->unit}}</td>

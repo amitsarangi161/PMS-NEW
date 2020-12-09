@@ -90,6 +90,10 @@
 		          </div>
 		       </td>
        </tr>
+        <tr>
+            <td></td>
+            <td><input type="checkbox" name="check" value="1">&nbsp;<span style="color: red;font-weight: bold;font-size:16px;">Do you Want to send SMS</span></td>
+        </tr>
        <tr>
 
         <td>Photo</td>

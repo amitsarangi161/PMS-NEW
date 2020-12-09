@@ -64,6 +64,13 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label  class=" col-sm-3">TOTAL AMOUNT</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="tamt"class="form-control" id="inputEmail3" value="{{$editdailyattendancegroup->tamt}}" placeholder="tamt">
+                  </div>
+                </div>
+                <div class="form-group">
                   <label  class=" col-sm-3">REMARKS</label>
 
                   <div class="col-sm-9">

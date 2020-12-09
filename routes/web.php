@@ -830,7 +830,7 @@ Route::post('/updateattendance/','HrController@updateattendance');
 Route::get('/rcp/addvisitor','HomeController@addvisitor');
 Route::post('/savevisitor','HomeController@savevisitor');
 Route::get('/rcp/viewallvisitors','HomeController@viewallvisitors');
-Route::get('/rcp/viewreception/{id}','HomeController@vi/attendance/adddailyattendanceewreception');
+Route::get('/rcp/viewreception/{id}','HomeController@viewreception');
 Route::get('/rcp/editreception/{id}','HomeController@editreception');
 Route::post('/updatereception/{id}','HomeController@updatereception');
 

@@ -16,7 +16,11 @@ class SendSmsController extends Controller
     //dd($smssetting->status);
     if($smssetting->status==1){
     $url = "https://message.datagramindia.com/api/api_http.php";
-    $recipients = array($smssetting->mobile,$mobile);
+    if($mobile != 'RECEPTION'){
+      $recipients = array($smssetting->mobile,$mobile);
+    }else{
+      $recipients = array($smssetting->receptioncontact);
+    }
     $param = array('username' => $smssetting->username,
                    'password' => $smssetting->password,
                    'senderid' => 'PBTGRP',

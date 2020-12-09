@@ -11,6 +11,7 @@ $requisitionmessage=$smssettings->requisitionmessage;
 $debitvoucher=$smssettings->debitvoucher;
 $status=$smssettings->status;
 $mobile=$smssettings->mobile;
+$receptioncontact=$smssettings->receptioncontact;
 $value="Update";
 }
 else{
@@ -22,6 +23,7 @@ $requisitionmessage='';
 $debitvoucher='';
 $status='';
 $mobile='';
+$receptioncontact='';
 $value="Save";
 }
 
@@ -86,7 +88,10 @@ $value="Save";
 	
 </tr>
 <tr>
-
+	<td><strong>Reception Contact *</strong></td>
+	<td>
+		<input type="text" name="receptioncontact" value="{{$receptioncontact}}" class="form-control" placeholder="Example :918776543500,918958865852 " >
+	</td>
 	<td><strong>Mobile Number *</strong></td>
 	<td>
 		<input type="text" name="mobile" value="{{$mobile}}" class="form-control" placeholder="Example :918776543500,918958865852 " >
