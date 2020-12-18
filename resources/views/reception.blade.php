@@ -27,37 +27,49 @@
     </thead>
     <tbody>
       <tr>
-        <td>Visitor Name</td>
+        <td><strong>Visitor Name</strong></td>
         <td>
           <input type="text" name="visitorname" class="form-control" placeholder="Enter Visitor Name" required>
         </td>
       </tr>
       <tr>
-        <td>Mobile Number</td>
+        <td><strong>Mobile Number</strong></td>
         <td>
           <input type="text" required="" name="mobile" class="form-control" placeholder="Enter Mobile Number">
         </td>
       </tr>
       <tr>
-            <td>ADDRESS</td>
+            <td><strong>ADDRESS</strong></td>
 		        <td>
                    <div class="box">
 		            <div class="box-body pad">
-		                  <textarea class="form-control" required="" type="text" name="address"placeholder="your  address"></textarea>
+		                  <textarea class="form-control" type="text" name="address"placeholder="your  address"></textarea>
 		             
 		            </div>
 		          </div>
 		       </td>
        </tr>
-       <tr>
+       <!-- <tr>
         <td>Whom To Meet</td>
         <td>
-          <input type="text" name="whomtomeet" class="form-control" placeholder="Enter Whom To Meet" required>
+          <input type="text" name="whomtomeet" class="form-control" placeholder="Enter Whom To Meet">
         </td>
-      </tr>
+      </tr> -->
+      <tr>
+        <td><strong>Whom To Meet*</strong></td>
+          <td>
+            <select class="form-control" name="whomtomeet" required="">
+            <option value=''>--Select a User--</option>
+            <option value='MD SIR'>MD SIR</option>
+            <option value='SUBODH SIR'>SUBODH SIR</option>
+            <option value='HR SIR'>HR SIR</option>
+            <option value='OTHERS'>OTHERS</option>
+            </select>
+           </td>
+     </tr>
        
        <tr>
-            <td>Purpose</td>
+            <td><strong>Purpose</strong></td>
 		        <td>
                    <div class="box">
 		            <div class="box-body pad">
@@ -68,19 +80,19 @@
 		       </td>
        </tr>
       <tr>
-        <td>Entry Time</td>
+        <td><strong>Entry Time</strong></td>
         <td>
-          <input type="text" name="entrytime" class="form-control datetimepicker1" placeholder="Enter Entry Time" >
+          <input type="text" name="entrytime" class="form-control datetimepicker1" placeholder="Enter Entry Time"required >
         </td>
       </tr>
       <tr>
-        <td>Exit Time</td>
+        <td><strong>Exit Time</strong></td>
         <td>
-          <input type="text" name="exittime" class="form-control datetimepicker1" placeholder="Enter Exit Time" required>
+          <input type="text" name="exittime" class="form-control datetimepicker1" placeholder="Enter Exit Time">
         </td>
       </tr>
       <tr>
-            <td>Remarks</td>
+            <td><strong>Remarks</strong></td>
 		        <td>
                    <div class="box">
 		            <div class="box-body pad">
@@ -96,7 +108,7 @@
         </tr>
        <tr>
 
-        <td>Photo</td>
+        <td><strong>Photo</strong></td>
         <td> <input name="photo" type="file" onchange="readURL(this);"><img style="height:70px;width:95px;" alt="noimage"  id="imgshow"></td>
        
       </tr>

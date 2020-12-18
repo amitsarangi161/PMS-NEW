@@ -354,7 +354,7 @@ else{
                   <label for="inputEmail3" class=" col-sm-3">Wages Code*</label>
 
                   <div class="col-sm-9">
-                    <input type="text" name="wagescode" value="{{$editemployeedetail->wagescode}}"class="form-control" placeholder="Enter Employee wages" required="" id="wagescode">
+                    <input type="text" name="wagescode" value="{{$editemployeedetail->wagescode}}"class="form-control" placeholder="Enter Employee wages"  id="wagescode">
                   </div>
                </div>
              
@@ -362,7 +362,7 @@ else{
                   <label for="inputEmail3" class=" col-sm-3">Employee Group*</label>
 
                   <div class="col-sm-9">
-                      <select class="form-control select2" id="groupid"  name="groupid" required="" style="width: 100%;">
+                      <select class="form-control select2" id="groupid"  name="groupid" style="width: 100%;">
                         <option value="">SELECT A GROUP</option>
                            @foreach($groups as $key => $group)
                            <option value="{{$group->id}}" {{ ( $editemployeedetail->groupid == $group->id) ? 'selected' : '' }}>{{$group->groupname}}</option>
@@ -374,21 +374,21 @@ else{
                   <label for="inputEmail3" class=" col-sm-3">No. of Hours/day*</label>
 
                   <div class="col-sm-9">
-                    <input type="text" name="noofhour"class="form-control calc" placeholder="Number of hours per day" value="{{$editemployeedetail->noofhour}}" required="" autocomplete="off" value="8" id="noofhour">
+                    <input type="text" name="noofhour"class="form-control calc" placeholder="Number of hours per day" value="{{$editemployeedetail->noofhour}}" autocomplete="off" value="8" id="noofhour">
                   </div>
                </div>
                 <div class="form-group">
                   <label for="inputEmail3" class=" col-sm-3">Wages*</label>
 
                   <div class="col-sm-9">
-                    <input type="text" name="wages"class="form-control calc" placeholder="Enter Employee wages" required="" value="{{$editemployeedetail->wages}}" id="wages" autocomplete="off">
+                    <input type="text" name="wages"class="form-control calc" placeholder="Enter Employee wages" value="{{$editemployeedetail->wages}}" id="wages" autocomplete="off">
                   </div>
                </div>  
                   <div class="form-group">
                   <label for="inputEmail3" class=" col-sm-3">Wages per Hour*</label>
 
                   <div class="col-sm-9">
-                    <input type="text" name="wagesperhour"class="form-control" placeholder="Enter  wages per Hour" required="" value="{{$editemployeedetail->wagesperhour}}" id="wagesperhour">
+                    <input type="text" name="wagesperhour"class="form-control" placeholder="Enter  wages per Hour" value="{{$editemployeedetail->wagesperhour}}" id="wagesperhour">
                   </div>
                </div>         
              

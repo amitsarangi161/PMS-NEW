@@ -87,7 +87,7 @@ class HomeController extends Controller
     $reception->purpose=$request->purpose;
     $reception->entrytime=$request->entrytime;
     $reception->exittime=$request->exittime;
-    $reception->whomtomeet=$request->whomtomeet;
+    //$reception->whomtomeet=$request->whomtomeet;
     $reception->remarks=$request->remarks;
     $rarefile = $request->file('photo');    
       if($rarefile!=''){
@@ -133,9 +133,18 @@ public function savevisitor(Request $request){
     }
   $reception->save();
   $message="Mr/Mrs -". $reception->visitorname ." has Visited Our Office to meet ".$reception->whomtomeet." For ".$reception->purpose." from (PABITRA GROUPS).".$request->root();
-      if($request->check=='1'){
+      if($request->check=='1' && $request->whomtomeet=='MD SIR'){
         app('App\Http\Controllers\SendSmsController')->sendSms($message,'RECEPTION');
           }
+      if($request->check=='1' && $request->whomtomeet=='SUBODH SIR'){
+        app('App\Http\Controllers\SendSmsController')->sendSms($message,'RECEPTION','9777445909');
+      }
+      if($request->check=='1'&& $request->whomtomeet=='HR SIR'){
+        app('App\Http\Controllers\SendSmsController')->sendSms($message,'RECEPTION','9078072700');
+      }
+      if($request->check=='1' && $request->whomtomeet=='OTHERS'){
+        app('App\Http\Controllers\SendSmsController')->sendSms($message,'RECEPTION');
+      }
   Session::flash('message','Reception Details Updated Successfully');
   return redirect('/rcp/viewallvisitors');
 }

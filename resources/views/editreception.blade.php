@@ -49,12 +49,18 @@
 		          </div>
 		       </td>
        </tr>
-       <tr>
-        <td>Whom To Meet</td>
-        <td>
-          <input type="text" name="whomtomeet" value="{{$editreception->whomtomeet}}" class="form-control" placeholder="Enter Whom To Meet" required>
-        </td>
-      </tr>
+      <tr>
+        <td><strong>Whom To Meet*</strong></td>
+          <td>
+            <select class="form-control" name="whomtomeet" disabled="">
+            <option value=''>--Select a User--</option>
+            <option value='MD SIR' {{ ( $editreception->whomtomeet == "MD SIR") ? 'selected' : '' }}>MD SIR</option>
+            <option value='SUBODH SIR' {{ ( $editreception->whomtomeet == "SUBODH SIR") ? 'selected' : '' }}>SUBODH SIR</option>
+            <option value='HR SIR' {{ ( $editreception->whomtomeet == "HR SIR") ? 'selected' : '' }}>HR SIR</option>
+            <option value='OTHERS' {{ ( $editreception->whomtomeet == "OTHERS") ? 'selected' : '' }}>OTHERS</option>
+            </select>
+           </td>
+     </tr>
        <tr>
             <td>Purpose</td>
 		        <td>
@@ -75,7 +81,7 @@
       <tr>
         <td>Exit Time</td>
         <td>
-          <input type="text" name="exittime" value="{{$editreception->exittime}}" class="form-control datetimepicker1" placeholder="Enter Exit Time" required>
+          <input type="text" name="exittime" value="{{$editreception->exittime}}" class="form-control datetimepicker1" placeholder="Enter Exit Time">
         </td>
       </tr>
       <tr>

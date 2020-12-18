@@ -1388,6 +1388,50 @@ public function viewdetailsadminexpenseentrybydate($empid,$dt)
 //return $expenseentries;
           return view('accounts.pendinghodexpenseentry',compact('expenseentries'));
   }
+  public function getpendinghodexpenseentrylist(Request $request)
+       {
+          $expenseentries=expenseentry::select('expenseentries.*','u1.name as for')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->where('expenseentries.status','HOD PENDING')
+                      ->groupBy('expenseentries.employeeid');
+          return $expenseentries->get();
+
+          
+          
+          return DataTables::of($expenseentries)
+                 ->setRowClass(function ($expenseentries) {
+                        $date = \Carbon\Carbon::parse($expenseentries->lastdateofsubmisssion);
+                        $now = \Carbon\Carbon::now();
+                        $diff = $now->diffInDays($date);
+                        if($date<$now){
+                            $day=-($diff);
+                         }
+                        else
+                        {
+                          $day=$diff;
+                        }
+                        if($day>=0 && $day<=5)
+                          {
+                              return 'blink';
+                          }
+                      
+                              
+                   
+                })
+                 
+                 
+                 ->addColumn('idbtn', function($expenseentries){
+                         return '<a target="_blank" href="/pendingexpenseentrydetailview/'.$expenseentries->id.'" class="btn btn-info">'.$expenseentries->id.'</a>';
+                    })
+                  ->addColumn('view', function($expenseentries){
+                         return '<a target="_blank" href="/pendingexpenseentrydetailview/'.$expenseentries->id.'" class="btn btn-info">VIEW</a>';
+                    })
+                  
+                  ->rawColumns(['idbtn','view'])
+                
+               
+                 ->make(true);
+       }
 
    public function updatedebitvoucher(Request $request,$id)
    {

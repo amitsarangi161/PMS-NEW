@@ -834,6 +834,8 @@ Route::get('/rcp/viewreception/{id}','HomeController@viewreception');
 Route::get('/rcp/editreception/{id}','HomeController@editreception');
 Route::post('/updatereception/{id}','HomeController@updatereception');
 
+Route::get('getpendinghodexpenseentrylist','AccountController@getpendinghodexpenseentrylist')->name('getpendinghodexpenseentrylist');
+
 //-------------PMS TENDER ROUTE------------//
 
 Route::get('getpendingtenderapprovallist','TenderController@getpendingtenderapprovallist')->name('getpendingtenderapprovallist');   

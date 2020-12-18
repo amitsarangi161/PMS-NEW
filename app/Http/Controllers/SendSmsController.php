@@ -11,7 +11,7 @@ class SendSmsController extends Controller
      
      return $this->sendSms('hello','7008460411');
     }
-    public function sendSms($message,$mobile){
+    public function sendSms($message,$mobile,$usernumber=''){
     $smssetting=Smssetting::first();
     //dd($smssetting->status);
     if($smssetting->status==1){
@@ -19,7 +19,7 @@ class SendSmsController extends Controller
     if($mobile != 'RECEPTION'){
       $recipients = array($smssetting->mobile,$mobile);
     }else{
-      $recipients = array($smssetting->receptioncontact);
+      $recipients = array($smssetting->receptioncontact,$usernumber);
     }
     $param = array('username' => $smssetting->username,
                    'password' => $smssetting->password,
@@ -30,6 +30,7 @@ class SendSmsController extends Controller
                    'datetime' => date("Y-m-d h:i:s"),
                    'to' => implode(';', $recipients),
                     );
+    //dd($param);
     try{
     $post = http_build_query($param, '', '&');
     $ch = curl_init();
