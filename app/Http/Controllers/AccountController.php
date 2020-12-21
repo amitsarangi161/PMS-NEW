@@ -3895,6 +3895,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
     $trns = DB::table('voucher_report')
           ->where('vendorid',$id)
           ->where('status','COMPLETED')
+          ->orderBy('dateofpayment','DESC')
           ->get();
     $projects=project::all();
     $expenseheads=expensehead::all();
@@ -5655,6 +5656,154 @@ public function changependingstatusmgr(Request $request,$id)
 
         return view('accounts.viewapplicationform',compact('requisitions'));
     }
+    public function getviewallapplicationformlist(Request $request)
+       {
+
+          $requisitions=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname')
+                      ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
+                      ->leftJoin('users as u2','requisitionheaders.userid','=','u2.id')
+                      ->leftJoin('users as u3','requisitionheaders.approvedby','=','u3.id')
+                      ->leftJoin('projects','requisitionheaders.projectid','=','projects.id');
+                     
+          //return $requisitions->get();
+          
+          
+          return DataTables::of($requisitions)
+                 ->setRowClass(function ($requisitions) {
+                        $date = \Carbon\Carbon::parse($requisitions->lastdateofsubmisssion);
+                        $now = \Carbon\Carbon::now();
+                        $diff = $now->diffInDays($date);
+                        if($date<$now){
+                            $day=-($diff);
+                         }
+                        else
+                        {
+                          $day=$diff;
+                        }
+                        if($day>=0 && $day<=5)
+                          {
+                              return 'blink';
+                          }
+                      
+                              
+                   
+                })
+                 
+                 
+                 ->addColumn('idbtn', function($requisitions){
+                         return '<a target="_blank" href="/viewappliedrequisitions/'.$requisitions->id.'" class="btn btn-info">'.$requisitions->id.'</a>';
+                    })
+                 ->addColumn('technicalscoreupload', function($requisitions) {
+                    if ($requisitions->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$requisitions->technicalscoreupload.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+                  ->addColumn('financialscoreupload', function($requisitions) {
+                    if ($requisitions->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$requisitions->financialscoreupload.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+                  ->addColumn('technicalproposal', function($requisitions) {
+                    if ($requisitions->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$requisitions->technicalproposal.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+                  ->addColumn('financialproposal', function($requisitions) {
+                    if ($requisitions->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$requisitions->financialproposal.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+                  ->addColumn('participantlistupload', function($requisitions) {
+                    if ($requisitions->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$requisitions->participantlistupload.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+
+
+                 // <td> <a href="/img/posttenderdoc/{{$tender->technicalscoreupload}}" target="_blank"><i style="color: green;font-size: 20px;" class='fa fa-check-circle-o'></i></a></td>
+
+
+                  ->addColumn('sta', function($requisitions) {
+                    /*if ($requisitions->status=='PENDING') return '<span class="label label-default">'.$requisitions->status.'</span>';*/
+                      if ($requisitions->status=='ELLIGIBLE') return '<span class="label label-success" ondblclick="revokestatus('.$requisitions->id.')">'.$requisitions->status.'</span>';
+                    if ($requisitions->status=='NOT ELLIGIBLE') return '<span class="label label-warning" ondblclick="revokestatus('.$requisitions->id.')">'.$requisitions->status.'</span>';
+                    if ($requisitions->status=='PENDING')
+                      return '<select id="status" onchange="changestatus(this.value,'.$requisitions->id.')">'.
+                               '<option value="PENDING">PENDING</option>'.
+                               '<option value="ELLIGIBLE">ELLIGIBLE</option>'.
+                               '<option value="NOT ELLIGIBLE">NOT ELLIGIBLE</option>'.
+                               '<option value="NOT INTERESTED">NOT INTERESTED</option>'.
+                               '</select>';
+
+
+
+                    if ($requisitions->status=='COMMITEE APPROVED') return '<span class="label label-success" ondblclick="revokestatus('.$requisitions->id.')">'.$requisitions->status.'</span>';
+                    if ($requisitions->status=='ADMIN APPROVED') return '<span class="label label-primary" ondblclick="revokestatus('.$requisitions->id.')">'.$requisitions->status.'</span>';
+                    if ($requisitions->status=='ADMIN REJECTED') return '<span class="label label-danger" ondblclick="revokestatus('.$requisitions->id.')">'.$requisitions->status.'</span>';
+                    else
+                      return '<span class="label label-success" ondblclick="revokestatus('.$requisitions->id.')">'.$requisitions->status.'</span>';
+                    
+                    
+                    })
+                ->addColumn('status', function($requisitions){
+                  return '<select id="status" onchange="changestatus(this.value,'.$requisitions->id.')">
+                      <option value="ADMIN APPROVED">Select a option</option>
+                      <option value="APPLIED">APPLIED</option>
+                      <option value="NOT APPLIED">NOT APPLIED</option>
+                    </select>';
+                    })
+                  ->addColumn('view', function($requisitions){
+                         return '<a target="_blank" href="/viewappliedrequisitions/'.$requisitions->id.'" class="btn btn-info">VIEW</a>';
+                    })
+                  ->addColumn('delete', function($requisitions){
+                         return '<a target="_blank" href="/viewappliedrequisitions/'.$requisitions->id.'" class="btn btn-danger">DELETE</a>';
+                    })
+                  ->addColumn('now', function($requisitions){
+                         return '<p class="b" title="'.$requisitions->nameofthework.'">'.$requisitions->nameofthework.'</p>';
+                    })
+                    ->addColumn('ldos', function($requisitions) {
+                    return '<strong><span class="label label-danger" style="font-size:13px;">'.$this->changedateformat($requisitions->lastdateofsubmisssion).'</strong></span>';
+                     })
+                  ->editColumn('nitpublicationdate', function($requisitions) {
+                    return $this->changedateformat($requisitions->nitpublicationdate);
+                     })
+                   ->editColumn('emdamount', function($requisitions) {
+                    return app('App\Http\Controllers\AccountController')->moneyFormatIndia($requisitions->emdamount);
+                     })
+                   ->editColumn('location', function($requisitions) {
+                    return $requisitions->location;
+                     })
+                ->editColumn('lastdateofsubmisssion', function($requisitions) {
+                    return $this->changedateformat($requisitions->lastdateofsubmisssion);
+                     })
+                 
+                  ->editColumn('rfpavailabledate', function($requisitions) {
+                    return $this->changedateformat($requisitions->rfpavailabledate);
+                     })
+                  ->editColumn('created_at', function($requisitions) {
+                        return $this->changedatetimeformat($requisitions->created_at);
+                     })
+                  
+                  ->rawColumns(['idbtn','view','delete','now','sta','status','ldos','technicalscoreupload','financialscoreupload','technicalproposal','financialproposal','participantlistupload'])
+                
+               
+                 ->make(true);
+       }
     public function saverequisitions(Request $request)
     {
          //return $request->all();

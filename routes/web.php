@@ -835,6 +835,7 @@ Route::get('/rcp/editreception/{id}','HomeController@editreception');
 Route::post('/updatereception/{id}','HomeController@updatereception');
 
 Route::get('getpendinghodexpenseentrylist','AccountController@getpendinghodexpenseentrylist')->name('getpendinghodexpenseentrylist');
+Route::get('getviewallapplicationformlist','AccountController@getviewallapplicationformlist')->name('getviewallapplicationformlist');
 
 //-------------PMS TENDER ROUTE------------//
 

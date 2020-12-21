@@ -96,7 +96,7 @@
 		        <td>
                    <div class="box">
 		            <div class="box-body pad">
-		                  <textarea class="form-control" type="text" name="remarks" requiredplaceholder="Remarks"></textarea>
+		                  <textarea class="form-control" type="text" name="remarks" placeholder="Remarks"></textarea>
 		             
 		            </div>
 		          </div>

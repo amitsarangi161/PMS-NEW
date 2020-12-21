@@ -65,13 +65,15 @@
     color: #fff;">
             <th>ID</th>
             <th>Transaction Date</th>
+            <th>Date of Payment</th>
             <th>Credit</th>
             <th>Debit</th>
         </thead>
         @foreach($trns as $key=>$trn)
 		<tr>
             <td width="20%"><a href="/viewdrvoucher/{{$trn->id}}" target="_blank" class="btn btn-info">{{$trn->id}}</a></td>
-			<td width="20%">{{$provider::changedatetimeformat($trn->created_at)}}</td>
+      <td width="20%">{{$provider::changedatetimeformat($trn->created_at)}}</td>
+			<td width="20%">{{$provider::changedateformat($trn->dateofpayment)}}</td>
             <td style="text-align: right" width="30%">{{$trn->credit}}</td>
             <td style="text-align: right" width="30%">{{$trn->debit}}</td>
         </tr>

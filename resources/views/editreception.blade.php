@@ -22,7 +22,7 @@
     <thead>
       <tr class="bg-navy">
         <td colspan="2" class="text-center"><strong>EDIT VISITORS</strong>
-          <a href="/gallery/viewallgallery" class="btn btn-info pull-right">View all Gallery</a></td>
+          <a href="/rcp/viewallvisitors" class="btn btn-info pull-right">View all Visitors</a></td>
       </tr>
     </thead>
     <tbody>
@@ -89,7 +89,7 @@
 		        <td>
                    <div class="box">
 		            <div class="box-body pad">
-		                  <textarea class="form-control" type="text" name="remarks" requiredplaceholder="Remarks">{{$editreception->remarks}}</textarea>
+		                  <textarea class="form-control" type="text" name="remarks" placeholder="Remarks">{{$editreception->remarks}}</textarea>
 		             
 		            </div>
 		          </div>
