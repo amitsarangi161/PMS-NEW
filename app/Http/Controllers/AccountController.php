@@ -3895,8 +3895,9 @@ public function approvedebitvoucheradmin(Request $request,$id)
     $trns = DB::table('voucher_report')
           ->where('vendorid',$id)
           ->where('status','COMPLETED')
-          ->orderBy('dateofpayment','DESC')
+          ->orderBy('billdate','DESC')
           ->get();
+    return $trns;
     $projects=project::all();
     $expenseheads=expensehead::all();
     //return $vendor;
@@ -3999,9 +4000,17 @@ public function approvedebitvoucheradmin(Request $request,$id)
                      ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
                      ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
                      ->where('pmsdebitvouchers.status','PENDING')
+
+                     ->get();
+      $completedinvoices=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')
+                     ->leftJoin('vendors','pmsdebitvouchers.vendorid','=','vendors.id')
+                     ->leftJoin('projects','pmsdebitvouchers.projectid','=','projects.id')
+                     ->leftJoin('expenseheads','pmsdebitvouchers.expenseheadid','=','expenseheads.id')
+                     ->where('pmsdebitvouchers.status','COMPLETED')
+                     ->where('pmsdebitvouchers.voucher_type','INVOICE')
                      ->get();
 
-      return view('accounts.viewaccountverification',compact('createdebitvouchers'));
+      return view('accounts.viewaccountverification',compact('createdebitvouchers','completedinvoices'));
     }
      public function managerpendingdr(){
       $createdebitvouchers=Pmsdebitvoucher::select('pmsdebitvouchers.*','vendors.vendorname','projects.projectname','expenseheads.expenseheadname')

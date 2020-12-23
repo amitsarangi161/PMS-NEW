@@ -270,7 +270,9 @@
 			@if($pmsdebitvoucher->status=="CANCELLED" || $pmsdebitvoucher->status=="COMPLETED")
 			{{" "}}
 			@else
+			@if(Auth::user()->usertype !='CASHIER')
 			<button type="button" id="cancelbtn" class="btn btn-warning btn-flat btn-lg" onclick="canceldr()">CANCEL</button>
+			@endif
 			@endif
 		</td>
 		

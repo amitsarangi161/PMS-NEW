@@ -65,7 +65,7 @@
     color: #fff;">
             <th>ID</th>
             <th>Transaction Date</th>
-            <th>Date of Payment</th>
+            <th>Bill Date</th>
             <th>Credit</th>
             <th>Debit</th>
         </thead>
@@ -73,21 +73,25 @@
 		<tr>
             <td width="20%"><a href="/viewdrvoucher/{{$trn->id}}" target="_blank" class="btn btn-info">{{$trn->id}}</a></td>
       <td width="20%">{{$provider::changedatetimeformat($trn->created_at)}}</td>
-			<td width="20%">{{$provider::changedateformat($trn->dateofpayment)}}</td>
+      @if ($trn->billdate="")
+      <td><span style="color:red;">Date Not Found</span></td>
+      @else
+			<td width="20%">{{$provider::changedateformat($trn->billdate)}}</td>
+      @endif
             <td style="text-align: right" width="30%">{{$trn->credit}}</td>
             <td style="text-align: right" width="30%">{{$trn->debit}}</td>
         </tr>
         @endforeach
 
         <tfoot style="background: #c0c0c0;">
-			<tr><td colspan='2'>Total</td>
+			<tr><td colspan='3'>Total</td>
             <td style="text-align: right" width="30%">{{$trns->sum('credit')}}</td>
             <td style="text-align: right" width="30%">{{$trns->sum('debit')}}</td>
 			</tr>
             <tr style="
     background: #9e9c9c;
 ">
-			<td colspan='3'>Balance</td>
+			<td colspan='4'>Balance</td>
             <td style="border-bottom:double ;text-align: right" width="30%">{{$trns->sum('credit')-$trns->sum('debit')}}</td>
 </tr>
 

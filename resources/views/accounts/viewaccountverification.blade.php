@@ -123,6 +123,70 @@
    
    
 		@endforeach
+
+    @foreach($completedinvoices as $completedinvoice)
+          <tr style="background-color: #f7b1b1;">
+            <td>
+              @if (Request::is('drvouchers/viewalldrvouchers'))
+              <a href="/viewdrvoucher/{{$completedinvoice->id}}"  class="btn btn-primary">{{$completedinvoice->id}}</a>
+              @elseif(Request::is('drvouchers/cancelleddrvouchers'))
+               <a href="/viewdrvoucher/{{$completedinvoice->id}}"  class="btn btn-primary">{{$completedinvoice->id}}</a>
+              @else
+              <a href="/viewpendingaccountdr/{{$completedinvoice->id}}"  class="btn btn-primary">{{$completedinvoice->id}}</a>
+              @endif
+            </td>
+            <td>{{$completedinvoice->vendorname}}</td>
+            <td>
+              @if($completedinvoice->projectname)
+              <p class="b" title="{{$completedinvoice->projectname}}">{{$completedinvoice->projectname}}</p>
+              @else
+              NONE
+              @endif
+            </td>
+            <td>{{$completedinvoice->expenseheadname}}</td>
+            <td>{{$completedinvoice->voucher_type}}</td>
+            <td>{{$provider::changedateformat($completedinvoice->billdate)}}</td>
+            <td>{{$completedinvoice->billno}}</td>
+            <td>{{$provider::moneyFormatIndia($completedinvoice->tprice)}}</td>
+            <td>{{$provider::moneyFormatIndia($completedinvoice->discount)}}</td>
+            <td>{{$provider::moneyFormatIndia($completedinvoice->tsgst)}}</td>
+            <td>{{$provider::moneyFormatIndia($completedinvoice->tcgst)}}</td>
+            <td>{{$provider::moneyFormatIndia($completedinvoice->tigst)}}</td>
+            <td>{{$provider::moneyFormatIndia($completedinvoice->totalamt)}}</td>
+            <td>{{$provider::moneyFormatIndia($completedinvoice->itdeduction)}}</td>
+            <td>{{$provider::moneyFormatIndia($completedinvoice->otherdeduction)}}</td>
+            <td>{{$provider::moneyFormatIndia($completedinvoice->finalamount)}}</td>
+            <td>
+               <a target="_blank" href="{{asset('img/createdebitvoucher/'.$completedinvoice->invoicecopy)}}" >
+              <img style="height:50px;width:50px;" src="{{asset('img/createdebitvoucher/'.$completedinvoice->invoicecopy)}}" alt="click here" id="imgshow">
+            </a>
+            </td>
+            <td>{{$completedinvoice->narration}}</td>
+            <td>{{$completedinvoice->status}}</td>
+            <td>{{$completedinvoice->name}}</td>
+            <td>{{$completedinvoice->created_at}}</td>
+            <td>
+
+             @if (Request::is('drvouchers/viewalldrvouchers'))
+              <a href="/viewdrvoucher/{{$completedinvoice->id}}" class="btn btn-primary">View</a>
+               @elseif(Request::is('drvouchers/cancelleddrvouchers'))
+               <a href="/viewdrvoucher/{{$completedinvoice->id}}"  class="btn btn-primary">{{$completedinvoice->id}}</a>
+              @else
+              <a href="/viewpendingaccountdr/{{$completedinvoice->id}}" class="btn btn-primary">View</a>
+             @endif
+              </td>
+               @if (Request::is('drvouchers/viewalldrvouchers'))
+               @if(Auth::user()->usertype=="MASTER ADMIN")
+              <td>
+              <a href="/editdrvoucher/{{$completedinvoice->id}}" class="btn btn-warning">EDIT</a>
+                
+              </td>
+              @endif
+              @endif
+          </tr>
+   
+   
+    @endforeach
 	</tbody>
   <tfoot>
       <tr bgcolor="#97FFD7">
