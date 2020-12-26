@@ -261,19 +261,19 @@
               </span>
              </a></li>
 
-             <li class="{{ Request::is('tm/assignedtendersoffice') ? 'active' : '' }}"><a href="/tm/assignedtendersoffice"><i class="fa fa-circle-o text-aqua"></i>ASSIGNED TENDERS TO APPLY</a></li>
+        <!--      <li class="{{ Request::is('tm/assignedtendersoffice') ? 'active' : '' }}"><a href="/tm/assignedtendersoffice"><i class="fa fa-circle-o text-aqua"></i>ASSIGNED TENDERS TO APPLY</a></li>
 
              <li class="{{ Request::is('tm/adminapprovedtenders') ? 'active' : '' }}"><a href="/tm/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS
                <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$adminapprovedtenders}}</span>
               </span>
 
-             </a></li>
+             </a></li> -->
 
 
 
 
-     <li class="{{ Request::is('tm/associatepartner') ? 'active' : '' }}"><a href="/tm/associatepartner"><i class="fa fa-circle-o text-aqua"></i>ASSOCIATE PARTNER</a></li>
+     <!-- <li class="{{ Request::is('tm/associatepartner') ? 'active' : '' }}"><a href="/tm/associatepartner"><i class="fa fa-circle-o text-aqua"></i>ASSOCIATE PARTNER</a></li> -->
      
                <!--       <li class="{{ Request::is('tm/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/tm/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPROVED NOT APPLIED TENDERS</a></li> -->
           </ul>
@@ -284,7 +284,7 @@
         $temptenders=\App\temptender::where('isactive',1)->count();
         $nottemptenders=\App\temptender::where('isactive',0)->count();
         @endphp
-      <li class="{{ Request::is('temptender*') ? 'active' : '' }} treeview">
+     <!--  <li class="{{ Request::is('temptender*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>TEMP TENDER</span>
             <span class="pull-right-container">
@@ -309,9 +309,9 @@
             </a></li>
             
           </ul>
-        </li>
+        </li> -->
 
-      @if(Auth::user()->usertype=='TENDER COMMITTEE')
+    <!--   @if(Auth::user()->usertype=='TENDER COMMITTEE')
 
     <li class="{{ Request::is('tm*') ? 'active' : '' }} treeview">
           <a href="#">
@@ -356,7 +356,7 @@
           </ul>
         </li>
 
-      @endif
+      @endif -->
       @if(Auth::user()->usertype=='TENDER COMMITTEE'|| Auth::user()->usertype=='MASTER ADMIN')
 
 
@@ -381,7 +381,7 @@
                   ->count();
        
       @endphp
-            <li class="{{ Request::is('tendercom*') ? 'active' : '' }} treeview">
+          <!--   <li class="{{ Request::is('tendercom*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>TENDER COMMITTEE</span>
             <span class="pull-right-container">
@@ -411,14 +411,13 @@
             </a></li>
 
           </ul>
-        </li>
+        </li> -->
   
         @endif
       @if(Auth::user()->usertype=='MASTER ADMIN')
        @php
          $pendingadminapproval=DB::table('tenders')
-                 ->where('status','COMMITEE APPROVED')
-                 ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+                 ->where('status','ELLIGIBLE')
                  ->count();
            $adminapproved=DB::table('tenders')
                 ->where('status','ADMIN APPROVED')
@@ -485,7 +484,7 @@
             </a></li>
           </ul>
         </li>
-            <li class="{{ Request::is('userassigned*') ? 'active' : '' }} treeview">
+            <!-- <li class="{{ Request::is('userassigned*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>USER ASSIGNED</span>
             <span class="pull-right-container">
@@ -505,8 +504,8 @@
      
 
           </ul>
-        </li>
-      <li class="{{ Request::is('comrejected*') ? 'active' : '' }} treeview">
+        </li> -->
+     <!--  <li class="{{ Request::is('comrejected*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>COMMITTEE REJECTED</span>
             <span class="pull-right-container">
@@ -524,9 +523,9 @@
 
             </a></li>
           </ul>
-        </li>
+        </li> -->
 
-         <li class="{{ Request::is('notapplied*') ? 'active' : '' }} treeview">
+<!--          <li class="{{ Request::is('notapplied*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>APPROVED BUT 
             <br>
@@ -545,7 +544,7 @@
 
             </a></li>
           </ul>
-        </li>
+        </li> -->
            <li class="{{ Request::is('alltenderpdu*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>TENDER RESULT</span>

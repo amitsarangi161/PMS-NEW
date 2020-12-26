@@ -71,12 +71,12 @@
         </thead>
         @foreach($trns as $key=>$trn)
 		<tr>
-            <td width="20%"><a href="/viewdrvoucher/{{$trn->id}}" target="_blank" class="btn btn-info">{{$trn->id}}</a></td>
+      <td width="20%"><a href="/viewdrvoucher/{{$trn->id}}" target="_blank" class="btn btn-info">{{$trn->id}}</a></td>
       <td width="20%">{{$provider::changedatetimeformat($trn->created_at)}}</td>
-      @if ($trn->billdate="")
-      <td><span style="color:red;">Date Not Found</span></td>
+      @if ($trn->billdate=="")
+      <td><span style="color:red;">No Date Found</span></td>
       @else
-			<td width="20%">{{$provider::changedateformat($trn->billdate)}}</td>
+      <td width="20%">{{$provider::changedateformat($trn->billdate)}}</td>
       @endif
             <td style="text-align: right" width="30%">{{$trn->credit}}</td>
             <td style="text-align: right" width="30%">{{$trn->debit}}</td>

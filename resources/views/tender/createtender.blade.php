@@ -40,14 +40,12 @@
 	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location"></td>
 	<td><strong>Evaluation Process</strong></td>
 	<td>
-		<input type="radio" value="LCS" name="evaluationprocess" checked><strong>LCS</strong>
-		<input type="radio" value="QCBS" name="evaluationprocess"><strong>QCBS</strong>
-	<div id="evaluationscore" style="display: none;">
-		
-	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="0" style="width:30%">
-	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="0" style="width:30%">
-	</div>
-	
+		<select class="form-control" name="evaluationprocess" >
+			<option value="" selected>--Select a Evaluationprocess--</option>
+			<option value="ONLINE">ONLINE</option>
+			<option value="OFFLINE" >OFFLINE</option>
+			
+		</select>
 	</td>
 	
 </tr>
@@ -64,10 +62,8 @@
         	
         </div>
 	</td>
-	<td><strong>NO OF COVERS *</strong></td>
-	<td>
-		<input type="number" name="noofcovers" class="form-control" placeholder="Enter No of Covers" >
-	</td>
+	<td><strong>TENDER DATE*</strong></td>
+	<td><input type="text" name="tenderdate" class="form-control datepicker"></td>
 </tr>
 <tr>
 	<td><strong>Work Value *</strong></td>
@@ -79,42 +75,13 @@
 	
 </tr>
 <tr>
-
-
-	<td><strong>NIT PUBLICATION DATE *</strong></td>
-	<td><input type="text" name="nitpublicationdate" class="form-control datepicker1 readonly"  autocomplete="off"></td>
-	<td></td>
-	<td></td>
-	
-</tr>
-<tr>
-	<td><strong>SOURCE *</strong></td>
-	<td><input type="text" name="source" class="form-control" placeholder="Enter Source Name" value="NA" ></td>
-
-	<td><strong>TENDER PRIORITY *</strong></td>
-	<td>
-		<select class="form-control select2" name="tenderpriority" >
-			<option value="HIGH">HIGH</option>
-			<option value="MEDIUM" selected>MEDIUM</option>
-			<option value="LOW">LOW</option>
-			
-		</select>
-	</td>
-
-</tr>
-<tr>
 	<td><strong>Type Of Work *</strong></td>
 	<td>
 		<select class="form-control select2" name="typeofwork" >
-			<option value="">--Select a Work Type--</option>
-			<option value="DPR">DPR</option>
-			<option value="SURVEY">SURVEY</option>
-			<option value="GEOTECH">GEOTECH</option>
-			<option value="RAILWAY">RAILWAY</option>
-			<option value="SURVEY AND GEOTECH">SURVEY AND GEOTECH</option>
-			<option value="PMC">PMC</option>
-			<option value="AE">AE</option>
-			<option value="OTHERS" selected="">OTHERS</option>
+			<option value="" selected="">--Select a Work Type--</option>
+			<option value="ELECTRICAL">ELECTRICAL</option>
+			<option value="CIVIL">CIVIL</option>
+			<option value="OTHERS">OTHERS</option>
 			
 		</select>
 	</td>
@@ -130,16 +97,14 @@
 	<td><input type="text" autocomplete="off" name="tendervaliditydate" id="tendervaliditydate" class="form-control" readonly=""></td>
 </tr>
 <tr>
-	<td><strong>RFP AVAILABLE DATE *</strong></td>
-	<td><input type="text" class="form-control datepicker readonly" name="rfpavailabledate"  autocomplete="off"></td>
-	<td><strong>RFP DOCUMENT/NIT/QUOTATION *</strong></td>
+	<td><strong>NIT DOCUMENT/NIT/QUOTATION *</strong></td>
 
 	<td><input type="file" name="rfpdocument[]" class="form-control" multiple  ></td>
 	
 </tr>
 
 <tr>
-	<td><strong>REF PAGE NO OF RFP DOCUMENT *</strong></td>
+	<td><strong>REF PAGE NO OF NIT DOCUMENT *</strong></td>
 	<td>
 		<textarea name="refpageofrfp" class="form-control" placeholder="Enter Reference Page No of RFP Document" >NOT MENTIONED</textarea>
         
@@ -148,27 +113,14 @@
 	<td><input type="file" name="corrigendumfile[]" multiple class="form-control"></td>
 </tr>
 <tr>
-	<td><strong>DOCUMENT DOWNLOAD/SALE START DATE</strong></td>
-	<td><input type="text" name="salestartdate" class="form-control datetimepicker1" ></td>
-	<td><strong>DOCUMENT DOWNLOAD/SALE END DATE</strong></td>
-	<td><input type="text" name="saleenddate" class="form-control datetimepicker1" ></td>
-	
-</tr>
-<tr>
-	<td><strong>BID SUBMISSION START DATE</strong></td>
-	<td><input type="text" name="bidstartdate" class="form-control datetimepicker1" ></td>
-	<td><strong>BID SUBMISSION END DATE</strong></td>
-	<td><input type="text" name="bidenddate" class="form-control datetimepicker1" ></td>
-	
-</tr>
-<tr>
 	<td><strong>PRE-BID MEETING START DATE</strong></td>
 	<td><input type="text" name="prebidmeetingdate" class="form-control datetimepicker1" ></td>
 
 	<td><strong>RECOMENDED FOR</strong></td>
 	<td>
 			<input type="radio" name="recomended" value="SOLE" checked="">SOLE &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="ASSOCIATION">ASSOCIATION &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="recomended" value="OSIC">OSIC &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="recomended" value="NSIC">NSIC &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="recomended" value="JV" >JV
 	</td>
 
@@ -220,24 +172,24 @@
 
 <table class="table">
 	<tr class="bg-blue">
-		<td class="text-center">TENDER COST</td>
+		<td class="text-center">PAPER COST</td>
 		
 	</tr>
 </table>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr>
-		<td><strong>TENDER AMOUNT</strong></td> 
-		<td><input type="text" name="tenderamount" id="tenderamount" class="form-control convert1" autocomplete="off" placeholder="Enter Tender Amount"  ></td>
+		<td><strong>PAPER AMOUNT</strong></td> 
+		<td><input type="text" name="paperamount" id="paperamount" class="form-control convert4 calc" autocomplete="off" placeholder="Enter Paper Amount"  ></td>
 		<td><strong>Amount in Word</strong></td>
 		<td>
-			<textarea class="form-control" id="tenderamountinword" name="tenderamountinword" readonly=""></textarea>
+			<textarea class="form-control" id="tenderpaperamountinword" name="tenderpaperamountinword" readonly=""></textarea>
 		</td>
 	</tr>
 	<tr>
-		<td><strong>TENDER COST in the form of </strong></td>
+		<td><strong>PAPER COST in the form of </strong></td>
 		<td>
-			<select class="form-control select2" name="tendercostinformof">
+			<select class="form-control select2" name="papercostinformof">
 				<option value="">--Choose a Type--</option>
 				<option value="DD">DD</option>
 				<option value="BG">BG</option>
@@ -248,10 +200,20 @@
 			
 		    </select>
 	</td>
-	<td><strong>TENDER FEE Payable To</strong></td>
+	<td><strong>PAPER FEE Payable To</strong></td>
 	<td>
-		<textarea name="tenderfeepayableto" class="form-control"></textarea>
+		<textarea name="paperfeepayableto" class="form-control"></textarea>
 	</td>
+	</tr>
+	<tr>
+		<td><strong>GST IN(%)</strong></td> 
+		<td><input type="text" name="gstpercnt" id="gstpercnt" class="form-control calc" autocomplete="off" placeholder="Enter GST Percentage" value="0" ></td>
+		<td><strong>GST AMOUNT</strong></td> 
+		<td><input type="text" name="gstamount" id="gstamount" class="form-control convert1" autocomplete="off" placeholder="Enter Tender Amount"  ></td>
+	</tr>
+	<tr>
+		<td><strong>TOTAL PAPER AMOUNT</strong></td> 
+		<td><input type="text" name="totalpaperamt" id="totalpaperamt" class="form-control calc" autocomplete="off" readonly=""></td>
 	</tr>
 	
 </table>
@@ -266,7 +228,7 @@
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr>
 		<td><strong>REGISTRATION AMOUNT</strong></td> 
-		<td><input type="text" name="registrationamount" id="registrationamount" class="form-control convert2" autocomplete="off" placeholder="Enter Tender Amount"></td>
+		<td><input type="text" name="registrationamount" id="registrationamount" class="form-control convert2" autocomplete="off" placeholder="Enter Registration Amount"></td>
 		<td><strong>Registration Amount in Word</strong></td>
 		<td>
 			<textarea class="form-control" id="registrationamountinword" name="registrationamountinword" readonly=""></textarea>
@@ -285,12 +247,12 @@
 				<option value="EXEMPTED">EXEMPTED</option>
 			
 		    </select>
-	</td>
-	<td><strong>Registration FEE Payable To</strong></td>
-	<td>
-		<textarea name="registrationamountpayableto" class="form-control"></textarea>
-	</td>
-	</tr>
+		</td>
+		<td><strong>Registration FEE Payable To</strong></td>
+		<td>
+			<textarea name="registrationamountpayableto" class="form-control"></textarea>
+		</td>
+		</tr>
 	
 </table>
 
@@ -313,6 +275,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+	$(".calc").on('change input', function(){
+        var paperamount=parseFloat($("#paperamount").val());
+        var gstpercnt=parseFloat($("#gstpercnt").val());
+         amt=paperamount*(gstpercnt/100);
+         if (amt) {
+         	gamt=amt;
+         }
+         else{
+         	gamt=0;
+         }
+        var totalpaperamt=paperamount+gamt;
+
+        $("#gstamount").val(gamt);
+        $("#totalpaperamt").val(totalpaperamt);
+	});
 	$('input[type=radio][name=evaluationprocess]').change(function() {
        if (this.value=='QCBS') {
        	    $("#evaluationscore").show();
@@ -367,6 +344,7 @@ document.getElementById('amountinword').value=money;
 	
  });
 
+	
  $( ".convert1" ).on("change paste keyup", function() {
  var money1=RsPaise(Math.round(document.getElementById('tenderamount').value*100)/100);
 document.getElementById('tenderamountinword').value=money1;
@@ -385,7 +363,12 @@ document.getElementById('workvalueinword').value=money1;
 
 	
  });
+$( ".convert4" ).on("change paste keyup", function() {
+ var money1=RsPaise(Math.round(document.getElementById('paperamount').value*100)/100);
+document.getElementById('tenderpaperamountinword').value=money1;
 
+	
+ });
 
 
 

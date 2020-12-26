@@ -119,6 +119,12 @@
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
+        <label>TOTAL OT Hour*</label>
+          <input type="text" id="totalothrid" class="form-control" name="tothour">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
         <label>TOTAL OT*</label>
           <input type="text" id="totalotid" class="form-control" name="tot">
       </div>
@@ -412,6 +418,7 @@ function sumofrow()
         });
   $('#totalwagesid').val(totalwages.toFixed(2));
   $('#totalotid').val(totalotamt.toFixed(2));
+  $('#totalothrid').val(totalothr);
   $('#totalotamt').val(totalamt.toFixed(2));
   $('#noofworkerid').val(totallabour);
 

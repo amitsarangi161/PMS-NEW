@@ -2050,8 +2050,8 @@ public function userassociatepartner(){
           $tenders=DB::table('tenders')
                  ->select('tenders.*','users.name')
                  ->leftJoin('users','tenders.author','=','users.id')
-                 ->where('status','COMMITEE APPROVED')
-                 ->where('lastdateofsubmisssion', '>=',date('Y-m-d'));
+                 ->where('status','ELLIGIBLE');
+                /* ->where('lastdateofsubmisssion', '>=',date('Y-m-d'));*/
           
           
           return DataTables::of($tenders)
@@ -3268,6 +3268,7 @@ public function userassociatepartner(){
 
        public function savetender(Request $request)
        {
+        //return $request->all();
               $chk=tender::where('tenderrefno',$request->tenderrefno)->count();
               if($chk>0)
               {
@@ -3280,47 +3281,73 @@ public function userassociatepartner(){
 
                 $tender=new tender();
                 $tender->author=Auth::id();
-
-                $tender->location=$request->location;
-                $tender->evaluationprocess=$request->evaluationprocess;
-                $tender->evaluationtechnical=$request->evaluationtechnical;
-                $tender->evaluationfinancial=$request->evaluationfinancial;
-
                 $tender->nameofthework=$request->nameofthework;
                 $tender->clientname=$request->clientname;
-                $tender->recomended=$request->recomended;
+                $tender->location=$request->location;
+                $tender->evaluationprocess=$request->evaluationprocess;
+                $tender->tenderrefno=$request->tenderrefno;
+                $tender->tenderdate=$request->tenderdate;
                 $tender->workvalue=$request->workvalue;
                 $tender->workvalueinword=$request->workvalueinword;
-                $tender->nitpublicationdate=$request->nitpublicationdate;
-                $tender->source=$request->source;
-                $tender->tenderpriority=$request->tenderpriority;
                 $tender->typeofwork=$request->typeofwork;
                 $tender->lastdateofsubmisssion=$request->lastdateofsubmisssion;
-                $tender->rfpavailabledate=$request->rfpavailabledate;
-              
+                $tender->tendervalidityindays=$request->tendervalidityindays;
+                $tender->tendervaliditydate=$request->tendervaliditydate;
                 $tender->refpageofrfp=$request->refpageofrfp;
-                
+                $tender->prebidmeetingdate=$request->prebidmeetingdate;
+                $tender->recomended=$request->recomended;
+
                 $tender->emdamount=$request->emdamount;
                 $tender->amountinword=$request->amountinword;
                 $tender->emdinformof=$request->emdinformof;
+                $tender->emdpayableto=$request->emdpayableto;
+
+                $tender->paperamount=$request->paperamount;
+                $tender->tenderpaperamountinword=$request->tenderpaperamountinword;
+                $tender->papercostinformof=$request->papercostinformof;
+                $tender->paperfeepayableto=$request->paperfeepayableto;
+                $tender->totalpaperamt=$request->totalpaperamt;
+                $tender->gstpercnt=$request->gstpercnt;
+                $tender->gstamount=$request->gstamount;
+
+                $tender->registrationamount=$request->registrationamount;
+                $tender->registrationamountinword=$request->registrationamountinword;
+                $tender->registrationamountinformof=$request->registrationamountinformof;
+                $tender->registrationamountpayableto=$request->registrationamountpayableto;
+
+
+
+                $tender->evaluationtechnical=$request->evaluationtechnical;
+                $tender->evaluationfinancial=$request->evaluationfinancial;
+                
+                
+                
+                
+                $tender->nitpublicationdate=$request->nitpublicationdate;
+                $tender->source=$request->source;
+                $tender->tenderpriority=$request->tenderpriority;
+                
+                
+                $tender->rfpavailabledate=$request->rfpavailabledate;
+              
+                
+                
+                
                 $tender->tenderamount=$request->tenderamount;
                 $tender->tenderamountinword=$request->tenderamountinword;
                 $tender->tendercostinformof=$request->tendercostinformof;
-                $tender->tenderrefno=$request->tenderrefno;
+                
                 $tender->noofcovers=$request->noofcovers;
                 $tender->salestartdate=$request->salestartdate;
                 $tender->saleenddate=$request->saleenddate;
                 $tender->bidstartdate=$request->bidstartdate;
                 $tender->bidenddate=$request->bidenddate;
-                $tender->prebidmeetingdate=$request->prebidmeetingdate;
-                $tender->emdpayableto=$request->emdpayableto;
+                
+                
                 $tender->tenderfeepayableto=$request->tenderfeepayableto;
-                $tender->tendervalidityindays=$request->tendervalidityindays;
-                $tender->tendervaliditydate=$request->tendervaliditydate;
-                $tender->registrationamount=$request->registrationamount;
-                $tender->registrationamountinword=$request->registrationamountinword;
-                $tender->registrationamountinformof=$request->registrationamountinformof;
-                $tender->registrationamountpayableto=$request->registrationamountpayableto;
+                
+                
+                
 
                 $tender->save();
 

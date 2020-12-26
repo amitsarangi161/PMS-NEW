@@ -11,15 +11,15 @@
 @endif
 
 <table class="table table-responsive table-hover table-bordered table-striped">
-	<tr class="bg-navy">
-		 <td class="text-center">Daily Attendance Report</td>
-	</tr>
+  <tr class="bg-navy">
+     <td class="text-center">Daily Attendance Report</td>
+  </tr>
 
 </table>
 
 
 <form action="/laboursaveattendancereportgrp" method="post" enctype="multipart/form-data">
-	{{csrf_field()}}
+  {{csrf_field()}}
 <div class="col-sm-12">
   <div class="row">
     <div class="col-md-6">
@@ -119,6 +119,12 @@
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
+        <label>TOTAL OT Hour*</label>
+          <input type="text" id="totalothrid" class="form-control" name="tothour">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
         <label>TOTAL OT*</label>
           <input type="text" id="totalotid" class="form-control" name="tot">
       </div>
@@ -131,7 +137,7 @@
     </div>
   </div>
 
-    <!-- <div class="row">
+   <!--  <div class="row">
     <div class="col-md-6">
       <div class="form-group">
         <label>ITEM DESCRIPTION*</label>
@@ -144,9 +150,9 @@
           <input type="text" class="form-control" name="unit">
       </div>
     </div>
-  </div>
+  </div> -->
 
-    <div class="row">
+  <!--   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
         <label>QUANTITY*</label>
@@ -159,8 +165,8 @@
           <input type="text" class="form-control" name="amount">
       </div>
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+<!--   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
         <label>WORK ASSIGNMENT*</label>
@@ -190,9 +196,9 @@
 </div>
 <div style="display: none;" id="submitbtnid">
 <table class="table table-responsive">
-	<tr>
-		<td ><button type="submit" class="btn btn-success pull-right" onclick="return confirm('Do You Want to Proceed?')">Submit</button></td>
-	</tr>
+  <tr>
+    <td ><button type="submit" class="btn btn-success pull-right" onclick="return confirm('Do You Want to Proceed?')">Submit</button></td>
+  </tr>
 </table>
 </div>
 
@@ -412,6 +418,7 @@ function sumofrow()
         });
   $('#totalwagesid').val(totalwages.toFixed(2));
   $('#totalotid').val(totalotamt.toFixed(2));
+  $('#totalothrid').val(totalothr);
   $('#totalotamt').val(totalamt.toFixed(2));
   $('#noofworkerid').val(totallabour);
 

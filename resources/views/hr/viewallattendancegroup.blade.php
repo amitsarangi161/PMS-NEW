@@ -53,12 +53,13 @@
             <td>GROUP NAME</td>
             <td>ENTRY TIME</td>
             <td>DEPARTURE TIME</td>
-            <td>WORK ASSIGNMENT</td>
             <td>NUMBER OF WORKERS</td>
             <td>WAGES</td>
+            <td>OT HOUR</td>
             <td>OT</td>
             <td>TOTAL AMOUNT</td>
             <td>REMARKS</td>
+            <td>WORK ASSIGNMENT</td>
             <td>ITEM DESCRIPTION</td>
             <td>UNIT</td>
             <td>QUANTITY</td>
@@ -76,12 +77,13 @@
             <td>{{$allattendancegroup->groupname}}</td>
             <td>{{$allattendancegroup->entrytime}}</td>
             <td>{{$allattendancegroup->departuretime}}</td>
-            <td>{{$allattendancegroup->workassignment}}</td>
             <td>{{$allattendancegroup->noofworkerspresent}}</td>
             <td>{{$allattendancegroup->twages}}</td>
+            <td>{{$allattendancegroup->tothour}}</td>
             <td>{{$allattendancegroup->tot}}</td>
             <td>{{$allattendancegroup->tamt}}</td>
             <td>{{$allattendancegroup->remarks}}</td>
+            <td>{{$allattendancegroup->workassignment}}</td>
             <td>{{$allattendancegroup->itemdescription}}</td>
             <td>{{$allattendancegroup->unit}}</td>
             <td>{{$allattendancegroup->quantity}}</td>
