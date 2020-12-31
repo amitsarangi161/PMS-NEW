@@ -38,21 +38,12 @@
 	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location" value="{{$tender->location}}"></td>
 	<td><strong>Evaluation Process</strong></td>
 	<td>
-		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>
-		<input type="radio" value="QCBS" name="evaluationprocess" {{($tender->evaluationprocess=='QCBS')? 'checked':''}}><strong>QCBS</strong>
-
-	@php
-	if($tender->evaluationprocess =='LCS')
-	   $val='none';
-	   else
-	   $val='block';
-	@endphp
-	<div id="evaluationscore" style="display: {{$val}}">
-	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="{{$tender->evaluationtechnical}}" style="width:15%">
-	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="{{$tender->evaluationfinancial}}" style="width:15%">
-	</div>
-	
-	
+		<select class="form-control" name="evaluationprocess" >
+			<option value="" selected>--Select a Evaluationprocess--</option>
+			<option value="ONLINE" {{ ( $tender->evaluationprocess == 'ONLINE') ? 'selected' : '' }}>ONLINE</option>
+			<option value="OFFLINE" {{ ( $tender->evaluationprocess == 'OFFLINE') ? 'selected' : '' }} >OFFLINE</option>
+			
+		</select>
 	</td>
 	
 </tr>
@@ -71,10 +62,8 @@
         	
         </div>
 	</td>
-	<td><strong>NO OF COVERS *</strong></td>
-	<td>
-		<input type="number" name="noofcovers" value="{{$tender->noofcovers}}" class="form-control" placeholder="Enter No of Covers" >
-	</td>
+	<td><strong>TENDER DATE*</strong></td>
+	<td><input type="text" name="tenderdate" value="{{$tender->tenderdate}}" class="form-control datepicker"></td>
 </tr>
 <tr>
 	<td><strong>Work Value *</strong></td>
@@ -86,48 +75,18 @@
 	
 </tr>
 <tr>
-
-
-	<td><strong>NIT PUBLICATION DATE *</strong></td>
-	<td><input type="text" name="nitpublicationdate" value="{{$tender->nitpublicationdate}}" class="form-control datepicker readonly"  autocomplete="off"></td>
-	<td></td>
-	<td></td>
-	
-</tr>
-<tr>
-	<td><strong>SOURCE *</strong></td>
-	<td><input type="text" name="source" value="{{$tender->source}}" class="form-control" placeholder="Enter Source Name" ></td>
-
-	<td><strong>TENDER PRIORITY *</strong></td>
-	<td>
-		<select class="form-control select2" name="tenderpriority" >
-			<option value="HIGH" {{ ( $tender->tenderpriority == 'HIGH') ? 'selected' : '' }}>HIGH</option>
-			<option value="MEDIUM" {{ ( $tender->tenderpriority == 'MEDIUM') ? 'selected' : '' }}>MEDIUM</option>
-			<option value="LOW" {{ ( $tender->tenderpriority == 'LOW') ? 'selected' : '' }}>LOW</option>
-			
-		</select>
-	</td>
-
-</tr>
-<tr>
 	<td><strong>Type Of Work *</strong></td>
 	<td>
 		<select class="form-control select2" name="typeofwork" >
-			<option value="">--Select a Work Type--</option>
-			<option value="DPR" {{ ( $tender->typeofwork == 'DPR') ? 'selected' : '' }}>DPR</option>
-			<option value="SURVEY" {{ ( $tender->typeofwork == 'SURVEY') ? 'selected' : '' }}>SURVEY</option>
-			<option value="GEOTECH" {{ ( $tender->typeofwork == 'GEOTECH') ? 'selected' : '' }}>GEOTECH</option>
-			<option value="RAILWAY" {{ ( $tender->typeofwork == 'RAILWAY') ? 'selected' : '' }}>RAILWAY</option>
-			<option value="SURVEY AND GEOTECH" {{ ( $tender->typeofwork == 'SURVEY AND GEOTECH') ? 'selected' : '' }}>SURVEY AND GEOTECH</option>
-
-			<option value="PMC" {{ ( $tender->typeofwork == 'PMC') ? 'selected' : '' }}>PMC</option>
-			<option value="AE" {{ ( $tender->typeofwork == 'AE') ? 'selected' : '' }}>AE</option>
+			<option value="" selected="">--Select a Work Type--</option>
+			<option value="ELECTRICAL" {{ ( $tender->typeofwork == 'ELECTRICAL') ? 'selected' : '' }}>ELECTRICAL</option>
+			<option value="CIVIL" {{ ( $tender->typeofwork == 'CIVIL') ? 'selected' : '' }}>CIVIL</option>
 			<option value="OTHERS" {{ ( $tender->typeofwork == 'OTHERS') ? 'selected' : '' }}>OTHERS</option>
 			
 		</select>
 	</td>
 	<td><strong>LAST DATE OF SUBMISSION *</strong></td>
-	<td><input type="text" class="form-control datepicker readonly" name="lastdateofsubmisssion" id="lastdateofsubmisssion" value="{{$tender->lastdateofsubmisssion}}"  autocomplete="off"></td>
+	<td><input type="text" class="form-control datepicker readonly" name="lastdateofsubmisssion" value="{{$tender->lastdateofsubmisssion}}" id="lastdateofsubmisssion"  autocomplete="off"></td>
 	
 </tr>
 <tr>
@@ -138,19 +97,14 @@
 	<td><input type="text" autocomplete="off" name="tendervaliditydate" id="tendervaliditydate" class="form-control" readonly="" value="{{$tender->tendervaliditydate}}"></td>
 </tr>
 <tr>
-	<td><strong>RFP AVAILABLE DATE *</strong></td>
-	<td><input type="text" class="form-control datepicker readonly" name="rfpavailabledate" value="{{$tender->rfpavailabledate}}"  autocomplete="off"></td>
-	<td><strong>RFP DOCUMENT *</strong></td>
+	<td><strong>NIT DOCUMENT/NIT/QUOTATION *</strong></td>
 
-	<td>
-		<input type="file" name="rfpdocument[]" class="form-control" multiple>
-
-	</td>
+	<td><input type="file" name="rfpdocument[]" class="form-control" multiple  ></td>
 	
 </tr>
 
 <tr>
-	<td><strong>REF PAGE NO OF RFP DOCUMENT *</strong></td>
+	<td><strong>REF PAGE NO OF NIT DOCUMENT *</strong></td>
 	<td>
 	
 		<textarea name="refpageofrfp" class="form-control" placeholder="Enter Reference Page No of RFP Document" >{{$tender->refpageofrfp}}</textarea>
@@ -162,31 +116,15 @@
 	</td>
 </tr>
 <tr>
-	<td><strong>DOCUMENT DOWNLOAD/SALE START DATE *</strong></td>
-	<td><input type="text" value="{{$tender->salestartdate}}" name="salestartdate" class="form-control datetimepicker1" ></td>
-	<td><strong>DOCUMENT DOWNLOAD/SALE END DATE *</strong></td>
-	<td><input type="text" name="saleenddate" value="{{$tender->saleenddate}}" class="form-control datetimepicker1" ></td>
-	
-</tr>
-<tr>
-	<td><strong>BID SUBMISSION START DATE *</strong></td>
-	<td><input type="text" name="bidstartdate" id="" class="form-control datetimepicker1" value="{{$tender->bidstartdate}}"></td>
-	<td><strong>BID SUBMISSION END DATE *</strong></td>
-	<td><input type="text" name="bidenddate" value="{{$tender->bidenddate}}" class="form-control datetimepicker1" ></td>
-
-	
-</tr>
-<tr>
 	<td><strong>PRE-BID MEETING START DATE*</strong></td>
 	<td><input type="text" value="{{$tender->prebidmeetingdate}}" name="prebidmeetingdate" class="form-control datetimepicker1" ></td>
-
 	<td><strong>RECOMENDED FOR</strong></td>
-		<td>
+	<td>
 			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
+			<input type="radio" name="recomended" value="OSIC" {{ ( $tender->recomended == 'OSIC') ? 'checked' : '' }}>OSIC &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="recomended" value="NSIC" {{ ( $tender->recomended == 'NSIC') ? 'checked' : '' }}>NSIC &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }} >JV
 	</td>
-	
 	
 </tr>
 	
@@ -235,39 +173,49 @@
 
 <table class="table">
 	<tr class="bg-blue">
-		<td class="text-center">TENDER COST</td>
+		<td class="text-center">PAPER COST</td>
 		
 	</tr>
 </table>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr>
-		<td><strong>TENDER AMOUNT</strong></td> 
-		<td><input type="text" name="tenderamount" value="{{$tender->tenderamount}}" id="tenderamount" autocomplete="off" class="form-control convert1" placeholder="Enter Tender Amount"  ></td>
+		<td><strong>PAPER AMOUNT</strong></td> 
+		<td><input type="text" name="paperamount" id="paperamount" class="form-control convert4 calc" value="{{$tender->paperamount}}" autocomplete="off" placeholder="Enter Paper Amount"  ></td>
 		<td><strong>Amount in Word</strong></td>
 		<td>
-			<textarea class="form-control" id="tenderamountinword" name="tenderamountinword" readonly="">{{$tender->tenderamountinword}}</textarea>
+			<textarea class="form-control" id="tenderpaperamountinword" name="tenderpaperamountinword" readonly="">{{$tender->tenderpaperamountinword}}</textarea>
 		</td>
 	</tr>
 	<tr>
-		<td><strong>TENDER COST in the form of *</strong></td>
+		<td><strong>PAPER COST in the form of </strong></td>
 		<td>
-			<select class="form-control select2" name="tendercostinformof" >
+			<select class="form-control select2" name="papercostinformof">
 				<option value="">--Choose a Type--</option>
-				<option value="DD" {{ ( $tender->tendercostinformof == 'DD') ? 'selected' : '' }}>DD</option>
-				<option value="BG" {{ ( $tender->tendercostinformof == 'BG') ? 'selected' : '' }}>BG</option>
-				<option value="ONLINE" {{ ( $tender->tendercostinformof == 'ONLINE') ? 'selected' : '' }}>ONLINE</option>
-				<option value="TDR" {{ ( $tender->tendercostinformof == 'TDR') ? 'selected' : '' }}>TDR</option>
-				<option value="KVP" {{ ( $tender->tendercostinformof == 'KVP') ? 'selected' : '' }}>KVP</option>
-				<option value="EXEMPTED" {{ ( $tender->tendercostinformof == 'EXEMPTED') ? 'selected' : '' }}>EXEMPTED</option>
+				<option value="DD" {{ ( $tender->papercostinformof == 'DD') ? 'selected' : '' }}>DD</option>
+				<option value="BG" {{ ( $tender->papercostinformof == 'BG') ? 'selected' : '' }}>BG</option>
+				<option value="ONLINE" {{ ( $tender->papercostinformof == 'ONLINE') ? 'selected' : '' }}>ONLINE</option>
+				<option value="TDR" {{ ( $tender->papercostinformof == 'TDR') ? 'selected' : '' }}>TDR</option>
+				<option value="KVP" {{ ( $tender->papercostinformof == 'KVP') ? 'selected' : '' }}>KVP</option>
+				<option value="EXEMPTED" {{ ( $tender->papercostinformof == 'EXEMPTED') ? 'selected' : '' }}>EXEMPTED</option>
 			
 		    </select>
 	</td>
-	<td><strong>TENDER FEE Payable To*</strong></td>
+	<td><strong>PAPER FEE Payable To</strong></td>
 	<td>
-		<textarea name="tenderfeepayableto" class="form-control">{{$tender->tenderfeepayableto}}</textarea>
+		<textarea name="paperfeepayableto" class="form-control">{{$tender->paperfeepayableto}}</textarea>
 	</td>
 	</tr>
+	<tr>
+		<td><strong>GST IN(%)</strong></td> 
+		<td><input type="text" name="gstpercnt" id="gstpercnt" class="form-control calc" autocomplete="off" value={{$tender->gstpercnt}} placeholder="Enter GST Percentage" value="0" ></td>
+		<td><strong>GST AMOUNT</strong></td> 
+		<td><input type="text" name="gstamount" id="gstamount" class="form-control convert1" autocomplete="off" value={{$tender->gstamount}} placeholder="Enter Tender Amount"  ></td>
+	</tr>
+	<!-- <tr>
+		<td><strong>TOTAL PAPER AMOUNT</strong></td> 
+		<td><input type="text" name="totalpaperamt" id="totalpaperamt" class="form-control calc" autocomplete="off" readonly=""></td>
+	</tr> -->
 	
 </table>
 <table class="table">
@@ -395,6 +343,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+	$(".calc").on('change input', function(){
+        var paperamount=parseFloat($("#paperamount").val());
+        var gstpercnt=parseFloat($("#gstpercnt").val());
+         amt=paperamount*(gstpercnt/100);
+         if (amt) {
+         	gamt=amt;
+         }
+         else{
+         	gamt=0;
+         }
+        var totalpaperamt=paperamount+gamt;
+
+        $("#gstamount").val(gamt);
+        $("#totalpaperamt").val(totalpaperamt);
+	});
 	$('input[type=radio][name=evaluationprocess]').change(function() {
        if (this.value=='QCBS') {
        	    $("#evaluationscore").show();
@@ -462,6 +425,12 @@ document.getElementById('tenderamountinword').value=money1;
    $( ".convert3" ).on("change paste keyup", function() {
  var money1=RsPaise(Math.round(document.getElementById('workvalue').value*100)/100);
 document.getElementById('workvalueinword').value=money1;
+
+	
+ });
+ $( ".convert4" ).on("change paste keyup", function() {
+ var money1=RsPaise(Math.round(document.getElementById('paperamount').value*100)/100);
+document.getElementById('tenderpaperamountinword').value=money1;
 
 	
  });

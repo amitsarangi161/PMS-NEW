@@ -55,8 +55,9 @@ table {
             <td>LOCATION</td>
             <td>TENDER REF NO</td>
             <td>WORK VALUE</td>
+            <td>PAPER AMOUNT</td>
+            <td>GST AMOUNT</td>
             <td>LAST DATE OF SUB.</td>
-            <td>RFP AVAILABLE DATE</td>
             <td>EMD Amount</td>
             <td>STATUS</td>
             <td>AUTHOR</td>
@@ -157,8 +158,9 @@ table {
             {data: 'location', name: 'location'},
             {data: 'tenderrefno', name: 'tenderrefno'},
             {data: 'workvalue', name: 'workvalue'},
-            {data: 'ldos', name: 'lastdateofsubmisssion'},
-            {data: 'rfpavailabledate', name:'rfpavailabledate'},    
+            {data: 'paperamount', name: 'paperamount'},
+            {data: 'gstamount', name: 'gstamount'},
+            {data: 'ldos', name: 'lastdateofsubmisssion'},    
             {data: 'emdamount', name:'emdamount'},    
             {data: 'sta', name: 'sta'},
             {data: 'name', name: 'users.name'},

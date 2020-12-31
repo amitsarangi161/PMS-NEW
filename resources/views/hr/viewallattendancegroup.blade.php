@@ -20,33 +20,40 @@
  <div class="col-md-12">
   <div class="box">
     <div class="box-header bg-gray">
-  <form method="get" action="/attendance/viewallattendance">
     <div class="form-group">
-      <label  class="col-sm-2 control-label">Select A Group</label>
-      <div class="col-sm-4">
-        <select class="form-control" required="" name="group">
+      <label  class="col-sm-1 control-label">Select A Group</label>
+      <div class="col-sm-2">
+        <select class="form-control" required="" name="group" id="group">
             <option value="">Select A Group</option>
             @foreach($addgroups as $addgroup)
             <option value="{{$addgroup->id}}" {{ Request::get('group')==$addgroup->id ? 'selected' : '' }}>{{$addgroup->groupname}}</option>
             @endforeach
         </select>
       </div>
-      <div class="col-sm-1">
-        <button type="submit" class="btn  btn-primary">Filter</button>
+      <label  class="col-sm-1 control-label">From Date</label>
+       <div class="col-sm-2">
+        <input type="text" class="attfromdate form-control readonly" placeholder="Enter From Date" name="fromdate" id="fromdate" autocomplete="off">
       </div>
-      @if(Request::has('group'))
-      <div class="col-sm-1">
-        <a href="/attendance/viewallattendance"  class="btn  btn-danger">Clear Filter</a>
+      <label  class="col-sm-1 control-label">To Date</label>
+       <div class="col-sm-2">
+        <input type="text" class="atttodate form-control readonly" placeholder="Enter To Date" name="todate" id="todate" autocomplete="off">
       </div>
-      @endif
+      <div class="col-sm-1">
+        <button type="button" onclick="filter()" class="btn  btn-primary">Filter</button>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" onclick="hello()" class="btn  btn-danger">Clear</button>
+      </div>
     </div>
-  </form>
   </div>
 </div>
+
+<button type="button" onclick="exportTable()" class="btn btn-success pull-right">EXPORT</button>
 </div>
 </div>
+
       <div class="box-body table-responsive">
-        <table class="table table-bordered table-striped datatablescrollexport">
+        <table class="table table-bordered table-striped yajratable">
         <thead>
           <tr class="bg-navy">
             <td>Id</td>
@@ -71,30 +78,30 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($allattendancegroups as $key=>$allattendancegroup)
-          <tr>
-            <td><a href="/attendance/viewattendancegroup/{{$allattendancegroup->id}}"><button class="btn btn-info btn-sm btn-flat">{{$allattendancegroup->id}}</button></a></td>
-            <td>{{$allattendancegroup->groupname}}</td>
-            <td>{{$allattendancegroup->entrytime}}</td>
-            <td>{{$allattendancegroup->departuretime}}</td>
-            <td>{{$allattendancegroup->noofworkerspresent}}</td>
-            <td>{{$allattendancegroup->twages}}</td>
-            <td>{{$allattendancegroup->tothour}}</td>
-            <td>{{$allattendancegroup->tot}}</td>
-            <td>{{$allattendancegroup->tamt}}</td>
-            <td>{{$allattendancegroup->remarks}}</td>
-            <td>{{$allattendancegroup->workassignment}}</td>
-            <td>{{$allattendancegroup->itemdescription}}</td>
-            <td>{{$allattendancegroup->unit}}</td>
-            <td>{{$allattendancegroup->quantity}}</td>
-            <td>{{$allattendancegroup->amount}}</td>
-            <td>{{$provider::changedatetimeformat($allattendancegroup->created_at)}}</td>
-            <!-- <td><a href="/attendance/editdailyattendancegroup/{{$allattendancegroup->id}}" onclick="return confirm('are you sure to edit dailyattendance ??')" ><button class="btn btn-primary btn-flat">Edit</button></a></td> -->
-            <td><button class="btn btn-primary btn-flat" onclick="edit('{{$allattendancegroup->id}}','{{$allattendancegroup->itemdescription}}','{{$allattendancegroup->unit}}','{{$allattendancegroup->quantity}}','{{$allattendancegroup->amount}}','{{$allattendancegroup->workassignment}}','{{$allattendancegroup->remarks}}');">Edit</button></td>
-            <td><a href="/attendance/viewattendancegroup/{{$allattendancegroup->id}}"><button class="btn btn-info btn-flat">View</button></a></td>
-          </tr>
-          @endforeach
+         
         </tbody>
+            <tfoot>
+              <tr style="background-color: gray;">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><strong>TOTAL</strong></td>
+                <td id="noofworker" style="text-align: right;"></td>
+                <td id="totalwages" style="text-align: right;"></td>
+                <td id="tothour" style="text-align: right;"></td>
+                <td id="totalotamt" style="text-align: right;"></td>
+                <td id="totalamt" style="text-align: right;"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tfoot>
       
       </table>
   </div>
@@ -184,8 +191,27 @@
 
   </div>
 </div>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script>
+  function hello(){
+    $('#group').prop('selectedIndex',0)
+    $('#fromdate').val('');
+    $('#todate').val('');
+    table.draw(true);
+  }
+  function exportTable(){
+    var grp=$('#group').val();
+    var fromdate=$('#fromdate').val();
+    var todate=$('#todate').val();
+    var url='/labourattendanceexport?group='+grp+'&fromdate='+fromdate+'&todate='+todate;
+    //alert(url);
+  window.open(
+  url,
+  '_blank' // <- This is what makes it open in a new window.
+);
+  }
   function edit(id,itemdescription,unit,quantity,amount,workassignment,remarks){
+       //alert(itemdescription);
         $("#uid").val(id);
         $("#itemdescription").val(itemdescription);
         $("#unit").val(unit);
@@ -195,6 +221,65 @@
         $("#remarks").val(remarks);
         $("#myModal").modal('show');
   }
+  var table = $('.yajratable').DataTable({
+        order: [[ 0, "asc" ]],
+        processing: true, 
+        serverSide: true,
+        "iDisplayLength": 10,
+          ajax: {
+            url: '{{ url("getviewallattendancelist")  }}',
+            data: function (d) {
+                d.group = $('#group').val();
+                d.fromdate=$('#fromdate').val();
+                d.todate=$('#todate').val();
+               
+            }
+        },
+        columns: [
+
+            {data: 'idbtn', name: 'id'},
+            {data: 'groupname',name: 'addgroups.groupname'},    
+            {data: 'entrytime',name: 'entrytime'},    
+            {data: 'departuretime',name: 'departuretime'},    
+            {data: 'noofworkerspresent',name: 'noofworkerspresent'},    
+            {data: 'twages',name: 'twages'},    
+            {data: 'tothour',name: 'tothour'},    
+            {data: 'tot',name: 'tot'},    
+            {data: 'tamt',name: 'tamt'},    
+            {data: 'remarks',name: 'remarks'},    
+            {data: 'workassignment',name: 'workassignment'},    
+            {data: 'itemdescription',name: 'itemdescription'},    
+            {data: 'unit',name: 'unit'},    
+            {data: 'quantity',name: 'quantity'},    
+            {data: 'amount',name: 'amount'},    
+            {data: 'created_at',name: 'created_at'},
+            {data: 'edit', name: 'edit'},    
+            {data: 'view', name: 'view'},
+                      
+
+          
+
+        ],
+        drawCallback: function( settings ) {                        
+        console.log(settings.json);
+        $("#totalotamt").html(settings.json.totalotamt);
+        $("#noofworker").html(settings.json.noofworker);
+        $("#totalwages").html(settings.json.totalwages);
+        $("#tothour").html(settings.json.tothour);
+        //alert(settings.json.totalotamt);
+        $("#totalamt").html(settings.json.totalamt);
+      }
+
+    });
+   table.on( 'xhr', function () {
+    var json = table.ajax.json();
+    console.log(json.data);
+   } );
+  function filter(){
+       table.draw(true);
+  }
+
+  
 </script>
 
 @endsection

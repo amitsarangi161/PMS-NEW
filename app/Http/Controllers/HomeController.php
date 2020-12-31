@@ -68,6 +68,8 @@ use App\Bankledger;
 use App\Openingbalance;
 use App\Smssetting;
 use App\Receptiondetail;
+use App\Pmsdebitvoucher;
+use App\Pmsdebitvoucherpayment;
 use DataTables;
 use Excel;
 
@@ -421,7 +423,7 @@ public function companydetails(){
     $noofprojects=project::count();
     $completedprojects=project::where('status','COMPLETED')->count();
     $pendingvouchers=voucher::where('status','PENDING')->count();
-    $pendingdrvouchers=debitvoucherheader::where('status','MGR APPROVED')->count();
+    $pendingdrvouchers=Pmsdebitvoucher::where('status','MGR APPROVED')->count();
     $pendingrequisitions=requisitionheader::where('status','PENDING')->count();
     $pendingexpenseentry=expenseentry::where('status','PENDING')->count();
     $noofclients=client::count();

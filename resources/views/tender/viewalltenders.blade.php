@@ -64,7 +64,6 @@
     <thead>
         <tr class="bg-blue">
             <td>ID</td>
-            <td>TENDER SOURCE ID</td>
             <td>TENDER REF NO</td>
             <td>NAME OF WORK</td>
             <td>CLIENT</td>
@@ -80,11 +79,6 @@
             <td>NIT AND RFP</td>
             <td>CORRIGENDUM</td>
             <td>APPLIED AS</td>
-            <td>COMMENTS VIEW</td>
-            <td>NO OF PARTICIPANT</td>
-            <td>PARTICIPANT LIST</td>
-            <td>AWARDED TO</td>
-            <td>AGREEMENT VALUE</td>
             <td>AUTHOR</td>
             <td>VIEW</td>
             <td>EDIT</td>
@@ -290,7 +284,6 @@
         columns: [
 
             {data: 'idbtn', name: 'id'},
-            {data: 'tendersiteidlink', name: 'tendersiteid'},
              {data: 'tenderrefnolink', name: 'tenderrefno'},
             {data: 'now',name: 'nameofthework'},
             {data: 'clientname', name: 'clientname'},
@@ -306,11 +299,6 @@
             {data: 'nitandrfp', name: 'nitandrfp',searchable: false, sortable : false},
             {data: 'corrigendum', name: 'corrigendum',searchable: false, sortable : false},
             {data: 'recomended', name: 'recomended'},
-            {data: 'commentview', name: 'commentview',searchable: false, sortable : false},
-            {data: 'noofparticipant', name: 'noofparticipant',searchable: false, sortable : false},
-            {data: 'participantlist', name: 'participantlist',searchable: false, sortable : false},
-            {data: 'awardedto', name: 'awardedto',searchable: false, sortable : false},
-            {data: 'agreementvalue', name: 'agreementvalue',searchable: false, sortable : false},
             
             {data: 'name', name: 'users.name'},
             {data: 'view', name: 'view'},

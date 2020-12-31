@@ -1392,47 +1392,43 @@ public function userassociatepartner(){
               //return $request->all();
 
                 $tender=tender::find($id);
-
-                $tender->location=$request->location;
-                $tender->evaluationprocess=$request->evaluationprocess;
-                $tender->evaluationtechnical=$request->evaluationtechnical;
-                $tender->evaluationfinancial=$request->evaluationfinancial;
-
+                
                 $tender->nameofthework=$request->nameofthework;
                 $tender->clientname=$request->clientname;
-                $tender->recomended=$request->recomended;
+                $tender->location=$request->location;
+                $tender->evaluationprocess=$request->evaluationprocess;
+                $tender->tenderrefno=$request->tenderrefno;
+                $tender->tenderdate=$request->tenderdate;
                 $tender->workvalue=$request->workvalue;
                 $tender->workvalueinword=$request->workvalueinword;
-                $tender->nitpublicationdate=$request->nitpublicationdate;
-                $tender->source=$request->source;
-                $tender->tenderpriority=$request->tenderpriority;
                 $tender->typeofwork=$request->typeofwork;
                 $tender->lastdateofsubmisssion=$request->lastdateofsubmisssion;
-                $tender->rfpavailabledate=$request->rfpavailabledate;
-              
+                $tender->tendervalidityindays=$request->tendervalidityindays;
+                $tender->tendervaliditydate=$request->tendervaliditydate;
                 $tender->refpageofrfp=$request->refpageofrfp;
-                
+                $tender->prebidmeetingdate=$request->prebidmeetingdate;
+                $tender->recomended=$request->recomended;
+
                 $tender->emdamount=$request->emdamount;
                 $tender->amountinword=$request->amountinword;
                 $tender->emdinformof=$request->emdinformof;
-                $tender->tenderamount=$request->tenderamount;
-                $tender->tenderamountinword=$request->tenderamountinword;
-                $tender->tendercostinformof=$request->tendercostinformof;
-                $tender->tenderrefno=$request->tenderrefno;
-                $tender->noofcovers=$request->noofcovers;
-                $tender->salestartdate=$request->salestartdate;
-                $tender->saleenddate=$request->saleenddate;
-                $tender->bidstartdate=$request->bidstartdate;
-                $tender->bidenddate=$request->bidenddate;
-                $tender->prebidmeetingdate=$request->prebidmeetingdate;
                 $tender->emdpayableto=$request->emdpayableto;
-                $tender->tenderfeepayableto=$request->tenderfeepayableto;
-                $tender->tendervalidityindays=$request->tendervalidityindays;
-                $tender->tendervaliditydate=$request->tendervaliditydate;
-                    $tender->registrationamount=$request->registrationamount;
+
+                $tender->paperamount=$request->paperamount;
+                $tender->tenderpaperamountinword=$request->tenderpaperamountinword;
+                $tender->papercostinformof=$request->papercostinformof;
+                $tender->paperfeepayableto=$request->paperfeepayableto;
+                $tender->totalpaperamt=$request->totalpaperamt;
+                $tender->gstpercnt=$request->gstpercnt;
+                $tender->gstamount=$request->gstamount;
+
+                $tender->registrationamount=$request->registrationamount;
                 $tender->registrationamountinword=$request->registrationamountinword;
                 $tender->registrationamountinformof=$request->registrationamountinformof;
                 $tender->registrationamountpayableto=$request->registrationamountpayableto;
+
+
+
 
                 $tender->save();
                 $tid=$tender->id;
@@ -1507,6 +1503,7 @@ public function userassociatepartner(){
        public function edittender($id)
        {
            $tender=tender::find($id);
+           //return $tender;
            $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
            return view('tender.edittender',compact('tender','tenderdocuments','corrigendumfiles'));

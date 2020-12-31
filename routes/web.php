@@ -556,6 +556,7 @@ Route::post('/updatedepartment','HrController@updatedepartment');
 
 Route::get('/attendance/viewattendance','HrController@viewattendance');
 Route::get('/attendance/attendancereport','HrController@attendancereport');
+Route::get('/labourattendanceexport','HrController@labourattendanceexport');
 Route::get('/showuserlocation/{uid}/{date}','HrController@userlocation');
 Route::post('/getuserlocation','HrController@getuserlocation');
 Route::post('/getalluserlocation','HrController@getalluserlocation');
@@ -836,6 +837,7 @@ Route::post('/updatereception/{id}','HomeController@updatereception');
 
 Route::get('getpendinghodexpenseentrylist','AccountController@getpendinghodexpenseentrylist')->name('getpendinghodexpenseentrylist');
 Route::get('getviewallapplicationformlist','AccountController@getviewallapplicationformlist')->name('getviewallapplicationformlist');
+Route::get('getviewallattendancelist','HrController@getviewallattendancelist')->name('getviewallattendancelist');
 
 //-------------PMS TENDER ROUTE------------//
 

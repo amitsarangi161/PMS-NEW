@@ -91,7 +91,7 @@
         </div>
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <a href="/vouchers/pendingdebitvoucheradmin" title="Pending Debit Vouchers Admin">
+          <a href="/drvouchers/adminverificationdr" title="Pending Debit Vouchers Admin">
           <div class="info-box">
             
              <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>

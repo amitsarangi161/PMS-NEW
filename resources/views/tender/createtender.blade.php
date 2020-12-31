@@ -211,10 +211,10 @@
 		<td><strong>GST AMOUNT</strong></td> 
 		<td><input type="text" name="gstamount" id="gstamount" class="form-control convert1" autocomplete="off" placeholder="Enter Tender Amount"  ></td>
 	</tr>
-	<tr>
+	<!-- <tr>
 		<td><strong>TOTAL PAPER AMOUNT</strong></td> 
 		<td><input type="text" name="totalpaperamt" id="totalpaperamt" class="form-control calc" autocomplete="off" readonly=""></td>
-	</tr>
+	</tr> -->
 	
 </table>
 

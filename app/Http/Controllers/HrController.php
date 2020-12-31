@@ -11,6 +11,7 @@ use Mail;
 use App\complaint;
 use Auth;
 use App\complaintlog;
+use DataTables;
 use DB;
 use App\todo;
 use Carbon\Carbon;
@@ -29,9 +30,22 @@ use App\Dailyattendancegroup;
 use App\Dailyattendancegroupdetail;
 use App\Dailyattendanceimage;
 use Excel;
+use App\Http\Controllers\AccountController as Money;
 class HrController extends Controller
 {
   //-------------PMS HR ------------//
+   public static function changedateformat($date)
+   {
+    $originalDate = $date;
+    $newDate = date("d-m-Y", strtotime($originalDate));
+    return $newDate;
+   }
+  public static function changedatetimeformat($datetime)
+   {
+    $originalDate = $datetime;
+    $newDate = date("d-m-Y H:i:s", strtotime($originalDate));
+    return $newDate;
+   }
   public function updateattendance(Request $request){
        $attendance=Dailyattendancegroup::find($request->uid);
        $attendance->itemdescription=$request->itemdescription;
@@ -1795,4 +1809,235 @@ public function adddepartment(Request $request){
     Session::flash('msg','User Updated Successfully');
     return back();
    }
+   public function getviewallattendancelist(Request $request)
+       {
+           $allattendancegroups=Dailyattendancegroup::select('dailyattendancegroups.*','addgroups.groupname')
+          ->leftjoin('addgroups','dailyattendancegroups.groupid','=','addgroups.id');
+            //$allattendancegroups=$allattendancegroups->get();
+            //return $allattendancegroups;
+            if($request->has('group') && $request->get('group')!=''){
+               $allattendancegroups=$allattendancegroups->where('groupid',$request->group);
+
+            }
+            if($request->has('fromdate') && $request->has('todate')){
+               if($request->get('fromdate')!='' && $request->get('todate')!=''){ 
+               $allattendancegroups=$allattendancegroups
+                                ->where('entrytime','>=',$request->fromdate.' 00:00:00')
+                                ->where('entrytime','<=',$request->todate.' 23:59:59');
+              }
+
+            }
+            $totalotamt=Money::moneyFormatIndia($allattendancegroups->sum('tot'));
+            $totalamt=Money::moneyFormatIndia($allattendancegroups->sum('tamt'));
+            $totalwages=Money::moneyFormatIndia($allattendancegroups->sum('twages'));
+            $noofworker=$allattendancegroups->sum('noofworkerspresent');
+            $tothour=$allattendancegroups->sum('tothour');
+
+          
+          
+          
+          return DataTables::of($allattendancegroups)
+                 ->setRowClass(function ($allattendancegroups) {
+                        $date = \Carbon\Carbon::parse($allattendancegroups->lastdateofsubmisssion);
+                        $now = \Carbon\Carbon::now();
+                        $diff = $now->diffInDays($date);
+                        if($date<$now){
+                            $day=-($diff);
+                         }
+                        else
+                        {
+                          $day=$diff;
+                        }
+                        if($day>=0 && $day<=5)
+                          {
+                              return 'blink';
+                          }
+                      
+                              
+                   
+                })
+                 
+                 
+                 ->addColumn('idbtn', function($allattendancegroups){
+                         return '<a target="_blank" href="/attendance/viewattendancegroup/'.$allattendancegroups->id.'" class="btn btn-info">'.$allattendancegroups->id.'</a>';
+                    })
+                 ->addColumn('technicalscoreupload', function($allattendancegroups) {
+                    if ($allattendancegroups->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$allattendancegroups->technicalscoreupload.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+                  ->addColumn('financialscoreupload', function($allattendancegroups) {
+                    if ($allattendancegroups->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$allattendancegroups->financialscoreupload.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+                  ->addColumn('technicalproposal', function($allattendancegroups) {
+                    if ($allattendancegroups->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$allattendancegroups->technicalproposal.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+                  ->addColumn('financialproposal', function($allattendancegroups) {
+                    if ($allattendancegroups->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$allattendancegroups->financialproposal.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+                  ->addColumn('participantlistupload', function($allattendancegroups) {
+                    if ($allattendancegroups->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$allattendancegroups->participantlistupload.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
+
+
+                 // <td> <a href="/img/posttenderdoc/{{$tender->technicalscoreupload}}" target="_blank"><i style="color: green;font-size: 20px;" class='fa fa-check-circle-o'></i></a></td>
+
+
+                  ->addColumn('sta', function($allattendancegroups) {
+                    /*if ($allattendancegroups->status=='PENDING') return '<span class="label label-default">'.$allattendancegroups->status.'</span>';*/
+                      if ($allattendancegroups->status=='ELLIGIBLE') return '<span class="label label-success" ondblclick="revokestatus('.$allattendancegroups->id.')">'.$allattendancegroups->status.'</span>';
+                    if ($allattendancegroups->status=='NOT ELLIGIBLE') return '<span class="label label-warning" ondblclick="revokestatus('.$allattendancegroups->id.')">'.$allattendancegroups->status.'</span>';
+                    if ($allattendancegroups->status=='PENDING')
+                      return '<select id="status" onchange="changestatus(this.value,'.$allattendancegroups->id.')">'.
+                               '<option value="PENDING">PENDING</option>'.
+                               '<option value="ELLIGIBLE">ELLIGIBLE</option>'.
+                               '<option value="NOT ELLIGIBLE">NOT ELLIGIBLE</option>'.
+                               '<option value="NOT INTERESTED">NOT INTERESTED</option>'.
+                               '</select>';
+
+
+
+                    if ($allattendancegroups->status=='COMMITEE APPROVED') return '<span class="label label-success" ondblclick="revokestatus('.$allattendancegroups->id.')">'.$allattendancegroups->status.'</span>';
+                    if ($allattendancegroups->status=='ADMIN APPROVED') return '<span class="label label-primary" ondblclick="revokestatus('.$allattendancegroups->id.')">'.$allattendancegroups->status.'</span>';
+                    if ($allattendancegroups->status=='ADMIN REJECTED') return '<span class="label label-danger" ondblclick="revokestatus('.$allattendancegroups->id.')">'.$allattendancegroups->status.'</span>';
+                    else
+                      return '<span class="label label-success" ondblclick="revokestatus('.$allattendancegroups->id.')">'.$allattendancegroups->status.'</span>';
+                    
+                    
+                    })
+                  
+                 ->addColumn('edit', function($allattendancegroups){
+                  return '<button type="button" class="btn btn-primary" onclick="edit('.$allattendancegroups->id.',\''. $allattendancegroups->itemdescription . '\',\''. $allattendancegroups->unit . '\',\''. $allattendancegroups->quantity . '\',\''. $allattendancegroups->amount . '\',\''. $allattendancegroups->workassignment . '\',\''. $allattendancegroups->remarks . '\')">EDIT</button>';
+                    })
+                  ->addColumn('view', function($allattendancegroups){
+                         return '<a target="_blank" href="/attendance/viewattendancegroup/'.$allattendancegroups->id.'" class="btn btn-info">VIEW</a>';
+                    })
+                  
+                  ->addColumn('delete', function($allattendancegroups){
+                         return '<a target="_blank" href="/viewappliedallattendancegroups/'.$allattendancegroups->id.'" class="btn btn-danger">DELETE</a>';
+                    })
+                  ->addColumn('now', function($allattendancegroups){
+                         return '<p class="b" title="'.$allattendancegroups->nameofthework.'">'.$allattendancegroups->nameofthework.'</p>';
+                    })
+                    ->addColumn('ldos', function($allattendancegroups) {
+                    return '<strong><span class="label label-danger" style="font-size:13px;">'.$this->changedateformat($allattendancegroups->lastdateofsubmisssion).'</strong></span>';
+                     })
+                  ->editColumn('nitpublicationdate', function($allattendancegroups) {
+                    return $this->changedateformat($allattendancegroups->nitpublicationdate);
+                     })
+                   ->editColumn('emdamount', function($allattendancegroups) {
+                    return app('App\Http\Controllers\AccountController')->moneyFormatIndia($allattendancegroups->emdamount);
+                     })
+                   ->editColumn('location', function($allattendancegroups) {
+                    return $allattendancegroups->location;
+                     })
+                ->editColumn('lastdateofsubmisssion', function($allattendancegroups) {
+                    return $this->changedateformat($allattendancegroups->lastdateofsubmisssion);
+                     })
+                 
+                  ->editColumn('rfpavailabledate', function($allattendancegroups) {
+                    return $this->changedateformat($allattendancegroups->rfpavailabledate);
+                     })
+                  ->editColumn('created_at', function($allattendancegroups) {
+                        return $this->changedatetimeformat($allattendancegroups->created_at);
+                     })
+                  
+                  ->rawColumns(['idbtn','view','edit','delete','now','sta','status','ldos','technicalscoreupload','financialscoreupload','technicalproposal','financialproposal','participantlistupload'])
+                  ->with(compact('totalotamt','totalamt','noofworker','totalwages','tothour'))
+                 ->make(true);
+       }
+       public function labourattendanceexport(Request $request){
+        $allattendancegroups=Dailyattendancegroup::select('dailyattendancegroups.*','addgroups.groupname')
+          ->leftjoin('addgroups','dailyattendancegroups.groupid','=','addgroups.id');
+            if($request->has('group') && $request->get('group')!=''){
+               $allattendancegroups=$allattendancegroups->where('groupid',$request->group);
+
+            }
+            if($request->has('fromdate') && $request->has('todate')){
+               if($request->get('fromdate')!='' && $request->get('todate')!=''){ 
+               $allattendancegroups=$allattendancegroups
+                                ->where('entrytime','>=',$request->fromdate.' 00:00:00')
+                                ->where('entrytime','<=',$request->todate.' 23:59:59');
+              }
+
+            }
+        $allattendancegroups=$allattendancegroups->get();
+        $totaltamt=$allattendancegroups->sum('tamt');
+        $noofworkerspresent=$allattendancegroups->sum('noofworkerspresent');
+        $twages=$allattendancegroups->sum('twages');
+        $tothour=$allattendancegroups->sum('tothour');
+        $tot=$allattendancegroups->sum('tot');
+      $customer_array[] = array('Id', 'GROUP NAME', 'ENTRY TIME','DEPARTURE TIME','NUMBER OF WORKERS','WAGES','OT HOUR','OT','TOTAL AMOUNT','REMARKS','WORK ASSIGNMENT','ITEM DESCRIPTION','UNIT','QUANTITY','AMOUNT','CREATED AT');
+
+       foreach($allattendancegroups as $allattendancegroup)
+     {
+      $customer_array[] = array(
+       'Id'  => $allattendancegroup->id,
+       'GROUP NAME'   => $allattendancegroup->groupname,
+       'ENTRY TIME'  => $allattendancegroup->entrytime,
+       'DEPARTURE TIME'    => $allattendancegroup->departuretime,
+       'NUMBER OF WORKERS'    => $allattendancegroup->noofworkerspresent,
+       'WAGES'    => $allattendancegroup->twages,
+       'OT HOUR'    => $allattendancegroup->tothour,
+       'OT'    => $allattendancegroup->tot,
+       'TOTAL AMOUNT'    => $allattendancegroup->tamt,
+       'REMARKS'    => $allattendancegroup->remarks,
+       'WORK ASSIGNMENT'    => $allattendancegroup->workassignment,
+       'ITEM DESCRIPTION'    => $allattendancegroup->itemdescription,
+       'UNIT,'   => $allattendancegroup->unit,
+       'QUANTITY,'   => $allattendancegroup->quantity,
+       'AMOUNT,'   => $allattendancegroup->amount,
+       'CREATED AT,'   => $allattendancegroup->created_at
+      );
+     }
+     $customer_array[] = array(
+       'id'  => '',
+       'groupname'   => 'TOTAL',
+       'entrytime'  => '',
+       'departuretime'    => '',
+       'noofworkerspresent'    => $noofworkerspresent,
+       'twages'    => $twages,
+       'tothour'    => $tothour,
+       'tot'    => $tot,
+       'tamt'    => $totaltamt,
+       'remarks'    => '',
+       'workassignment'    => '',
+       'itemdescription'    => '',
+       'unit,'   => '',
+       'quantity,'   => '',
+       'amount,'   => '',
+       'created_at,'   => ''
+      );
+     Excel::create('Attendance Report', function($excel) use ($customer_array){
+      $excel->setTitle('Attendance Report');
+      $excel->sheet('Attendance Report', function($sheet) use ($customer_array){
+       $sheet->fromArray($customer_array, null, 'A1', false, false);
+      });
+     })->download('xlsx');
+
+       }
 }
+
