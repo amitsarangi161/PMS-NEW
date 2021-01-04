@@ -3936,6 +3936,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
      $createdebitvoucher->tsgst=$request->tsgst;
      $createdebitvoucher->tcgst=$request->tcgst;
      $createdebitvoucher->tigst=$request->tigst;
+     $createdebitvoucher->tcsamount=$request->tcsamount;
      $createdebitvoucher->totalamt=$request->totalamt;
      $createdebitvoucher->itdeduction=$request->itdeduction;
      $createdebitvoucher->otherdeduction=$request->otherdeduction;

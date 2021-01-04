@@ -202,10 +202,16 @@
 			<td><strong>OTHER DEDUCTION(in %)</strong></td>
 			<td><input readonly type="text" class="form-control dedcalc" value="{{$pmsdebitvoucher->otherdeduction}}" id="otherdeduction" autocomplete="off" name="otherdeduction" value="0"></td>
 		</tr>
-
 		<tr>
+			<td><strong>TCS AMOUNT</strong></td>
+			<td><input readonly type="text" class="form-control calc" id="tcsamount" value="{{$pmsdebitvoucher->tcsamount}}" name="tcsamount" autocomplete="off" value="0"></td>
 			<td><strong>Final Price</strong></td>
 			<td><input readonly type="text" class="form-control" value="{{$pmsdebitvoucher->finalamount}}" id="finalamount" name="finalamount"  required=""></td>
+			
+		</tr>
+
+		<tr>
+			
 			<td><strong>Attachments</strong></td>
 
 			<td>
@@ -531,6 +537,14 @@ function canceldr(){
 		} else {
 			gtigst = tigst;
 		}
+		 var tcsamount=$("#tcsamount").val();
+        if(tcsamount=='') {
+           gtcsamount = 0;
+          }
+          else
+          {
+            gtcsamount=tcsamount;
+          }
 
 
 		var totalamt = Number.parseFloat((parseFloat(gtprice) - parseFloat(gdiscount)) + (parseFloat(gtcgst) + parseFloat(gtsgst) + parseFloat(gtigst))).toFixed(2);

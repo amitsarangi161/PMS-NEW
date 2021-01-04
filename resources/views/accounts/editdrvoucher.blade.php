@@ -141,18 +141,21 @@
       <td><strong>OTHER DEDUCTION(in %)</strong></td>
       <td><input  type="text" class="form-control dedcalc" value="{{$pmsdebitvoucher->otherdeduction}}" id="otherdeduction" autocomplete="off" name="otherdeduction" value="0"></td>
     </tr>
+    <tr>
+          <td><strong>TCS AMOUNT</strong></td>
+          <td><input type="text" value="{{$pmsdebitvoucher->tcsamount}}" class="form-control calc" id="tcsamount" autocomplete="off" name="tcsamount" value="0"></td>
+                <td><strong>Final Price</strong></td>
+      <td><input  type="text" class="form-control" value="{{$pmsdebitvoucher->finalamount}}" id="finalamount" name="finalamount"  required="" readonly=""></td>
+                   
+        </tr>
 
     <tr>
-      <td><strong>Final Price</strong></td>
-      <td><input  type="text" class="form-control" value="{{$pmsdebitvoucher->finalamount}}" id="finalamount" name="finalamount"  required="" readonly=""></td>
        <td><strong>Attachment</strong></td>
           <td>
           <input name="invoicecopy" type="file" onchange="readURL(this);" >
             <img style="height:40px;width:40px;" alt="noimage" id="imgshow">
           </td>
-      </tr>
-      <tr>
-      <td><strong>Attachments</strong></td>
+           <td><strong>Attachments</strong></td>
 
       <td>
         @if($pmsdebitvoucher->invoicecopy)
@@ -167,6 +170,8 @@
         @endif
 
       </td>
+      </tr>
+      <tr>
       
            <td><strong>Narration</strong></td>
           <td>
@@ -290,7 +295,7 @@
             gtcgst=tcgst;
           }
 
-           var tigst=$("#tigst").val();
+      var tigst=$("#tigst").val();
         if(tigst=='') {
            gtigst = 0;
           }
@@ -298,9 +303,17 @@
           {
             gtigst=tigst;
           }
+          var tcsamount=$("#tcsamount").val();
+        if(tcsamount=='') {
+           gtcsamount = 0;
+          }
+          else
+          {
+            gtcsamount=tcsamount;
+          }
 
       
-      var totalamt=Number.parseFloat((parseFloat(gtprice)-parseFloat(gdiscount))+(parseFloat(gtcgst)+parseFloat(gtsgst)+parseFloat(gtigst))).toFixed(2);
+      var totalamt=Number.parseFloat((parseFloat(gtprice)-parseFloat(gdiscount))+(parseFloat(gtcgst)+parseFloat(gtsgst)+parseFloat(gtigst)+parseFloat(gtcsamount))).toFixed(2);
 
       $("#totalamt").val(totalamt);
       $("#finalamount").val(Math.round(totalamt).toFixed(2));

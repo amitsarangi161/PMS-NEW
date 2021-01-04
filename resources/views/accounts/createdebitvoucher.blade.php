@@ -152,13 +152,12 @@
 
 
           <tr>
+          <td><strong>TCS AMOUNT</strong></td>
+          <td><input type="text" class="form-control calc" id="tcsamount" autocomplete="off" name="tcsamount" value="0"></td>
           <td><strong>Final Price</strong></td>
           <td><input type="text" class="form-control" id="finalamount" name="finalamount" readonly="" required=""></td> 
           
-          <td><strong>Narration</strong></td>
-          <td>
-            <textarea class="form-control" name="narration" placeholder="Enter  Narration"></textarea>
-          </td>
+          
         </tr>
 
         <tr>
@@ -166,6 +165,10 @@
           <td>
           <input name="invoicecopy" type="file" onchange="readURL(this);" >
             <img style="height:40px;width:40px;" alt="noimage" id="imgshow">
+          </td>
+          <td><strong>Narration</strong></td>
+          <td>
+            <textarea class="form-control" name="narration" placeholder="Enter  Narration"></textarea>
           </td>
          </tr>
 	</table>		
@@ -292,9 +295,17 @@
           {
             gtigst=tigst;
           }
+          var tcsamount=$("#tcsamount").val();
+        if(tcsamount=='') {
+           gtcsamount = 0;
+          }
+          else
+          {
+            gtcsamount=tcsamount;
+          }
 
       
-      var totalamt=Number.parseFloat((parseFloat(gtprice)-parseFloat(gdiscount))+(parseFloat(gtcgst)+parseFloat(gtsgst)+parseFloat(gtigst))).toFixed(2);
+      var totalamt=Number.parseFloat((parseFloat(gtprice)-parseFloat(gdiscount))+(parseFloat(gtcgst)+parseFloat(gtsgst)+parseFloat(gtigst)+parseFloat(gtcsamount))).toFixed(2);
 
       $("#totalamt").val(totalamt);
       $("#finalamount").val(Math.round(totalamt).toFixed(2));
