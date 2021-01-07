@@ -3921,6 +3921,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
       $this->validate($request, [
             'finalamount' => "required|regex:/^\d+(\.\d{1,2})?$/",
             'totalamt' => "required|regex:/^\d+(\.\d{1,2})?$/",
+            
        ]);
     $createdebitvoucher=new Pmsdebitvoucher();
      $createdebitvoucher->vendorid=$request->vendorid;

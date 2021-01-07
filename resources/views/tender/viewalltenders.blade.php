@@ -1,6 +1,26 @@
 @extends('layouts.tender')
 @section('content')
 @inject('provider', 'App\Http\Controllers\TenderController')
+@inject('provider', 'App\Http\Controllers\TenderController')
+   @if(Session::has('msg'))
+   <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
+   @endif
+   @if(Session::has('status'))
+   <p class="alert alert-success text-center">{{ Session::get('status') }}</p>
+   @endif
+   @if(Session::has('error'))
+    <p class="alert alert-danger text-center">{{ Session::get('error') }}</p>
+   @endif
+
+   @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div><br />
+      @endif
 <style type="text/css">
   
     .b {
@@ -45,12 +65,6 @@
       <form method="POST" id="search-form4" class="form-inline" role="form">
         <td><button type="submit" value="" name="applied" id="applied" class="btn btn-warning">APPLIED</button></td>
       </form>
-      <form method="POST" id="search-form5" class="form-inline" role="form">
-        <td><button type="submit" value="" name="technical" id="technical" class="btn btn-info">TECHNICAL EVALUATION</button></td>
-      </form>
-      <form method="POST" id="search-form6" class="form-inline" role="form">
-        <td><button type="submit" value="" name="financial" id="financial" class="btn btn-primary">FINANCIAL EVALUATION</button></td>
-      </form>
       <form method="POST" id="search-form7" class="form-inline" role="form">
         <td><button type="submit" value="" name="ei" id="ei" class="btn btn-success">ELLIGIBLE,INTERESTED</button></td>
       </form>
@@ -59,6 +73,16 @@
       </form>
     </tr>
 </table>
+<div class="box-header">
+    <div class="row">
+        <p>
+            <span class="pull-right"><button type="submit" class="btn bg-navy btn-flat margin" data-toggle="modal" data-target="#importsavetender" onclick="importsavetender();"><i class="fa fa-file-excel-o"></i> Import Trender</button>
+                <a href="/TendorImportSample.xlsx" download="/tendersample.xlsx" class="btn bg-orange btn-flat margin"><i class="fa fa-download"></i> Sample</a>
+          </span>
+          
+        </p>
+    </div>
+  </div>
 <div class="table-responsive">
 <table class="table table-responsive table-hover table-bordered table-striped yajratable">
     <thead>
@@ -71,9 +95,7 @@
             <td title="Tender Inviting Authority">TIA</td>
             <td>WORK VALUE</td>
             <td>LAST DATE OF SUB.</td>
-            <td>OPENING DT</td>
             <td>LIVE/EXP</td>
-            <td>RFP AVAILABLE DATE</td>
             <td>EMD AMT</td>
             <td>STATUS</td>
             <td>NIT AND RFP</td>
@@ -140,9 +162,41 @@
   </div>
 </div>
 @endif
+<div class="modal fade in" id="importsavetender">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <form method="post" enctype="multipart/form-data" action="/importsavetender">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+      </button>
+        <h4 class="modal-title text-center">Upload Tender Excel</h4>
+      </div>
+      <div class="modal-body">
+        
+        
+          {{ csrf_field() }}
+          <div class="form-group">
+        <label>Select File for Upload Tender</label>
+              <input type="file" name="select_file" />
+          <span class="text-muted">.xls, .xslx</span>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success btn-flat">Upload</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
+      function importsavetender(){
+        alert("Do You Want To Upload Tender Excel");
+      }
 
      $('#search-form1').on('submit', function(e) {
 
@@ -291,9 +345,7 @@
             {data: 'tia', name: 'tia', searchable: false, sortable : false},
             {data: 'workvalue', name: 'workvalue'},
             {data: 'ldos', name: 'lastdateofsubmisssion'},
-            {data: 'openingdate',name: 'openingdate', searchable: false, sortable : false},
             {data: 'live', name: 'lastdateofsubmisssion'},
-            {data: 'rfpavailabledatelink', name:'rfpavailabledate'},
             {data: 'emdamount', name:'emdamount'},
             {data: 'sta', name: 'sta'},
             {data: 'nitandrfp', name: 'nitandrfp',searchable: false, sortable : false},

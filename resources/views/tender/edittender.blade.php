@@ -208,9 +208,9 @@
 	</tr>
 	<tr>
 		<td><strong>GST IN(%)</strong></td> 
-		<td><input type="text" name="gstpercnt" id="gstpercnt" class="form-control calc" autocomplete="off" value={{$tender->gstpercnt}} placeholder="Enter GST Percentage" value="0" ></td>
+		<td><input type="text" name="gstpercnt" id="gstpercnt" class="form-control calc" autocomplete="off" value="{{$tender->gstpercnt}}" placeholder="Enter GST Percentage" value="0" ></td>
 		<td><strong>GST AMOUNT</strong></td> 
-		<td><input type="text" name="gstamount" id="gstamount" class="form-control convert1" autocomplete="off" value={{$tender->gstamount}} placeholder="Enter Tender Amount"  ></td>
+		<td><input type="text" name="gstamount" id="gstamount" class="form-control convert1" autocomplete="off" value="{{$tender->gstamount}}" placeholder="Enter Tender Amount"  ></td>
 	</tr>
 	<!-- <tr>
 		<td><strong>TOTAL PAPER AMOUNT</strong></td> 

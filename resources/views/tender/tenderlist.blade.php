@@ -1,6 +1,25 @@
 @extends('layouts.tender')
 @section('content')
 @inject('provider', 'App\Http\Controllers\TenderController')
+   @if(Session::has('msg'))
+   <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
+   @endif
+   @if(Session::has('status'))
+   <p class="alert alert-success text-center">{{ Session::get('status') }}</p>
+   @endif
+   @if(Session::has('error'))
+    <p class="alert alert-danger text-center">{{ Session::get('error') }}</p>
+   @endif
+
+   @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div><br />
+      @endif
 <style type="text/css">
     .b {
     white-space: nowrap; 
@@ -45,6 +64,16 @@ table {
     
 </table>
 </form>
+<div class="box-header">
+    <div class="row">
+        <p>
+            <span class="pull-right"><button type="submit" class="btn bg-navy btn-flat margin" data-toggle="modal" data-target="#importsavetender" onclick="importsavetender();"><i class="fa fa-file-excel-o"></i> Import Trender</button>
+                <a href="/TendorImportSample.xlsx" download="/tendersample.xlsx" class="btn bg-orange btn-flat margin"><i class="fa fa-download"></i> Sample</a>
+          </span>
+          
+        </p>
+    </div>
+  </div>
 <div class="table-responsive">
 <table class="table table-responsive table-hover table-bordered table-striped yajratable">
     <thead>
@@ -120,11 +149,42 @@ table {
   </div>
 </div>
 @endif
+<div class="modal fade in" id="importsavetender">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <form method="post" enctype="multipart/form-data" action="/importsavetender">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+      </button>
+        <h4 class="modal-title text-center">Upload Tender Excel</h4>
+      </div>
+      <div class="modal-body">
+        
+        
+          {{ csrf_field() }}
+          <div class="form-group">
+        <label>Select File for Upload Tender</label>
+              <input type="file" name="select_file" />
+          <span class="text-muted">.xls, .xslx</span>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success btn-flat">Upload</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
 
+function importsavetender(){
+        alert("Do You Want To Upload Tender Excel");
+      }
 
  $('#search-form').on('submit', function(e) {
         e.preventDefault();

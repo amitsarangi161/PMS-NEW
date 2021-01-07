@@ -144,7 +144,47 @@ public function temptenders()
 
       return view('tender.temptenders',compact('temptenders'));
 }
+public function importsavetender(Request $request)
+{
+       $this->validate($request, [
+      'select_file'  => 'required|mimes:xls,xlsx'
+     ]);
+      $path = $request->file('select_file')->getRealPath();
+      $data = Excel::selectSheetsByIndex(0)->load($path)->get();
+      //return $data;
+      $custerr=array();
+        if($data->count()>0){
+        foreach($data as $kay=>$value){
+        if($value['tenderreferenceno']!=''){
+        $check=tender::where('tenderrefno',$value['tenderreferenceno'])
+          ->count();
+         if($check==0){
+         $tender=new tender();
+         $tender->author=Auth::id();
+         $tender->nameofthework=$value['tendername'];
+         $tender->tenderrefno=$value['tenderreferenceno'];
+         $tender->location=$value['location'];
+         $tender->clientname=$value['clientname'];
+         $tender->lastdateofsubmisssion=$value['lastdateofsubmission'];
+         $tender->tenderdate=$value['tenderdate'];
+         $tender->workvalue=$value['workvalue'];
+         $tender->emdamount=$value['emdamount'];
+         $tender->paperamount=$value['paperamount'];
+         $tender->registrationamount=$value['registrationamount'];
+         $tender->save();
+         Session::flash('status', 'Upload successful!');
+         }
+          else{
+          Session::flash('error', 'Duplicate Entery');
+        }
+       }
 
+        }
+      }
+
+
+      return back();
+}
 public function importtender(Request $request)
 {
        $this->validate($request, [
@@ -182,6 +222,7 @@ public function importtender(Request $request)
 
       return back();
 }
+
 
 public function importassociatepartners(Request $request)
 {

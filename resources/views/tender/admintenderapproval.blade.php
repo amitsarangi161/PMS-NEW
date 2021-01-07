@@ -26,9 +26,7 @@
 			<td>LOCATION</td>
 			<td>SOURCE</td>
 			<td>WORK VALUE</td>
-			<td>NIT PUBLICATION DATE</td>
 			<td>LAST DATE OF SUB.</td>
-			<td>RFP AVAILABLE DATE</td>
 			<td>EMD AMT</td>
 			<td>CREATED AT</td>
 			<td>STATUS</td>		
@@ -62,9 +60,7 @@
             {data: 'location', name: 'location'},
             {data: 'source', name: 'source'},
             {data: 'workvalue', name: 'workvalue'},
-            {data: 'nitpublicationdate', name: 'nitpublicationdate'},
-            {data: 'ldos', name: 'lastdateofsubmisssion'},
-            {data: 'rfpavailabledate', name:'rfpavailabledate'},    
+            {data: 'ldos', name: 'lastdateofsubmisssion'},    
             {data: 'emdamount', name:'emdamount'},    
             {name: 'created_at',data: 'created_at'},
             {data: 'sta', name: 'status'},

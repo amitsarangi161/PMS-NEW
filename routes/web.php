@@ -867,6 +867,7 @@ Route::get('getpendingtenderapprovallist','TenderController@getpendingtenderappr
     Route::post('/emddetailsupdate/{id}','TenderController@emddetailsupdate');  
     Route::post('/importassociatepartners','TenderController@importassociatepartners'); 
     Route::post('/importtender','TenderController@importtender');   
+    Route::post('/importsavetender','TenderController@importsavetender');   
         
     Route::get('/viewcommitteerejectedtender/{id}','TenderController@viewcommitteerejectedtender'); 
         
@@ -898,6 +899,7 @@ Route::get('getpendingtenderapprovallist','TenderController@getpendingtenderappr
     Route::post('/revokestatusadmin','TenderController@revokestatusadmin'); 
     Route::post('/revokestatustendercommittee','TenderController@revokestatustendercommittee'); 
     Route::get('/mytenders/previoustenders','TenderController@previoustenders');
+    Route::post('/changestatus/{id}','TenderController@changestatus');
 
 
 
