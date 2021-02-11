@@ -5,9 +5,34 @@
 <table class="table table-responsive table-hover table-bordered table-striped">
   <thead>
   <tr class="bg-primary">
-    <td class="text-center">WRITE PROJECT REPORT</td>
+    <td class="text-center">YOUR ACTIVITIES</td>
   </tr>
   </thead>
+</table>
+<table class="table table-striped table-bordered display" id="res">
+  
+    <thead class="bg-navy">
+      <tr>
+        <td>ACTIVITY</td>
+      <td>START DATE</td>
+      <td>END DATE</td>
+      <td>DURATION</td>
+      </tr>
+    </thead>
+    <tbody class="addnewrow sortable">
+
+      @foreach($projectactivities as $key=> $projectactivity)
+              <tr>
+                <td>{{$projectactivity->activityname}}<input type="hidden" name="activityid[]" value="{{$projectactivity->activityid}}"></td>
+         <td id="st{{$key+1}}" ondblclick="startdatechange('{{$key+1}}')">{{$projectactivity->startdate}}<input type="hidden" name="activitystartdate[]" id="s{{$key+1}}" value="{{$projectactivity->startdate}}" class="calcin"/>
+         </td>
+        <td id="en{{$key+1}}" ondblclick="enddatechange('{{$key+1}}')">{{$projectactivity->enddate}}<input type="hidden" name="activityenddate[]" id="e{{$key+1}}" value="{{$projectactivity->enddate}}"/></td>
+        <td id="du{{$key+1}}">{{$projectactivity->duration}}<input type="hidden" name="duration[]" class="countable" value="{{$projectactivity->duration}}" class="calcin"/></td>
+              </tr>
+
+            @endforeach
+                   
+      </tbody>         
 </table>
 <table class="table table-responsive table-hover table-bordered table-striped">
 
@@ -18,34 +43,8 @@
         <input type="text" name="reportfordate" class="form-control datepicker4 readonly" placeholder="select a date" required="">
       </td>
     </tr>
-    
 
     <tr>
-      <td>SELECT PROJECT NAME</td>
-      <td>
-        
-        <select class="form-control select2" name="projectid" id="projectid" required onchange="getactivities();">
-         <option value="">select a project</option>
-          @foreach($projects as $project)
-             <option value="{{$project->id}}" mytag="{{$project->clientid}}" title="{{$project->orgname}}">{{$project->projectname}}</option>
-           @endforeach
-        </select>
-      </td>
-    </tr>
-
-
-    <tr>
-      <td>SELECT CLIENT</td>
-      <td>
-        
-        <select class="form-control select2" name="clientid" id="clientid"  readonly required>
-        
-          
-        </select>
-      </td>
-    </tr>
-
-        <tr>
       <td>SELECT ACTIVITY NAME</td>
       <td>
         

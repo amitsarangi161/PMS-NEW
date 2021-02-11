@@ -1,4 +1,4 @@
-@extends('layouts.labour')
+@extends('layouts.app')
 @section('content')
 <style type="text/css">
   .box{border-radius: 0px!important;}
@@ -28,7 +28,7 @@
   <div class="row">
   <div class="col-md-6">
           <!-- Horizontal Form -->
-          <form action="/laboursaveemployeedetails" method="post" enctype="multipart/form-data" class="form-horizontal">
+          <form action="/recsaveemployeedetails" method="post" enctype="multipart/form-data" class="form-horizontal">
           {{csrf_field()}}
           <div class="box box-info  box-solid">
             <div class="box-header with-border">

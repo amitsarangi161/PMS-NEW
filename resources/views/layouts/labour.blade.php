@@ -224,7 +224,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-             <li class="{{ Request::is('hrmain/labouremployeelist') ? 'active' : '' }}"><a href="/hrmain/labouremployeelist"><i class="fa fa-circle-o text-aqua"></i>Employee Database</a></li>
+             <li class="{{ Request::is('hrmain/labouremployeelist') ? 'active' : '' }}"><a href="/hrmain/labouremployeelist"><i class="fa fa-circle-o text-aqua"></i>Labour Database</a></li>
+             <!-- <li class="{{ Request::is('hrmain/labouremplist') ? 'active' : '' }}"><a href="/hrmain/labouremplist"><i class="fa fa-circle-o text-aqua"></i>Employee Database</a></li> -->
           </ul>
         </li>
           <li class="{{ Request::is('attendance*') ? 'active' : '' }} treeview">

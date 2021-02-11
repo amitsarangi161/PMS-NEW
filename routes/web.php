@@ -17,7 +17,11 @@ Route::post('/registerrequest','HomeController@registerrequest');
 Route::post('/account/kit','AjaxController@accountkitverify');
 Route::post('/ajaxsavesuggestion','AjaxController@savesuggestion');
 Route::post('/ajaxfetchlabourfromgrp','AjaxController@ajaxfetchlabourfromgrp');
+Route::post('/ajaxfetchemployeefromgrp','AjaxController@ajaxfetchemployeefromgrp');
+
+Route::post('/ajaxfetchemployeeattngrp','AjaxController@ajaxfetchemployeeattngrp');
 Route::post('/ajaxfetchlabour','AjaxController@ajaxfetchlabour');
+Route::post('/ajaxfetchemployee','AjaxController@ajaxfetchemployee');
 
 Route::post('/ajaxsearchtenderno','AjaxController@ajaxsearchtenderno');
 Route::get('/sendtestsms','SendSmsController@sendtextsms');
@@ -111,7 +115,7 @@ Route::get('/viewadminapprovedtender/{id}','TenderController@viewadminapprovedte
 
 
 Route::get('/home', 'HomeController@home');
-Route::get('/dm/activity','HomeController@activity')->name('activity');
+Route::get('/daywisereport/activity','HomeController@activity')->name('activity');
 Route::post('/saveactivity','HomeController@saveactivity');
 Route::delete('/deleteactivity/{id}','HomeController@deleteactivity');
 Route::post('/updateactivity','HomeController@updateactivity');
@@ -537,19 +541,24 @@ Route::get('/attendance/mapview','HrController@mapview');
 Route::get('/attendance/mapview/{date}','HrController@allemployeemapview');
 Route::get('/hrmain/employeelist','HrController@employeelist');
 Route::get('/hrmain/labouremployeelist','HrController@labouremployeelist');
+Route::get('/hrmain/recemplist','HrController@recemplist');
 Route::get('/hrmain/department','HrController@department');
 Route::post('/adddepartment','HrController@adddepartment');
 Route::post('/importemployee','HrController@importemployee');
 Route::get('/hrmain/registeremployee','HrController@registeremployee');
 Route::get('/hrmain/labourregisteremployee','HrController@labourregisteremployee');
+Route::get('/hrmain/recregisteremployee','HrController@recregisteremployee');
 Route::post('/employeestatus','HrController@employeestatus');
 Route::post('/saveemployeedetails','HrController@saveemployeedetails');
 Route::post('/laboursaveemployeedetails','HrController@laboursaveemployeedetails');
+Route::post('/recsaveemployeedetails','HrController@recsaveemployeedetails');
 
 Route::get('/hrmain/editemployeedetails/{id}','HrController@editemployeedetails');
 Route::get('/hrmain/laboureditemployeedetails/{id}','HrController@laboureditemployeedetails');
+Route::get('/hrmain/receditemployeedetails/{id}','HrController@receditemployeedetails');
 Route::post('/updateemployeedetails/{id}','HrController@updateemployeedetails');
 Route::post('/labourupdateemployeedetails/{id}','HrController@labourupdateemployeedetails');
+Route::post('/recupdateemployeedetails/{id}','HrController@recupdateemployeedetails');
 Route::post('/saveempotherdoc/{id}','HrController@saveempotherdoc');
 Route::post('/ajaxgetdept','HrController@ajaxgetdept');
 Route::post('/updatedepartment','HrController@updatedepartment');
@@ -808,13 +817,23 @@ Route::get('/dm/smssetting','HomeController@smssetting');
 Route::post('/savesmssetting','HomeController@savesmssetting');
 
 Route::get('/attendance/addgroup','HrController@addgroup');
+Route::get('/empattendance/recaddempgroup','HrController@recaddempgroup');
+Route::get('/empattendance/addempgroup','HrController@addempgroup');
 Route::get('/attendance/labouraddgroup','HrController@labouraddgroup');
 Route::post('/saveaddgroup','HrController@saveaddgroup');
+Route::post('/saveaddempgroup','HrController@saveaddempgroup');
+Route::post('/saverecaddempgroup','HrController@saverecaddempgroup');
 Route::post('/updategroup/','HrController@updategroup');
+Route::post('/updateempgroup/','HrController@updateempgroup');
 
 Route::get('/attendance/adddailyattendance','HrController@adddailyattendance');
+Route::get('/empattendance/adddailyempattendance','HrController@adddailyempattendance');
+Route::get('/empattendance/recadddailyempattendance','HrController@recadddailyempattendance');
 Route::get('/attendance/labouradddailyattendance','HrController@labouradddailyattendance');
 Route::post('/saveattendancereportgrp','HrController@saveattendancereportgrp');
+Route::post('/saveattendancereportempgrp','HrController@saveattendancereportempgrp');
+Route::post('/saveattendanceemployee','HrController@saveattendanceemployee');
+Route::post('/saverecattendanceemployee','HrController@saverecattendanceemployee');
 Route::post('/laboursaveattendancereportgrp','HrController@laboursaveattendancereportgrp');
 Route::get('/attendance/viewallattendance','HrController@viewallattendance');
 Route::get('/attendance/labourviewallattendance','HrController@labourviewallattendance');
@@ -901,8 +920,45 @@ Route::get('getpendingtenderapprovallist','TenderController@getpendingtenderappr
     Route::get('/mytenders/previoustenders','TenderController@previoustenders');
     Route::post('/changestatus/{id}','TenderController@changestatus');
 
-
-
+    Route::get('/daywisereport/addactivities','HomeController@addactivities');
+    Route::post('/saveactivies','HomeController@saveactivies');
+    Route::get('/daywisereport/viewallactivities','HomeController@viewallactivities');
+    
+    Route::get('/editemployeeactivities/{id}','HomeController@editemployeeactivities');
+    Route::post('/updaateemployeactivities/{id}','HomeController@updaateemployeactivities');
+    Route::get('/dm/addleavetype','HrController@addleavetype');
+    Route::post('/saveaddleavetype','HrController@saveaddleavetype');
+    Route::post('/updatleavetype/','HrController@updatleavetype');
+    Route::get('/dm/addsalarydecuction','HrController@addsalarydecuction');
+    Route::post('/saveaddsalarydeduction','HrController@saveaddsalarydeduction');
+    Route::post('/updatedeductiontype/','HrController@updatedeductiontype');
+    Route::get('/leave/applyleave','HrController@applyleave');
+    Route::get('/leave/userapplyleave','HomeController@userapplyleave');
+    Route::post('/saveleaveapply','HrController@saveleaveapply');
+    Route::get('/leave/viewalleave','HrController@viewalleave');
+    Route::get('/leave/viewpendingleves','HrController@viewpendingleves');
+    Route::post('/ajaxchangeleavestatus','AjaxController@ajaxchangeleavestatus');
+    Route::post('/ajaxchangestatus','AjaxController@ajaxchangestatus');
+    Route::post('/ajaxfetchattendanceemp','AjaxController@ajaxfetchattendanceemp');
+    Route::post('/ajaxholidayemployee','AjaxController@ajaxholidayemployee');
+    Route::get('/viewapplicantleave/{id}','HrController@viewapplicantleave'); 
+    Route::post('/approveleave/{id}','HrController@approveleave');
+    Route::post('/approveleaveall/{id}','HrController@approveleaveall');
+    Route::post('/rejectleave/{id}','HrController@rejectleave');
+    Route::post('/rejectleaveall/{id}','HrController@rejectleaveall');
+    Route::post('/addemployeesalaryshee','HrController@addemployeesalaryshee');
+    Route::get('/viewapplicantleaveall/{id}','HrController@viewapplicantleaveall');
+    Route::get('/empattendance/viewallempattendance','HrController@viewallempattendance');
+    Route::get('/empattendance/viewattendanceemployee','HrController@viewattendanceemployee');
+    Route::get('/empattendance/recviewattendanceemployee','HrController@recviewattendanceemployee');
+    Route::get('/empattendance/viewemployeepayslip','HrController@viewemployeepayslip');
+    Route::get('/viewslip/{id}','HrController@viewslip');
+    Route::get('/viewatendances/{date}/{id}','HrController@viewatendances');
+    Route::get('/recviewatendances/{date}/{id}','HrController@recviewatendances');
+    Route::post('/updateadjustleave/','HrController@updateadjustleave');
+    Route::get('/leave/viewuserleave','HrController@viewuserleave');
+    Route::get('/viewapplicantleaveuser/{id}','HrController@viewapplicantleaveuser');
+    Route::post('/saveuserleaveapply','HrController@saveuserleaveapply');
 //-------------PMS END TENDER ROUTE------------//
 
 });

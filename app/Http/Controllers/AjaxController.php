@@ -14,6 +14,10 @@ use App\otp;
 use Carbon\Carbon;
 use App\chat;
 use DB;
+use Session;
+use DateInterval;
+use DateTime;
+use DatePeriod;
 use App\todo;
 use App\expenseentry;
 use App\complaintlog;
@@ -25,11 +29,138 @@ use App\dailyvehicle;
 use App\suggestion;
 use App\tender;
 use App\employeedetail;
+use App\Applyleave;
+use App\Empdailyattendancegroup;
+use App\Empdailyattendancegroupdetail;
+use App\Approvedleave;
 class AjaxController extends Controller
 { 
+  public function ajaxchangestatus(Request $request){
+    $changestaus=Empdailyattendancegroupdetail::find($request->id);
+    $changestaus->present=$request->status;
+    $changestaus->save();
+  }
+  public function ajaxholidayemployee(Request $request){
+    //return $request->all();
+    $date=$request->attendancedate;
+    $empgroupid=$request->empgroupid;
+
+
+    $chk=Empdailyattendancegroup::where('date',$date)
+      ->where('empgroupid',$empgroupid)
+      ->count(); 
+    //return $chk;
+      
+      if($chk == 0)
+      {
+        $holiday=new Empdailyattendancegroup();
+        $holiday->date=$request->attendancedate;
+        $holiday->empgroupid=$request->empgroupid;
+        $holiday->type=$request->type;
+        $holiday->entryby=Auth::id();
+        $holiday->save();
+        $employees=employeedetail::select('id','employeename')
+                 ->where('emptype','Employee')
+                 ->where('empgroupid',$empgroupid)
+                 ->get();
+        $attendanceid=$holiday->id;
+        foreach ($employees as $key => $employee) {
+          $attendancedetail=new Empdailyattendancegroupdetail();
+           $attendancedetail->dailyattendanceid=$attendanceid;
+           $attendancedetail->employee_id=$employee->id;
+           $attendancedetail->employeename=$employee->employeename;
+           $attendancedetail->attendancedate=$request->attendancedate;
+           $attendancedetail->present="H";
+           $attendancedetail->save();
+        }
+        return 1;
+      }else{
+       
+        return 0;
+      }
+    
+  }
+  public function ajaxfetchattendanceemp(Request $request){
+    $customarray=array();
+    $employees=employeedetail::where('empgroupid',$request->empgroupid)
+              ->where('emptype','Employee')
+              ->get();
+      $totmonthdate=cal_days_in_month(CAL_GREGORIAN,$request->frommonth,$request->fromyear);
+      $totholiday=Empdailyattendancegroup::whereYear('date', '=', $request->fromyear)
+              ->whereMonth('date', '=', $request->frommonth)
+              ->where('type','HOLIDAY')
+              ->count();
+      //return compact('totmonthdate','totholiday');
+
+
+    foreach ($employees as $key => $employee) {
+            $empttotpresent=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
+                    ->whereYear('attendancedate', '=', $request->fromyear)
+                    ->whereMonth('attendancedate', '=', $request->frommonth)
+                    ->where('present','Y')
+                    ->count();
+            $empttotabsent=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
+                    ->whereYear('attendancedate', '=', $request->fromyear)
+                    ->whereMonth('attendancedate', '=', $request->frommonth)
+                    ->where('present','N')
+                    ->count();
+           $thismonthleave=Approvedleave::where('employee_id',$employee->id)
+                    ->whereYear('date', '=', $request->fromyear)
+                    ->whereMonth('date', '=', $request->frommonth)
+                    ->count();
+          $totleavetaken=Approvedleave::where('employee_id',$employee->id)->count();
+          $totalleave=15;
+          $totalbalanceleave=$totalleave-$totleavetaken;
+          $customarray[]=array('employee'=>$employee,'empttotpresent'=>$empttotpresent,'empttotabsent'=>$empttotabsent,'thismonthleave'=>$thismonthleave,'totleavetaken'=>$totleavetaken,'totalleave'=>$totalleave,'totalbalanceleave'=>$totalbalanceleave);
+
+        
+    }
+    return $customarray;
+
+  }
+  public function ajaxchangeleavestatus(request $request){
+    //return $request->all();
+    $fromdate=$request->fromdate;
+    $todate=$request->todate;
+
+    $changestaus=Applyleave::find($request->id);
+    $changestaus->status=$request->status;
+    $changestaus->fromdate=$request->fromdate;
+    $changestaus->todate=$request->todate;
+    $changestaus->save();
+    if($changestaus->status == "ACCEPTED"){
+      //return 2;
+        $begin = strtotime($fromdate);
+        $end = strtotime($todate);
+        for ( $i = $begin; $i <= $end; $i = $i + 86400 ) {
+          $thisDate = date( 'Y-m-d', $i ); // 2010-05-01, 2010-05-02, etc
+          $chk=Approvedleave::where('date',$thisDate)
+                    ->where('employee_id',$changestaus->employeeid)
+                    ->count();
+          if($chk == 0){
+         $approvedleave=new Approvedleave();
+         $approvedleave->applyleaveid=$changestaus->id;
+         $approvedleave->date=$thisDate;
+         $approvedleave->employee_id=$changestaus->employeeid;
+         $approvedleave->save();
+
+          }
+      }
+
+    }
+    //return 1;
+
+  }
   public function ajaxfetchlabour(Request $request){
 
     $labours=employeedetail::where('groupid',$request->groupid)->get();
+    return response()->json($labours);
+
+
+  }
+  public function ajaxfetchemployee(Request $request){
+
+    $labours=employeedetail::where('empgroupid',$request->empgroupid)->get();
     return response()->json($labours);
 
 
@@ -87,6 +218,72 @@ class AjaxController extends Controller
       $customarray[]=$arr;
    }
     return $customarray;
+
+  }
+  public function ajaxfetchemployeefromgrp(Request $request){
+    $entrytime=Carbon::parse($request->entrytime);
+    $departuretime=Carbon::parse($request->departuretime);
+    $labour=$request->labour;
+    $empgroupid=$request->empgroupid;
+    $numberofhour=$request->nof;
+    $not=$request->nofot;
+    $employeedetails=employeedetail::whereIn('id',$labour)->get();
+    $difference=$numberofhour*60;
+    $otmin=$not*60;
+    if ($numberofhour==8) {
+      $day=1;
+    }
+    else{
+      $day=0.5;
+    }
+    //$difference=$entrytime->diffInMinutes($departuretime,false);
+    $customarray=array();
+    foreach ($employeedetails as $key => $employeedetail) {
+      $noofhour=$employeedetail->noofhour;
+      $minutes=$noofhour*60;
+      $wages=$employeedetail->wages;
+      $wagesperminute=$wages/$minutes;
+      $totamt=$difference*$wagesperminute;
+      if($otmin>0)
+      {
+        $otminutes=$otmin;
+        $othours = $not;
+        $otamount= $otminutes*$wagesperminute;
+      }
+      else{
+        $otminutes=0;
+        $othours = 0;
+        $otamount= 0;
+      }
+      $arr=array(
+        'id'=>$employeedetail->id,
+        'employeename'=>$employeedetail->employeename,
+        'totamt'=>number_format((float)$totamt, 2, '.', ''),
+        'otamount'=>number_format((float)$otamount, 2, '.', ''),
+        'othours'=>$othours,
+        'wages'=>number_format((float)$wages, 2, '.', ''),
+        'otminutes'=>$otminutes,
+        'day'=>$day,
+        'totnoofhour'=>intdiv($difference, 60).':'. ($difference % 60),
+        'totnoofminutes'=>$difference,
+        'entrytime'=>$request->entrytime,
+        'departuretime'=>$request->departuretime
+
+    );
+      $customarray[]=$arr;
+   }
+    return $customarray;
+
+  }
+  public function ajaxfetchemployeeattngrp(Request $request){
+    $empgroupid=$request->empgroupid;
+    $attendancedate=$request->attendancedate;
+    $employees=employeedetail::select('id','employeename')
+                 ->where('emptype','Employee')
+                 ->where('empgroupid',$empgroupid)
+                 ->get();
+    $res=array('employees'=>$employees,'attendancedate'=>$attendancedate);
+    return response()->json($res);
 
   }
   public function ajaxexpchangedate(Request $request)

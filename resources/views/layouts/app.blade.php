@@ -261,6 +261,31 @@
           </ul>
 
         </li>
+        
+         <li class="{{ Request::is('daywisereport*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>REPORT MAIN</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+              <li class="{{ Request::is('daywisereport/activity') ? 'active' : '' }}"><a href="/daywisereport/activity"><i class="fa fa-circle-o text-aqua"></i>DEFINE ACTIVITY</a></li>
+             <li class="{{ Request::is('daywisereport/addactivities') ? 'active' : '' }}"><a href="/daywisereport/addactivities"><i class="fa fa-circle-o text-red"></i>ADD ACTIVITIES</a></li>
+             <li class="{{ Request::is('daywisereport/viewallactivities') ? 'active' : '' }}"><a href="/daywisereport/viewallactivities"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL ACTIVITIES</a></li>
+          </ul>
+        </li>
+        <li class="{{ Request::is('daywise*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>DAY WISE REPORT</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+              <li class="{{ Request::is('daywisereport/activity') ? 'active' : '' }}"><a href="/daywisereport/activity"><i class="fa fa-circle-o text-aqua"></i>DEFINE ACTIVITY</a></li>
+          </ul>
+        </li>
         @endif
         @php
         $rcpt=\App\Userrole::where('rolename','RECEPTION')->pluck('userid')->toArray();
@@ -281,7 +306,50 @@
              
           </ul>
         </li>
+
         @endif
+        @php
+        $rcpt=\App\Userrole::where('rolename','RECEPTION')->pluck('userid')->toArray();
+        @endphp
+        @if(Auth::user()->usertype=='MASTER ADMIN' || in_array(Auth::id(), $rcpt))
+        <li class="{{ Request::is('hrmain*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>EMPLOYEE MANAGEMENT</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('hrmain/recemplist') ? 'active' : '' }}"><a href="/hrmain/recemplist"><i class="fa fa-circle-o text-aqua"></i>Employee Database</a></li>
+          </ul>
+        </li>
+        <li class="{{ Request::is('empattendance*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>DAILY ATTENDANCE EMPLOYEE</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+           <ul class="treeview-menu">
+            
+            <li class="{{ Request::is('empattendance/recaddempgroup') ? 'active' : '' }}"><a href="/empattendance/recaddempgroup"><i class="fa fa-circle-o text-aqua"></i>ADD EMPLOYEE GROUPS</a></li>
+             
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/recadddailyempattendance') ? 'active' : '' }}"><a href="/empattendance/recadddailyempattendance"><i class="fa fa-circle-o text-aqua"></i>DAILY ATTENANCE EMPLOYEES</a></li>
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/recviewattendanceemployee') ? 'active' : '' }}"><a href="/empattendance/recviewattendanceemployee"><i class="fa fa-circle-o text-aqua"></i>VIEW ATTENANCE EMPLOYEES</a></li>
+          </ul>
+          <!--  <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/viewallempattendance') ? 'active' : '' }}"><a href="/empattendance/viewallempattendance"><i class="fa fa-circle-o text-aqua"></i>VIEW MONTHLY ATTENANCE</a></li>
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/viewemployeepayslip') ? 'active' : '' }}"><a href="/empattendance/viewemployeepayslip"><i class="fa fa-circle-o text-aqua"></i>VIEW EMPLOYEE PAYSLIP</a></li>
+          </ul> -->
+        </li>
+        @endif
+
 
         @if(Auth::user()->usertype=='USER' || Auth::user()->usertype=='ADMIN')
         <li class="{{ Request::is('userprojects*') ? 'active' : '' }} treeview">
@@ -296,6 +364,32 @@
               
             </a></li>
              
+        
+          </ul>
+        </li>
+        <li class="{{ Request::is('leave*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>LEAVE MANAGEMENT</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('leave/userapplyleave') ? 'active' : '' }}"><a href="/leave/userapplyleave"><i class="fa fa-circle-o text-aqua"></i>APPLY LEAVE</a></li>
+            <li class="{{ Request::is('leave/viewuserleave') ? 'active' : '' }}"><a href="/leave/viewuserleave"><i class="fa fa-circle-o text-red"></i>VIEW LEAVE</a></li>
+          </ul>
+        </li>
+        <li class="{{ Request::is('urm*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>REPORT MAIN</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('urm/userwritereport') ? 'active' : '' }}"><a href="/urm/userwritereport"><i class="fa fa-circle-o text-red"></i>WRITE A REPORT(SELF)</a></li>
+
+            <li class="{{ Request::is('urm/userviewreports') ? 'active' : '' }}"><a href="/urm/userviewreports"><i class="fa fa-circle-o text-red"></i>VIEW MY REPORTS</a></li>
         
           </ul>
         </li>

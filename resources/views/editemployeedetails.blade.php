@@ -1,4 +1,4 @@
-@extends('layouts.labour')
+@extends('layouts.app')
 @section('content')
 @php
 if($editemployeedocument){
@@ -39,7 +39,7 @@ else{
 </div>
   <div class="col-md-6">
           <!-- Horizontal Form -->
-          <form action="/labourupdateemployeedetails/{{$editemployeedetail->id}}" method="post" enctype="multipart/form-data" class="form-horizontal">
+          <form action="/recupdateemployeedetails/{{$editemployeedetail->id}}" method="post" enctype="multipart/form-data" class="form-horizontal">
           {{csrf_field()}}
           <div class="box box-info box-solid">
             <div class="box-header with-border">

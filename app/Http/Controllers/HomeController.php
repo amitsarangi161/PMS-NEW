@@ -70,12 +70,98 @@ use App\Smssetting;
 use App\Receptiondetail;
 use App\Pmsdebitvoucher;
 use App\Pmsdebitvoucherpayment;
+use App\Emplyeeactivity;
+use App\Addleavetype;
+use App\Applyleave;
 use DataTables;
 use Excel;
 
 //use Barryvdh\DomPDF\Facade as PDF;
 class HomeController extends Controller
 {
+  public function userapplyleave(){
+    $leavetypes=Addleavetype::all();
+    $users=User::all();
+    return view('userapplyleave',compact('leavetypes','users'));
+  }
+
+  public function updaateemployeactivities(Request $request,$id){
+    $employeeactivity=Emplyeeactivity::find($id);
+    $employeeactivity->employeeid=$request->employeeid;
+     $employeeactivity->save();
+     $employeeactivityid=$employeeactivity->id;
+    $count=count($request->activityid);
+    projectactivity::where('employeeactivityid',$employeeactivityid)->delete();
+    if($count>0)
+    {
+        for ($i=0; $i < $count; $i++) { 
+         $projectactivity=new projectactivity();
+         $projectactivity->employeeactivityid=$employeeactivityid;
+         $projectactivity->employeeid=$request->employeeid;
+         $projectactivity->activityid=$request->activityid[$i];
+         $projectactivity->position=$i+1;
+         $projectactivity->startdate=$request->activitystartdate[$i];
+         $projectactivity->enddate=$request->activityenddate[$i];
+         $projectactivity->enddate=$request->activityenddate[$i];
+         $projectactivity->duration=$request->duration[$i];
+         $projectactivity->save();
+
+     } 
+    }
+     
+     Session::flash("Activity Update Successfully");
+     return back();
+  }
+  public function editemployeeactivities($id){
+    $emplyeeactivity=Emplyeeactivity::find($id);
+    $users=User::all();
+    $projectactivities=projectactivity::select('projectactivities.*','activities.activityname')
+                      ->where('projectactivities.employeeactivityid',$id)
+                      ->leftJoin('activities','projectactivities.activityid','=','activities.id')
+                      ->orderBy('projectactivities.position','ASC')
+                      ->get();
+    $activities=activity::all();
+    return view('editemployeeactivities',compact('emplyeeactivity','activities','users','projectactivities'));
+  }
+  public function viewallactivities(){
+    $employeeactivities=Emplyeeactivity::select('emplyeeactivities.*','users.name')
+                  ->leftJoin('users','emplyeeactivities.employeeid','=','users.id')
+                  ->get();
+    //return $employeeactivities;
+    return view('viewallactivities',compact('employeeactivities'));
+  }
+  public function saveactivies(Request $request){
+    //return $request->all();
+    $employeeactivity=new Emplyeeactivity();
+     $employeeactivity->employeeid=$request->employeeid;
+     $employeeactivity->save();
+     $employeeactivityid=$employeeactivity->id;
+    $count=count($request->activityid);
+    if($count>0)
+    {
+        for ($i=0; $i < $count; $i++) { 
+         $projectactivity=new projectactivity();
+         $projectactivity->employeeactivityid=$employeeactivityid;
+         $projectactivity->employeeid=$request->employeeid;
+         $projectactivity->activityid=$request->activityid[$i];
+         $projectactivity->position=$i+1;
+         $projectactivity->startdate=$request->activitystartdate[$i];
+         $projectactivity->enddate=$request->activityenddate[$i];
+         $projectactivity->duration=$request->duration[$i];
+         $projectactivity->save();
+
+     } 
+    }
+     
+     Session::flash("Activity Saved Successfully");
+     return back();
+
+  }
+  public function addactivities(){
+    $activities=activity::all();
+    $users=User::all();
+    return view('addactivities',compact('activities','users'));
+  }
   public function viewreception($id){
     $reception=Receptiondetail::find($id);
     //return $reception;
@@ -3346,12 +3432,19 @@ public function deleteprojectotherdoc(Request $request,$id){
 
    public function userwritereport()
    {
-
+        $uid=Auth::id();
+        //return $uid;
         $projects=project::select('projects.*','clients.orgname')
                  ->leftJoin('clients','projects.clientid','=','clients.id')
                  ->get();
+        $projectactivities=projectactivity::select('projectactivities.*','activities.activityname')
+                      ->where('projectactivities.employeeactivityid',$uid)
+                      ->leftJoin('activities','projectactivities.activityid','=','activities.id')
+                      ->orderBy('projectactivities.position','ASC')
+                      ->get();
+         //return $projectactivities;
         $clients=client::all();
-        return view('userwritereport',compact('clients','projects'));
+        return view('userwritereport',compact('clients','projects','projectactivities'));
 
    }
 

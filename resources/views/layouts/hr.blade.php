@@ -216,6 +216,39 @@
             </span>
           </a>
           </li>
+          <li class="{{ Request::is('dm*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>DEFINE MAIN</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('dm/addleavetype') ? 'active' : '' }}"><a href="/dm/addleavetype"><i class="fa fa-circle-o text-aqua"></i>ADD Leave Type</a></li>
+             
+          </ul>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('dm/addsalarydecuction') ? 'active' : '' }}"><a href="/dm/addsalarydecuction"><i class="fa fa-circle-o text-aqua"></i>ADD Salary Deduction</a></li>
+             
+          </ul>
+        </li>
+        <li class="{{ Request::is('leave*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>LEAVE MANAGEMENT</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('leave/applyleave') ? 'active' : '' }}"><a href="/leave/applyleave"><i class="fa fa-circle-o text-aqua"></i>APPLY LEAVE</a></li>
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('leave/viewpendingleves') ? 'active' : '' }}"><a href="/leave/viewpendingleves"><i class="fa fa-circle-o text-aqua"></i>VIEW PENDING APPROVAL</a></li>
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('leave/viewalleave') ? 'active' : '' }}"><a href="/leave/viewalleave"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL LEAVES</a></li>
+          </ul>
+        </li>
         <li class="{{ Request::is('attendance*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>DAILY ATTENDANCE GROUPS</span>
@@ -233,6 +266,31 @@
           </ul>
            <ul class="treeview-menu">
              <li class="{{ Request::is('attendance/viewallattendance') ? 'active' : '' }}"><a href="/attendance/viewallattendance"><i class="fa fa-circle-o text-aqua"></i>VIEW ATTENANCE GROUPS</a></li>
+          </ul>
+        </li>
+        <li class="{{ Request::is('empattendance*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>DAILY ATTENDANCE EMPLOYEE</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+           <ul class="treeview-menu">
+            
+            <li class="{{ Request::is('empattendance/addempgroup') ? 'active' : '' }}"><a href="/empattendance/addempgroup"><i class="fa fa-circle-o text-aqua"></i>ADD EMPLOYEE GROUPS</a></li>
+             
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/adddailyempattendance') ? 'active' : '' }}"><a href="/empattendance/adddailyempattendance"><i class="fa fa-circle-o text-aqua"></i>DAILY ATTENANCE EMPLOYEES</a></li>
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/viewattendanceemployee') ? 'active' : '' }}"><a href="/empattendance/viewattendanceemployee"><i class="fa fa-circle-o text-aqua"></i>VIEW ATTENANCE EMPLOYEES</a></li>
+          </ul>
+           <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/viewallempattendance') ? 'active' : '' }}"><a href="/empattendance/viewallempattendance"><i class="fa fa-circle-o text-aqua"></i>VIEW MONTHLY ATTENANCE</a></li>
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/viewemployeepayslip') ? 'active' : '' }}"><a href="/empattendance/viewemployeepayslip"><i class="fa fa-circle-o text-aqua"></i>VIEW EMPLOYEE PAYSLIP</a></li>
           </ul>
         </li>
        <li class="{{ Request::is('hrmain*') ? 'active' : '' }} treeview">
@@ -463,6 +521,15 @@ if (event.persisted) {
         e.preventDefault();
     });
 
+  $('.date-picker10').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        format: 'MM yy',
+        onClose: function(dateText, inst) { 
+            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+        }
+    });
 $(".attfromdate").datepicker({
    dateFormat: 'yy-mm-dd',
        showButtonPanel: true,

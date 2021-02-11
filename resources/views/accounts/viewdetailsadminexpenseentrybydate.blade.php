@@ -177,7 +177,7 @@ label {font-size: 12px;}
                           <button class="btn"><i class="fa fa-download"></i> Download</button>
                          </a>
                   @else
-                  {{N/A}}
+                   N/A
                   @endif
                 </div>
                 <div class="col-md-6">
@@ -567,7 +567,7 @@ label {font-size: 12px;}
                success:function(data) { 
                
                        var count = $('.countwell').length;
-                       alert(count);
+                       //alert(count);
                    if(count==1){
                    	 window.location = "/adminpendingexpenseentryview/"+data.employeeid;
                    }

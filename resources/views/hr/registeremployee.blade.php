@@ -333,6 +333,110 @@
             </div>
           </div>
       </div>
+      <div class="col-md-6" id="employeediv" style="display: none">
+          <!-- Horizontal Form -->
+          <div class="box box-info  box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Employee WAGES</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <div class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Wages Code*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="empwagescode"class="form-control" placeholder="Enter Employee wages" id="empwagescode">
+                  </div>
+               </div>
+             
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Employee Group*</label>
+
+                  <div class="col-sm-9">
+                      <select class="form-control select2" id="empgroupid"  name="empgroupid" style="width: 100%;">
+                        <option value="">SELECT A GROUP</option>
+                           @foreach($empgroups as $key => $group)
+                           <option value="{{$group->id}}">{{$group->groupname}}</option>
+                           @endforeach
+                      </select>
+                  </div>
+               </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">No. of Hours/day*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="noofhour"class="form-control calc1" placeholder="Number of hours per day"  autocomplete="off" value="8" id="empnoofhour">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Total Salary*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="emptotalwages"class="form-control calc1" placeholder="Enter Employee Salary"  id="emptotalwages" autocomplete="off">
+                  </div>
+               </div>
+               <!-- <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Basic Salary*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="basicsalary"class="form-control calc1" placeholder="Enter Basic Salary"  id="emptotalwages" autocomplete="off">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Conveyance Allowance*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="conveyanceall"class="form-control calc1" placeholder="Enter Conveyance Allowance"  id="emptotalwages" autocomplete="off">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Dearness Allowance*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="dearnessall"class="form-control calc1" placeholder="Enter Dearness Allowance"  id="emptotalwages" autocomplete="off">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Medical Allowance*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="medicalall"class="form-control calc1" placeholder="Enter Medical Allowance"  id="emptotalwages" autocomplete="off">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Houserent Allowance*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="houserentall"class="form-control calc1" placeholder="Enter Houserent Allowance"  id="emptotalwages" autocomplete="off">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Professional Tax*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="professionaltax"class="form-control calc1" placeholder="Enter Professional Tax"  id="emptotalwages" autocomplete="off">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Income Tax*</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="incometax"class="form-control calc1" placeholder="Enter Income Tax"  id="emptotalwages" autocomplete="off">
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class=" col-sm-3">Welfare Fund *</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" name="welfarefund"class="form-control calc1" placeholder="Enter Welfare Fund"  id="emptotalwages" autocomplete="off">
+                  </div>
+               </div> -->
+              </div>
+            </div>
+          </div>
+      </div>
             <div class="col-md-6" id="labourdiv" style="display: none">
           <!-- Horizontal Form -->
           <div class="box box-info  box-solid">
@@ -600,15 +704,45 @@
       $("#wages").prop('required',true);
       $("#groupid").prop('required',true);
       $("#wagesperhour").prop('required',true);
+      $("#wagescode").prop('required',true);
     }else{
       $("#labourdiv").hide();
       $("#noofhour").prop('required',false);
       $("#wages").prop('required',false);
       $("#groupid").prop('required',false);
       $("#wagesperhour").prop('required',false);
+      $("#wagescode").prop('required',false);
 
   }
-    }
+   if(selected == 'Employee'){
+      $("#employeediv").show();
+      $("#noofhour").prop('required',true);
+      $("#empwages").prop('required',true);
+      $("#empgroupid").prop('required',true);
+      $("#empwagesperhour").prop('required',true);
+      $("#empwagescode").prop('required',true);
+      $("#emptotalwages").prop('required',true);
+      $("#pf").prop('required',true);
+      $("#esic").prop('required',true);
+      $("#advance").prop('required',true);
+      $("#salaryadvance").prop('required',true);
+      $("#misc").prop('required',true);
+    }else{
+      $("#employeediv").hide();
+      $("#noofhour").prop('required',false);
+      $("#empwages").prop('required',false);
+      $("#empgroupid").prop('required',false);
+      $("#empwagesperhour").prop('required',false);
+      $("#empwagescode").prop('required',false);
+      $("#emptotalwages").prop('required',false);
+      $("#pf").prop('required',false);
+      $("#esic").prop('required',false);
+      $("#advance").prop('required',false);
+      $("#salaryadvance").prop('required',false);
+      $("#misc").prop('required',false);
+
+  }
+}
     $(".calc").on('change input', function(){
      var h= $("#noofhour").val();
      var w= $("#wages").val();
@@ -628,6 +762,37 @@
      var wages=parseFloat(wg);
      var perHour=parseFloat(wages/hours).toFixed(2);
      $("#wagesperhour").val(perHour);
+     
+});
+    $(".calc1").on('change input', function(){
+     var d=$("#emptotalwages").val();
+     var h= $("#empnoofhour").val();
+     //var w= $("#empwages").val();
+     if(d){
+       dr=d;
+     }
+     else{
+      dr=0;
+     }
+     if(h){
+       hr=h;
+     }
+     else{
+      hr=0;
+     }
+     // if(w){
+     //  wg=w;
+     // }
+     // else{
+     //  wg=0;
+     // }
+     var totalwages=parseFloat(dr);
+     var hours=parseFloat(hr);
+     //var wages=parseFloat(wg);
+     var perDay=parseFloat(totalwages/30).toFixed(2);
+     var perHour=parseFloat(perDay/hours).toFixed(2);
+     $("#empwages").val(perDay);
+     $("#empwagesperhour").val(perHour);
      
 });
 </script>

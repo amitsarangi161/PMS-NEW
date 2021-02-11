@@ -1,4 +1,4 @@
-@extends('layouts.labour')
+@extends('layouts.app')
 @section('content')
 <style type="text/css">
   .status{
@@ -9,7 +9,7 @@
   <div class="box-header">
     <div class="row">
         <p>
-          <a href="/hrmain/labourregisteremployee" class="btn btn-success btn-flat margin"><i class="fa fa-plus"></i> Add New Labour
+          <a href="/hrmain/recregisteremployee" class="btn btn-success btn-flat margin"><i class="fa fa-plus"></i> Add New Employee
           </a>
             <span class="pull-right"><button type="submit" class="btn bg-navy btn-flat margin" data-toggle="modal" data-target="#importemployee" onclick="importemployee();"><i class="fa fa-file-excel-o"></i> Import Employee Database</button>
                 <a href="/Employee Import Sample.xlsx" download="/Employee Import Sample.xlsx" class="btn bg-orange btn-flat margin"><i class="fa fa-download"></i> Sample</a>
@@ -39,7 +39,7 @@
  <div class="col-md-12">
   <div class="box">
     <div class="box-header bg-gray">
-  <form method="get" action="/hrmain/labouremployeelist">
+  <form method="get" action="/hrmain/recemplist">
     <div class="form-group">
       <label  class="col-sm-2 control-label">Select A Status</label>
       <div class="col-sm-4">
@@ -57,7 +57,7 @@
       </div>
       @if(Request::has('status'))
       <div class="col-sm-1">
-        <a href="/hrmain/labouremployeelist"  class="btn  btn-danger">Clear Filter</a>
+        <a href="/hrmain/recemplist"  class="btn  btn-danger">Clear Filter</a>
       </div>
       @endif
     </div>
@@ -112,7 +112,7 @@
         <tbody>
           @foreach($employeedetails as $key=>$employeedetail)
           <tr>
-            <td><a href="/hrmain/laboureditemployeedetails/{{$employeedetail->id}}"><button class="btn btn-success btn-sm btn-flat">{{$employeedetail->id}}</button></a></td>
+            <td><a href="/hrmain/receditemployeedetails/{{$employeedetail->id}}"><button class="btn btn-success btn-sm btn-flat">{{$employeedetail->id}}</button></a></td>
             <td>{{$employeedetail->empcodeno}}</td>
             <td>{{$employeedetail->employeename}}</td>
             <td>{{$employeedetail->bloodgroup}}</td>
@@ -161,7 +161,7 @@
               <small class="label status bg-green" onclick="employeestatus('{{$employeedetail->id}}','{{$employeedetail->status}}','{{$employeedetail->employeename}}');">{{$employeedetail->status}}</small>
               @endif
             </td>
-            <td><a href="/hrmain/laboureditemployeedetails/{{$employeedetail->id}}" onclick="return confirm('are you sure to edit employee ??')" ><button class="btn btn-primary btn-flat">Edit</button></a></td>
+            <td><a href="/hrmain/receditemployeedetails/{{$employeedetail->id}}" onclick="return confirm('are you sure to edit employee ??')" ><button class="btn btn-primary btn-flat">Edit</button></a></td>
           </tr>
           @endforeach
         </tbody>
