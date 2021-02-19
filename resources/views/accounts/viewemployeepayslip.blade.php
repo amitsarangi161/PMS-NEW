@@ -1,4 +1,4 @@
-@extends('layouts.hr')
+@extends('layouts.account')
 @section('content')
 
 <style type="text/css">

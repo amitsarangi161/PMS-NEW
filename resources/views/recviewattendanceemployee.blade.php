@@ -32,7 +32,7 @@
 	<tbody>
 		@foreach($attendances as $atendance)
               <tr>
-              	<td><a href="/viewatendances/{{$atendance->id}}" class="btn btn-info" target="_blank">{{$atendance->id}}</a></td>
+              	<td><a href="/recviewatendances/{{$atendance->id}}" class="btn btn-info" target="_blank">{{$atendance->id}}</a></td>
               	<td>{{$atendance->groupname}}</td>
                 <td>{{$atendance->type}}</td>
                 <td>{{$atendance->date}}</td>
@@ -61,7 +61,6 @@
 		@endforeach
 	</tbody>
 </table>
-{{$attendances->links()}}
 
 
 @endsection

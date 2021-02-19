@@ -800,7 +800,7 @@ class AjaxController extends Controller
   {
        $projectactivity=projectactivity::select('projectactivities.*','activities.activityname')
                        ->leftJoin('activities','projectactivities.activityid','=','activities.id')
-                       ->where('projectactivities.projectid',$request->projectid)
+                       //->where('projectactivities.projectid',$request->projectid)
                        ->get();
 
        return response()->json($projectactivity);

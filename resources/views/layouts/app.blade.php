@@ -309,10 +309,10 @@
 
         @endif
         @php
-        $rcpt=\App\Userrole::where('rolename','RECEPTION')->pluck('userid')->toArray();
+        $rcpt=\App\Userrole::where('rolename','EMPATTENDANCE')->pluck('userid')->toArray();
         @endphp
-        @if(Auth::user()->usertype=='MASTER ADMIN' || in_array(Auth::id(), $rcpt))
-        <li class="{{ Request::is('hrmain*') ? 'active' : '' }} treeview">
+        @if(in_array(Auth::id(), $rcpt))
+        <!-- <li class="{{ Request::is('hrmain*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>EMPLOYEE MANAGEMENT</span>
             <span class="pull-right-container">
@@ -322,7 +322,7 @@
           <ul class="treeview-menu">
              <li class="{{ Request::is('hrmain/recemplist') ? 'active' : '' }}"><a href="/hrmain/recemplist"><i class="fa fa-circle-o text-aqua"></i>Employee Database</a></li>
           </ul>
-        </li>
+        </li> -->
         <li class="{{ Request::is('empattendance*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>DAILY ATTENDANCE EMPLOYEE</span>

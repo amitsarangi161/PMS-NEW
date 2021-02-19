@@ -1,4 +1,4 @@
-@extends('layouts.hr')
+@extends('layouts.account')
 @section('content')
 <style type="text/css">
     .b {
@@ -32,7 +32,7 @@
 	<tbody>
 		@foreach($attendances as $atendance)
               <tr>
-              	<td><a href="/viewatendances/{{$atendance->id}}" class="btn btn-info" target="_blank">{{$atendance->id}}</a></td>
+              	<td><a href="/managerviewatendances/{{$atendance->id}}" class="btn btn-info" target="_blank">{{$atendance->id}}</a></td>
               	<td>{{$atendance->groupname}}</td>
                 <td>{{$atendance->type}}</td>
                 <td>{{$atendance->date}}</td>
@@ -55,7 +55,7 @@
                 @endif
                 <td>{{$atendance->name}}</td>
                  <td>
-                   <a href="/viewatendances/{{$atendance->date}}/{{$atendance->id}}" class="btn btn-info">VIEW</a>
+                   <a href="/managerviewatendances/{{$atendance->date}}/{{$atendance->id}}" class="btn btn-info">VIEW</a>
                  </td>
               </tr>
 		@endforeach

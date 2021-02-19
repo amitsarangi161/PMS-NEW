@@ -1,4 +1,4 @@
-@extends('layouts.hr')
+@extends('layouts.account')
 @section('content')
 @if(Session::has('msg'))
    <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
@@ -10,7 +10,7 @@
  <div class="col-md-12">
   <div class="box">
     <div class="box-header bg-gray">
-    	<form action="/empattendance/viewallempattendance" method="get">
+    	<form action="/empattendance/managerviewallempattendance" method="get">
     <div class="form-group">
 
       <label  class="col-sm-2 control-label">From Month</label>
@@ -138,7 +138,7 @@
         <h4 class="modal-title">Calculate Salary For</h4>
       </div>
       <div class="modal-body">
-      	<form action="/addemployeesalaryshee" method="post">
+      	<form action="/manageraddemployeesalaryshee" method="post">
       		{{csrf_field()}}
 
 
@@ -220,22 +220,18 @@
      <td><input type="text" readonly="" autocomplete="off" name="houserentall" id="houserentall" placeholder="Enter Group Name" class="form-control calc"></td>
      
  	</tr>
+  <tr>
+  <td><strong>MISC. ALLOWANCE<span style="color: red"> *</span></strong></td>
+     <td><input type="text" autocomplete="off" name="miscall" id="miscall" placeholder="Enter Misc. ALLOWANCE" class="form-control"></td>
+     
+  </tr>
    <tr>
      <td><strong>Per Day Salary<span style="color: red"> *</span></strong></td>
      <td><input type="text"  readonly="" autocomplete="off" name="perdaysalary" id="perdaysalary" placeholder="Enter Group Name" class="form-control calc"></td>
    </tr>
    <tr>
-     <td><strong> Payments<span style="color: red"> *</span></strong></td>
-     <td><input type="text" readonly="" autocomplete="off" name="thismonthsalary" id="thismonthsalary" placeholder="Enter Group Name" class="form-control"></td>
-   </tr>
-   <tr>
-  <td><strong>MISC. ALLOWANCE<span style="color: red"> *</span></strong></td>
-     <td><input type="text" autocomplete="off" name="miscall" id="miscall" placeholder="Enter Misc. ALLOWANCE" class="form-control calc"></td>
-     
-  </tr>
-  <tr>
      <td><strong>Total Payments<span style="color: red"> *</span></strong></td>
-     <td><input type="text" readonly="" autocomplete="off" name="totalpaymemt" id="totalpaymemt" placeholder="Enter Group Name" class="form-control"></td>
+     <td><input type="text" readonly="" autocomplete="off" name="thismonthsalary" id="thismonthsalary" placeholder="Enter Group Name" class="form-control"></td>
    </tr>
    <tr style="color: red">
      <td><strong>Total Payble To<span style="color: red"> *</span></strong></td>
@@ -291,22 +287,16 @@
 		var professionaltax= ($("#professionaltax").val())?$("#professionaltax").val():0;
 		var incometax= ($("#incometax").val())?$("#incometax").val():0;
 		var welfarefund= ($("#welfarefund").val())?$("#welfarefund").val():0;
-    var miscall= ($("#miscall").val())?$("#miscall").val():0;
+    var welfarefund= ($("#miscall").val())?$("#miscall").val():0;
 		var thismonthsalary= ($("#thismonthsalary").val())?$("#thismonthsalary").val():0;
-    var totalpaymemt= ($("#totalpaymemt").val())?$("#totalpaymemt").val():0;
-    console.log(miscall);
-    // var totaladdition=parseFloat(miscall)+parseFloat(basicsalary)+parseFloat(conveyanceall)+parseFloat(dearnessall)+parseFloat(medicalall)+parseFloat(houserentall)+parseFloat(miscall);
-    //console.log(totaladdition);
+    //var totaladdition=parseFloat(basicsalary)+parseFloat(conveyanceall)+parseFloat(dearnessall)+parseFloat(medicalall)+parseFloat(houserentall);
     var totaldeduction=parseFloat(epfdeduction)+parseFloat(esicdeduction)+parseFloat(salaryadvance)+parseFloat(advance)+parseFloat(professionaltax)+parseFloat(incometax)+parseFloat(welfarefund);
-         $("#totaldeduction").val(totaldeduction.toFixed(2));
+         $("#totaldeduction").val(totaldeduction);
          //var thismonthsalary=parseFloat(totaladdition.toFixed(2));
-         // $("#thismonthsalary").val(thismonthsalary);
-         //console.log(thismonthsalary+"======"+totaldeduction);
-         //var thismonthsalary=parseFloat(totaladdition.toFixed(2));
-         var totalpaymemt=parseFloat(thismonthsalary)+parseFloat(miscall);
-         $("#totalpaymemt").val(totalpaymemt);
-         var totalpayble=parseFloat(totalpaymemt)-parseFloat(totaldeduction);
-         //console.log(totalpayble);
+         //$("#thismonthsalary").val(thismonthsalary);
+         console.log(thismonthsalary+"======"+totaldeduction);
+         var totalpayble=parseFloat(thismonthsalary)-parseFloat(totaldeduction);
+         console.log(totalpayble);
 		    $("#totalpaybleto").val(totalpayble.toFixed(2));
 
 
@@ -316,7 +306,7 @@ $( ".calc" ).on("change paste keyup", function() {
    calc();      
   });
 
-	function calculate(id,emptotalwages,basicsalary,professionaltax,incometax,welfarefund,empttotpresent,empttotabsent,thismonthleave,totleavetaken,totalleave,totalbalanceleave,totmonthdate,totholiday,employeename,year,month,miscall,totalpaymemt){
+	function calculate(id,emptotalwages,basicsalary,professionaltax,incometax,welfarefund,empttotpresent,empttotabsent,thismonthleave,totleavetaken,totalleave,totalbalanceleave,totmonthdate,totholiday,employeename,year,month){
 		//alert(id);
 		$("#did").val(id);
 		$("#emptotalwages").val(emptotalwages);

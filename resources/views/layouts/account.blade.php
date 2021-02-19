@@ -248,6 +248,33 @@
           </ul>
         </li>
         @endif
+        @if(Auth::user()->usertype=='MANAGER')
+        <li class="{{ Request::is('empattendance*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>DAILY ATTENDANCE EMPLOYEE</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+           <!-- <ul class="treeview-menu">
+            
+            <li class="{{ Request::is('empattendance/addempgroup') ? 'active' : '' }}"><a href="/empattendance/addempgroup"><i class="fa fa-circle-o text-aqua"></i>ADD EMPLOYEE GROUPS</a></li>
+             
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/adddailyempattendance') ? 'active' : '' }}"><a href="/empattendance/adddailyempattendance"><i class="fa fa-circle-o text-aqua"></i>DAILY ATTENANCE EMPLOYEES</a></li>
+          </ul> -->
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/managerviewattendanceemployee') ? 'active' : '' }}"><a href="/empattendance/managerviewattendanceemployee"><i class="fa fa-circle-o text-aqua"></i>VIEW ATTENANCE EMPLOYEES</a></li>
+          </ul>
+           <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/managerviewallempattendance') ? 'active' : '' }}"><a href="/empattendance/managerviewallempattendance"><i class="fa fa-circle-o text-aqua"></i>VIEW MONTHLY ATTENANCE</a></li>
+          </ul>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('empattendance/managerviewemployeepayslip') ? 'active' : '' }}"><a href="/empattendance/managerviewemployeepayslip"><i class="fa fa-circle-o text-aqua"></i>VIEW EMPLOYEE PAYSLIP</a></li>
+          </ul>
+        </li>
+        @endif
 
         @if(Auth::user()->usertype !='CASHIER')
         <li class="{{ Request::is('vendor*') ? 'active' : '' }} treeview">

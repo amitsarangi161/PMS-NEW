@@ -112,6 +112,14 @@ class HrController extends Controller
 
     return view('viewatendances',compact('viewatendances'));
   }
+  public function managerviewatendances($date,$id){
+    $viewatendances=Empdailyattendancegroupdetail::where('dailyattendanceid',$id)
+    ->where('attendancedate',$date)
+    ->get();
+    //return $viewatendances;
+
+    return view('accounts.viewatendances',compact('viewatendances'));
+  }
   public function viewslip($id){
     $salaryslip=Addemployeesalarysheet::select('addemployeesalarysheets.*','employeecompanydetails.department','employeecompanydetails.designation','employeebankaccountsdetails.ifsc','employeebankaccountsdetails.branch','employeebankaccountsdetails.pan','employeebankaccountsdetails.accountnumber','employeedetails.empcodeno')
     ->leftJoin('employeebankaccountsdetails','addemployeesalarysheets.employee_id','=','employeebankaccountsdetails.employee_id')
@@ -141,6 +149,28 @@ class HrController extends Controller
     //$sds=Addemployeesalarysheet::all();
     //return $salaryslips;
     return view('hr.viewemployeepayslip',compact('salaryslips','users'));
+  }
+   public function managerviewemployeepayslip(Request $request){
+  
+    $users=User::all();
+    $salaryslips=Addemployeesalarysheet::select('addemployeesalarysheets.*','employeecompanydetails.department','employeecompanydetails.designation','employeebankaccountsdetails.ifsc','employeebankaccountsdetails.branch','employeebankaccountsdetails.pan','employeebankaccountsdetails.accountnumber','employeedetails.empcodeno')
+    ->leftJoin('employeebankaccountsdetails','addemployeesalarysheets.employee_id','=','employeebankaccountsdetails.employee_id')
+    ->leftJoin('employeecompanydetails','addemployeesalarysheets.employee_id','=','employeecompanydetails.employee_id')
+    ->leftJoin('employeedetails','addemployeesalarysheets.employee_id','=','employeedetails.id');
+      if ($request->has('employeeid') && $request->get('employeeid')!=''){
+           $salaryslips=$salaryslips->where('addemployeesalarysheets.employee_id',$request->employeeid);
+        }
+        if ($request->has('fromyear') && $request->get('fromyear')!=''){
+           $salaryslips=$salaryslips->where('addemployeesalarysheets.year',$request->fromyear);
+        }
+        if ($request->has('frommonth') && $request->get('frommonth')!=''){
+           $salaryslips=$salaryslips->where('addemployeesalarysheets.month',$request->frommonth);
+        }
+
+    $salaryslips=$salaryslips->get();
+    //$sds=Addemployeesalarysheet::all();
+    //return $salaryslips;
+    return view('accounts.viewemployeepayslip',compact('salaryslips','users'));
   }
   public function addemployeesalaryshee(Request $request){
     //return $request->all();
@@ -178,10 +208,58 @@ class HrController extends Controller
     $calculate->professionaltax=$request->professionaltax;
     $calculate->incometax=$request->incometax;
     $calculate->welfarefund=$request->welfarefund;
+    $calculate->miscall=$request->miscall;
+    $calculate->totalpaymemt=$request->totalpaymemt;
     $calculate->totaldeduction=$request->totaldeduction;
     $calculate->totalpaybleto=$request->totalpaybleto;
     $calculate->save();
-    Session::flash('msg','Leave Applied Successfully');
+    Session::flash('msg','Salary Generated Successfully');
+    return back();
+
+
+  }
+   public function manageraddemployeesalaryshee(Request $request){
+    //return $request->all();
+    $calculate=new Addemployeesalarysheet();
+    $calculate->employee_id=$request->did;
+    $calculate->employeename=$request->employeename;
+    $calculate->year=$request->year;
+    $calculate->month=$request->month;
+    $calculate->empcodeno=$request->empcodeno;
+    $calculate->department=$request->department;
+    $calculate->designation=$request->designation;
+    $calculate->ifsc=$request->ifsc;
+    $calculate->bankname=$request->bankname;
+    $calculate->branch=$request->branch;
+    $calculate->pan=$request->pan;
+    $calculate->accountnumber=$request->accountnumber;
+    $calculate->totalleave=$request->totalleave;
+    $calculate->totleavetaken=$request->totleavetaken;
+    $calculate->totalbalanceleave=$request->totalbalanceleave;
+    $calculate->emptotalwages=$request->emptotalwages;
+    $calculate->basicsalary=$request->basicsalary;
+    $calculate->conveyanceall=$request->conveyanceall;
+    $calculate->salaryadvance=$request->salaryadvance;
+    $calculate->dearnessall=$request->dearnessall;
+    $calculate->medicalall=$request->medicalall;
+    $calculate->houserentall=$request->houserentall;
+    $calculate->totaldays=$request->totmonthdate;
+    $calculate->totholiday=$request->totholiday;
+    $calculate->empttotpresent=$request->empttotpresent;
+    $calculate->perdaysalary=$request->perdaysalary;
+    $calculate->thismonthsalary=$request->thismonthsalary;
+    $calculate->epfdeduction=$request->epfdeduction;
+    $calculate->esicdeduction=$request->esicdeduction;
+    $calculate->advance=$request->advance;
+    $calculate->professionaltax=$request->professionaltax;
+    $calculate->incometax=$request->incometax;
+    $calculate->welfarefund=$request->welfarefund;
+    $calculate->miscall=$request->miscall;
+    $calculate->totalpaymemt=$request->totalpaymemt;
+    $calculate->totaldeduction=$request->totaldeduction;
+    $calculate->totalpaybleto=$request->totalpaybleto;
+    $calculate->save();
+    Session::flash('msg','Salary Generated Successfully');
     return back();
 
 
@@ -190,8 +268,8 @@ class HrController extends Controller
     $attendances=Empdailyattendancegroup::select('empdailyattendancegroups.*','addempgroups.groupname','users.name')
     ->leftjoin('addempgroups','empdailyattendancegroups.empgroupid','=','addempgroups.id')
     ->leftjoin('users','empdailyattendancegroups.entryby','=','users.id')
-    ->orderBy('date','DESC')
-    ->paginate(25);
+    ->orderBy('date','DESC')->get();
+    //->paginate(25);
     //return $attendances;
     return view('hr.viewattendanceemployee',compact('attendances'));
   }
@@ -199,10 +277,17 @@ class HrController extends Controller
     $attendances=Empdailyattendancegroup::select('empdailyattendancegroups.*','addempgroups.groupname','users.name')
     ->leftjoin('addempgroups','empdailyattendancegroups.empgroupid','=','addempgroups.id')
     ->leftjoin('users','empdailyattendancegroups.entryby','=','users.id')
-    ->orderBy('date','DESC')
-    ->paginate(25);
+    ->orderBy('date','DESC')->get();
     //return $attendances;
     return view('recviewattendanceemployee',compact('attendances'));
+  }
+  public function managerviewattendanceemployee(){
+    $attendances=Empdailyattendancegroup::select('empdailyattendancegroups.*','addempgroups.groupname','users.name')
+    ->leftjoin('addempgroups','empdailyattendancegroups.empgroupid','=','addempgroups.id')
+    ->leftjoin('users','empdailyattendancegroups.entryby','=','users.id')
+    ->orderBy('date','DESC')->get();
+    //return $attendances;
+    return view('accounts.viewattendanceemployee',compact('attendances'));
   }
   public function viewallempattendance(Request $request){
     $empgroups=Addempgroup::all();
@@ -252,6 +337,55 @@ class HrController extends Controller
     }
     //return $customarray;
     return view('hr.viewallempattendance',compact('empgroups','customarray'));
+}
+public function managerviewallempattendance(Request $request){
+    $empgroups=Addempgroup::all();
+    $customarray=array();
+    if($request->has('empgroupid')){
+      
+    $employees=employeedetail::where('empgroupid',$request->empgroupid)
+              ->where('emptype','Employee')
+              ->get();
+      $totmonthdate=cal_days_in_month(CAL_GREGORIAN,$request->frommonth,$request->fromyear);
+      $totholiday=Empdailyattendancegroup::whereYear('date', '=', $request->fromyear)
+              ->whereMonth('date', '=', $request->frommonth)
+              ->where('type','HOLIDAY')
+              ->count();
+      //return compact('totmonthdate','totholiday');
+
+
+    foreach ($employees as $key => $employee) {
+            $empttotpresent=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
+                    ->whereYear('attendancedate', '=', $request->fromyear)
+                    ->whereMonth('attendancedate', '=', $request->frommonth)
+                    ->where('present','Y')
+                    ->count();
+            $empttotabsent=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
+                    ->whereYear('attendancedate', '=', $request->fromyear)
+                    ->whereMonth('attendancedate', '=', $request->frommonth)
+                    ->where('present','N')
+                    ->count();
+           $thismonthleave=Approvedleave::where('employee_id',$employee->id)
+                    ->whereYear('date', '=', $request->fromyear)
+                    ->whereMonth('date', '=', $request->frommonth)
+                    ->count();
+          $emptotholiday=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
+                    ->whereYear('attendancedate', '=', $request->fromyear)
+                    ->whereMonth('attendancedate', '=', $request->frommonth)
+                    ->where('present','H')
+                    ->count();
+          //return $emptotholiday;
+          $totleavetaken=Approvedleave::where('employee_id',$employee->id)->count();
+          $totalleave=15;
+          $totalbalanceleave=$totalleave-$totleavetaken;
+          //return $totmonthdate;
+          $customarray[]=array('employee'=>$employee,'empttotpresent'=>$empttotpresent,'empttotabsent'=>$empttotabsent,'thismonthleave'=>$thismonthleave,'totleavetaken'=>$totleavetaken,'totalleave'=>$totalleave,'totalbalanceleave'=>$totalbalanceleave,'totmonthdate'=>$totmonthdate,'totholiday'=>$totholiday,'year'=>$request->fromyear,'month'=>$request->frommonth,'emptotholiday'=>$emptotholiday);
+
+        
+    }
+    }
+    //return $customarray;
+    return view('accounts.viewallempattendance',compact('empgroups','customarray'));
 }
   public function approveleaveall(Request $request,$id){
     $approveleave=Applyleave::find($id);
@@ -1790,6 +1924,7 @@ public function updateemployeedetails(Request $request,$id)
         $updateemployee->empgroupid=$request->empgroupid;
         $updateemployee->noofhour=$request->noofhour;
         $updateemployee->wages=$request->wages;
+        $updateemployee->wagesperhour=$request->wagesperhour;
         $updateemployee->emptotalwages=$request->emptotalwages;
         $updateemployee->basicsalary=$request->basicsalary;
         $updateemployee->conveyanceall=$request->conveyanceall;
@@ -1951,6 +2086,7 @@ public function updateemployeedetails(Request $request,$id)
         $updateemployee->empgroupid=$request->empgroupid;
         $updateemployee->noofhour=$request->noofhour;
         $updateemployee->wages=$request->wages;
+        $updateemployee->wagesperhour=$request->wagesperhour;
         $updateemployee->emptotalwages=$request->emptotalwages;
         $updateemployee->basicsalary=$request->basicsalary;
         $updateemployee->conveyanceall=$request->conveyanceall;
@@ -2104,6 +2240,7 @@ public function updateemployeedetails(Request $request,$id)
         $updateemployee->empgroupid=$request->empgroupid;
         $updateemployee->noofhour=$request->noofhour;
         $updateemployee->wages=$request->wages;
+        $updateemployee->wagesperhour=$request->wagesperhour;
         $updateemployee->emptotalwages=$request->emptotalwages;
         $updateemployee->basicsalary=$request->basicsalary;
         $updateemployee->conveyanceall=$request->conveyanceall;

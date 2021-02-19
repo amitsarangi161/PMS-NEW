@@ -285,6 +285,24 @@
               </tr >
               <tr>
                 <th colspan="2">
+                  Misc. Allowances
+      </th>
+                <td></td>
+
+                <td class="myAlign">
+                  {{$salaryslip->miscall}}
+      </td>
+                <th colspan="2" >
+                  
+      </th >
+                <td></td>
+
+                <td class="myAlign">
+                 
+      </td>
+              </tr >
+              <tr>
+                <th colspan="2">
                   
       </th> <td></td>
                 <td class="myAlign">
@@ -358,7 +376,7 @@
                   Total Payments
       </th>
                 <td class="myAlign">
-                  {{$salaryslip->thismonthsalary}}
+                  {{$salaryslip->totalpaymemt}}
       </td>
                 <th colspan="3" >
                   Total Deductions

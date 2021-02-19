@@ -268,6 +268,7 @@
              <li class="{{ Request::is('attendance/viewallattendance') ? 'active' : '' }}"><a href="/attendance/viewallattendance"><i class="fa fa-circle-o text-aqua"></i>VIEW ATTENANCE GROUPS</a></li>
           </ul>
         </li>
+      @if(Auth::user()->usertype=='MASTER ADMIN' ||Auth::user()->usertype=='HR')
         <li class="{{ Request::is('empattendance*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>DAILY ATTENDANCE EMPLOYEE</span>
@@ -293,6 +294,7 @@
              <li class="{{ Request::is('empattendance/viewemployeepayslip') ? 'active' : '' }}"><a href="/empattendance/viewemployeepayslip"><i class="fa fa-circle-o text-aqua"></i>VIEW EMPLOYEE PAYSLIP</a></li>
           </ul>
         </li>
+        @endif
        <li class="{{ Request::is('hrmain*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>EMPLOYEE MANAGEMENT</span>

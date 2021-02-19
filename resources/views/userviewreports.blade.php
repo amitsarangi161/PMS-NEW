@@ -8,9 +8,9 @@
     <thead>
         <tr class="bg-navy">
             <th>REPORT DATE</th>
-            <th>CLIENT</th>
-            <th>PROJECT NAME</th>
-            <th>ACTIVITY NAME</th>
+            <!-- <th>CLIENT</th>
+            <th>PROJECT NAME</th> -->
+            <!-- <th>ACTIVITY NAME</th> -->
             <th>SUBJECT</th>
             <th>DESCRIPTION</th>
             <th>REPORT OF</th>
@@ -27,9 +27,9 @@
          @foreach($projectreports as $projectreport)
          <tr>
            <td>{{$projectreport->reportfordate}}</td>
-           <td>{{$projectreport->orgname}}</td>
-           <td>{{$projectreport->projectname}}</td>
-           <td>{{$projectreport->activityname}}</td>
+           <!-- <td>{{$projectreport->orgname}}</td>
+           <td>{{$projectreport->projectname}}</td> -->
+           <!-- <td>{{$projectreport->activityname}}</td> -->
            <td>{{$projectreport->subject}}</td>
            <td>{!! $projectreport->description !!}</td>
            <td>{{$projectreport->name}}</td>

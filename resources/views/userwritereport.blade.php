@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<form action="/saveuserreport" method="post">
-  {{csrf_field()}}
 <table class="table table-responsive table-hover table-bordered table-striped">
   <thead>
   <tr class="bg-primary">
@@ -34,6 +32,8 @@
                    
       </tbody>         
 </table>
+<form action="/saveuserreport" method="post">
+  {{csrf_field()}}
 <table class="table table-responsive table-hover table-bordered table-striped">
 
   <thead>
@@ -44,7 +44,7 @@
       </td>
     </tr>
 
-    <tr>
+    <!-- <tr>
       <td>SELECT ACTIVITY NAME</td>
       <td>
         
@@ -54,7 +54,7 @@
         </select>
       </td>
     </tr>
-
+ -->
       <tr>
       <td>REPORT SUBJECT</td>
       <td>

@@ -3438,7 +3438,7 @@ public function deleteprojectotherdoc(Request $request,$id){
                  ->leftJoin('clients','projects.clientid','=','clients.id')
                  ->get();
         $projectactivities=projectactivity::select('projectactivities.*','activities.activityname')
-                      ->where('projectactivities.employeeactivityid',$uid)
+                      ->where('projectactivities.employeeid',$uid)
                       ->leftJoin('activities','projectactivities.activityid','=','activities.id')
                       ->orderBy('projectactivities.position','ASC')
                       ->get();
@@ -3450,18 +3450,19 @@ public function deleteprojectotherdoc(Request $request,$id){
 
    public function saveuserreport(Request $request)
    {
+
+    //return $request->all();
         
 
         $projectreport=new projectreport();
         $projectreport->reportfordate=$request->reportfordate;
-        $projectreport->clientid=$request->clientid;
-        $projectreport->projectid=$request->projectid;
-        $projectreport->activityid=$request->activityid;
+        //$projectreport->clientid=$request->clientid;
+        //$projectreport->projectid=$request->projectid;
+        //$projectreport->activityid=$request->activityid;
         $projectreport->subject=$request->subject;
         $projectreport->description=$request->description;
         $projectreport->userid=Auth::id();
         $projectreport->author="SELF";
-
         $projectreport->save();
 
         return back();
