@@ -298,10 +298,10 @@ class HrController extends Controller
               ->where('emptype','Employee')
               ->get();
       $totmonthdate=cal_days_in_month(CAL_GREGORIAN,$request->frommonth,$request->fromyear);
-      $totholiday=Empdailyattendancegroup::whereYear('date', '=', $request->fromyear)
-              ->whereMonth('date', '=', $request->frommonth)
-              ->where('type','HOLIDAY')
-              ->count();
+      // $totholiday=Empdailyattendancegroup::whereYear('date', '=', $request->fromyear)
+      //         ->whereMonth('date', '=', $request->frommonth)
+      //         ->where('type','HOLIDAY')
+      //         ->count();
       //return compact('totmonthdate','totholiday');
 
 
@@ -310,6 +310,11 @@ class HrController extends Controller
                     ->whereYear('attendancedate', '=', $request->fromyear)
                     ->whereMonth('attendancedate', '=', $request->frommonth)
                     ->where('present','Y')
+                    ->count();
+            $totholiday=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
+                    ->whereYear('attendancedate', '=', $request->fromyear)
+                    ->whereMonth('attendancedate', '=', $request->frommonth)
+                    ->where('present','H')
                     ->count();
             $empttotabsent=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
                     ->whereYear('attendancedate', '=', $request->fromyear)
@@ -347,10 +352,10 @@ public function managerviewallempattendance(Request $request){
               ->where('emptype','Employee')
               ->get();
       $totmonthdate=cal_days_in_month(CAL_GREGORIAN,$request->frommonth,$request->fromyear);
-      $totholiday=Empdailyattendancegroup::whereYear('date', '=', $request->fromyear)
-              ->whereMonth('date', '=', $request->frommonth)
-              ->where('type','HOLIDAY')
-              ->count();
+      // $totholiday=Empdailyattendancegroup::whereYear('date', '=', $request->fromyear)
+      //         ->whereMonth('date', '=', $request->frommonth)
+      //         ->where('type','HOLIDAY')
+      //         ->count();
       //return compact('totmonthdate','totholiday');
 
 
@@ -359,6 +364,11 @@ public function managerviewallempattendance(Request $request){
                     ->whereYear('attendancedate', '=', $request->fromyear)
                     ->whereMonth('attendancedate', '=', $request->frommonth)
                     ->where('present','Y')
+                    ->count();
+            $totholiday=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
+                    ->whereYear('attendancedate', '=', $request->fromyear)
+                    ->whereMonth('attendancedate', '=', $request->frommonth)
+                    ->where('present','H')
                     ->count();
             $empttotabsent=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
                     ->whereYear('attendancedate', '=', $request->fromyear)

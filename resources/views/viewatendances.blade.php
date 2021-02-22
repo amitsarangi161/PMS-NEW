@@ -43,12 +43,17 @@
             <td>{{$viewatendance->employeename}}</td>
             @if($viewatendance->present =="Y")
             <td>PRESENT</td>
-            @else
+            @endif
+            @if($viewatendance->present =="H")
+            <td>HOLIDAY</td>
+            @endif
+            @if($viewatendance->present =="N")
             <td>ABSENT</td>
             @endif
            <td>
            <select onchange="changestatus(this.value,'{{$viewatendance->id}}')" class="form-control">
            <option value="">Select</option>
+           <option value="H">HOLIDAY</option>
            <option value="Y">PRESENT</option>
            <option value="N">ABSENT</option>
           </select>

@@ -25,6 +25,7 @@
 			<th>DATE</th>
       <th>TOTAL PRESENT</th>
       <th>TOTAL ABSENT</th>
+      <th>TOTAL HOLIDAY</th>
       <th>ADDED BY</th>
 			<th>VIEW</th>
 		</tr>
@@ -36,10 +37,6 @@
               	<td>{{$atendance->groupname}}</td>
                 <td>{{$atendance->type}}</td>
                 <td>{{$atendance->date}}</td>
-                @if($atendance->type=='HOLIDAY')
-                 <td>0</td>
-                 <td>0</td>
-                @else
                   @php
                      $p=\App\Empdailyattendancegroupdetail::where('attendancedate',$atendance->date)
                      ->where('dailyattendanceid',$atendance->id)
@@ -49,10 +46,14 @@
                      ->where('dailyattendanceid',$atendance->id)
                      ->where('present','N')
                      ->count();
+                     $h=\App\Empdailyattendancegroupdetail::where('attendancedate',$atendance->date)
+                     ->where('dailyattendanceid',$atendance->id)
+                     ->where('present','H')
+                     ->count();
                   @endphp
                   <td>{{$p}}</td>
                  <td>{{$a}}</td>
-                @endif
+                 <td>{{$h}}</td>
                 <td>{{$atendance->name}}</td>
                  <td>
                    <a href="/recviewatendances/{{$atendance->date}}/{{$atendance->id}}" class="btn btn-info">VIEW</a>
