@@ -73,6 +73,7 @@ use App\Pmsdebitvoucherpayment;
 use App\Emplyeeactivity;
 use App\Addleavetype;
 use App\Applyleave;
+use App\Useractivityprojectreport;
 use DataTables;
 use Excel;
 
@@ -2780,8 +2781,7 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
    }
 public function getusers()
 {
-  $users=User::all();
-
+   $users=User::all();
    return response()->json($users);
 }
 
@@ -2795,22 +2795,6 @@ public function getusers()
    }
    public function saveactivity(Request $request)
    {
-
-
-     /*  $sid = "AC3739c72ba0c44c41746543f288b370f6"; // Your Account SID from www.twilio.com/console
-$token = "61b2a08c8970376b526cba80d42b81fb"; // Your Auth Token from www.twilio.com/console
-
-$client = new \Twilio\Rest\Client($sid, $token);
-$message = $client->messages->create(
-  'whatsapp:+917381256230', // Text this number
-  array(
-    'from' => 'whatsapp:+14155238886', // From a valid Twilio number
-    'body' => 'Hello from Twilio!'
-  )
-);
-
-return $message->sid;*/
-
         $activity=new activity();
         $activity->activityname=$request->activityname;
         $activity->description=$request->description;
@@ -3451,28 +3435,52 @@ public function deleteprojectotherdoc(Request $request,$id){
    public function saveuserreport(Request $request)
    {
 
-    //return $request->all();
+        //return $request->all();
         
-
+       //  $this->validate($request,[
+       //      'reportfordate'=>'required|string|max:10|min:10|unique:projectreports',
+       // ]);
+      $reportfordate=$request->reportfordate;
+      $userid=Auth::id();
+      //return $userid;
+      $chk=projectreport::where('reportfordate',$reportfordate)
+      ->where('userid',$userid)
+      ->count();
+      //return $chk;
+        if($chk == 0)
+        {
         $projectreport=new projectreport();
         $projectreport->reportfordate=$request->reportfordate;
         //$projectreport->clientid=$request->clientid;
         //$projectreport->projectid=$request->projectid;
         //$projectreport->activityid=$request->activityid;
-        $projectreport->subject=$request->subject;
-        $projectreport->description=$request->description;
+        // $projectreport->subject=$request->subject;
+        // $projectreport->description=$request->description;
         $projectreport->userid=Auth::id();
         $projectreport->author="SELF";
         $projectreport->save();
-
-        return back();
-
-
+        $reportid=$projectreport->id;
+        $count=count($request->activityid);
+        for ($i=0; $i < $count ; $i++) { 
+             $userreport=new Useractivityprojectreport();
+             $userreport->reportid=$reportid;
+             $userreport->actvtid=$request->actvtid[$i];
+             $userreport->activityname=$request->activityid[$i];
+             $userreport->save();
+             Session::flash('msg','Report Save successfully');
+          }
+          return back();
    }
+   else{
+        Session::flash('error','Duplicate entry');
+        return back();
+      }
+    }
 
    public function userviewreports()
    {
       $uid=Auth::id();
+      $customarray=array();
 
       $projectreports=projectreport::select('projectreports.*','clients.orgname','projects.projectname','activities.activityname','users.name')
       ->leftJoin('clients','projectreports.clientid','=','clients.id')
@@ -3483,6 +3491,18 @@ public function deleteprojectotherdoc(Request $request,$id){
       ->orWhere('projectreports.authorid',$uid)
       ->orderBy('projectreports.created_at','DESC')
       ->get();
+
+      $projectactivities=projectactivity::select('projectactivities.*','activities.activityname')
+                      ->where('projectactivities.employeeid',$uid)
+                      ->leftJoin('activities','projectactivities.activityid','=','activities.id')
+                      ->orderBy('projectactivities.position','ASC')
+                      ->get();
+      //return $projectactivities;
+      $userdoneactivities=Useractivityprojectreport::select('useractivityprojectreports.*','activities.activityname')
+                      ->leftJoin('activities','useractivityprojectreports.actvtid','=','activities.id')
+                      ->get();
+      //return $userdoneactivities;
+
        
       return view('userviewreports',compact('projectreports'));
    }

@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 @section('content')
     <h3 class="text-center"><strong>MY REPORTS</strong></h3>
@@ -7,34 +8,38 @@
 <table class="table table-responsive table-hover table-bordered table-striped datatable">
     <thead>
         <tr class="bg-navy">
+            <th>SL NO.</th>
             <th>REPORT DATE</th>
+            <th>ASSIGN ACTIVITIES</th>
+            <th>DONE ACTIVITIES</th>
             <!-- <th>CLIENT</th>
             <th>PROJECT NAME</th> -->
             <!-- <th>ACTIVITY NAME</th> -->
-            <th>SUBJECT</th>
-            <th>DESCRIPTION</th>
+            <!-- <th>SUBJECT</th>
+            <th>DESCRIPTION</th> -->
             <th>REPORT OF</th>
             <th>AUTHOR</th>
-            <th>VERIFIED BY</th>
-             <th>STATUS</th>
-            <th>EDIT</th>
-            <th>DELETE</th>
-
-           
+            <!-- <th>VERIFIED BY</th> -->
+            <!-- <th>STATUS</th> -->
+            <!-- <th>EDIT</th>
+            <th>DELETE</th> -->
         </tr>
     </thead>
     <tbody>
          @foreach($projectreports as $projectreport)
          <tr>
+           <td>{{$projectreport->id}}</td>
+           <td>{{$projectreport->reportfordate}}</td>
+           <td>{{$projectreport->reportfordate}}</td>
            <td>{{$projectreport->reportfordate}}</td>
            <!-- <td>{{$projectreport->orgname}}</td>
            <td>{{$projectreport->projectname}}</td> -->
            <!-- <td>{{$projectreport->activityname}}</td> -->
-           <td>{{$projectreport->subject}}</td>
-           <td>{!! $projectreport->description !!}</td>
+           <!-- <td>{{$projectreport->subject}}</td>
+           <td>{!! $projectreport->description !!}</td> -->
            <td>{{$projectreport->name}}</td>
            <td>{{$projectreport->author}}</td>
-           <td>{{$projectreport->acceptedby}}</td>
+           <!-- <td>{{$projectreport->acceptedby}}</td>
               @if($projectreport->status=="VERIFIED")
            <td><span class="label label-success">{{$projectreport->status}}</span></td>
             @else
@@ -44,8 +49,8 @@
            <td><button type="button"  class="btn btn-primary" disabled="">EDIT</button type="button"></td>
             @else
             <td><a href="/edituserprojectreport/{{$projectreport->id}}" class="btn btn-primary">EDIT</a></td>
-            @endif
-             @if($projectreport->status=="VERIFIED")
+            @endif -->
+            <!--  @if($projectreport->status=="VERIFIED")
             <td><button type="button" class="btn btn-danger" disabled="">DELETE</button></td>  
              @else
            <td>
@@ -55,7 +60,7 @@
                 <button type="submit" class="btn btn-danger" onclick="return confirm('Do You Want to Delete this Report?');">DELETE</button>
              </form>
            </td>
-           @endif
+           @endif -->
          </tr>
 
         @endforeach

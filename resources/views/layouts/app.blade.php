@@ -283,7 +283,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-              <li class="{{ Request::is('daywisereport/activity') ? 'active' : '' }}"><a href="/daywisereport/activity"><i class="fa fa-circle-o text-aqua"></i>DEFINE ACTIVITY</a></li>
+              <li class="{{ Request::is('daywise/viewalluserreports') ? 'active' : '' }}"><a href="/daywise/viewalluserreports"><i class="fa fa-circle-o text-aqua"></i>VIEW All REPORTS</a></li>
           </ul>
         </li>
         @endif

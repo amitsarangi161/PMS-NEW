@@ -53,7 +53,7 @@
           <select  class="form-control select2" id="employeeid"  name="employeeid" style="width: 100%;">
             <option value="">SELECT A Employee</option>
                @foreach($users as $key => $user)
-               <option value="{{$user->employee_id}}" {{(Request::get('employeeid')==$user->employee_id)?'selected':''}} >{{$user->name}}</option>
+               <option value="{{$user->employee_id}}" {{(Request::get('employeeid')==$user->employee_id)?:''}} >{{$user->name}}</option>
                @endforeach
           </select>
       </div>

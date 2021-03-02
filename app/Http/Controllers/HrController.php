@@ -215,8 +215,6 @@ class HrController extends Controller
     $calculate->save();
     Session::flash('msg','Salary Generated Successfully');
     return back();
-
-
   }
    public function manageraddemployeesalaryshee(Request $request){
     //return $request->all();

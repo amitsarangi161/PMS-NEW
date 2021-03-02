@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+@if(Session::has('msg'))
+   <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
+ @endif
+ @if(Session::has('error'))
+   <p class="alert alert-danger text-center">{{ Session::get('error') }}</p>
+ @endif
 <table class="table table-responsive table-hover table-bordered table-striped">
   <thead>
   <tr class="bg-primary">
@@ -7,40 +13,42 @@
   </tr>
   </thead>
 </table>
+<form action="/saveuserreport" method="post">
+  {{csrf_field()}}
 <table class="table table-striped table-bordered display" id="res">
   
     <thead class="bg-navy">
       <tr>
         <td>ACTIVITY</td>
-      <td>START DATE</td>
-      <td>END DATE</td>
-      <td>DURATION</td>
+        <td>START DATE</td>
+        <td>END DATE</td>
+        <td>DURATION&nbsp;&nbsp;<input type="checkbox" id="checkAll"></td>
       </tr>
     </thead>
     <tbody class="addnewrow sortable">
 
       @foreach($projectactivities as $key=> $projectactivity)
               <tr>
-                <td>{{$projectactivity->activityname}}<input type="hidden" name="activityid[]" value="{{$projectactivity->activityid}}"></td>
-         <td id="st{{$key+1}}" ondblclick="startdatechange('{{$key+1}}')">{{$projectactivity->startdate}}<input type="hidden" name="activitystartdate[]" id="s{{$key+1}}" value="{{$projectactivity->startdate}}" class="calcin"/>
-         </td>
-        <td id="en{{$key+1}}" ondblclick="enddatechange('{{$key+1}}')">{{$projectactivity->enddate}}<input type="hidden" name="activityenddate[]" id="e{{$key+1}}" value="{{$projectactivity->enddate}}"/></td>
-        <td id="du{{$key+1}}">{{$projectactivity->duration}}<input type="hidden" name="duration[]" class="countable" value="{{$projectactivity->duration}}" class="calcin"/></td>
+                  <td>{{$projectactivity->activityname}}<input type="hidden" value="{{$projectactivity->activityid}}" name="actvtid[]">
+                    </td>
+                 <td id="st{{$key+1}}" ondblclick="startdatechange('{{$key+1}}')">{{$projectactivity->startdate}}<input type="hidden" name="activitystartdate[]" id="s{{$key+1}}" value="{{$projectactivity->startdate}}" class="calcin"/>
+                 </td>
+                <td id="en{{$key+1}}" ondblclick="enddatechange('{{$key+1}}')">{{$projectactivity->enddate}}<input type="hidden" name="activityenddate[]" id="e{{$key+1}}" value="{{$projectactivity->enddate}}"/></td>
+                <td id="du{{$key+1}}">{{$projectactivity->duration}}<input type="hidden" name="duration[]" class="countable" value="{{$projectactivity->duration}}" class="calcin"/>&nbsp;&nbsp;
+                <input type="checkbox" id="checkItem" name="activityid[]"></td>
               </tr>
 
             @endforeach
                    
       </tbody>         
 </table>
-<form action="/saveuserreport" method="post">
-  {{csrf_field()}}
 <table class="table table-responsive table-hover table-bordered table-striped">
 
   <thead>
     <tr>
       <td>Report For Date</td>
       <td>
-        <input type="text" name="reportfordate" class="form-control datepicker4 readonly" placeholder="select a date" required="">
+        <input type="text" name="reportfordate" class="form-control datepicker1 readonly" placeholder="select a date" required="">
       </td>
     </tr>
 
@@ -55,7 +63,7 @@
       </td>
     </tr>
  -->
-      <tr>
+      <!-- <tr>
       <td>REPORT SUBJECT</td>
       <td>
        <input type="text" class="form-control" name="subject" placeholder="Enter Report Subject" required>
@@ -73,7 +81,7 @@
             </div>
           </div>
           </td>
-      </tr>
+      </tr> -->
       <tr>
          <td colspan="2" style="text-align: right;"><button type="submit" class="btn btn-success">SUBMIT</button></td>
       </tr>
@@ -179,5 +187,8 @@
 
 
   }
+  $("#checkAll").click(function () {
+     $('input:checkbox').not(this).prop('checked', this.checked);
+ });
 </script>
 @endsection
