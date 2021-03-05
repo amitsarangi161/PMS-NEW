@@ -60,7 +60,7 @@
 </table>
 
 <div class="well">
-	<table class="table table-responsive table-bordered table-hover table-striped">
+	<table class="table table-responsive table-hover table-bordered table-striped datatable3">
         <thead style="background: #0073b7;
     color: #fff;">
             <th>ID</th>

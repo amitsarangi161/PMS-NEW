@@ -90,6 +90,7 @@
 			<td>RID</td>
 			<td>NAME</td>
 			<td>PROJECT</td>
+			<td>AUTHOR NAME</td>
 			<td>EXPENSEHEAD</td>
 			<td>PARTICULAR</td>
 			<td>DESCRIPTION</td>
@@ -112,6 +113,7 @@
 			@else
              <td>OTHERS</td>
 			@endif
+			<td>{{$requisition->reqaddby}}</td>
 			<td>{{$requisition->expenseheadname}}</td>
 			<td>{{$requisition->particularname}}</td>
 			<td><p class="b" title="{{$requisition->description}}">{{$requisition->description}}</p></td>

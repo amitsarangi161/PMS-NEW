@@ -11,58 +11,22 @@
             <th>SL NO.</th>
             <th>REPORT DATE</th>
             <th>ASSIGN ACTIVITIES</th>
-            <th>DONE ACTIVITIES</th>
-            <!-- <th>CLIENT</th>
-            <th>PROJECT NAME</th> -->
-            <!-- <th>ACTIVITY NAME</th> -->
-            <!-- <th>SUBJECT</th>
-            <th>DESCRIPTION</th> -->
+            <th>ACTIVITIES DONE</th>
             <th>REPORT OF</th>
             <th>AUTHOR</th>
-            <!-- <th>VERIFIED BY</th> -->
-            <!-- <th>STATUS</th> -->
-            <!-- <th>EDIT</th>
-            <th>DELETE</th> -->
         </tr>
     </thead>
     <tbody>
-         @foreach($projectreports as $projectreport)
+         @foreach($customarray as $cust)
          <tr>
-           <td>{{$projectreport->id}}</td>
-           <td>{{$projectreport->reportfordate}}</td>
-           <td>{{$projectreport->reportfordate}}</td>
-           <td>{{$projectreport->reportfordate}}</td>
-           <!-- <td>{{$projectreport->orgname}}</td>
-           <td>{{$projectreport->projectname}}</td> -->
-           <!-- <td>{{$projectreport->activityname}}</td> -->
-           <!-- <td>{{$projectreport->subject}}</td>
-           <td>{!! $projectreport->description !!}</td> -->
-           <td>{{$projectreport->name}}</td>
-           <td>{{$projectreport->author}}</td>
-           <!-- <td>{{$projectreport->acceptedby}}</td>
-              @if($projectreport->status=="VERIFIED")
-           <td><span class="label label-success">{{$projectreport->status}}</span></td>
-            @else
-            <td><span class="label label-danger">{{$projectreport->status}}</span></td>
-            @endif
-             @if($projectreport->status=="VERIFIED")
-           <td><button type="button"  class="btn btn-primary" disabled="">EDIT</button type="button"></td>
-            @else
-            <td><a href="/edituserprojectreport/{{$projectreport->id}}" class="btn btn-primary">EDIT</a></td>
-            @endif -->
-            <!--  @if($projectreport->status=="VERIFIED")
-            <td><button type="button" class="btn btn-danger" disabled="">DELETE</button></td>  
-             @else
-           <td>
-             <form action="/deleteuserreport/{{$projectreport->id}}" method="post">
-                {{csrf_field()}}
-                {{method_field('DELETE')}}
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Do You Want to Delete this Report?');">DELETE</button>
-             </form>
-           </td>
-           @endif -->
+           
+           <td>{{$cust['projectreport']->id}}</td>
+           <td>{{$cust['projectreport']->reportfordate}}</td>
+           <td>{{$cust['assignactivitie']}}</td>
+           <td>{{$cust['userdoneactivitie']}}</td>
+           <td>{{$cust['projectreport']->name}}</td>
+           <td>{{$cust['projectreport']->author}}</td>
          </tr>
-
         @endforeach
     </tbody>
 </table>

@@ -1768,7 +1768,7 @@ if($request->has('status') && $request->status!='')
                       ->groupBy('requisitionpayments.id')
                       ->get();*/
 
-             $requisitions=requisition::select('requisitions.*','expenseheads.expenseheadname','particulars.particularname','projects.projectname','users.name','requisitionheaders.datefrom','requisitionheaders.dateto')
+             $requisitions=requisition::select('requisitions.*','expenseheads.expenseheadname','particulars.particularname','projects.projectname','users.name','requisitionheaders.datefrom','requisitionheaders.dateto','requisitionheaders.reqaddby')
                          ->leftJoin('requisitionheaders','requisitions.requisitionheaderid','=','requisitionheaders.id')
                          ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
                          ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
@@ -1780,6 +1780,7 @@ if($request->has('status') && $request->status!='')
                          ->where('requisitions.approvestatus','!=','PENDING')
                          ->where('requisitions.approvestatus','!=','CANCELLED')
                          ->groupBy('requisitions.id');
+        //return $requisitions;
 $searchcount=0;
   if($request->has('fromdate') && $request->has('todate') && $request->fromdate!='' && $request->todate!='')
   {
@@ -3464,6 +3465,7 @@ public function deleteprojectotherdoc(Request $request,$id){
         for ($i=0; $i < $count ; $i++) { 
              $userreport=new Useractivityprojectreport();
              $userreport->reportid=$reportid;
+             $userreport->reportfordate=$request->reportfordate;
              $userreport->actvtid=$request->actvtid[$i];
              $userreport->activityname=$request->activityid[$i];
              $userreport->save();
@@ -3491,20 +3493,26 @@ public function deleteprojectotherdoc(Request $request,$id){
       ->orWhere('projectreports.authorid',$uid)
       ->orderBy('projectreports.created_at','DESC')
       ->get();
-
-      $projectactivities=projectactivity::select('projectactivities.*','activities.activityname')
+      //return $reportfordate;
+      foreach ($projectreports as $key => $projectreport) {
+      $assignactivitie=projectactivity::select('activities.activityname')
                       ->where('projectactivities.employeeid',$uid)
                       ->leftJoin('activities','projectactivities.activityid','=','activities.id')
                       ->orderBy('projectactivities.position','ASC')
                       ->get();
       //return $projectactivities;
-      $userdoneactivities=Useractivityprojectreport::select('useractivityprojectreports.*','activities.activityname')
+      $reportfordate=projectreport::select('projectreports.reportfordate')->get();
+      //return $reportfordate;
+      $userdoneactivitie=Useractivityprojectreport::select('useractivityprojectreports.*','activities.activityname')
                       ->leftJoin('activities','useractivityprojectreports.actvtid','=','activities.id')
+                       //->where('useractivityprojectreports.reportfordate',$reportfordate)
                       ->get();
+      //return $userdoneactivitie;
+      $customarray[]=array('projectreport'=>$projectreport,'assignactivitie'=>$assignactivitie,'userdoneactivitie'=>$userdoneactivitie);
+                  }
       //return $userdoneactivities;
 
-       
-      return view('userviewreports',compact('projectreports'));
+      return view('userviewreports',compact('customarray'));
    }
 
    public function deleteuserreport(Request $request,$id)

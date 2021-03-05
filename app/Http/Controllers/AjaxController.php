@@ -35,6 +35,11 @@ use App\Empdailyattendancegroupdetail;
 use App\Approvedleave;
 class AjaxController extends Controller
 { 
+  public function ajaxchangedaytype(Request $request){
+    $changestaus=Empdailyattendancegroupdetail::find($request->id);
+    $changestaus->halffull=$request->status;
+    $changestaus->save();
+  }
   public function ajaxchangestatus(Request $request){
     $changestaus=Empdailyattendancegroupdetail::find($request->id);
     $changestaus->present=$request->status;

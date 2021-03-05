@@ -939,6 +939,7 @@ Route::get('getpendingtenderapprovallist','TenderController@getpendingtenderappr
     Route::get('/leave/viewpendingleves','HrController@viewpendingleves');
     Route::post('/ajaxchangeleavestatus','AjaxController@ajaxchangeleavestatus');
     Route::post('/ajaxchangestatus','AjaxController@ajaxchangestatus');
+    Route::post('/ajaxchangedaytype','AjaxController@ajaxchangedaytype');
     Route::post('/ajaxfetchattendanceemp','AjaxController@ajaxfetchattendanceemp');
     Route::post('/ajaxholidayemployee','AjaxController@ajaxholidayemployee');
     Route::get('/viewapplicantleave/{id}','HrController@viewapplicantleave'); 

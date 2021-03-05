@@ -77,6 +77,7 @@
           <!-- <th>BASIC SALARY</th> -->
           <th>TOTAL PRESENT</th>
           <th>TOTAL ABSENT</th>
+          <th>TOTAL HALFDAY</th>
           <th>TOTAL DAYS</th>
           <th>TOTAL HOLIDAY</th>
           <th>TOTAL LEAVE</th>
@@ -96,6 +97,7 @@
       		<!-- <td>{{$cust['employee']->basicsalary}}</td> -->
       		<td>{{$cust['empttotpresent']}}</td>
       		<td>{{$cust['empttotabsent']}}</td>
+          <td>{{$cust['emptothalfday']}}</td>
       		<td>{{$cust['totmonthdate']}}</td>
       		<td>{{$cust['totholiday']}}</td>
       		<td>{{$cust['totalleave']}}</td>
@@ -111,7 +113,7 @@
                   ->count();
       			@endphp
       			@if($check == 0)
-      			<button type="button" class="btn btn-primary" onclick="calculate('{{$cust['employee']->id}}','{{$cust['employee']->emptotalwages}}','{{$cust['employee']->basicsalary}}','{{$cust['employee']->professionaltax}}','{{$cust['employee']->incometax}}','{{$cust['employee']-> welfarefund }}','{{$cust['empttotpresent']}}','{{$cust['empttotabsent']}}','{{$cust['thismonthleave']}}','{{$cust['totleavetaken']}}','{{$cust['totalleave']}}','{{$cust['totalbalanceleave']}}','{{$cust['totmonthdate']}}','{{$cust['totholiday']}}','{{$cust['employee']->employeename}}','{{$cust['year']}}','{{$cust['month']}}');">Generate</button>
+      			<button type="button" class="btn btn-primary" onclick="calculate('{{$cust['employee']->id}}','{{$cust['employee']->emptotalwages}}','{{$cust['employee']->basicsalary}}','{{$cust['employee']->professionaltax}}','{{$cust['employee']->incometax}}','{{$cust['employee']-> welfarefund }}','{{$cust['empttotpresent']}}','{{$cust['empttotabsent']}}','{{$cust['emptothalfday']}}','{{$cust['thismonthleave']}}','{{$cust['totleavetaken']}}','{{$cust['totalleave']}}','{{$cust['totalbalanceleave']}}','{{$cust['totmonthdate']}}','{{$cust['totholiday']}}','{{$cust['employee']->employeename}}','{{$cust['year']}}','{{$cust['month']}}');">Generate</button>
       			@else
       			<button type="button" disabled="" class="btn btn-danger">Done</button>
       			@endif
@@ -207,12 +209,14 @@
  	<tr>
 	<td><strong>OTHER ALLOWANCES<span style="color: red"> *</span></strong></td>
      <td><input type="text" readonly="" autocomplete="off" name="dearnessall" id="dearnessall" placeholder="Enter Group Name" class="form-control calc"></td>
-     <td><strong>Total Deduction<span style="color: red"> *</span></strong></td>
-     <td><input type="text" autocomplete="off" readonly="" name="totaldeduction" id="totaldeduction" placeholder="Enter Group Name" class="form-control"></td>
+     <td><strong>HALF DAY<span style="color: red"> *</span></strong></td>
+     <td><input type="text" autocomplete="off" readonly="" name="emptothalfday" id="emptothalfday" placeholder="Enter Total Half Day" class="form-control calc"></td>
  	</tr>
  	<tr>
 	<td><strong>MEDICAL ALLOWANCE<span style="color: red"> *</span></strong></td>
      <td><input type="text" readonly="" autocomplete="off" name="medicalall" id="medicalall" placeholder="Enter Group Name" class="form-control calc"></td>
+      <td><strong>Total Deduction<span style="color: red"> *</span></strong></td>
+     <td><input type="text" autocomplete="off" readonly="" name="totaldeduction" id="totaldeduction" placeholder="Enter Group Name" class="form-control"></td>
     
  	</tr>
  	<tr>
@@ -271,6 +275,7 @@
 		var emptotalwages= ($("#emptotalwages").val())?$("#emptotalwages").val():0;
 		var empttotpresent= ($("#empttotpresent").val())?$("#empttotpresent").val():0;
 		var empttotabsent= ($("#empttotabsent").val())?$("#empttotabsent").val():0;
+    var emptothalfday= ($("#emptothalfday").val())?$("#emptothalfday").val():0;
 		var thismonthleave= ($("#thismonthleave").val())?$("#thismonthleave").val():0;
 		var totleavetaken= ($("#totleavetaken").val())?$("#totleavetaken").val():0;
 		var totalleave= ($("#totalleave").val())?$("#totalleave").val():0;
@@ -297,7 +302,9 @@
     console.log(miscall);
     // var totaladdition=parseFloat(miscall)+parseFloat(basicsalary)+parseFloat(conveyanceall)+parseFloat(dearnessall)+parseFloat(medicalall)+parseFloat(houserentall)+parseFloat(miscall);
     //console.log(totaladdition);
-    var totaldeduction=parseFloat(epfdeduction)+parseFloat(esicdeduction)+parseFloat(salaryadvance)+parseFloat(advance)+parseFloat(professionaltax)+parseFloat(incometax)+parseFloat(welfarefund);
+    var caltotholiday=parseFloat(perdaysalary)/2*parseFloat(emptothalfday);
+    //$("#emptothalfday").val(caltotholiday.toFixed(2));
+    var totaldeduction=parseFloat(epfdeduction)+parseFloat(esicdeduction)+parseFloat(salaryadvance)+parseFloat(advance)+parseFloat(professionaltax)+parseFloat(incometax)+parseFloat(welfarefund)+parseFloat(caltotholiday);
          $("#totaldeduction").val(totaldeduction.toFixed(2));
          //var thismonthsalary=parseFloat(totaladdition.toFixed(2));
          // $("#thismonthsalary").val(thismonthsalary);
@@ -316,12 +323,13 @@ $( ".calc" ).on("change paste keyup", function() {
    calc();      
   });
 
-	function calculate(id,emptotalwages,basicsalary,professionaltax,incometax,welfarefund,empttotpresent,empttotabsent,thismonthleave,totleavetaken,totalleave,totalbalanceleave,totmonthdate,totholiday,employeename,year,month,miscall,totalpaymemt){
+	function calculate(id,emptotalwages,basicsalary,professionaltax,incometax,welfarefund,empttotpresent,empttotabsent,emptothalfday,thismonthleave,totleavetaken,totalleave,totalbalanceleave,totmonthdate,totholiday,employeename,year,month,miscall,totalpaymemt){
 		//alert(id);
 		$("#did").val(id);
 		$("#emptotalwages").val(emptotalwages);
 		$("#empttotpresent").val(empttotpresent);
 		$("#empttotabsent").val(empttotabsent);
+    $("#emptothalfday").val(emptothalfday);
 		$("#thismonthleave").val(thismonthleave);
 		$("#totleavetaken").val(totleavetaken);
 		$("#totalleave").val(totalleave);
@@ -371,9 +379,11 @@ $( ".calc" ).on("change paste keyup", function() {
 	    else{
 	    	var extraleave=0;
 	    }
+
 		var perdaysalary=parseFloat(emptotalwages)/parseFloat(totmonthdate);
 		if(extraleave==0){
-      var thismonthsalary=parseFloat(perdaysalary)*(parseFloat(empttotpresent)+parseFloat(totholiday));
+      var thismonthsalary=parseFloat(perdaysalary)*(parseFloat(empttotpresent)+parseFloat(totholiday)+parseFloat(thismonthleave));
+      console.log(perdaysalary+"=====perday"+empttotpresent+"=======totalpresent"+totholiday+"========totalholiday"+thismonthleave+"========thismonth");
     }
 		
 	     else{

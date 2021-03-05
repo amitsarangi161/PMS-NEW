@@ -106,7 +106,7 @@
 
                success:function(data) { 
                		
-               		location.reload();
+               		  location.reload();
                     id='#tid'+data;
                }
                

@@ -212,6 +212,7 @@ class HrController extends Controller
     $calculate->totalpaymemt=$request->totalpaymemt;
     $calculate->totaldeduction=$request->totaldeduction;
     $calculate->totalpaybleto=$request->totalpaybleto;
+    $calculate->tothalfday=$request->emptothalfday;
     $calculate->save();
     Session::flash('msg','Salary Generated Successfully');
     return back();
@@ -328,12 +329,17 @@ class HrController extends Controller
                     ->whereMonth('attendancedate', '=', $request->frommonth)
                     ->where('present','H')
                     ->count();
-          //return $emptotholiday;
+          $emptothalfday=Empdailyattendancegroupdetail::where('employee_id',$employee->id)
+                    ->whereYear('attendancedate', '=', $request->fromyear)
+                    ->whereMonth('attendancedate', '=', $request->frommonth)
+                    ->where('halffull','H')
+                    ->count();
+          //return $emptothalfday;
           $totleavetaken=Approvedleave::where('employee_id',$employee->id)->count();
           $totalleave=15;
           $totalbalanceleave=$totalleave-$totleavetaken;
           //return $totmonthdate;
-          $customarray[]=array('employee'=>$employee,'empttotpresent'=>$empttotpresent,'empttotabsent'=>$empttotabsent,'thismonthleave'=>$thismonthleave,'totleavetaken'=>$totleavetaken,'totalleave'=>$totalleave,'totalbalanceleave'=>$totalbalanceleave,'totmonthdate'=>$totmonthdate,'totholiday'=>$totholiday,'year'=>$request->fromyear,'month'=>$request->frommonth,'emptotholiday'=>$emptotholiday);
+          $customarray[]=array('employee'=>$employee,'empttotpresent'=>$empttotpresent,'empttotabsent'=>$empttotabsent,'thismonthleave'=>$thismonthleave,'totleavetaken'=>$totleavetaken,'totalleave'=>$totalleave,'totalbalanceleave'=>$totalbalanceleave,'totmonthdate'=>$totmonthdate,'totholiday'=>$totholiday,'year'=>$request->fromyear,'month'=>$request->frommonth,'emptotholiday'=>$emptotholiday,'emptothalfday'=>$emptothalfday);
 
         
     }
